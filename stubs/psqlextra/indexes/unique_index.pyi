@@ -1,0 +1,3 @@
+from django.db.models import Index
+
+class UniqueIndex(Index): ...

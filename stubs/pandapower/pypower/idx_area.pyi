@@ -1,0 +1,2 @@
+AREA_I: int
+PRICE_REF_BUS: int

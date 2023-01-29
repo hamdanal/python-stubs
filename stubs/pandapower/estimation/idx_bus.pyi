@@ -1,0 +1,14 @@
+VM: int
+VM_STD: int
+P: int
+P_STD: int
+Q: int
+Q_STD: int
+VM_IDX: int
+P_IDX: int
+Q_IDX: int
+ZERO_INJ_FLAG: int
+VA: int
+VA_STD: int
+VA_IDX: int
+bus_cols_se: int

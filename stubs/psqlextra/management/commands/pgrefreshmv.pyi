@@ -1,0 +1,6 @@
+from django.core.management.base import BaseCommand
+
+class Command(BaseCommand):
+    help: str
+    def add_arguments(self, parser) -> None: ...
+    def handle(self, *app_labels, **options) -> None: ...

@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def adapt_impedance_params(Z, sign: int = ..., adaption: float = ...): ...

@@ -1,0 +1,9 @@
+from numpy import setdiff1d as setdiff1d
+
+shapely_INSTALLED: bool
+geopandas_INSTALLED: bool
+pyproj_INSTALLED: bool
+
+def convert_gis_to_geodata(net, node_geodata: bool = ..., branch_geodata: bool = ...) -> None: ...
+def convert_geodata_to_gis(net, epsg: int = ..., node_geodata: bool = ..., branch_geodata: bool = ...) -> None: ...
+def convert_epsg_bus_geodata(net, epsg_in: int = ..., epsg_out: int = ...): ...

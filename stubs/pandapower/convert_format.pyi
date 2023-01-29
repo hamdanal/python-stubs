@@ -1,0 +1,6 @@
+from collections.abc import Container
+
+from pandapower.auxiliary import pandapowerNet
+
+def convert_format(net: pandapowerNet, elements_to_deserialize: Container[str] | None = None) -> pandapowerNet: ...
+def correct_dtypes(net: pandapowerNet, error: bool) -> None: ...

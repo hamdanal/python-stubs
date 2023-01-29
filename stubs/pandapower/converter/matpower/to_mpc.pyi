@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def to_mpc(net, filename: Incomplete | None = ..., **kwargs): ...

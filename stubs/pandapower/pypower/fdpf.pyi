@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def fdpf(Ybus, Sbus, V0, Bp, Bpp, ref, pv, pq, ppopt: Incomplete | None = ...): ...

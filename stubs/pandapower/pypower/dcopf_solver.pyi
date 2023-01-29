@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def dcopf_solver(om, ppopt, out_opt: Incomplete | None = ...): ...

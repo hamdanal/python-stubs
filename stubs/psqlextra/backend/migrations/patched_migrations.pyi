@@ -1,0 +1,3 @@
+from collections.abc import Generator
+
+def postgres_patched_migrations() -> Generator[None, None, None]: ...

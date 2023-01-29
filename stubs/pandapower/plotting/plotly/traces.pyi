@@ -1,0 +1,96 @@
+from _typeshed import Incomplete
+
+def version_check() -> None: ...
+def sum_line_length(pts): ...
+def get_line_neutral(coord): ...
+def create_edge_center_trace(
+    line_trace,
+    size: int = ...,
+    patch_type: str = ...,
+    color: str = ...,
+    infofunc: Incomplete | None = ...,
+    trace_name: str = ...,
+    use_line_geodata: bool = ...,
+    showlegend: bool = ...,
+    legendgroup: Incomplete | None = ...,
+    hoverlabel: Incomplete | None = ...,
+): ...
+def create_bus_trace(
+    net,
+    buses: Incomplete | None = ...,
+    size: int = ...,
+    patch_type: str = ...,
+    color: str = ...,
+    infofunc: Incomplete | None = ...,
+    trace_name: str = ...,
+    legendgroup: Incomplete | None = ...,
+    cmap: Incomplete | None = ...,
+    cmap_vals: Incomplete | None = ...,
+    cbar_title: Incomplete | None = ...,
+    cmin: Incomplete | None = ...,
+    cmax: Incomplete | None = ...,
+    cpos: float = ...,
+    colormap_column: str = ...,
+): ...
+def create_line_trace(
+    net,
+    lines: Incomplete | None = ...,
+    use_line_geodata: bool = ...,
+    respect_switches: bool = ...,
+    width: float = ...,
+    color: str = ...,
+    infofunc: Incomplete | None = ...,
+    trace_name: str = ...,
+    legendgroup: str = ...,
+    cmap: Incomplete | None = ...,
+    cbar_title: Incomplete | None = ...,
+    show_colorbar: bool = ...,
+    cmap_vals: Incomplete | None = ...,
+    cmin: Incomplete | None = ...,
+    cmax: Incomplete | None = ...,
+    cpos: float = ...,
+    cmap_vals_category: str = ...,
+    hoverlabel: Incomplete | None = ...,
+): ...
+def create_trafo_trace(
+    net,
+    trafos: Incomplete | None = ...,
+    color: str = ...,
+    trafotype: str = ...,
+    width: int = ...,
+    infofunc: Incomplete | None = ...,
+    cmap: Incomplete | None = ...,
+    trace_name: str = ...,
+    cmin: Incomplete | None = ...,
+    cmax: Incomplete | None = ...,
+    cmap_vals: Incomplete | None = ...,
+    matching_params: Incomplete | None = ...,
+    use_line_geodata: Incomplete | None = ...,
+): ...
+def create_weighted_marker_trace(
+    net,
+    elm_type: str = ...,
+    elm_ids: Incomplete | None = ...,
+    column_to_plot: str = ...,
+    sizemode: str = ...,
+    color: str = ...,
+    patch_type: str = ...,
+    marker_scaling: float = ...,
+    trace_name: str = ...,
+    infofunc: Incomplete | None = ...,
+    node_element: str = ...,
+    show_scale_legend: bool = ...,
+    scale_marker_size: Incomplete | None = ...,
+): ...
+def create_scale_trace(net, weighted_trace, down_shift: int = ...): ...
+def draw_traces(
+    traces,
+    on_map: bool = ...,
+    map_style: str = ...,
+    showlegend: bool = ...,
+    figsize: int = ...,
+    aspectratio: str = ...,
+    filename: str = ...,
+    auto_open: bool = ...,
+    **kwargs,
+): ...

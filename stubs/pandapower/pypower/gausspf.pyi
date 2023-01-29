@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def gausspf(Ybus, Sbus, V0, ref, pv, pq, ppopt: Incomplete | None = ...): ...

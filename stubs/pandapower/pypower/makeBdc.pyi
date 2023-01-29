@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def makeBdc(bus, branch, return_csr: bool = ...): ...

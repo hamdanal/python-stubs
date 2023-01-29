@@ -1,0 +1,7 @@
+PW_LINEAR: int
+POLYNOMIAL: int
+MODEL: int
+STARTUP: int
+SHUTDOWN: int
+NCOST: int
+COST: int

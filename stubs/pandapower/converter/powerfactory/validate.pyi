@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def validate_pf_conversion(net, is_unbalanced: bool = ..., **kwargs): ...

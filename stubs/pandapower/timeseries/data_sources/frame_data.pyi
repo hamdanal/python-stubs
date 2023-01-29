@@ -1,0 +1,9 @@
+from _typeshed import Incomplete
+
+from pandapower.timeseries.data_source import DataSource
+
+class DFData(DataSource):
+    df: Incomplete
+    def __init__(self, df, multi: bool = ...) -> None: ...
+    def get_time_step_value(self, time_step, profile_name, scale_factor: float = ...): ...
+    def get_time_steps_len(self): ...

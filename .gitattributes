@@ -1,0 +1,2 @@
+.vscode/*.json linguist-language=jsonc
+pyrightconfig*.json linguist-language=jsonc

@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def opf_consfcn(x, om, Ybus, Yf, Yt, ppopt, il: Incomplete | None = ..., *args): ...

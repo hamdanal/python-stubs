@@ -1,0 +1,9 @@
+from collections.abc import Iterable
+from typing import Any
+from typing_extensions import TypeGuard
+
+from django.db.models.query import QuerySet
+
+def is_query_set(value: object) -> TypeGuard[QuerySet[Any]]: ...
+def is_sql(value: object) -> TypeGuard[str]: ...
+def is_sql_with_params(value: object) -> TypeGuard[tuple[str, Iterable[Any]]]: ...

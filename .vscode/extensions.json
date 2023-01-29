@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.isort",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "redhat.vscode-yaml",
+  ],
+  "unwantedRecommendations": [
+        // We use black
+        "ms-python.autopep8",
+        // Not using pylint
+        "ms-python.pylint",
+        // Obsoleted by Pylance
+        "ms-pyright.pyright",
+    ],
+  }

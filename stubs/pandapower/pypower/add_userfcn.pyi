@@ -1,0 +1,3 @@
+from _typeshed import Incomplete
+
+def add_userfcn(ppc, stage, fcn, args: Incomplete | None = ..., allow_multiple: bool = ...): ...
