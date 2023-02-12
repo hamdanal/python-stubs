@@ -50,13 +50,13 @@ to copy the stubs in this repository and use them as a starting point.
 
 The project is already useful as is, but there are still some things to do:
 - [ ] The stubs are very incomplete; they are just enough to make Pylance *happy*.
-- [ ] The stubs are tested. Must add pyright, mypy, stubtest and optionally pytype.
+- [ ] The stubs are not tested. Must add pyright, mypy, stubtest and optionally pytype.
 - [ ] No CI is set up yet.
 
 ## List of available stubs
 
 Project | Links | Status
 ------- | ----- | ------
-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Incomplete
-psqlextra | [PyPI](https://pypi.org/project/django-postgres-extra/), [GitHub](https://github.com/SectorLabs/django-postgres-extra) | Incomplete
+django-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Incomplete
+django-postgres-extra | [PyPI](https://pypi.org/project/django-postgres-extra/), [GitHub](https://github.com/SectorLabs/django-postgres-extra) | Incomplete
 pandapower | [PyPI](https://pypi.org/project/pandapower/), [GitHub](https://github.com/e2nIEE/pandapower) | Incomplete
