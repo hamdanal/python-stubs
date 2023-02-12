@@ -1,6 +1,7 @@
-from _typeshed import _KT, _VT, Incomplete, Self
+from _typeshed import _KT, _VT, Incomplete
 from collections.abc import Iterable, Mapping, MutableMapping, MutableSequence, Sized
 from typing import Any, NoReturn, SupportsInt, TypeVar
+from typing_extensions import Self
 
 from numpy import complexfloating, floating, integer
 from numpy.typing import ArrayLike, NDArray
@@ -94,7 +95,7 @@ class pandapowerNet(ADict[str, DataFrame]):
     version: str
     ward: DataFrame
     xward: DataFrame
-    def deepcopy(self: Self) -> Self: ...
+    def deepcopy(self) -> Self: ...
 
 def get_free_id(df: Sized) -> int: ...
 

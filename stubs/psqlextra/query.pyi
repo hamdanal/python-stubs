@@ -1,7 +1,6 @@
-from _typeshed import Self
 from collections.abc import Sequence
 from typing import Any, Literal, TypeVar, overload
-from typing_extensions import TypeAlias
+from typing_extensions import Self, TypeAlias
 
 from django.db import models
 from django.db.models import Expression, Q
@@ -13,7 +12,7 @@ _Rows: TypeAlias = list[dict[str, Any]]
 ConflictTarget: TypeAlias = Sequence[str | tuple[str, ...]]
 
 class PostgresQuerySet(models.QuerySet[_T]):
-    def rename_annotations(self: Self, **annotations: str) -> Self: ...
+    def rename_annotations(self, **annotations: str) -> Self: ...
     def on_conflict(
         self,
         fields: ConflictTarget,

@@ -1,4 +1,5 @@
-from _typeshed import Incomplete, Self
+from _typeshed import Incomplete
+from typing_extensions import Self
 
 from django.db.models.expressions import Case, Col, Expression, F
 from django.db.models.sql.compiler import SQLCompiler
@@ -15,7 +16,7 @@ class HStoreColumn(Col):
     hstore_key: str
 
     def __init__(self, alias: str, target: str, hstore_key: str) -> None: ...
-    def relabeled_clone(self: Self, relabels: dict[str, str]) -> Self: ...
+    def relabeled_clone(self, relabels: dict[str, str]) -> Self: ...
     def as_sql(self, compiler: SQLCompiler, connection: Incomplete) -> tuple[str, list[Incomplete]]: ...
 
 class HStoreRef(F):
