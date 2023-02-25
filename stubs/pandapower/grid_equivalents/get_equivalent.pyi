@@ -1,5 +1,3 @@
-from _typeshed import Incomplete
-
 from pandapower.grid_equivalents.auxiliary import (
     adaptation_phase_shifter as adaptation_phase_shifter,
     get_boundary_vp as get_boundary_vp,

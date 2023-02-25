@@ -1,5 +1,3 @@
-from _typeshed import Incomplete
-
 import pandas as pd
 from pandapower.auxiliary import pandapowerNet
 

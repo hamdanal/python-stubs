@@ -1,6 +1,5 @@
 import abc
 from abc import abstractmethod
-from typing import Optional
 
 from psqlextra.backend.schema import PostgresSchemaEditor
 from psqlextra.models import PostgresPartitionedModel

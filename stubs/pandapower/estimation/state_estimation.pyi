@@ -32,7 +32,6 @@ def chi2_analysis(
 ): ...
 
 class StateEstimation:
-
     net: Incomplete
     solver: Incomplete
     ppc: Incomplete

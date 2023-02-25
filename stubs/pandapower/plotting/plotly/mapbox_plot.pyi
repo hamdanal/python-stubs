@@ -1,5 +1,3 @@
-from _typeshed import Incomplete
-
 from pandapower.auxiliary import ppException
 
 class MapboxTokenMissing(ppException): ...

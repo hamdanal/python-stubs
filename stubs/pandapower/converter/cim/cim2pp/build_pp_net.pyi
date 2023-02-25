@@ -7,7 +7,6 @@ from .. import cim_classes as cim_classes
 sc: Incomplete
 
 class CimConverter:
-
     cim_parser: Incomplete
     kwargs: Incomplete
     cim: Incomplete

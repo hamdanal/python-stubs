@@ -1,5 +1,3 @@
-from typing import Optional
-
 from dateutil.relativedelta import relativedelta as relativedelta
 from psqlextra.models import PostgresPartitionedModel
 

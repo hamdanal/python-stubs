@@ -1,5 +1,3 @@
-from _typeshed import Incomplete
-
 from pandapower.grid_equivalents.auxiliary import drop_internal_branch_elements as drop_internal_branch_elements
 
 def getFromDict(dict_, keys): ...

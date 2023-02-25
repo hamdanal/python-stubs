@@ -1,6 +1,5 @@
 from _typeshed import Incomplete
 from datetime import datetime
-from typing import Optional
 
 from dateutil.relativedelta import relativedelta as relativedelta
 

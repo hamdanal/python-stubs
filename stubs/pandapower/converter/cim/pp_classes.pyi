@@ -3,7 +3,6 @@ from _typeshed import Incomplete
 import pandapower.auxiliary
 
 class PandapowerDiagnostic:
-
     net: Incomplete
     diagnostic: Incomplete
     def __init__(self, net: pandapower.auxiliary.pandapowerNet, diagnostic: dict = ...) -> None: ...

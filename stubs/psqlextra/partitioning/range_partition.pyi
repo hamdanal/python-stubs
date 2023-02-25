@@ -1,6 +1,6 @@
 import abc
 from _typeshed import Incomplete
-from typing import Any, Optional
+from typing import Any
 
 from psqlextra.backend.schema import PostgresSchemaEditor
 from psqlextra.models import PostgresPartitionedModel
