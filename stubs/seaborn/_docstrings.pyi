@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+from .external.docscrape import NumpyDocString as NumpyDocString
+
+class DocstringComponents:
+    regexp: Incomplete
+    entries: Incomplete
+    def __init__(self, comp_dict, strip_whitespace: bool = ...) -> None: ...
+    def __getattr__(self, attr): ...
+    @classmethod
+    def from_nested_components(cls, **kwargs): ...
+    @classmethod
+    def from_function_params(cls, func): ...

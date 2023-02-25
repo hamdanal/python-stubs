@@ -15,6 +15,8 @@ repos:
     hooks:
       - id: pycln
         args: [--config=pyproject.toml, stubs]
+        types: [file]
+        types_or: [python, pyi]
   - repo: https://github.com/psf/black
     rev: 23.1.0 # must match requirements-tests.txt
     hooks:
