@@ -3,7 +3,6 @@ from _typeshed import Incomplete
 import pandas as pd
 
 class CimParser:
-
     cim: Incomplete
     def __init__(self, cim: dict[str, dict[str, pd.DataFrame]] = ...) -> None: ...
     def parse_files(
@@ -14,7 +13,7 @@ class CimParser:
         sv_file: str = ...,
         eq_bd_file: str = ...,
         tp_bd_file: str = ...,
-        file_list: None = ...,
+        file_list: None = None,
         encoding: str = ...,
         prepare_cim_net: bool = ...,
         set_data_types: bool = ...,

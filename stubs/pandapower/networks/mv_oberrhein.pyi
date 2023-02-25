@@ -9,7 +9,7 @@ def mv_oberrhein(
     cosphi_load: float = 0.98,
     cosphi_pv: float = 1,
     include_substations: bool = False,
-    separation_by_sub: Literal[True] = ...,
+    separation_by_sub: Literal[True] = True,
     **kwargs: Incomplete,
 ) -> tuple[pandapowerNet, pandapowerNet]: ...
 @overload
