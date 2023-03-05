@@ -1,12 +1,11 @@
 from collections.abc import Iterable, Sequence
 from typing import Literal, TypeVar
-from typing_extensions import Self, TypeAlias
+from typing_extensions import Self
 
+from matplotlib._typing import Color
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 
 _T = TypeVar("_T")
-
-_Color: TypeAlias = tuple[float, float, float] | str
 
 SEABORN_PALETTES: dict[str, list[str]]
 MPL_QUAL_PALS: dict[str, int]
@@ -34,10 +33,10 @@ def mpl_palette(
     name: str, n_colors: int = 6, as_cmap: bool = False
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def dark_palette(
-    color: _Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
+    color: Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def light_palette(
-    color: _Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
+    color: Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def diverging_palette(
     h_neg: float,
@@ -50,7 +49,7 @@ def diverging_palette(
     as_cmap: bool = False,
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def blend_palette(
-    colors: Iterable[_Color], n_colors: int = 6, as_cmap: bool = False, input: str = "rgb"
+    colors: Iterable[Color], n_colors: int = 6, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def xkcd_palette(colors: Iterable[str]) -> _ColorPalette[tuple[float, float, float]]: ...
 def crayon_palette(colors: Iterable[str]) -> _ColorPalette[tuple[float, float, float]]: ...
