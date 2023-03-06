@@ -1,17 +1,21 @@
-from _typeshed import Incomplete
+from typing import Literal
+
+from pandapower.auxiliary import pandapowerNet
+from pandapower.plotting.plotly.traces import _MapStyle
+from plotly.graph_objs import Figure
 
 def vlevel_plotly(
-    net,
-    respect_switches: bool = ...,
-    use_line_geodata: Incomplete | None = ...,
-    colors_dict: Incomplete | None = ...,
-    on_map: bool = ...,
-    projection: Incomplete | None = ...,
-    map_style: str = ...,
-    figsize: int = ...,
-    aspectratio: str = ...,
-    line_width: int = ...,
-    bus_size: int = ...,
-    filename: str = ...,
-    auto_open: bool = ...,
-): ...
+    net: pandapowerNet,
+    respect_switches: bool = True,
+    use_line_geodata: bool | None = None,
+    colors_dict: dict | None = None,
+    on_map: bool = False,
+    projection: str | None = None,
+    map_style: _MapStyle = "basic",
+    figsize: float = 1,
+    aspectratio: tuple[float, float] | Literal["auto"] = "auto",
+    line_width: float = 2,
+    bus_size: float = 10,
+    filename: str = "temp-plot.html",
+    auto_open: bool = True,
+) -> Figure: ...

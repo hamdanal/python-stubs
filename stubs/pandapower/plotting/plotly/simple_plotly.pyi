@@ -1,27 +1,43 @@
 from _typeshed import Incomplete
+from collections.abc import Iterable
+from typing import Literal, overload
 
+import pandas as pd
+from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
+from pandapower.plotting.plotly.traces import _MapStyle
+from plotly.graph_objs import Figure
 
-def get_hoverinfo(net, element, precision: int = ..., sub_index: Incomplete | None = ...): ...
+@overload
+def get_hoverinfo(
+    net: pandapowerNet,
+    element: Literal["bus", "line", "trafo", "trafo3w", "ext_grid"],
+    precision: int = 3,
+    sub_index: Iterable[int] | None = None,
+) -> pd.Series: ...
+@overload
+def get_hoverinfo(
+    net: pandapowerNet, element: str, precision: int = 3, sub_index: Iterable[int] | None = None
+) -> pd.Series | None: ...
 def simple_plotly(
-    net,
-    respect_switches: bool = ...,
-    use_line_geodata: Incomplete | None = ...,
-    on_map: bool = ...,
-    projection: Incomplete | None = ...,
-    map_style: str = ...,
-    figsize: int = ...,
-    aspectratio: str = ...,
-    line_width: int = ...,
-    bus_size: int = ...,
-    ext_grid_size: float = ...,
-    bus_color: str = ...,
-    line_color: str = ...,
-    trafo_color: str = ...,
-    trafo3w_color: str = ...,
-    ext_grid_color: str = ...,
-    filename: str = ...,
-    auto_open: bool = ...,
-    showlegend: bool = ...,
-    additional_traces: Incomplete | None = ...,
-): ...
+    net: pandapowerNet,
+    respect_switches: bool = True,
+    use_line_geodata: bool | None = None,
+    on_map: bool = False,
+    projection: str | None = None,
+    map_style: _MapStyle = "basic",
+    figsize: float = 1,
+    aspectratio: tuple[float, float] | Literal["auto"] = "auto",
+    line_width: float = 1,
+    bus_size: float = 10,
+    ext_grid_size: float = 20.0,
+    bus_color: str = "blue",
+    line_color: str = "grey",
+    trafo_color: str = "green",
+    trafo3w_color: str = "green",
+    ext_grid_color: str = "yellow",
+    filename: str = "temp-plot.html",
+    auto_open: bool = True,
+    showlegend: bool = True,
+    additional_traces: Incomplete | None = None,
+) -> Figure: ...
