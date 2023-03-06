@@ -1,31 +1,35 @@
 from _typeshed import Incomplete
+from collections.abc import Sequence
+
+import pandas as pd
+from matplotlib.axes import Axes
+from pandapower.auxiliary import pandapowerNet
 
 MATPLOTLIB_INSTALLED: bool
 
 def plot_voltage_profile(
-    net,
-    ax: Incomplete | None = ...,
-    plot_transformers: bool = ...,
+    net: pandapowerNet,
+    ax: Axes | None = None,
+    plot_transformers: bool = True,
     xlabel: str = ...,
     ylabel: str = ...,
-    x0: int = ...,
-    line_color: str = ...,
-    trafo_color: str = ...,
-    bus_colors: str = ...,
-    line_loading_weight: bool = ...,
-    voltage_column: Incomplete | None = ...,
-    bus_size: int = ...,
-    lines: Incomplete | None = ...,
-    **kwargs,
-): ...
+    x0: int = 0,
+    line_color: str = "grey",
+    trafo_color: str = "r",
+    bus_colors: str = "b",
+    line_loading_weight: bool = False,
+    bus_size: int = 3,
+    lines: Sequence[int] | pd.Index | None = None,
+    **kwargs: Incomplete,
+) -> Axes: ...
 def plot_loading(
-    net,
-    ax: Incomplete | None = ...,
-    element_type: str = ...,
-    box_color: str = ...,
-    median_color: str = ...,
-    whisker_color: str = ...,
-    index_subset: Incomplete | None = ...,
-    **kwargs,
-): ...
-def voltage_profile_to_bus_geodata(net, voltages: Incomplete | None = ...): ...
+    net: pandapowerNet,
+    ax: Axes | None = None,
+    element_type: str = "line",
+    box_color: str = "b",
+    median_color: str = "r",
+    whisker_color: str = "k",
+    index_subset: Sequence[int] | pd.Index | None = None,
+    **kwargs: Incomplete,
+) -> Axes: ...
+def voltage_profile_to_bus_geodata(net: pandapowerNet, voltages: pd.Series[float] | None = None) -> pd.DataFrame: ...

@@ -1,14 +1,19 @@
-from _typeshed import Incomplete
+from pandapower.auxiliary import pandapowerNet
 
 def to_html(
-    net, filename, respect_switches: bool = ..., include_lines: bool = ..., include_trafos: bool = ..., show_tables: bool = ...
+    net: pandapowerNet,
+    filename: str,
+    respect_switches: bool = True,
+    include_lines: bool = True,
+    include_trafos: bool = True,
+    show_tables: bool = True,
 ) -> None: ...
 
 class Raw:
-    html: Incomplete
-    def __init__(self, html) -> None: ...
+    html: str
+    def __init__(self, html: str) -> None: ...
 
 class Tag:
-    name: Incomplete
-    def __init__(self, name) -> None: ...
-    def __call__(self, *args, **kwargs): ...
+    name: str
+    def __init__(self, name: str) -> None: ...
+    def __call__(self, *args: object, **kwargs: object) -> Raw: ...
