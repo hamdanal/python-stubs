@@ -7,9 +7,9 @@ class mac_unix_common(netaddr.mac_eui48):
     word_fmt: ClassVar[str]
 
 class mac_eui64:
-    word_size: Literal[8]
-    num_words: int
-    max_word: int
-    word_sep: Literal[":"]
-    word_fmt: Literal["%.2x"]
-    word_base: Literal[16]
+    word_size: ClassVar[Literal[8]]
+    num_words: ClassVar[int]
+    max_word: ClassVar[int]
+    word_sep: ClassVar[Literal[":"]]
+    word_fmt: ClassVar[Literal["%.2x"]]
+    word_base: ClassVar[Literal[16]]

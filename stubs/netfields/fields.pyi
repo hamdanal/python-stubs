@@ -8,6 +8,9 @@ from netaddr import EUI
 
 _N = TypeVar("_N", bound=IPv4Network | IPv6Network | None)
 
+NET_OPERATORS: dict[str, str]
+NET_TEXT_OPERATORS: list[str]
+
 class CidrAddressField(Generic[_N], Field[_N | Combinable, _N]):
     @overload
     def __new__(
