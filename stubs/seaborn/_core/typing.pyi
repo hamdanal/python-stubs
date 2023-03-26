@@ -1,4 +1,3 @@
-from _typeshed import Incomplete
 from collections.abc import Hashable, Iterable, Mapping
 from datetime import date, datetime, timedelta
 from typing import Any
@@ -21,4 +20,4 @@ ContinuousValueSpec: TypeAlias = tuple[float, float] | list[float] | dict[Any, f
 
 class Default: ...
 
-default: Incomplete
+default: Default
