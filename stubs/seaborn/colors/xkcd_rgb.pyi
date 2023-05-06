@@ -1,3 +1,1 @@
-from _typeshed import Incomplete
-
-xkcd_rgb: Incomplete
+xkcd_rgb: dict[str, str]

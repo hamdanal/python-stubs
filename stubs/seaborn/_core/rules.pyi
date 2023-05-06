@@ -3,7 +3,6 @@ from collections import UserString
 from typing import Literal
 
 from pandas import Series as Series
-from seaborn.external.version import Version as Version
 
 class VarType(UserString):
     allowed: Incomplete

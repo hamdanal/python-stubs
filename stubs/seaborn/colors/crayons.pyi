@@ -1,3 +1,1 @@
-from _typeshed import Incomplete
-
-crayons: Incomplete
+crayons: dict[str, str]
