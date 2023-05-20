@@ -30,9 +30,9 @@ class Grid(_BaseGrid):
     def tight_layout(self, *args: Incomplete, **kwargs: Incomplete) -> Self: ...
     def add_legend(
         self,
-        legend_data: Mapping[str | tuple[Incomplete, str], Artist] | None = ...,
-        title: str | None = ...,
-        label_order: list[str] | None = ...,
+        legend_data: Mapping[str | tuple[Incomplete, str], Artist] | None = None,
+        title: str | None = None,
+        label_order: list[str] | None = None,
         adjust_subtitles: bool = False,
         **kwargs: Incomplete,
     ) -> Self: ...
