@@ -1,9 +1,24 @@
 from collections.abc import Iterable, Sequence
-from typing import Literal, TypeVar
-from typing_extensions import Self
+from typing import TypeVar
+from typing_extensions import Literal, Self
 
-from matplotlib._typing import Color
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
+from matplotlib.typing import ColorType
+
+__all__ = [
+    "color_palette",
+    "hls_palette",
+    "husl_palette",
+    "mpl_palette",
+    "dark_palette",
+    "light_palette",
+    "diverging_palette",
+    "blend_palette",
+    "xkcd_palette",
+    "crayon_palette",
+    "cubehelix_palette",
+    "set_color_codes",
+]
 
 _T = TypeVar("_T")
 
@@ -33,10 +48,10 @@ def mpl_palette(
     name: str, n_colors: int = 6, as_cmap: bool = False
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def dark_palette(
-    color: Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
+    color: ColorType, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def light_palette(
-    color: Color, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
+    color: ColorType, n_colors: int = 6, reverse: bool = False, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def diverging_palette(
     h_neg: float,
@@ -49,7 +64,7 @@ def diverging_palette(
     as_cmap: bool = False,
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def blend_palette(
-    colors: Iterable[Color], n_colors: int = 6, as_cmap: bool = False, input: str = "rgb"
+    colors: Iterable[ColorType], n_colors: int = 6, as_cmap: bool = False, input: str = "rgb"
 ) -> _ColorPalette[tuple[float, float, float]] | LinearSegmentedColormap: ...
 def xkcd_palette(colors: Iterable[str]) -> _ColorPalette[tuple[float, float, float]]: ...
 def crayon_palette(colors: Iterable[str]) -> _ColorPalette[tuple[float, float, float]]: ...

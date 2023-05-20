@@ -1,22 +1,17 @@
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, TypeVar
 from typing_extensions import TypeAlias
 
-from matplotlib.artist import Artist as Artist
 from numpy import ndarray
-from pandas import DataFrame as DataFrame
-from seaborn._core.exceptions import PlotSpecError as PlotSpecError
-from seaborn._core.properties import (
-    PROPERTIES as PROPERTIES,
-    DashPattern as DashPattern,
-    DashPatternWithOffset as DashPatternWithOffset,
-    Property as Property,
-    RGBATuple as RGBATuple,
-)
-from seaborn._core.scales import Scale as Scale
+from pandas import DataFrame
+from seaborn._core.properties import DashPattern, DashPatternWithOffset, RGBATuple
+from seaborn._core.scales import Scale
+
+_MarkT = TypeVar("_MarkT", bound=type[Mark])
 
 class Mappable:
     def __init__(
-        self, val: Any = ..., depend: str | None = ..., rc: str | None = ..., auto: bool = ..., grouping: bool = ...
+        self, val: Any = None, depend: str | None = None, rc: str | None = None, auto: bool = False, grouping: bool = True
     ) -> None: ...
     @property
     def depend(self) -> Any: ...
@@ -31,12 +26,12 @@ MappableFloat: TypeAlias = float | Mappable
 MappableColor: TypeAlias = str | tuple | Mappable
 MappableStyle: TypeAlias = str | DashPattern | DashPatternWithOffset | Mappable
 
+@dataclass
 class Mark:
-    artist_kws: dict
-    def __init__(self, artist_kws) -> None: ...
+    artist_kws: dict = ...
 
 def resolve_properties(mark: Mark, data: DataFrame, scales: dict[str, Scale]) -> dict[str, Any]: ...
 def resolve_color(
-    mark: Mark, data: DataFrame | dict, prefix: str = ..., scales: dict[str, Scale] | None = ...
+    mark: Mark, data: DataFrame | dict, prefix: str = "", scales: dict[str, Scale] | None = None
 ) -> RGBATuple | ndarray: ...
-def document_properties(mark): ...
+def document_properties(mark: _MarkT) -> _MarkT: ...

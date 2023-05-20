@@ -1,6 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable as Callable, Generator
-from typing import Any, TypedDict
+from typing import Any
+from typing_extensions import TypedDict
 
 from matplotlib.artist import Artist as Artist
 from matplotlib.axes import Axes as Axes

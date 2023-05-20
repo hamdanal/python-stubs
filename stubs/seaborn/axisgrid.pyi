@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Generator, Iterable, Mapping
-from typing import Literal, Protocol, TypeVar
-from typing_extensions import Concatenate, ParamSpec, Self
+from typing import Protocol, TypeVar
+from typing_extensions import Concatenate, Literal, ParamSpec, Self
 
 from matplotlib.artist import Artist
 from matplotlib.axes import Axes
@@ -9,6 +9,8 @@ from matplotlib.figure import Figure
 from matplotlib.legend import Legend
 from numpy.typing import NDArray
 from pandas import DataFrame, Series
+
+__all__ = ["FacetGrid", "PairGrid", "JointGrid", "pairplot", "jointplot"]
 
 _P = ParamSpec("_P")
 _R = TypeVar("_R")
@@ -98,7 +100,7 @@ class FacetGrid(Grid):
         **line_kws: Incomplete,
     ) -> Self: ...
     @property
-    def axes(self) -> NDArray[Axes]: ...
+    def axes(self) -> NDArray[Incomplete]: ...  # array of `Axes`
     @property
     def ax(self) -> Axes: ...
     @property
@@ -119,11 +121,11 @@ class PairGrid(Grid):
     x_vars: list[str]
     y_vars: list[str]
     square_grid: bool
-    axes: NDArray[Axes]  # two-dimensional array of Axes
+    axes: NDArray[Incomplete]  # two-dimensional array of `Axes`
     data: DataFrame
     diag_sharey: bool
-    diag_vars: NDArray[str] | None
-    diag_axes: NDArray[Axes] | None
+    diag_vars: NDArray[Incomplete] | None  # array of `str`
+    diag_axes: NDArray[Incomplete] | None  # array of `Axes`
     hue_names: list[str]
     hue_vals: Series[Incomplete]
     hue_kws: dict[str, Incomplete]

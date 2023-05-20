@@ -1,42 +1,39 @@
-from matplotlib.artist import Artist as Artist
-from seaborn._core.scales import Scale as Scale
+from dataclasses import dataclass
+
 from seaborn._marks.base import (
-    Mappable as Mappable,
-    MappableBool as MappableBool,
-    MappableColor as MappableColor,
-    MappableFloat as MappableFloat,
-    MappableString as MappableString,
-    MappableStyle as MappableStyle,
-    Mark as Mark,
-    document_properties as document_properties,
-    resolve_color as resolve_color,
-    resolve_properties as resolve_properties,
+    MappableBool,
+    MappableColor,
+    MappableFloat,
+    MappableString,
+    MappableStyle,
+    Mark,
+    document_properties,
 )
 
 class DotBase(Mark): ...
 
+@document_properties
+@dataclass
 class Dot(DotBase):
-    marker: MappableString
-    pointsize: MappableFloat
-    stroke: MappableFloat
-    color: MappableColor
-    alpha: MappableFloat
-    fill: MappableBool
-    edgecolor: MappableColor
-    edgealpha: MappableFloat
-    edgewidth: MappableFloat
-    edgestyle: MappableStyle
-    def __init__(
-        self, artist_kws, marker, pointsize, stroke, color, alpha, fill, edgecolor, edgealpha, edgewidth, edgestyle
-    ) -> None: ...
+    marker: MappableString = ...
+    pointsize: MappableFloat = ...
+    stroke: MappableFloat = ...
+    color: MappableColor = ...
+    alpha: MappableFloat = ...
+    fill: MappableBool = ...
+    edgecolor: MappableColor = ...
+    edgealpha: MappableFloat = ...
+    edgewidth: MappableFloat = ...
+    edgestyle: MappableStyle = ...
 
+@document_properties
+@dataclass
 class Dots(DotBase):
-    marker: MappableString
-    pointsize: MappableFloat
-    stroke: MappableFloat
-    color: MappableColor
-    alpha: MappableFloat
-    fill: MappableBool
-    fillcolor: MappableColor
-    fillalpha: MappableFloat
-    def __init__(self, artist_kws, marker, pointsize, stroke, color, alpha, fill, fillcolor, fillalpha) -> None: ...
+    marker: MappableString = ...
+    pointsize: MappableFloat = ...
+    stroke: MappableFloat = ...
+    color: MappableColor = ...
+    alpha: MappableFloat = ...
+    fill: MappableBool = ...
+    fillcolor: MappableColor = ...
+    fillalpha: MappableFloat = ...

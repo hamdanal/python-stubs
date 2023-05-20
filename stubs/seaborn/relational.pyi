@@ -2,6 +2,8 @@ from _typeshed import Incomplete
 
 from ._oldcore import VectorPlotter
 
+__all__ = ["relplot", "scatterplot", "lineplot"]
+
 class _RelationalPlotter(VectorPlotter):
     wide_structure: Incomplete
     sort: bool

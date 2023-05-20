@@ -1,6 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Iterable, Iterator, Mapping, MutableSequence
-from typing import Any, ClassVar, NamedTuple, SupportsIndex, TypeVar, overload
+from typing import Any, ClassVar, NamedTuple, TypeVar, overload
+from typing_extensions import SupportsIndex
 
 _S = TypeVar("_S", bound=MutableSequence[str])
 
@@ -9,9 +10,9 @@ def strip_blank_lines(l: _S) -> _S: ...
 class Reader:
     def __init__(self, data: str | list[str]) -> None: ...
     @overload
-    def __getitem__(self, n: SupportsIndex) -> str: ...
-    @overload
     def __getitem__(self, n: slice) -> list[str]: ...
+    @overload
+    def __getitem__(self, n: SupportsIndex) -> str: ...
     def reset(self) -> None: ...
     def read(self) -> str: ...
     def seek_next_non_empty_line(self) -> None: ...
@@ -49,9 +50,14 @@ class FunctionDoc(NumpyDocString):
 class ClassDoc(NumpyDocString):
     extra_public_methods: list[str]
     show_inherited_members: bool
+    @overload
+    def __init__(
+        self, cls: None, doc: str, modulename: str = "", func_doc: type[FunctionDoc] = ..., config: Mapping[str, Any] = {}
+    ) -> None: ...
+    @overload
     def __init__(
         self,
-        cls: type | None,
+        cls: type,
         doc: str | None = None,
         modulename: str = "",
         func_doc: type[FunctionDoc] = ...,

@@ -1,6 +1,9 @@
 from _typeshed import Incomplete
 
+from seaborn.axisgrid import FacetGrid
 from seaborn.relational import _RelationalPlotter
+
+__all__ = ["catplot", "stripplot", "swarmplot", "boxplot", "violinplot", "boxenplot", "pointplot", "barplot", "countplot"]
 
 class _CategoricalPlotterNew(_RelationalPlotter):
     semantics: Incomplete
@@ -465,7 +468,7 @@ def catplot(
     facet_kws: Incomplete | None = ...,
     ci: str = ...,
     **kwargs,
-): ...
+) -> FacetGrid: ...
 
 class Beeswarm:
     orient: Incomplete

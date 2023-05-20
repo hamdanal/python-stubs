@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, ClassVar
 from typing_extensions import Self, TypeAlias
 
 from matplotlib.axis import Axis as Axis, Ticker
@@ -19,7 +19,7 @@ TransFuncs: TypeAlias = tuple[Callable[[ArrayLike], ArrayLike], Callable[[ArrayL
 Pipeline: TypeAlias = Sequence[Callable[[Any], Any] | None]
 
 class Scale:
-    values: tuple | str | list | dict | None = None
+    values: tuple | str | list | dict | None
     def __post_init__(self) -> None: ...
     def tick(self) -> None: ...
     def label(self) -> None: ...
@@ -27,16 +27,16 @@ class Scale:
 
 @dataclass
 class Boolean(Scale):
-    values: tuple | list | dict | None
-    def tick(self, locator: Locator | None = None) -> Self: ...
-    def label(self, formatter: Formatter | None = None) -> Self: ...
+    values: tuple | list | dict | None = ...  # None # pytype parse error
+    def tick(self, locator: Locator | None = None) -> Self: ...  # type: ignore[override]
+    def label(self, formatter: Formatter | None = None) -> Self: ...  # type: ignore[override]
 
 @dataclass
 class Nominal(Scale):
-    values: tuple | str | list | dict | None = None
-    order: list | None = None
-    def tick(self, locator: Locator | None = None) -> Self: ...
-    def label(self, formatter: Formatter | None = None) -> Self: ...
+    values: tuple | str | list | dict | None = ...  # None # pytype parse error
+    order: list | None = ...  # None # pytype parse error
+    def tick(self, locator: Locator | None = None) -> Self: ...  # type: ignore[override]
+    def label(self, formatter: Formatter | None = None) -> Self: ...  # type: ignore[override]
 
 @dataclass
 class Ordinal(Scale): ...
@@ -46,14 +46,14 @@ class Discrete(Scale): ...
 
 @dataclass
 class ContinuousBase(Scale):
-    values: tuple | str | None = None
-    norm: tuple | None = None
+    values: tuple | str | None = ...  # None # pytype parse error
+    norm: tuple | None = ...  # None # pytype parse error
 
 @dataclass
 class Continuous(ContinuousBase):
-    values: tuple | str | None = None
-    trans: str | TransFuncs | None = None
-    def tick(
+    values: tuple | str | None = ...  # None # pytype parse error
+    trans: str | TransFuncs | None = ...  # None # pytype parse error
+    def tick(  # type: ignore[override]
         self,
         locator: Locator | None = None,
         *,
@@ -64,7 +64,7 @@ class Continuous(ContinuousBase):
         between: tuple[float, float] | None = None,
         minor: int | None = None,
     ) -> Self: ...
-    def label(
+    def label(  # type: ignore[override]
         self,
         formatter: Formatter | None = None,
         *,
@@ -75,10 +75,9 @@ class Continuous(ContinuousBase):
 
 @dataclass
 class Temporal(ContinuousBase):
-    trans: Incomplete
-    def tick(self, locator: Locator | None = None, *, upto: int | None = None) -> Self: ...
-    def label(self, formatter: Formatter | None = None, *, concise: bool = False) -> Self: ...
-    def __init__(self, values, norm) -> None: ...
+    trans: ClassVar[Incomplete]  # not sure if this is a classvar but dataclass machinery is corrupted otherwise
+    def tick(self, locator: Locator | None = None, *, upto: int | None = None) -> Self: ...  # type: ignore[override]
+    def label(self, formatter: Formatter | None = None, *, concise: bool = False) -> Self: ...  # type: ignore[override]
 
 class PseudoAxis:
     axis_name: str

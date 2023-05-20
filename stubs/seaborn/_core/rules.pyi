@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 from collections import UserString
-from typing import Literal
+from typing_extensions import Literal
 
 from pandas import Series as Series
 

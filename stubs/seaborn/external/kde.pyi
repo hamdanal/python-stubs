@@ -1,10 +1,11 @@
 from collections.abc import Callable
 from numbers import Number
-from typing import Literal
-from typing_extensions import TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from numpy import float64
 from numpy.typing import ArrayLike, NDArray
+
+__all__ = ["gaussian_kde"]
 
 _BwMethodType: TypeAlias = Literal["scott", "silverman"] | Callable[[gaussian_kde], object] | Number | bool | None
 

@@ -1,24 +1,19 @@
-from typing import ClassVar
+from dataclasses import dataclass
 
-from numpy.typing import ArrayLike as ArrayLike
-from pandas import DataFrame as DataFrame
-from seaborn._core.groupby import GroupBy as GroupBy
-from seaborn._core.scales import Scale as Scale
-from seaborn._stats.base import Stat as Stat
+from numpy.typing import ArrayLike
+from seaborn._stats.base import Stat
 
-class Count(Stat):
-    group_by_orient: ClassVar[bool]
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
+@dataclass
+class Count(Stat): ...
 
+@dataclass
 class Hist(Stat):
-    stat: str
-    bins: str | int | ArrayLike
-    binwidth: float | None
-    binrange: tuple[float, float] | None
-    common_norm: bool | list[str]
-    common_bins: bool | list[str]
-    cumulative: bool
-    discrete: bool
+    stat: str = "count"
+    bins: str | int | ArrayLike = "auto"
+    binwidth: float | None = ...  # None # pytype parse error
+    binrange: tuple[float, float] | None = ...  # None # pytype parse error
+    common_norm: bool | list[str] = True
+    common_bins: bool | list[str] = True
+    cumulative: bool = False
+    discrete: bool = False
     def __post_init__(self) -> None: ...
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
-    def __init__(self, stat, bins, binwidth, binrange, common_norm, common_bins, cumulative, discrete) -> None: ...

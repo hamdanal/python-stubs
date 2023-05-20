@@ -1,47 +1,43 @@
-from _typeshed import Incomplete
 from collections.abc import Callable
+from dataclasses import dataclass
 from typing import ClassVar
 
-from pandas import DataFrame as DataFrame
-from seaborn._core.groupby import GroupBy as GroupBy
-from seaborn._core.scales import Scale as Scale
-from seaborn._core.typing import Default as Default
+from pandas import DataFrame
+from seaborn._core.groupby import GroupBy
+from seaborn._core.scales import Scale
+from seaborn._core.typing import Default
 
-default: Incomplete
+default: Default
 
+@dataclass
 class Move:
     group_by_orient: ClassVar[bool]
     def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
 
+@dataclass
 class Jitter(Move):
-    width: float | Default
-    x: float
-    y: float
-    seed: int | None
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
-    def __init__(self, width, x, y, seed) -> None: ...
+    width: float | Default = ...
+    x: float = 0
+    y: float = 0
+    seed: int | None = ...  # None # pytype parse error
 
+@dataclass
 class Dodge(Move):
-    empty: str
-    gap: float
-    by: list[str] | None
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
-    def __init__(self, empty, gap, by) -> None: ...
+    empty: str = "keep"
+    gap: float = 0
+    by: list[str] | None = ...  # None # pytype parse error
 
-class Stack(Move):
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
+@dataclass
+class Stack(Move): ...
 
+@dataclass
 class Shift(Move):
-    x: float
-    y: float
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
-    def __init__(self, x, y) -> None: ...
+    x: float = 0
+    y: float = 0
 
+@dataclass
 class Norm(Move):
-    func: Callable | str
-    where: str | None
-    by: list[str] | None
-    percent: bool
-    group_by_orient: ClassVar[bool]
-    def __call__(self, data: DataFrame, groupby: GroupBy, orient: str, scales: dict[str, Scale]) -> DataFrame: ...
-    def __init__(self, func, where, by, percent) -> None: ...
+    func: Callable | str = "max"
+    where: str | None = ...  # None # pytype parse error
+    by: list[str] | None = ...  # None # pytype parse error
+    percent: bool = False

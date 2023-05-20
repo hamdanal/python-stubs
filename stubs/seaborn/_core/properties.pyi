@@ -3,20 +3,11 @@ from collections.abc import Callable
 from typing import Any
 from typing_extensions import TypeAlias
 
+from matplotlib.markers import MarkerStyle
 from matplotlib.path import Path
 from numpy.typing import ArrayLike
-from pandas import Series as Series
-from seaborn._compat import MarkerStyle as MarkerStyle
-from seaborn._core.rules import categorical_order as categorical_order, variable_type as variable_type
-from seaborn._core.scales import (
-    Boolean as Boolean,
-    Continuous as Continuous,
-    Nominal as Nominal,
-    Scale as Scale,
-    Temporal as Temporal,
-)
-from seaborn.palettes import QUAL_PALETTES as QUAL_PALETTES, blend_palette as blend_palette, color_palette as color_palette
-from seaborn.utils import get_color_cycle as get_color_cycle
+from pandas import Series
+from seaborn._core.scales import Scale
 
 RGBTuple: TypeAlias = tuple[float, float, float]
 RGBATuple: TypeAlias = tuple[float, float, float, float]
@@ -103,5 +94,5 @@ class Fill(Property):
     def standardize(self, val: Any) -> bool: ...
     def get_mapping(self, scale: Scale, data: Series) -> Mapping: ...
 
-PROPERTY_CLASSES: Incomplete
-PROPERTIES: Incomplete
+PROPERTY_CLASSES: dict[str, type[Property]]
+PROPERTIES: dict[str, Property]

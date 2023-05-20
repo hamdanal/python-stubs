@@ -2,6 +2,8 @@ from _typeshed import Incomplete
 
 from ._oldcore import VectorPlotter
 
+__all__ = ["displot", "histplot", "kdeplot", "ecdfplot", "rugplot", "distplot"]
+
 class _DistributionPlotter(VectorPlotter):
     semantics: Incomplete
     wide_structure: Incomplete
