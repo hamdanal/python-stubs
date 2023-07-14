@@ -1,6 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable as Callable, Generator
-from typing import Any
+from contextlib import contextmanager
+from typing import Any, TypeVar
 from typing_extensions import TypedDict
 
 from matplotlib.artist import Artist as Artist
@@ -29,9 +30,11 @@ from seaborn.external.version import Version as Version
 from seaborn.palettes import color_palette as color_palette
 from seaborn.rcmod import axes_style as axes_style, plotting_context as plotting_context
 
-default: Incomplete
+_ClsT = TypeVar("_ClsT", bound=type)
 
-class Layer(TypedDict):
+default: Default
+
+class Layer(TypedDict, total=False):
     mark: Mark
     stat: Stat | None
     move: Move | list[Move] | None
@@ -41,20 +44,21 @@ class Layer(TypedDict):
     orient: str
     legend: bool
 
-class FacetSpec(TypedDict):
+class FacetSpec(TypedDict, total=False):
     variables: dict[str, VariableSpec]
     structure: dict[str, list[str]]
     wrap: int | None
 
-class PairSpec(TypedDict):
+class PairSpec(TypedDict, total=False):
     variables: dict[str, VariableSpec]
     structure: dict[str, list[str]]
     cross: bool
     wrap: int | None
 
-def theme_context(params: dict[str, Any]) -> Generator: ...
-def build_plot_signature(cls): ...
-
+@contextmanager
+def theme_context(params: dict[str, Any]) -> Generator[None, None, None]: ...
+def build_plot_signature(cls: _ClsT) -> _ClsT: ...
+@build_plot_signature
 class Plot:
     def __init__(self, *args: DataSource | VariableSpec, data: DataSource = None, **variables: VariableSpec) -> None: ...
     def __add__(self, other) -> None: ...

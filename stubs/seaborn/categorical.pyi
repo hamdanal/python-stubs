@@ -1,16 +1,20 @@
 from _typeshed import Incomplete
+from typing import TypeVar
+from typing_extensions import Literal
 
+import numpy as np
+from matplotlib.axes import Axes
 from seaborn.axisgrid import FacetGrid
 from seaborn.relational import _RelationalPlotter
 
+from .external.kde import gaussian_kde
+
 __all__ = ["catplot", "stripplot", "swarmplot", "boxplot", "violinplot", "boxenplot", "pointplot", "barplot", "countplot"]
 
+_T = TypeVar("_T")
+
 class _CategoricalPlotterNew(_RelationalPlotter):
-    semantics: Incomplete
-    wide_structure: Incomplete
-    flat_structure: Incomplete
-    plot_data: Incomplete
-    orient: Incomplete
+    orient: Literal["v", "h"]
     legend: Incomplete
     def __init__(
         self,
@@ -19,28 +23,27 @@ class _CategoricalPlotterNew(_RelationalPlotter):
         order: Incomplete | None = None,
         orient: Incomplete | None = None,
         require_numeric: bool = False,
-        legend: str = "auto",
+        legend: Incomplete = "auto",
     ) -> None: ...
     @property
-    def cat_axis(self): ...
+    def cat_axis(self) -> Literal["x", "y"]: ...
     def plot_strips(self, jitter, dodge, color, edgecolor, plot_kws) -> None: ...
     def plot_swarms(self, dodge, color, edgecolor, warn_thresh, plot_kws) -> None: ...
 
-class _CategoricalFacetPlotter(_CategoricalPlotterNew):
-    semantics: Incomplete
+class _CategoricalFacetPlotter(_CategoricalPlotterNew): ...
 
 class _CategoricalPlotter:
     width: float
     default_palette: str
     require_numeric: bool
-    orient: Incomplete
+    orient: Literal["v", "h"]
     plot_data: Incomplete
     group_label: Incomplete
     value_label: Incomplete
     group_names: Incomplete
-    plot_hues: Incomplete
+    plot_hues: list[Incomplete] | None
     hue_title: Incomplete
-    hue_names: Incomplete
+    hue_names: list[Incomplete] | None
     plot_units: Incomplete
     def establish_variables(
         self,
@@ -57,15 +60,14 @@ class _CategoricalPlotter:
     gray: Incomplete
     def establish_colors(self, color, palette, saturation) -> None: ...
     @property
-    def hue_offsets(self): ...
+    def hue_offsets(self) -> np.ndarray: ...
     @property
-    def nested_width(self): ...
-    def annotate_axes(self, ax) -> None: ...
-    def add_legend_data(self, ax, color, label) -> None: ...
+    def nested_width(self) -> float: ...
+    def annotate_axes(self, ax: Axes) -> None: ...
+    def add_legend_data(self, ax: Axes, color, label) -> None: ...
 
 class _BoxPlotter(_CategoricalPlotter):
     dodge: Incomplete
-    width: Incomplete
     fliersize: Incomplete
     linewidth: Incomplete
     def __init__(
@@ -77,7 +79,6 @@ class _BoxPlotter(_CategoricalPlotter):
 
 class _ViolinPlotter(_CategoricalPlotter):
     gridsize: Incomplete
-    width: Incomplete
     dodge: Incomplete
     inner: Incomplete
     split: Incomplete
@@ -96,7 +97,7 @@ class _ViolinPlotter(_CategoricalPlotter):
         scale_hue,
         gridsize,
         width,
-        inner,
+        inner: str | None,
         split,
         dodge,
         orient,
@@ -108,28 +109,28 @@ class _ViolinPlotter(_CategoricalPlotter):
     support: Incomplete
     density: Incomplete
     def estimate_densities(self, bw, cut, scale, scale_hue, gridsize) -> None: ...
-    def fit_kde(self, x, bw): ...
-    def kde_support(self, x, bw, cut, gridsize): ...
+    def fit_kde(self, x, bw) -> tuple[gaussian_kde, Incomplete]: ...
+    def kde_support(self, x, bw, cut, gridsize) -> np.ndarray: ...
     def scale_area(self, density, max_density, scale_hue) -> None: ...
     def scale_width(self, density) -> None: ...
     def scale_count(self, density, counts, scale_hue) -> None: ...
     @property
-    def dwidth(self): ...
-    def draw_violins(self, ax) -> None: ...
-    def draw_single_observation(self, ax, at_group, at_quant, density) -> None: ...
-    def draw_box_lines(self, ax, data, center) -> None: ...
-    def draw_quartiles(self, ax, data, support, density, center, split: bool = False) -> None: ...
-    def draw_points(self, ax, data, center) -> None: ...
-    def draw_stick_lines(self, ax, data, support, density, center, split: bool = False) -> None: ...
-    def draw_to_density(self, ax, center, val, support, density, split, **kws) -> None: ...
-    def plot(self, ax) -> None: ...
+    def dwidth(self) -> Incomplete: ...
+    def draw_violins(self, ax: Axes) -> None: ...
+    def draw_single_observation(self, ax: Axes, at_group, at_quant, density) -> None: ...
+    def draw_box_lines(self, ax: Axes, data, center) -> None: ...
+    def draw_quartiles(self, ax: Axes, data, support, density, center, split: bool = False) -> None: ...
+    def draw_points(self, ax: Axes, data, center) -> None: ...
+    def draw_stick_lines(self, ax: Axes, data, support, density, center, split: bool = False) -> None: ...
+    def draw_to_density(self, ax: Axes, center, val, support, density, split, **kws) -> None: ...
+    def plot(self, ax: Axes) -> None: ...
 
 class _CategoricalStatPlotter(_CategoricalPlotter):
     require_numeric: bool
+    statistic: np.ndarray
+    confint: np.ndarray
     @property
-    def nested_width(self): ...
-    statistic: Incomplete
-    confint: Incomplete
+    def nested_width(self) -> float: ...
     def estimate_statistic(self, estimator, errorbar, n_boot, seed) -> None: ...
     def draw_confints(
         self, ax, at_group, confint, colors, errwidth: Incomplete | None = None, capsize: Incomplete | None = None, **kws
@@ -137,7 +138,6 @@ class _CategoricalStatPlotter(_CategoricalPlotter):
 
 class _BarPlotter(_CategoricalStatPlotter):
     dodge: Incomplete
-    width: Incomplete
     errcolor: Incomplete
     errwidth: Incomplete
     capsize: Incomplete
@@ -204,7 +204,7 @@ class _PointPlotter(_CategoricalStatPlotter):
         label,
     ) -> None: ...
     @property
-    def hue_offsets(self): ...
+    def hue_offsets(self) -> np.ndarray: ...
     def draw_points(self, ax) -> None: ...
     def plot(self, ax) -> None: ...
 
@@ -261,12 +261,12 @@ def boxplot(
     saturation: float = 0.75,
     width: float = 0.8,
     dodge: bool = True,
-    fliersize: int = 5,
+    fliersize: float = 5,
     linewidth: Incomplete | None = None,
     whis: float = 1.5,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def violinplot(
     data: Incomplete | None = None,
     *,
@@ -289,9 +289,9 @@ def violinplot(
     color: Incomplete | None = None,
     palette: Incomplete | None = None,
     saturation: float = 0.75,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def boxenplot(
     data: Incomplete | None = None,
     *,
@@ -312,11 +312,11 @@ def boxenplot(
     outlier_prop: float = 0.007,
     trust_alpha: float = 0.05,
     showfliers: bool = True,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     box_kws: Incomplete | None = None,
     flier_kws: Incomplete | None = None,
     line_kws: Incomplete | None = None,
-): ...
+) -> Axes: ...
 def stripplot(
     data: Incomplete | None = None,
     *,
@@ -330,16 +330,16 @@ def stripplot(
     orient: Incomplete | None = None,
     color: Incomplete | None = None,
     palette: Incomplete | None = None,
-    size: int = 5,
+    size: float = 5,
     edgecolor: str = "gray",
-    linewidth: int = 0,
+    linewidth: float = 0,
     hue_norm: Incomplete | None = None,
     native_scale: bool = False,
     formatter: Incomplete | None = None,
     legend: str = "auto",
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def swarmplot(
     data: Incomplete | None = None,
     *,
@@ -352,17 +352,17 @@ def swarmplot(
     orient: Incomplete | None = None,
     color: Incomplete | None = None,
     palette: Incomplete | None = None,
-    size: int = 5,
+    size: float = 5,
     edgecolor: str = "gray",
-    linewidth: int = 0,
+    linewidth: float = 0,
     hue_norm: Incomplete | None = None,
     native_scale: bool = False,
     formatter: Incomplete | None = None,
     legend: str = "auto",
     warn_thresh: float = 0.05,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def barplot(
     data: Incomplete | None = None,
     *,
@@ -386,9 +386,9 @@ def barplot(
     capsize: Incomplete | None = None,
     dodge: bool = True,
     ci: str = "deprecated",
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def pointplot(
     data: Incomplete | None = None,
     *,
@@ -406,7 +406,7 @@ def pointplot(
     linestyles: str = "-",
     dodge: bool = False,
     join: bool = True,
-    scale: int = 1,
+    scale: float = 1,
     orient: Incomplete | None = None,
     color: Incomplete | None = None,
     palette: Incomplete | None = None,
@@ -414,8 +414,8 @@ def pointplot(
     ci: str = "deprecated",
     capsize: Incomplete | None = None,
     label: Incomplete | None = None,
-    ax: Incomplete | None = None,
-): ...
+    ax: Axes | None = None,
+) -> Axes: ...
 def countplot(
     data: Incomplete | None = None,
     *,
@@ -430,9 +430,9 @@ def countplot(
     saturation: float = 0.75,
     width: float = 0.8,
     dodge: bool = True,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def catplot(
     data: Incomplete | None = None,
     *,
@@ -451,8 +451,8 @@ def catplot(
     hue_order: Incomplete | None = None,
     row_order: Incomplete | None = None,
     col_order: Incomplete | None = None,
-    height: int = 5,
-    aspect: int = 1,
+    height: float = 5,
+    aspect: float = 1,
     kind: str = "strip",
     native_scale: bool = False,
     formatter: Incomplete | None = None,
@@ -471,13 +471,13 @@ def catplot(
 ) -> FacetGrid: ...
 
 class Beeswarm:
-    orient: Incomplete
-    width: Incomplete
-    warn_thresh: Incomplete
+    orient: Literal["v", "h"]
+    width: float
+    warn_thresh: float
     def __init__(self, orient: str = "v", width: float = 0.8, warn_thresh: float = 0.05) -> None: ...
     def __call__(self, points, center) -> None: ...
-    def beeswarm(self, orig_xyr): ...
-    def could_overlap(self, xyr_i, swarm): ...
-    def position_candidates(self, xyr_i, neighbors): ...
-    def first_non_overlapping_candidate(self, candidates, neighbors): ...
-    def add_gutters(self, points, center, log_scale: bool = False): ...
+    def beeswarm(self, orig_xyr) -> np.ndarray: ...
+    def could_overlap(self, xyr_i, swarm) -> np.ndarray: ...
+    def position_candidates(self, xyr_i, neighbors) -> np.ndarray: ...
+    def first_non_overlapping_candidate(self, candidates, neighbors) -> Incomplete: ...
+    def add_gutters(self, points: _T, center, log_scale: bool = False) -> _T: ...

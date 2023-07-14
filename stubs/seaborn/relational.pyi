@@ -1,16 +1,19 @@
 from _typeshed import Incomplete
+from typing_extensions import Literal
+
+from matplotlib.axes import Axes
 
 from ._oldcore import VectorPlotter
+from .axisgrid import FacetGrid
 
 __all__ = ["relplot", "scatterplot", "lineplot"]
 
 class _RelationalPlotter(VectorPlotter):
-    wide_structure: Incomplete
     sort: bool
-    legend_title: Incomplete
-    legend_data: Incomplete
-    legend_order: Incomplete
-    def add_legend_data(self, ax) -> None: ...
+    legend_title: str
+    legend_data: dict[Incomplete, Incomplete]
+    legend_order: list[Incomplete]
+    def add_legend_data(self, ax: Axes) -> None: ...
 
 class _LinePlotter(_RelationalPlotter):
     estimator: Incomplete
@@ -37,12 +40,14 @@ class _LinePlotter(_RelationalPlotter):
         err_kws: Incomplete | None = None,
         legend: Incomplete | None = None,
     ) -> None: ...
-    def plot(self, ax, kws) -> None: ...
+    def plot(self, ax: Axes, kws: dict[str, Incomplete]) -> None: ...
 
 class _ScatterPlotter(_RelationalPlotter):
-    legend: Incomplete
-    def __init__(self, *, data: Incomplete | None = None, variables={}, legend: Incomplete | None = None) -> None: ...
-    def plot(self, ax, kws) -> None: ...
+    legend: Incomplete | None
+    def __init__(
+        self, *, data: Incomplete | None = None, variables: dict[str, Incomplete] = {}, legend: Incomplete | None = None
+    ) -> None: ...
+    def plot(self, ax: Axes, kws: dict[str, Incomplete]) -> None: ...
 
 def lineplot(
     data: Incomplete | None = None,
@@ -70,11 +75,11 @@ def lineplot(
     sort: bool = True,
     err_style: str = "band",
     err_kws: Incomplete | None = None,
-    legend: str = "auto",
+    legend: Literal["auto", "brief", "full", False] = "auto",
     ci: str = "deprecated",
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def scatterplot(
     data: Incomplete | None = None,
     *,
@@ -91,10 +96,10 @@ def scatterplot(
     size_norm: Incomplete | None = None,
     markers: bool = True,
     style_order: Incomplete | None = None,
-    legend: str = "auto",
-    ax: Incomplete | None = None,
+    legend: Literal["auto", "brief", "full", False] = "auto",
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def relplot(
     data: Incomplete | None = None,
     *,
@@ -118,10 +123,10 @@ def relplot(
     markers: Incomplete | None = None,
     dashes: Incomplete | None = None,
     style_order: Incomplete | None = None,
-    legend: str = "auto",
-    kind: str = "scatter",
-    height: int = 5,
-    aspect: int = 1,
+    legend: Literal["auto", "brief", "full", False] = "auto",
+    kind: Literal["scatter", "line"] = "scatter",
+    height: float = 5,
+    aspect: float = 1,
     facet_kws: Incomplete | None = None,
     **kwargs,
-): ...
+) -> FacetGrid: ...

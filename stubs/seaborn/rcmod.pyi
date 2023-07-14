@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable
 from typing import Any, TypeVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 __all__ = [
     "set_theme",
@@ -17,29 +17,41 @@ __all__ = [
 
 _KT = TypeVar("_KT")
 _VT = TypeVar("_VT")
-_F = TypeVar("_F", bound=Callable)
-
-_Context: TypeAlias = Literal["paper", "notebook", "talk", "poster"] | dict[str, Any]
-_Style: TypeAlias = Literal["white", "dark", "whitegrid", "darkgrid", "ticks"] | dict[str, Any]
+_F = TypeVar("_F", bound=Callable[..., Any])
 
 def set_theme(
-    context: _Context = "notebook",
-    style: _Style = "darkgrid",
-    palette: str = "deep",
+    context: Literal["paper", "notebook", "talk", "poster"] | dict[str, Any] = "notebook",
+    style: Literal["white", "dark", "whitegrid", "darkgrid", "ticks"] | dict[str, Any] = "darkgrid",
+    palette: Incomplete = "deep",
     font: str = "sans-serif",
     font_scale: float = 1,
     color_codes: bool = True,
     rc: dict[str, Any] | None = None,
 ) -> None: ...
-def set(*args, **kwargs) -> None: ...
+
+# def set(*args, **kwargs) -> None: ...  # deprecated alias for set_theme
+set = set_theme
+
 def reset_defaults() -> None: ...
 def reset_orig() -> None: ...
-def axes_style(style: _Style | None = None, rc: dict[str, Any] | None = None): ...
-def set_style(style: _Style | None = None, rc: dict[str, Any] | None = None) -> None: ...
+def axes_style(
+    style: Literal["white", "dark", "whitegrid", "darkgrid", "ticks"] | dict[str, Any] | None = None,
+    rc: dict[str, Any] | None = None,
+) -> _AxesStyle[str, Any]: ...
+def set_style(
+    style: Literal["white", "dark", "whitegrid", "darkgrid", "ticks"] | dict[str, Any] | None = None,
+    rc: dict[str, Any] | None = None,
+) -> None: ...
 def plotting_context(
-    context: _Context | None = None, font_scale: float = 1, rc: dict[str, Any] | None = None
-) -> _PlottingContext: ...
-def set_context(context: _Context | None = None, font_scale: float = 1, rc: dict[str, Any] | None = None) -> None: ...
+    context: Literal["paper", "notebook", "talk", "poster"] | dict[str, Any] | None = None,
+    font_scale: float = 1,
+    rc: dict[str, Any] | None = None,
+) -> _PlottingContext[str, Any]: ...
+def set_context(
+    context: Literal["paper", "notebook", "talk", "poster"] | dict[str, Any] | None = None,
+    font_scale: float = 1,
+    rc: dict[str, Any] | None = None,
+) -> None: ...
 
 class _RCAesthetics(dict[_KT, _VT]):
     def __enter__(self) -> None: ...

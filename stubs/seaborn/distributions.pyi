@@ -1,20 +1,20 @@
 from _typeshed import Incomplete
 
+from matplotlib.axes import Axes
+
 from ._oldcore import VectorPlotter
+from .axisgrid import FacetGrid
 
 __all__ = ["displot", "histplot", "kdeplot", "ecdfplot", "rugplot", "distplot"]
 
 class _DistributionPlotter(VectorPlotter):
-    semantics: Incomplete
-    wide_structure: Incomplete
-    flat_structure: Incomplete
-    def __init__(self, data: Incomplete | None = None, variables={}) -> None: ...
+    def __init__(self, data: Incomplete | None = None, variables: dict[str, Incomplete] = {}) -> None: ...
     @property
-    def univariate(self): ...
+    def univariate(self) -> bool: ...
     @property
-    def data_variable(self): ...
+    def data_variable(self) -> str: ...
     @property
-    def has_xy_data(self): ...
+    def has_xy_data(self) -> bool: ...
     def plot_univariate_histogram(
         self,
         multiple,
@@ -55,8 +55,7 @@ class _DistributionPlotter(VectorPlotter):
     def plot_univariate_ecdf(self, estimate_kws, legend, **plot_kws) -> None: ...
     def plot_rug(self, height, expand_margins, legend, **kws) -> None: ...
 
-class _DistributionFacetPlotter(_DistributionPlotter):
-    semantics: Incomplete
+class _DistributionFacetPlotter(_DistributionPlotter): ...
 
 def histplot(
     data: Incomplete | None = None,
@@ -76,11 +75,11 @@ def histplot(
     multiple: str = "layer",
     element: str = "bars",
     fill: bool = True,
-    shrink: int = 1,
+    shrink: float = 1,
     kde: bool = False,
     kde_kws: Incomplete | None = None,
     line_kws: Incomplete | None = None,
-    thresh: int = 0,
+    thresh: float = 0,
     pthresh: Incomplete | None = None,
     pmax: Incomplete | None = None,
     cbar: bool = False,
@@ -92,9 +91,9 @@ def histplot(
     color: Incomplete | None = None,
     log_scale: Incomplete | None = None,
     legend: bool = True,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def kdeplot(
     data: Incomplete | None = None,
     *,
@@ -124,9 +123,9 @@ def kdeplot(
     cbar: bool = False,
     cbar_ax: Incomplete | None = None,
     cbar_kws: Incomplete | None = None,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def ecdfplot(
     data: Incomplete | None = None,
     *,
@@ -141,9 +140,9 @@ def ecdfplot(
     hue_norm: Incomplete | None = None,
     log_scale: Incomplete | None = None,
     legend: bool = True,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def rugplot(
     data: Incomplete | None = None,
     *,
@@ -156,9 +155,9 @@ def rugplot(
     hue_order: Incomplete | None = None,
     hue_norm: Incomplete | None = None,
     legend: bool = True,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     **kwargs,
-): ...
+) -> Axes: ...
 def displot(
     data: Incomplete | None = None,
     *,
@@ -180,11 +179,11 @@ def displot(
     col_wrap: Incomplete | None = None,
     row_order: Incomplete | None = None,
     col_order: Incomplete | None = None,
-    height: int = 5,
-    aspect: int = 1,
+    height: float = 5,
+    aspect: float = 1,
     facet_kws: Incomplete | None = None,
     **kwargs,
-): ...
+) -> FacetGrid: ...
 def distplot(
     a: Incomplete | None = None,
     bins: Incomplete | None = None,
@@ -201,6 +200,6 @@ def distplot(
     norm_hist: bool = False,
     axlabel: Incomplete | None = None,
     label: Incomplete | None = None,
-    ax: Incomplete | None = None,
+    ax: Axes | None = None,
     x: Incomplete | None = None,
-): ...
+) -> Axes: ...
