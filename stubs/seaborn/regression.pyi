@@ -21,8 +21,8 @@ class _RegressionPlotter(_LinearPlotter):
     x_estimator: Incomplete
     ci: Incomplete
     x_ci: Incomplete
-    n_boot: Incomplete
-    seed: Incomplete
+    n_boot: int
+    seed: int | np.random.Generator | np.random.RandomState | None
     scatter: Incomplete
     fit_reg: Incomplete
     order: Incomplete
@@ -31,8 +31,8 @@ class _RegressionPlotter(_LinearPlotter):
     robust: Incomplete
     logx: Incomplete
     truncate: Incomplete
-    x_jitter: Incomplete
-    y_jitter: Incomplete
+    x_jitter: float | None
+    y_jitter: float | None
     color: Incomplete
     label: Incomplete
     x: Incomplete
@@ -52,7 +52,7 @@ class _RegressionPlotter(_LinearPlotter):
         ci: int | None = 95,
         n_boot: int = 1000,
         units: Incomplete | None = None,
-        seed: Incomplete | None = None,
+        seed: int | np.random.Generator | np.random.RandomState | None = None,
         order: int = 1,
         logistic: bool = False,
         lowess: bool = False,
@@ -62,8 +62,8 @@ class _RegressionPlotter(_LinearPlotter):
         y_partial: Incomplete | None = None,
         truncate: bool = False,
         dropna: bool = True,
-        x_jitter: Incomplete | None = None,
-        y_jitter: Incomplete | None = None,
+        x_jitter: float | None = None,
+        y_jitter: float | None = None,
         color: Incomplete | None = None,
         label: Incomplete | None = None,
     ) -> None: ...

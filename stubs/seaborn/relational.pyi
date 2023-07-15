@@ -19,36 +19,40 @@ class _RelationalPlotter(VectorPlotter):
     def add_legend_data(self, ax: Axes) -> None: ...
 
 class _LinePlotter(_RelationalPlotter):
-    estimator: Incomplete
+    estimator: str | Callable | None
     errorbar: Incomplete
-    n_boot: Incomplete
-    seed: Incomplete
-    sort: Incomplete
-    orient: Incomplete
-    err_style: Incomplete
-    err_kws: Incomplete
-    legend: Incomplete
+    n_boot: int | None
+    seed: int | np.random.Generator | np.random.RandomState | None
+    sort: bool
+    orient: Literal["x", "y"]
+    err_style: Literal["band", "bars"] | None
+    err_kws: dict[str, Any]
+    legend: Literal["auto", "brief", "full"] | bool | None
     def __init__(
         self,
         *,
         data: Incomplete | None = None,
         variables={},
-        estimator: Incomplete | None = None,
-        n_boot: Incomplete | None = None,
-        seed: Incomplete | None = None,
+        estimator: str | Callable | None = None,
+        n_boot: int | None = None,
+        seed: int | np.random.Generator | np.random.RandomState | None = None,
         errorbar: Incomplete | None = None,
         sort: bool = True,
-        orient: str = "x",
-        err_style: Incomplete | None = None,
-        err_kws: Incomplete | None = None,
-        legend: Incomplete | None = None,
+        orient: Literal["x", "y"] = "x",
+        err_style: Literal["band", "bars"] | None = None,
+        err_kws: dict[str, Any] | None = None,
+        legend: Literal["auto", "brief", "full"] | bool | None = None,
     ) -> None: ...
     def plot(self, ax: Axes, kws: dict[str, Incomplete]) -> None: ...
 
 class _ScatterPlotter(_RelationalPlotter):
-    legend: Incomplete | None
+    legend: Literal["auto", "brief", "full"] | bool | None
     def __init__(
-        self, *, data: Incomplete | None = None, variables: dict[str, Incomplete] = {}, legend: Incomplete | None = None
+        self,
+        *,
+        data: Incomplete | None = None,
+        variables: dict[str, Incomplete] = {},
+        legend: Literal["auto", "brief", "full"] | bool | None = None,
     ) -> None: ...
     def plot(self, ax: Axes, kws: dict[str, Incomplete]) -> None: ...
 
@@ -74,12 +78,12 @@ def lineplot(
     errorbar: str | tuple[str, float] | Callable = ("ci", 95),
     n_boot: int = 1000,
     seed: int | np.random.Generator | np.random.RandomState | None = None,
-    orient: str = "x",
+    orient: Literal["x", "y"] = "x",
     sort: bool = True,
-    err_style: str = "band",
-    err_kws: Incomplete | None = None,
-    legend: Literal["auto", "brief", "full", False] = "auto",
-    ci: str = "deprecated",
+    err_style: Literal["band", "bars"] = "band",
+    err_kws: dict[str, Any] | None = None,
+    legend: Literal["auto", "brief", "full"] | bool = "auto",
+    ci: str | int | None = "deprecated",  # deprecated
     ax: Axes | None = None,
     **kwargs,
 ) -> Axes: ...
@@ -99,7 +103,7 @@ def scatterplot(
     size_norm: Incomplete | None = None,
     markers: Incomplete = True,
     style_order: Iterable[Any] | None = None,
-    legend: Literal["auto", "brief", "full", False] = "auto",
+    legend: Literal["auto", "brief", "full"] | bool = "auto",
     ax: Axes | None = None,
     **kwargs,
 ) -> Axes: ...
@@ -126,7 +130,7 @@ def relplot(
     markers: Incomplete | None = None,
     dashes: Incomplete | None = None,
     style_order: Iterable[Any] | None = None,
-    legend: Literal["auto", "brief", "full", False] = "auto",
+    legend: Literal["auto", "brief", "full"] | bool = "auto",
     kind: Literal["scatter", "line"] = "scatter",
     height: float = 5,
     aspect: float = 1,

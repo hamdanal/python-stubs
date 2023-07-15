@@ -1,6 +1,6 @@
-from _typeshed import Incomplete
 from collections.abc import Callable
 
+import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 def bootstrap(
@@ -9,5 +9,5 @@ def bootstrap(
     func: str | Callable = "mean",
     axis: int | None = None,
     units: ArrayLike | None = None,
-    seed: Incomplete | int | None = None,
+    seed: int | np.random.Generator | np.random.RandomState | None = None,
 ) -> NDArray: ...

@@ -1,4 +1,6 @@
 from _typeshed import Incomplete
+from collections.abc import Callable
+from typing import Any
 
 import pandas as pd
 
@@ -35,11 +37,11 @@ class Histogram:
     binrange: tuple[Incomplete, Incomplete] | None
     discrete: bool | tuple[bool, bool]
     cumulative: bool
-    bin_kws: Incomplete
+    bin_kws: dict[str, Any] | None
     def __init__(
         self,
         stat: str = "count",
-        bins: str | float | Incomplete = "auto",
+        bins: Incomplete = "auto",
         binwidth: float | tuple[float, float] | None = None,
         binrange: tuple[Incomplete, Incomplete] | None = None,
         discrete: bool | tuple[bool, bool] = False,
@@ -57,9 +59,11 @@ class ECDF:
     def __call__(self, x1, x2: Incomplete | None = None, weights: Incomplete | None = None) -> tuple[Incomplete, Incomplete]: ...
 
 class EstimateAggregator:
-    estimator: Incomplete
-    error_method: Incomplete
-    error_level: Incomplete
-    boot_kws: Incomplete
-    def __init__(self, estimator, errorbar: Incomplete | None = None, **boot_kws) -> None: ...
+    estimator: str | Callable
+    error_method: str | Callable | None
+    error_level: float | None
+    boot_kws: dict[str, Any]
+    def __init__(
+        self, estimator: str | Callable, errorbar: str | tuple[str, float] | Callable | None = None, **boot_kws: Any
+    ) -> None: ...
     def __call__(self, data, var) -> pd.Series: ...
