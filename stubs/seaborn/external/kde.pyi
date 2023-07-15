@@ -7,7 +7,7 @@ from numpy.typing import ArrayLike, NDArray
 
 __all__ = ["gaussian_kde"]
 
-_BwMethodType: TypeAlias = Literal["scott", "silverman"] | Callable[[gaussian_kde], object] | Number | bool | None
+_BwMethodType: TypeAlias = Literal["scott", "silverman"] | Callable[[gaussian_kde], object] | Number | float | bool | None
 
 class gaussian_kde:
     dataset: NDArray[float64]
