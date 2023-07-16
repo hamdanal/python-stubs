@@ -6,29 +6,31 @@ from typing_extensions import Literal, Self
 
 import pandas as pd
 
-from ._decorators import share_init_params_with_map as share_init_params_with_map
-from .external.version import Version as Version
-from .palettes import QUAL_PALETTES as QUAL_PALETTES, color_palette as color_palette
-from .utils import get_color_cycle as get_color_cycle, remove_na as remove_na
-
 _PlotterT = TypeVar("_PlotterT", bound=VectorPlotter)
 
 class SemanticMapping:
-    map_type: str
+    map_type: str | None
     levels: Incomplete
     lookup_table: Incomplete
     plotter: VectorPlotter
     def __init__(self, plotter: VectorPlotter) -> None: ...
-    def map(cls, plotter: _PlotterT, *args, **kwargs) -> _PlotterT: ...
+    # @classmethod
+    def map(
+        cls,
+        plotter: _PlotterT,
+        markers: Incomplete | None = None,
+        dashes: Incomplete | None = None,
+        order: Incomplete | None = None,
+    ) -> _PlotterT: ...
     def __call__(self, key, *args, **kwargs) -> Incomplete: ...
 
 class HueMapping(SemanticMapping):
     palette: Incomplete
     norm: Incomplete
     cmap: Incomplete
-    map_type: str
-    lookup_table: dict[Incomplete, Incomplete]
-    levels: list[Incomplete]
+    map_type: str | None
+    lookup_table: dict[Incomplete, Incomplete] | None
+    levels: list[Incomplete] | None
     def __init__(
         self,
         plotter: VectorPlotter,
@@ -41,14 +43,22 @@ class HueMapping(SemanticMapping):
     def numeric_mapping(
         self, data, palette, norm
     ) -> tuple[list[Incomplete], dict[Incomplete, Incomplete], Incomplete, Incomplete]: ...
+    @classmethod
+    def map(
+        cls,
+        plotter: _PlotterT,
+        markers: Incomplete | None = None,
+        dashes: Incomplete | None = None,
+        order: Incomplete | None = None,
+    ) -> _PlotterT: ...
 
 class SizeMapping(SemanticMapping):
     norm: Incomplete
-    map_type: str
-    levels: list[Incomplete]
+    map_type: str | None
+    levels: list[Incomplete] | None
     sizes: Incomplete
     size_range: Incomplete
-    lookup_table: dict[Incomplete, Incomplete]
+    lookup_table: dict[Incomplete, Incomplete] | None
     def __init__(
         self,
         plotter: VectorPlotter,
@@ -61,6 +71,14 @@ class SizeMapping(SemanticMapping):
     def numeric_mapping(
         self, data, sizes, norm
     ) -> tuple[list[Incomplete], dict[Incomplete, Incomplete], Incomplete, Incomplete]: ...
+    @classmethod
+    def map(
+        cls,
+        plotter: _PlotterT,
+        markers: Incomplete | None = None,
+        dashes: Incomplete | None = None,
+        order: Incomplete | None = None,
+    ) -> _PlotterT: ...
 
 class StyleMapping(SemanticMapping):
     map_type: str
@@ -69,6 +87,14 @@ class StyleMapping(SemanticMapping):
     def __init__(
         self, plotter, markers: Incomplete | None = None, dashes: Incomplete | None = None, order: Incomplete | None = None
     ) -> None: ...
+    @classmethod
+    def map(
+        cls,
+        plotter: _PlotterT,
+        markers: Incomplete | None = None,
+        dashes: Incomplete | None = None,
+        order: Incomplete | None = None,
+    ) -> _PlotterT: ...
 
 class VectorPlotter:
     semantics: tuple[str, ...]
@@ -113,7 +139,7 @@ class VectorPlotter:
 class VariableType(UserString):
     allowed: tuple[str, ...]
     def __init__(self, data: str) -> None: ...
-    def __eq__(self, other: str) -> bool: ...
+    def __eq__(self, other: str) -> bool: ...  # type: ignore[override]
 
 def variable_type(vector, boolean_type: Literal["numeric", "categorical"] = "numeric") -> VariableType: ...
 def infer_orient(

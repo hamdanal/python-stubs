@@ -1,5 +1,5 @@
-from pandas import DataFrame as DataFrame
-from seaborn._core.typing import ColumnName as ColumnName, DataSource as DataSource, VariableSpec as VariableSpec
+from pandas import DataFrame
+from seaborn._core.typing import DataSource, VariableSpec
 
 class PlotData:
     frame: DataFrame

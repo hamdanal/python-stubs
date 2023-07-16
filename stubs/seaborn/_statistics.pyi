@@ -4,9 +4,6 @@ from typing import Any
 
 import pandas as pd
 
-from .algorithms import bootstrap as bootstrap
-from .external.kde import gaussian_kde as gaussian_kde
-
 class KDE:
     bw_method: Incomplete
     bw_adjust: float

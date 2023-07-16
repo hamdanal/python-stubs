@@ -14,43 +14,6 @@ from .axisgrid import Grid
 
 __all__ = ["heatmap", "clustermap"]
 
-class _HeatMapper:
-    xticks: Literal["auto"] | list | NDArray
-    xticklabels: list[str]
-    yticks: Literal["auto"] | list | NDArray
-    yticklabels: list[str]
-    xlabel: str
-    ylabel: str
-    vmin: float
-    vmax: float
-    cmap: Colormap
-    data: DataFrame
-    plot_data: np.ma.MaskedArray
-    annot: bool
-    annot_data: NDArray | None
-    fmt: str
-    annot_kws: dict[str, Incomplete]
-    cbar: bool
-    cbar_kws: dict[str, Incomplete]
-    def __init__(
-        self,
-        data: Incomplete,
-        vmin: float | None,
-        vmax: float | None,
-        cmap: str | list | Colormap | None,
-        center: float | None,
-        robust: bool | None,
-        annot: bool | ArrayLike | None,
-        fmt: str,
-        annot_kws: dict[str, Incomplete] | None,
-        cbar: bool,
-        cbar_kws: dict[str, Incomplete] | None,
-        xticklabels: Literal["auto"] | bool | int | Sequence[str] = True,
-        yticklabels: Literal["auto"] | bool | int | Sequence[str] = True,
-        mask: NDArray[np.bool_] | DataFrame | None = None,
-    ) -> None: ...
-    def plot(self, ax: Axes, cax: Axes | None, kws: dict[str, Incomplete]) -> None: ...
-
 def heatmap(
     data: Incomplete,
     *,

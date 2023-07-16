@@ -1,34 +1,18 @@
+import inspect
 from _typeshed import Incomplete
-from collections.abc import Callable as Callable, Generator
+from collections.abc import Callable, Generator
 from contextlib import contextmanager
-from typing import Any, TypeVar
+from typing import Any, NoReturn, TypeVar
 from typing_extensions import TypedDict
 
-from matplotlib.artist import Artist as Artist
-from matplotlib.axes import Axes as Axes
-from matplotlib.figure import Figure as Figure, SubFigure as SubFigure
-from pandas import DataFrame as DataFrame, Index as Index, Series as Series
-from seaborn._compat import set_layout_engine as set_layout_engine, set_scale_obj as set_scale_obj
-from seaborn._core.data import PlotData as PlotData
-from seaborn._core.exceptions import PlotSpecError as PlotSpecError
-from seaborn._core.groupby import GroupBy as GroupBy
-from seaborn._core.moves import Move as Move
-from seaborn._core.properties import PROPERTIES as PROPERTIES, Property as Property
-from seaborn._core.rules import categorical_order as categorical_order
-from seaborn._core.scales import Nominal as Nominal, Scale as Scale
-from seaborn._core.subplots import Subplots as Subplots
-from seaborn._core.typing import (
-    DataSource as DataSource,
-    Default as Default,
-    OrderSpec as OrderSpec,
-    VariableSpec as VariableSpec,
-    VariableSpecList as VariableSpecList,
-)
-from seaborn._marks.base import Mark as Mark
-from seaborn._stats.base import Stat as Stat
-from seaborn.external.version import Version as Version
-from seaborn.palettes import color_palette as color_palette
-from seaborn.rcmod import axes_style as axes_style, plotting_context as plotting_context
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure, SubFigure
+from seaborn._core.data import PlotData
+from seaborn._core.moves import Move
+from seaborn._core.scales import Scale
+from seaborn._core.typing import DataSource, Default, OrderSpec, VariableSpec, VariableSpecList
+from seaborn._marks.base import Mark
+from seaborn._stats.base import Stat
 
 _ClsT = TypeVar("_ClsT", bound=type)
 
@@ -61,7 +45,8 @@ def build_plot_signature(cls: _ClsT) -> _ClsT: ...
 @build_plot_signature
 class Plot:
     def __init__(self, *args: DataSource | VariableSpec, data: DataSource = None, **variables: VariableSpec) -> None: ...
-    def __add__(self, other) -> None: ...
+    __signature__: inspect.Signature  # Added by @build_plot_signature
+    def __add__(self, other) -> NoReturn: ...
     def on(self, target: Axes | SubFigure | Figure) -> Plot: ...
     def add(
         self,

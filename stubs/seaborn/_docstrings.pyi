@@ -1,8 +1,6 @@
 from re import Pattern
 from typing_extensions import Self
 
-from .external.docscrape import NumpyDocString as NumpyDocString
-
 class DocstringComponents:
     regexp: Pattern[str]
     entries: dict[str, str]

@@ -10,7 +10,6 @@ from matplotlib.path import Path
 from matplotlib.scale import ScaleBase, scale_factory as scale_factory
 from matplotlib.typing import FillStyleType
 from numpy.typing import ArrayLike
-from seaborn.external.version import Version as Version
 
 def MarkerStyle(
     marker: str | ArrayLike | Path | mpl_MarkerStyle | None = None, fillstyle: FillStyleType | None = None

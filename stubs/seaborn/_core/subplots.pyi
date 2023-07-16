@@ -1,18 +1,19 @@
 from collections.abc import Generator
+from typing import Any
 
-from matplotlib.axes import Axes as Axes
-from matplotlib.figure import Figure as Figure, SubFigure as SubFigure
-from seaborn._core.plot import FacetSpec as FacetSpec, PairSpec as PairSpec
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure, SubFigure
+from seaborn._core.plot import FacetSpec, PairSpec
 
 class Subplots:
-    subplot_spec: dict
-    def __init__(self, subplot_spec: dict, facet_spec: FacetSpec, pair_spec: PairSpec) -> None: ...
+    subplot_spec: dict[str, Any]
+    def __init__(self, subplot_spec: dict[str, Any], facet_spec: FacetSpec, pair_spec: PairSpec) -> None: ...
     def init_figure(
         self,
         pair_spec: PairSpec,
         pyplot: bool = False,
-        figure_kws: dict | None = None,
+        figure_kws: dict[str, Any] | None = None,
         target: Axes | Figure | SubFigure | None = None,
     ) -> Figure: ...
-    def __iter__(self) -> Generator[dict, None, None]: ...
+    def __iter__(self) -> Generator[dict[str, Any], None, None]: ...
     def __len__(self) -> int: ...

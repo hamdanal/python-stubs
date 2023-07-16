@@ -5,81 +5,9 @@ from typing_extensions import Literal
 
 from matplotlib.axes import Axes
 
-from ._oldcore import VectorPlotter
 from .axisgrid import FacetGrid
 
 __all__ = ["displot", "histplot", "kdeplot", "ecdfplot", "rugplot", "distplot"]
-
-class _DistributionPlotter(VectorPlotter):
-    def __init__(self, data: Incomplete | None = None, variables: dict[str, Incomplete] = {}) -> None: ...
-    @property
-    def univariate(self) -> bool: ...
-    @property
-    def data_variable(self) -> Literal["x", "y"]: ...
-    @property
-    def has_xy_data(self) -> bool: ...
-    def plot_univariate_histogram(
-        self,
-        multiple: str,
-        element: Incomplete,
-        fill: bool,
-        common_norm: bool,
-        common_bins: bool,
-        shrink: float,
-        kde: bool,
-        kde_kws: dict[str, Any],
-        color: Incomplete,
-        legend: bool,
-        line_kws: dict[str, Any],
-        estimate_kws: dict[str, Any],
-        **plot_kws: Any,
-    ) -> None: ...
-    def plot_bivariate_histogram(
-        self,
-        common_bins: bool,
-        common_norm: bool,
-        thresh: float,
-        pthresh: float,
-        pmax: float,
-        color: Incomplete,
-        legend: bool,
-        cbar: bool,
-        cbar_ax: Axes,
-        cbar_kws: dict[str, Any],
-        estimate_kws: dict[str, Any],
-        **plot_kws: Any,
-    ) -> None: ...
-    def plot_univariate_density(
-        self,
-        multiple: str,
-        common_norm: Incomplete,
-        common_grid: Incomplete,
-        warn_singular: bool,
-        fill: bool,
-        color: Incomplete,
-        legend: bool,
-        estimate_kws: dict[str, Any],
-        **plot_kws: Any,
-    ) -> None: ...
-    def plot_bivariate_density(
-        self,
-        common_norm: Incomplete,
-        fill: bool,
-        levels: Incomplete,
-        thresh: float,
-        color: Incomplete,
-        legend: bool,
-        cbar: bool,
-        warn_singular: bool,
-        cbar_ax: Axes,
-        cbar_kws: dict[str, Any],
-        estimate_kws: dict[str, Any],
-        **contour_kws: Any,
-    ) -> None: ...
-    def plot_univariate_ecdf(self, estimate_kws: dict[str, Any], legend: bool, **plot_kws: Any) -> None: ...
-    def plot_rug(self, height: float, expand_margins: bool, legend: bool, **kws: Any) -> None: ...
-
-class _DistributionFacetPlotter(_DistributionPlotter): ...
 
 def histplot(
     data: Incomplete | None = None,

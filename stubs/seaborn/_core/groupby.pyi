@@ -1,11 +1,9 @@
-from _typeshed import Incomplete
 from collections.abc import Callable
 
-from pandas import DataFrame as DataFrame, Index as Index, MultiIndex as MultiIndex
-from seaborn._core.rules import categorical_order as categorical_order
+from pandas import DataFrame
 
 class GroupBy:
-    order: Incomplete
+    order: dict[str, list | None]
     def __init__(self, order: list[str] | dict[str, list | None]) -> None: ...
     def agg(self, data: DataFrame, *args, **kwargs) -> DataFrame: ...
     def apply(self, data: DataFrame, func: Callable[..., DataFrame], *args, **kwargs) -> DataFrame: ...
