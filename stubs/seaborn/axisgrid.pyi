@@ -49,9 +49,9 @@ class Grid(_BaseGrid):
 
 class FacetGrid(Grid):
     data: DataFrame
-    row_names: list[str]
-    col_names: list[str]
-    hue_names: list[str] | None
+    row_names: list[Any]
+    col_names: list[Any]
+    hue_names: list[Any] | None
     hue_kws: dict[str, Any]
     def __init__(
         self,
@@ -66,9 +66,9 @@ class FacetGrid(Grid):
         height: float = 3,
         aspect: float = 1,
         palette: Incomplete | None = None,
-        row_order: Iterable[str] | None = None,
-        col_order: Iterable[str] | None = None,
-        hue_order: Iterable[str] | None = None,
+        row_order: Iterable[Any] | None = None,
+        col_order: Iterable[Any] | None = None,
+        hue_order: Iterable[Any] | None = None,
         hue_kws: dict[str, Any] | None = None,
         dropna: bool = False,
         legend_out: bool = True,
