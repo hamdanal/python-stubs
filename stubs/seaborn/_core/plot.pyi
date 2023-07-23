@@ -1,8 +1,9 @@
 import inspect
+import os
 from _typeshed import Incomplete
 from collections.abc import Callable, Generator
 from contextlib import contextmanager
-from typing import Any, NoReturn, TypeVar
+from typing import IO, Any, NoReturn, TypeVar
 from typing_extensions import TypedDict
 
 from matplotlib.axes import Axes
@@ -14,7 +15,7 @@ from seaborn._core.typing import DataSource, Default, OrderSpec, VariableSpec, V
 from seaborn._marks.base import Mark
 from seaborn._stats.base import Stat
 
-_ClsT = TypeVar("_ClsT", bound=type)
+_ClsT = TypeVar("_ClsT", bound=type[Any])
 
 default: Default
 
@@ -41,17 +42,17 @@ class PairSpec(TypedDict, total=False):
 
 @contextmanager
 def theme_context(params: dict[str, Any]) -> Generator[None, None, None]: ...
-def build_plot_signature(cls: _ClsT) -> _ClsT: ...
+def build_plot_signature(cls: _ClsT) -> _ClsT: ...  # -> _ClsT & "__signature__ protocol"
 @build_plot_signature
 class Plot:
+    __signature__: inspect.Signature
     def __init__(self, *args: DataSource | VariableSpec, data: DataSource = None, **variables: VariableSpec) -> None: ...
-    __signature__: inspect.Signature  # Added by @build_plot_signature
     def __add__(self, other) -> NoReturn: ...
     def on(self, target: Axes | SubFigure | Figure) -> Plot: ...
     def add(
         self,
         mark: Mark,
-        *transforms: Stat | Mark,
+        *transforms: Stat | Move,
         orient: str | None = None,
         legend: bool = True,
         data: DataSource = None,
@@ -73,11 +74,11 @@ class Plot:
     def label(self, *, title: Incomplete | None = None, **variables: str | Callable[[str], str]) -> Plot: ...
     def layout(self, *, size: tuple[float, float] | Default = ..., engine: str | None | Default = ...) -> Plot: ...
     def theme(self, *args: dict[str, Any]) -> Plot: ...
-    def save(self, loc, **kwargs) -> Plot: ...
+    def save(self, loc: str | os.PathLike | IO, **kwargs) -> Plot: ...
     def show(self, **kwargs) -> None: ...
     def plot(self, pyplot: bool = False) -> Plotter: ...
 
 class Plotter:
     def __init__(self, pyplot: bool, theme: dict[str, Any]) -> None: ...
-    def save(self, loc, **kwargs) -> Plotter: ...
+    def save(self, loc: str | os.PathLike | IO, **kwargs) -> Plotter: ...
     def show(self, **kwargs) -> None: ...

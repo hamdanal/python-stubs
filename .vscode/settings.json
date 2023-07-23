@@ -4,6 +4,7 @@
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff":false,  // prevent ruff from overwriting isort
             "source.organizeImports": true,
         },
     },
