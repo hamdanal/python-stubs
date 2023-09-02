@@ -1,18 +1,15 @@
 {
     "recommendations": [
+        "charliermarsh.ruff",
         "ms-python.black-formatter",
-        "ms-python.flake8",
-        "ms-python.isort",
         "ms-python.python",
         "ms-python.vscode-pylance",
         "redhat.vscode-yaml",
   ],
   "unwantedRecommendations": [
-        // We use black
-        "ms-python.autopep8",
-        // Not using pylint
-        "ms-python.pylint",
-        // Obsoleted by Pylance
-        "ms-pyright.pyright",
+        "ms-python.autopep8", // we use black
+        "ms-python.flake8",  // used via ruff
+        "ms-python.isort", // used via ruff
+        "ms-python.pylint", // not using pylint
     ],
   }

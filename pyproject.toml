@@ -3,35 +3,24 @@ line_length = 130
 target_version = ["py310"]
 skip_magic_trailing_comma = true
 
-[tool.isort]
-profile = "black"
-combine_as_imports = true
-line_length = 130
-skip = [".git", ".github", ".venv"]
-extra_standard_library = [
-    "typing_extensions",
-    "_typeshed",
-]
-
 [tool.ruff]
 line-length = 130
 target-version = "py37"
 fix = true
-exclude = [
-    # We're only interested in autofixes for our stubs
-    "*.py",
-    # virtual environment, cache directories, etc.:
-    "env",
-    ".env",
-    ".venv",
-    ".git",
-    ".mypy_cache",
-    ".pytype",
-]
-
-# Only enable rules that have safe autofixes;
-# only enable rules that are relevant to stubs
 select = [
+    "E",  # pycodestyle (errors)
+    "W",  # pycodestyle (warnings)
+    "F",  # pyflakes
+    "B",  # flake8-bugbear
+    "PYI",  # flake8-pyi
+    "PGH004",  # flake8-noqa
+    "I",  # isort
+    "UP",  # pyupgrade
+    "RUF100",  # yesqa
+]
+# ignore = ["E301", "E302", "E305", "E501"]
+# Only enable fixes for rules that have safe autofixes;
+fixable = [
     "F401",   # Remove unused imports
     "UP004",  # Remove explicit `object` inheritance
     "UP006",  # PEP-585 autofixes
@@ -48,7 +37,11 @@ select = [
     "PYI020",  # quoted annotations are always unnecessary in stubs
     "PYI025",  # always alias `collections.abc.Set` as `AbstractSet` when importing it
     "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
+    "I",  # isort
+    "RUF100",  # yesqa
 ]
+isort.combine-as-imports = true
+isort.extra-standard-library = ["typing_extensions", "_typeshed"]
 
-[tool.typeshed]
-pyright_version = "1.1.318"
+[tool.ruff.per-file-ignores]
+"*.pyi" = ["B", "E741", "F403", "F405"]
