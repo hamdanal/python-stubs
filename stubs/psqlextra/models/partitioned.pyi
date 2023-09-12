@@ -1,15 +1,11 @@
-from _typeshed import Incomplete
+from collections.abc import Iterable
 
 from django.db.models.base import ModelBase
-
-from .base import PostgresModel
+from psqlextra.models.base import PostgresModel
+from psqlextra.types import PostgresPartitioningMethod
 
 class PostgresPartitionedModelMeta(ModelBase):
-    default_method: Incomplete
-    default_key: Incomplete
-    def __new__(cls, name, bases, attrs, **kwargs): ...
+    default_method: PostgresPartitioningMethod
+    default_key: Iterable[str]
 
-class PostgresPartitionedModel(PostgresModel, metaclass=PostgresPartitionedModelMeta):
-    class Meta:
-        abstract: bool
-        base_manager_name: str
+class PostgresPartitionedModel(PostgresModel, metaclass=PostgresPartitionedModelMeta): ...
