@@ -24,8 +24,7 @@ __all__ = [
     "load_dataset",
 ]
 
-_VectorT = TypeVar("_VectorT", bound=SupportsGetItem[object, object])
-_DtypeT = TypeVar("_DtypeT")
+_VectorT = TypeVar("_VectorT", bound=SupportsGetItem[Any, Any])
 
 def ci_to_errsize(cis: ArrayLike, heights: ArrayLike) -> NDArray[np.float64]: ...
 def desaturate(color: ColorType, prop: float) -> tuple[float, float, float]: ...
@@ -54,8 +53,8 @@ def load_dataset(name: str, cache: bool = True, data_home: str | None = None, **
 def axis_ticklabels_overlap(labels: Iterable[Text]) -> bool: ...
 def axes_ticklabels_overlap(ax: Axes) -> tuple[bool, bool]: ...
 def locator_to_legend_entries(
-    locator: Locator, limits: Iterable[float], dtype: type[_DtypeT]
-) -> tuple[list[_DtypeT], list[str]]: ...
+    locator: Locator, limits: Iterable[float], dtype: Incomplete
+) -> tuple[list[Incomplete], list[str]]: ...
 @overload
 def relative_luminance(color: ColorType) -> float: ...  # type: ignore[misc]
 @overload
