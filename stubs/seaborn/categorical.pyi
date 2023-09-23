@@ -1,10 +1,13 @@
 from _typeshed import Incomplete
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from typing import Any, TypeVar
 from typing_extensions import Literal
 
 import numpy as np
 from matplotlib.axes import Axes
+from matplotlib.collections import PathCollection
+from matplotlib.typing import ColorType
+from numpy.typing import NDArray
 from seaborn.axisgrid import FacetGrid
 
 __all__ = ["catplot", "stripplot", "swarmplot", "boxplot", "violinplot", "boxenplot", "pointplot", "barplot", "countplot"]
@@ -19,9 +22,9 @@ def boxplot(
     hue: Incomplete | None = None,
     order: Incomplete | None = None,
     hue_order: Incomplete | None = None,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     saturation: float = 0.75,
     width: float = 0.8,
     dodge: bool = True,
@@ -48,10 +51,10 @@ def violinplot(
     inner: str = "box",
     split: bool = False,
     dodge: bool = True,
-    orient: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
     linewidth: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     saturation: float = 0.75,
     ax: Axes | None = None,
     **kwargs,
@@ -64,9 +67,9 @@ def boxenplot(
     hue: Incomplete | None = None,
     order: Incomplete | None = None,
     hue_order: Incomplete | None = None,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     saturation: float = 0.75,
     width: float = 0.8,
     dodge: bool = True,
@@ -77,9 +80,9 @@ def boxenplot(
     trust_alpha: float = 0.05,
     showfliers: bool = True,
     ax: Axes | None = None,
-    box_kws: Incomplete | None = None,
-    flier_kws: Incomplete | None = None,
-    line_kws: Incomplete | None = None,
+    box_kws: dict[str, Any] | None = None,
+    flier_kws: dict[str, Any] | None = None,
+    line_kws: dict[str, Any] | None = None,
 ) -> Axes: ...
 def stripplot(
     data: Incomplete | None = None,
@@ -91,11 +94,11 @@ def stripplot(
     hue_order: Incomplete | None = None,
     jitter: bool = True,
     dodge: bool = False,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     size: float = 5,
-    edgecolor: str = "gray",
+    edgecolor: ColorType = "gray",
     linewidth: float = 0,
     hue_norm: Incomplete | None = None,
     native_scale: bool = False,
@@ -113,11 +116,11 @@ def swarmplot(
     order: Incomplete | None = None,
     hue_order: Incomplete | None = None,
     dodge: bool = False,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     size: float = 5,
-    edgecolor: str = "gray",
+    edgecolor: ColorType = "gray",
     linewidth: float = 0,
     hue_norm: Incomplete | None = None,
     native_scale: bool = False,
@@ -135,17 +138,17 @@ def barplot(
     hue: Incomplete | None = None,
     order: Iterable[str] | None = None,
     hue_order: Iterable[str] | None = None,
-    estimator: str | Callable = "mean",
-    errorbar: str | tuple[str, float] | Callable = ("ci", 95),
+    estimator: str | Callable[..., Incomplete] = "mean",
+    errorbar: str | tuple[str, float] | Callable[[Iterable[float]], tuple[float, float]] | None = ("ci", 95),
     n_boot: int = 1000,
     units: Incomplete | None = None,
     seed: int | np.random.Generator | np.random.RandomState | None = None,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     saturation: float = 0.75,
     width: float = 0.8,
-    errcolor: Incomplete = ".26",
+    errcolor: ColorType = ".26",
     errwidth: float | None = None,
     capsize: float | None = None,
     dodge: bool = True,
@@ -161,8 +164,8 @@ def pointplot(
     hue: Incomplete | None = None,
     order: Incomplete | None = None,
     hue_order: Incomplete | None = None,
-    estimator: str | Callable = "mean",
-    errorbar: str | tuple[str, float] | Callable = ("ci", 95),
+    estimator: str | Callable[..., Incomplete] = "mean",
+    errorbar: str | tuple[str, float] | Callable[[Iterable[float]], tuple[float, float]] | None = ("ci", 95),
     n_boot: int = 1000,
     units: Incomplete | None = None,
     seed: int | np.random.Generator | np.random.RandomState | None = None,
@@ -171,9 +174,9 @@ def pointplot(
     dodge: bool = False,
     join: bool = True,
     scale: float = 1,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     errwidth: Incomplete | None = None,
     ci: str = "deprecated",
     capsize: Incomplete | None = None,
@@ -188,9 +191,9 @@ def countplot(
     hue: Incomplete | None = None,
     order: Incomplete | None = None,
     hue_order: Incomplete | None = None,
-    orient: Incomplete | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    orient: Literal["v", "h"] | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     saturation: float = 0.75,
     width: float = 0.8,
     dodge: bool = True,
@@ -206,8 +209,8 @@ def catplot(
     row: Incomplete | None = None,
     col: Incomplete | None = None,
     col_wrap: int | None = None,
-    estimator: str | Callable = "mean",
-    errorbar: str | tuple[str, float] | Callable = ("ci", 95),
+    estimator: str | Callable[..., Incomplete] = "mean",
+    errorbar: str | tuple[str, float] | Callable[[Iterable[float]], tuple[float, float]] | None = ("ci", 95),
     n_boot: int = 1000,
     units: Incomplete | None = None,
     seed: int | np.random.Generator | np.random.RandomState | None = None,
@@ -219,10 +222,10 @@ def catplot(
     aspect: float = 1,
     kind: str = "strip",
     native_scale: bool = False,
-    formatter: Callable | None = None,
+    formatter: Callable[..., str] | None = None,
     orient: Literal["v", "h"] | None = None,
-    color: Incomplete | None = None,
-    palette: Incomplete | None = None,
+    color: ColorType | None = None,
+    palette: str | Sequence[ColorType] | dict[Incomplete, ColorType] | None = None,
     hue_norm: Incomplete | None = None,
     legend: str | bool = "auto",
     legend_out: bool = True,
@@ -239,9 +242,9 @@ class Beeswarm:
     width: float
     warn_thresh: float
     def __init__(self, orient: str = "v", width: float = 0.8, warn_thresh: float = 0.05) -> None: ...
-    def __call__(self, points, center) -> None: ...
-    def beeswarm(self, orig_xyr) -> np.ndarray: ...
-    def could_overlap(self, xyr_i, swarm) -> np.ndarray: ...
-    def position_candidates(self, xyr_i, neighbors) -> np.ndarray: ...
+    def __call__(self, points: PathCollection, center: float) -> None: ...
+    def beeswarm(self, orig_xyr) -> NDArray[np.float64]: ...
+    def could_overlap(self, xyr_i, swarm) -> NDArray[np.float64]: ...
+    def position_candidates(self, xyr_i, neighbors) -> NDArray[np.float64]: ...
     def first_non_overlapping_candidate(self, candidates, neighbors) -> Incomplete: ...
-    def add_gutters(self, points: _T, center, log_scale: bool = False) -> _T: ...
+    def add_gutters(self, points: _T, center: float, log_scale: bool = False) -> _T: ...

@@ -1,4 +1,5 @@
 from collections import UserString
+from typing import Any
 from typing_extensions import Literal
 
 from pandas import Series
@@ -9,6 +10,6 @@ class VarType(UserString):
     def __eq__(self, other: str) -> bool: ...  # type: ignore[override]
 
 def variable_type(
-    vector: Series, boolean_type: Literal["numeric", "categorical", "boolean"] = "numeric", strict_boolean: bool = False
+    vector: Series[Any], boolean_type: Literal["numeric", "categorical", "boolean"] = "numeric", strict_boolean: bool = False
 ) -> VarType: ...
-def categorical_order(vector: Series, order: list | None = None) -> list: ...
+def categorical_order(vector: Series[Any], order: list[Any] | None = None) -> list[Any]: ...

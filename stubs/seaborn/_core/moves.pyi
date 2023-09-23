@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import ClassVar
@@ -19,13 +20,13 @@ class Jitter(Move):
     width: float | Default = ...
     x: float = 0
     y: float = 0
-    seed: int | None = ...  # None # pytype parse error
+    seed: int | None = None
 
 @dataclass
 class Dodge(Move):
     empty: str = "keep"
     gap: float = 0
-    by: list[str] | None = ...  # None # pytype parse error
+    by: list[str] | None = None
 
 @dataclass
 class Stack(Move): ...
@@ -37,7 +38,7 @@ class Shift(Move):
 
 @dataclass
 class Norm(Move):
-    func: Callable | str = "max"
-    where: str | None = ...  # None # pytype parse error
-    by: list[str] | None = ...  # None # pytype parse error
+    func: Callable[..., Incomplete] | str = "max"
+    where: str | None = None
+    by: list[str] | None = None
     percent: bool = False

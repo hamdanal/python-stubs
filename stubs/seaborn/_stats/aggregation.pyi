@@ -13,7 +13,7 @@ class Est(Stat):
     func: str | Callable[[Vector], float] = "mean"
     errorbar: str | tuple[str, float] = ...  # ("ci", 95) # pytype parse error
     n_boot: int = 1000
-    seed: int | None = ...  # None # pytype parse error
+    seed: int | None = None
 
 @dataclass
 class Rolling(Stat): ...

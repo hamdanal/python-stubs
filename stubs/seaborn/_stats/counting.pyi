@@ -10,8 +10,8 @@ class Count(Stat): ...
 class Hist(Stat):
     stat: str = "count"
     bins: str | int | ArrayLike = "auto"
-    binwidth: float | None = ...  # None # pytype parse error
-    binrange: tuple[float, float] | None = ...  # None # pytype parse error
+    binwidth: float | None = None
+    binrange: tuple[float, float] | None = None
     common_norm: bool | list[str] = True
     common_bins: bool | list[str] = True
     cumulative: bool = False

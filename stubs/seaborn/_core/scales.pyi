@@ -4,12 +4,11 @@ from dataclasses import dataclass
 from typing import Any, ClassVar
 from typing_extensions import Self, TypeAlias
 
-import numpy as np
 from matplotlib.axis import Ticker
 from matplotlib.scale import ScaleBase
 from matplotlib.ticker import Formatter, Locator
 from matplotlib.units import ConversionInterface
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from pandas import Series
 from seaborn._core.typing import Default
 
@@ -17,22 +16,22 @@ TransFuncs: TypeAlias = tuple[Callable[[ArrayLike], ArrayLike], Callable[[ArrayL
 Pipeline: TypeAlias = Sequence[Callable[[Any], Any] | None]
 
 class Scale:
-    values: tuple | str | list | dict | None
+    values: tuple[Incomplete] | str | list[Incomplete] | dict[Incomplete, Incomplete] | None
     def __post_init__(self) -> None: ...
     def tick(self) -> Self: ...
     def label(self) -> Self: ...
-    def __call__(self, data: Series) -> ArrayLike: ...
+    def __call__(self, data: Series[Any]) -> ArrayLike: ...
 
 @dataclass
 class Boolean(Scale):
-    values: tuple | list | dict | None = ...  # None # pytype parse error
+    values: tuple[Incomplete] | list[Incomplete] | dict[Incomplete, Incomplete] | None = None
     def tick(self, locator: Locator | None = None) -> Self: ...  # type: ignore[override]
     def label(self, formatter: Formatter | None = None) -> Self: ...  # type: ignore[override]
 
 @dataclass
 class Nominal(Scale):
-    values: tuple | str | list | dict | None = ...  # None # pytype parse error
-    order: list | None = ...  # None # pytype parse error
+    values: tuple[Incomplete] | str | list[Incomplete] | dict[Incomplete, Incomplete] | None = None
+    order: list[Incomplete] | None = None
     def tick(self, locator: Locator | None = None) -> Self: ...  # type: ignore[override]
     def label(self, formatter: Formatter | None = None) -> Self: ...  # type: ignore[override]
 
@@ -44,13 +43,13 @@ class Discrete(Scale): ...
 
 @dataclass
 class ContinuousBase(Scale):
-    values: tuple | str | None = ...  # None # pytype parse error
-    norm: tuple | None = ...  # None # pytype parse error
+    values: tuple[Incomplete] | str | None = None
+    norm: tuple[Incomplete] | None = None
 
 @dataclass
 class Continuous(ContinuousBase):
-    values: tuple | str | None = ...  # None # pytype parse error
-    trans: str | TransFuncs | None = ...  # None # pytype parse error
+    values: tuple[Incomplete] | str | None = None
+    trans: str | TransFuncs | None = None
     def tick(  # type: ignore[override]
         self,
         locator: Locator | None = None,
@@ -66,7 +65,7 @@ class Continuous(ContinuousBase):
         self,
         formatter: Formatter | None = None,
         *,
-        like: str | Callable | None = None,
+        like: str | Callable[[float], str] | None = None,
         base: int | None | Default = ...,
         unit: str | None = None,
     ) -> Self: ...
@@ -98,4 +97,4 @@ class PseudoAxis:
     def update_units(self, x: Incomplete) -> None: ...
     def convert_units(self, x: Incomplete) -> Incomplete: ...
     def get_scale(self) -> ScaleBase: ...
-    def get_majorticklocs(self) -> np.ndarray: ...
+    def get_majorticklocs(self) -> NDArray[Incomplete]: ...

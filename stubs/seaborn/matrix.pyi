@@ -19,7 +19,7 @@ def heatmap(
     *,
     vmin: float | None = None,
     vmax: float | None = None,
-    cmap: str | list | Colormap | None = None,
+    cmap: str | list[ColorType] | Colormap | None = None,
     center: float | None = None,
     robust: bool = False,
     annot: bool | ArrayLike | None = None,
@@ -40,17 +40,17 @@ def heatmap(
 
 class _DendrogramPlotter:
     axis: int
-    array: NDArray
+    array: NDArray[Incomplete]
     data: DataFrame
     shape: tuple[int, int]
     metric: str
     method: str
     label: bool
     rotate: bool
-    linkage: NDArray
+    linkage: NDArray[Incomplete]
     dendrogram: dict[str, list[Incomplete]]
-    xticks: list | NDArray
-    yticks: list | NDArray
+    xticks: list[float] | NDArray[Incomplete]
+    yticks: list[float] | NDArray[Incomplete]
     xticklabels: list[str]
     yticklabels: list[str]
     ylabel: str
@@ -58,10 +58,10 @@ class _DendrogramPlotter:
     dependent_coord: list[list[float]]
     independent_coord: list[list[float]]
     def __init__(
-        self, data: DataFrame, linkage: NDArray | None, metric: str, method: str, axis: int, label: bool, rotate: bool
+        self, data: DataFrame, linkage: NDArray[Incomplete] | None, metric: str, method: str, axis: int, label: bool, rotate: bool
     ) -> None: ...
     @property
-    def calculated_linkage(self) -> NDArray: ...
+    def calculated_linkage(self) -> NDArray[Incomplete]: ...
     def calculate_dendrogram(self) -> dict[str, list[Incomplete]]: ...
     @property
     def reordered_ind(self) -> list[int]: ...
@@ -70,7 +70,7 @@ class _DendrogramPlotter:
 def dendrogram(
     data: DataFrame,
     *,
-    linkage: NDArray | None = None,
+    linkage: NDArray[Incomplete] | None = None,
     axis: int = 1,
     label: bool = True,
     metric: str = "euclidean",
@@ -135,8 +135,8 @@ class ClusterGrid(Grid):
         col_cluster: bool,
         metric: str,
         method: str,
-        row_linkage: NDArray | None,
-        col_linkage: NDArray | None,
+        row_linkage: NDArray[Incomplete] | None,
+        col_linkage: NDArray[Incomplete] | None,
         tree_kws: dict[str, Incomplete] | None,
     ) -> None: ...
     def plot_colors(self, xind: Incomplete, yind: Incomplete, **kws: Incomplete) -> None: ...
@@ -148,8 +148,8 @@ class ClusterGrid(Grid):
         colorbar_kws: dict[str, Incomplete] | None,
         row_cluster: bool,
         col_cluster: bool,
-        row_linkage: NDArray | None,
-        col_linkage: NDArray | None,
+        row_linkage: NDArray[Incomplete] | None,
+        col_linkage: NDArray[Incomplete] | None,
         tree_kws: dict[str, Incomplete] | None,
         **kws: Incomplete,
     ) -> Self: ...
@@ -166,8 +166,8 @@ def clustermap(
     cbar_kws: dict[str, Incomplete] | None = None,
     row_cluster: bool = True,
     col_cluster: bool = True,
-    row_linkage: NDArray | None = None,
-    col_linkage: NDArray | None = None,
+    row_linkage: NDArray[Incomplete] | None = None,
+    col_linkage: NDArray[Incomplete] | None = None,
     row_colors: Incomplete | None = None,
     col_colors: Incomplete | None = None,
     mask: NDArray[np.bool_] | DataFrame | None = None,
