@@ -5,6 +5,7 @@ from typing_extensions import Concatenate, Literal, ParamSpec, Self
 
 from matplotlib.artist import Artist
 from matplotlib.axes import Axes
+from matplotlib.colors import Colormap
 from matplotlib.figure import Figure
 from matplotlib.legend import Legend
 from matplotlib.text import Text
@@ -30,16 +31,16 @@ class _BaseGrid:
     def pipe(self, func: Callable[Concatenate[Self, _P], _R], *args: _P.args, **kwargs: _P.kwargs) -> _R: ...
     def savefig(
         self, *args: Incomplete, **kwargs: Incomplete
-    ) -> None: ...  # *arg and **kwargs are passed to `matplotlib.figure.Figure.savefig`
+    ) -> None: ...  # *args and **kwargs are passed to `matplotlib.figure.Figure.savefig`
 
 class Grid(_BaseGrid):
     def __init__(self) -> None: ...
     def tight_layout(
         self, *args: Incomplete, **kwargs: Incomplete
-    ) -> Self: ...  # *arg and **kwargs are passed to `matplotlib.figure.Figure.tight_layout`
+    ) -> Self: ...  # *args and **kwargs are passed to `matplotlib.figure.Figure.tight_layout`
     def add_legend(
         self,
-        legend_data: Mapping[str | tuple[Incomplete, str], Artist] | None = None,
+        legend_data: Mapping[Any, Artist] | None = None,  # cannot use precise key type because of invariant Mapping keys
         title: str | None = None,
         label_order: list[str] | None = None,
         adjust_subtitles: bool = False,
@@ -174,7 +175,7 @@ class JointGrid(_BaseGrid):
         height: float = 6,
         ratio: float = 5,
         space: float = 0.2,
-        palette: _Palette | None = None,
+        palette: _Palette | Colormap | None = None,
         hue_order: Iterable[str] | None = None,
         hue_norm: Incomplete | None = None,
         dropna: bool = False,
@@ -217,7 +218,7 @@ def pairplot(
     plot_kws: dict[str, Any] | None = None,
     diag_kws: dict[str, Any] | None = None,
     grid_kws: dict[str, Any] | None = None,
-    size: float | None = None,
+    size: float | None = None,  # deprecated
 ) -> PairGrid: ...
 def jointplot(
     data: Incomplete | None = None,
@@ -225,7 +226,7 @@ def jointplot(
     x: Incomplete | None = None,
     y: Incomplete | None = None,
     hue: Incomplete | None = None,
-    kind: Literal["scatter", "kde", "hist", "hex", "reg", "resid"] = "scatter",
+    kind: str = "scatter",  # ideally Literal["scatter", "kde", "hist", "hex", "reg", "resid"] but it is checked with startswith
     height: float = 6,
     ratio: float = 5,
     space: float = 0.2,
@@ -233,7 +234,7 @@ def jointplot(
     xlim: Incomplete | None = None,
     ylim: Incomplete | None = None,
     color: ColorType | None = None,
-    palette: _Palette | None = None,
+    palette: _Palette | Colormap | None = None,
     hue_order: Iterable[str] | None = None,
     hue_norm: Incomplete | None = None,
     marginal_ticks: bool = False,
