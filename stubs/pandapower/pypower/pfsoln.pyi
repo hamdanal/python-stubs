@@ -1,7 +1,5 @@
 from _typeshed import Incomplete
 
-from numpy import r_ as r_
-
 EPS: Incomplete
 
 def pfsoln(
@@ -15,6 +13,6 @@ def pfsoln(
     V,
     ref,
     ref_gens,
-    Ibus: Incomplete | None = ...,
-    limited_gens: Incomplete | None = ...,
+    Ibus: Incomplete | None = None,
+    limited_gens: Incomplete | None = None,
 ): ...

@@ -17,9 +17,9 @@ class CimConverter:
     def __init__(self, cim_parser: cim_classes.CimParser, **kwargs) -> None: ...
     def convert_to_pp(
         self,
-        convert_line_to_switch: bool = ...,
-        line_r_limit: float = ...,
-        line_x_limit: float = ...,
+        convert_line_to_switch: bool = False,
+        line_r_limit: float = 0.1,
+        line_x_limit: float = 0.1,
         log_debug: bool = ...,
         **kwargs,
     ) -> pandapower.auxiliary.pandapowerNet: ...

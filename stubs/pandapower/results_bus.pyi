@@ -1,14 +1,13 @@
 from _typeshed import Incomplete
-from typing import Any
 from typing_extensions import TypeAlias
 
-from numpy import floating, integer
+import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from pandapower.auxiliary import pandapowerNet
 
-_PType: TypeAlias = NDArray[floating[Any]]
-_QType: TypeAlias = NDArray[floating[Any]]
-_BType: TypeAlias = NDArray[integer[Any]]
+_PType: TypeAlias = NDArray[np.float_]
+_QType: TypeAlias = NDArray[np.float_]
+_BType: TypeAlias = NDArray[np.int_]
 
 def write_voltage_dependend_load_results(
     net: pandapowerNet, p: ArrayLike, q: ArrayLike, b: ArrayLike

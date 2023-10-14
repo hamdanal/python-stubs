@@ -4,13 +4,13 @@ EPS: Incomplete
 
 def pips(
     f_fcn,
-    x0: Incomplete | None = ...,
-    A: Incomplete | None = ...,
-    l: Incomplete | None = ...,
-    u: Incomplete | None = ...,
-    xmin: Incomplete | None = ...,
-    xmax: Incomplete | None = ...,
-    gh_fcn: Incomplete | None = ...,
-    hess_fcn: Incomplete | None = ...,
-    opt: Incomplete | None = ...,
+    x0: Incomplete | None = None,
+    A: Incomplete | None = None,
+    l: Incomplete | None = None,
+    u: Incomplete | None = None,
+    xmin: Incomplete | None = None,
+    xmax: Incomplete | None = None,
+    gh_fcn: Incomplete | None = None,
+    hess_fcn: Incomplete | None = None,
+    opt: Incomplete | None = None,
 ): ...

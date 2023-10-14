@@ -21,12 +21,12 @@ class CharacteristicControl(Controller):
         input_variable,
         input_element_index,
         characteristic_index,
-        tol: float = ...,
-        in_service: bool = ...,
-        order: int = ...,
-        level: int = ...,
-        drop_same_existing_ctrl: bool = ...,
-        matching_params: Incomplete | None = ...,
+        tol: float = 0.001,
+        in_service: bool = True,
+        order: int = 0,
+        level: int = 0,
+        drop_same_existing_ctrl: bool = False,
+        matching_params: Incomplete | None = None,
         **kwargs,
     ) -> None: ...
     def initialize_control(self, net) -> None: ...

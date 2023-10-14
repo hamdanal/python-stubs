@@ -1,8 +1,7 @@
-from _typeshed import Incomplete
-from collections.abc import Mapping
 from typing import Literal
 
 from pandapower.auxiliary import pandapowerNet
+from pandapower.std_types import _StdType
 
 def create_dickert_lv_feeders(
     net: pandapowerNet,
@@ -18,5 +17,5 @@ def create_dickert_lv_network(
     customer: Literal["single", "multiple"] = "single",
     case: Literal["good", "average", "worse"] = "good",
     trafo_type_name: str = "0.4 MVA 20/0.4 kV",
-    trafo_type_data: Mapping[Incomplete, Incomplete] | None = ...,
+    trafo_type_data: _StdType | None = None,
 ) -> pandapowerNet: ...

@@ -1,6 +1,6 @@
 from _typeshed import Incomplete, StrOrBytesPath, SupportsRead, SupportsWrite
 from collections.abc import Mapping
-from typing import overload
+from typing import TypedDict, overload
 
 from pandapower.auxiliary import pandapowerNet
 
@@ -31,6 +31,16 @@ def to_json(
 ) -> str | None: ...
 def from_pickle(filename: SupportsRead[bytes] | StrOrBytesPath, convert: bool = True) -> pandapowerNet: ...
 def from_excel(filename: StrOrBytesPath, convert: bool = True) -> pandapowerNet: ...
+
+class _FromJsonKwds(TypedDict, total=False):  # noqa: PYI049
+    convert: bool
+    encryption_key: str | None
+    elements_to_deserialize: Incomplete | None
+    keep_serialized_elements: bool
+    add_basic_std_types: bool
+    replace_elements: Mapping[str, str] | None
+    empty_dict_like_object: Incomplete | None
+
 def from_json(
     filename: SupportsRead[str] | StrOrBytesPath,
     convert: bool = True,

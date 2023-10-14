@@ -1,4 +1,12 @@
-from _typeshed import Incomplete
+from collections.abc import Iterable, Mapping
+from typing import Any, Literal, overload
+
+import networkx as nx
+import numpy as np
+import pandas as pd
+from numpy.typing import NDArray
+from pandapower.auxiliary import pandapowerNet
+from pandapower.topology.graph_tool_interface import GraphToolInterface
 
 graph_tool_available: bool
 INDEX: int
@@ -9,26 +17,74 @@ BR_R: int
 BR_X: int
 BR_Z: int
 
+@overload
 def create_nxgraph(
-    net,
-    respect_switches: bool = ...,
-    include_lines: bool = ...,
-    include_impedances: bool = ...,
-    include_dclines: bool = ...,
-    include_trafos: bool = ...,
-    include_trafo3ws: bool = ...,
-    nogobuses: Incomplete | None = ...,
-    notravbuses: Incomplete | None = ...,
-    multi: bool = ...,
-    calc_branch_impedances: bool = ...,
-    branch_impedance_unit: str = ...,
-    library: str = ...,
-    include_out_of_service: bool = ...,
-): ...
-def get_edge_table(net, table_name, include_edges): ...
+    net: pandapowerNet,
+    *,
+    respect_switches: bool = True,
+    include_lines: bool = True,
+    include_impedances: bool = True,
+    include_dclines: bool = True,
+    include_trafos: bool = True,
+    include_trafo3ws: bool = True,
+    nogobuses: Iterable[int] | None = None,
+    notravbuses: Iterable[int] | None = None,
+    multi: Literal[False],
+    calc_branch_impedances: bool = False,
+    branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
+    library: Literal["networkx"] = "networkx",
+    include_out_of_service: bool = False,
+) -> nx.Graph: ...
+@overload
+def create_nxgraph(
+    net: pandapowerNet,
+    *,
+    respect_switches: bool = True,
+    include_lines: bool = True,
+    include_impedances: bool = True,
+    include_dclines: bool = True,
+    include_trafos: bool = True,
+    include_trafo3ws: bool = True,
+    nogobuses: Iterable[int] | None = None,
+    notravbuses: Iterable[int] | None = None,
+    multi: Literal[True] = True,
+    calc_branch_impedances: bool = False,
+    branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
+    library: Literal["graph_tool"],
+    include_out_of_service: bool = False,
+) -> GraphToolInterface: ...
+@overload
+def create_nxgraph(
+    net: pandapowerNet,
+    *,
+    respect_switches: bool = True,
+    include_lines: bool = True,
+    include_impedances: bool = True,
+    include_dclines: bool = True,
+    include_trafos: bool = True,
+    include_trafo3ws: bool = True,
+    nogobuses: Iterable[int] | None = None,
+    notravbuses: Iterable[int] | None = None,
+    multi: Literal[True] = True,
+    calc_branch_impedances: bool = False,
+    branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
+    library: Literal["networkx"] = "networkx",
+    include_out_of_service: bool = False,
+) -> nx.MultiGraph: ...
+def get_edge_table(net: pandapowerNet, table_name: str, include_edges: bool | Iterable[int]) -> pd.DataFrame | None: ...
 def add_edges(
-    mg, indices, parameter, in_service, net, element, calc_branch_impedances: bool = ..., branch_impedance_unit: str = ...
+    mg: nx.Graph | GraphToolInterface,
+    indices,
+    parameter,
+    in_service,
+    net: pandapowerNet,
+    element,
+    calc_branch_impedances: bool = False,
+    branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
 ) -> None: ...
-def get_baseR(net, ppc, buses): ...
-def init_par(tab, calc_branch_impedances: bool = ...): ...
-def get_nx_ppc(net): ...
+@overload
+def get_baseR(net: pandapowerNet, ppc: Mapping[str, Any], buses: int) -> float: ...
+@overload
+def get_baseR(net: pandapowerNet, ppc: Mapping[str, Any], buses: Iterable[int]) -> NDArray[np.float64]: ...
+def init_par(tab: pd.DataFrame, calc_branch_impedances: bool = False) -> tuple[NDArray, ...]: ...
+def get_nx_ppc(net: pandapowerNet) -> dict[str, Any]: ...

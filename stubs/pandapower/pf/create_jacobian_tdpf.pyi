@@ -1,11 +1,9 @@
-from pandapower.pypower.idx_brch import BR_B as BR_B, BR_R as BR_R, BR_X as BR_X, PF as PF, PT as PT, QF as QF, QT as QT
-from pandapower.pypower.idx_brch_tdpf import TDPF as TDPF
-from pandapower.pypower.idx_bus import BUS_I as BUS_I
+from pandapower.auxiliary import pandapowerNet
 
 SIGMA: float
 ALPHA: float
 
-def calc_r_theta_from_t_rise(net, t_rise_degree_celsius): ...
+def calc_r_theta_from_t_rise(net: pandapowerNet, t_rise_degree_celsius): ...
 def calc_i_square_p_loss(branch, tdpf_lines, g, b, Vm, Va): ...
 def calc_r_theta(t_air_pu, a0, a1, a2, i_square_pu, p_loss_pu): ...
 def calc_T_frank(p_loss_pu, t_air_pu, r_theta_pu, tdpf_delay_s, T0, tau): ...
@@ -20,11 +18,11 @@ def calc_a0_a1_a2_tau(
     wind_speed_m_per_s,
     wind_angle_degree,
     s_w_per_square_meter,
-    alpha_pu=...,
-    solar_absorptivity: float = ...,
-    emissivity: float = ...,
-    T_base: int = ...,
-    i_base_a: int = ...,
+    alpha_pu=0.004,
+    solar_absorptivity: float = 0.5,
+    emissivity: float = 0.5,
+    T_base: int = 1,
+    i_base_a: int = 1,
 ): ...
 def calc_h_c(conductor_outer_diameter_m, v_m_per_s, wind_angle_degree, t_air_degree_celsius): ...
 def create_J_tdpf(

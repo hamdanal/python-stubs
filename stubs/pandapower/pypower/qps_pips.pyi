@@ -6,8 +6,8 @@ def qps_pips(
     A,
     l,
     u,
-    xmin: Incomplete | None = ...,
-    xmax: Incomplete | None = ...,
-    x0: Incomplete | None = ...,
-    opt: Incomplete | None = ...,
+    xmin: Incomplete | None = None,
+    xmax: Incomplete | None = None,
+    x0: Incomplete | None = None,
+    opt: Incomplete | None = None,
 ): ...

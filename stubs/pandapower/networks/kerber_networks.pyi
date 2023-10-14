@@ -1,42 +1,5 @@
-from _typeshed import Incomplete as Unknown
-
 from pandapower.auxiliary import pandapowerNet
 
-def _create_empty_network_with_transformer(
-    trafotype: Unknown, V_OS: float = 10, V_US: float = 0.4
-) -> tuple[pandapowerNet, int]: ...
-def _add_lines_and_loads(
-    pd_net: pandapowerNet,
-    n_lines: int,
-    startbusnr: Unknown,
-    length_per_line: Unknown,
-    std_type: str = "NAYY 4x150 SE",
-    p_load_mw: float = 0,
-    q_load_mvar: float = 0,
-    branchnr: int = 1,
-    l_para_per_km: float | None = None,
-) -> pandapowerNet: ...
-def _add_lines_with_branched_loads(
-    net: pandapowerNet,
-    n_lines: int,
-    startbus: Unknown,
-    length_per_line: Unknown,
-    std_type: str = "NAYY 4x150 SE",
-    p_load_mw: float = 0,
-    q_load_mvar: float = 0,
-    length_branchout_line_1: float = 0.022,
-    length_branchout_line_2: float = 0,
-    std_type_branchout_line_1: str = "NAYY 4x50 SE",
-    std_type_branchout_line_2: str = "NAYY 4x50 SE",
-    prob_branchout_line_1: float = 0.5,
-    branchnr: int = 1,
-) -> pandapowerNet: ...
-def _create_branch_network(
-    trafotype: Unknown, v_os: Unknown, num_lines: Unknown, len_lines: Unknown, **kwargs: Unknown
-) -> pandapowerNet: ...
-def _create_branched_loads_network(
-    trafotype: Unknown, v_os: Unknown, num_lines: Unknown, len_lines: Unknown, **kwargs: Unknown
-) -> pandapowerNet: ...
 def create_kerber_landnetz_freileitung_1(
     n_lines: int = 13,
     l_lines_in_km: float = 0.021,

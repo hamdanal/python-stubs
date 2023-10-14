@@ -8,12 +8,12 @@ BUS_MEAS_PPCI_IX: Incomplete
 
 def pp2eppci(
     net,
-    v_start: Incomplete | None = ...,
-    delta_start: Incomplete | None = ...,
-    calculate_voltage_angles: bool = ...,
-    zero_injection: str = ...,
-    ppc: Incomplete | None = ...,
-    eppci: Incomplete | None = ...,
+    v_start: Incomplete | None = None,
+    delta_start: Incomplete | None = None,
+    calculate_voltage_angles: bool = True,
+    zero_injection: str = "aux_bus",
+    ppc: Incomplete | None = None,
+    eppci: Incomplete | None = None,
 ): ...
 
 class ExtendedPPCI(UserDict):

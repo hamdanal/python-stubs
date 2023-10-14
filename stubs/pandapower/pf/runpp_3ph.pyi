@@ -1,23 +1,21 @@
-from _typeshed import Incomplete
-
-from pandapower.auxiliary import ppException
+from pandapower.auxiliary import pandapowerNet, ppException
 
 class Not_implemented(ppException): ...
 
 def runpp_3ph(
-    net,
-    calculate_voltage_angles: bool = ...,
-    init: str = ...,
-    max_iteration: str = ...,
-    tolerance_mva: float = ...,
-    trafo_model: str = ...,
-    trafo_loading: str = ...,
-    enforce_q_lims: bool = ...,
-    numba: bool = ...,
-    recycle: Incomplete | None = ...,
-    check_connectivity: bool = ...,
-    switch_rx_ratio: float = ...,
-    delta_q: int = ...,
-    v_debug: bool = ...,
+    net: pandapowerNet,
+    calculate_voltage_angles: bool = True,
+    init: str = "auto",
+    max_iteration: str = "auto",
+    tolerance_mva: float = 1e-08,
+    trafo_model: str = "t",
+    trafo_loading: str = "current",
+    enforce_q_lims: bool = False,
+    numba: bool = True,
+    recycle: dict[str, bool] | None = None,
+    check_connectivity: bool = True,
+    switch_rx_ratio: float = 2.0,
+    delta_q: float = 0,
+    v_debug: bool = False,
     **kwargs,
 ) -> None: ...

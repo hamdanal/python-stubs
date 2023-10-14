@@ -1,26 +1,33 @@
 from _typeshed import Incomplete
-from collections.abc import Callable
-from typing import Literal
+from collections.abc import Callable, Mapping, Sequence
+from functools import partial
+from typing import Generic, Literal, TypeVar
 
+import pandas as pd
+from numpy.typing import NDArray
 from pandapower.auxiliary import pandapowerNet
 from pandapower.io_utils import JSONSerializableClass
 
-class OutputWriter(JSONSerializableClass):
+_T = TypeVar("_T")
+
+class OutputWriter(JSONSerializableClass, Generic[_T]):
     output_path: str | None
     output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"]
     write_time: float | None
-    log_variables: list[tuple[str, str]] | None
+    log_variables: list[tuple[str, str] | [tuple[str, str, list[int], Callable[[NDArray], object] | None, str | None]]] | None
     default_log_variables: list[tuple[str, str]]
     csv_separator: str
-    output: dict[str, Incomplete]
-    np_results: dict[str, Incomplete]
-    output_list: list[tuple[str, str]]
+    output: dict[str, pd.DataFrame]
+    np_results: dict[str, NDArray]
+    output_list: list[partial[object]]  # also list[tuple[str, str]] in self.get_batch_outputs
     cur_realtime: float
-    time_steps: Incomplete | None
+    time_steps: Sequence[_T] | None
+    time_step: _T
+    time_step_lookup: dict[_T, int]
     def __init__(
         self,
         net: pandapowerNet,
-        time_steps: Incomplete | None = None,
+        time_steps: Sequence[_T] | None = None,
         output_path: str | None = None,
         output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"] = ".p",
         write_time: float | None = None,
@@ -29,16 +36,17 @@ class OutputWriter(JSONSerializableClass):
     ) -> None: ...
     def init_log_variables(self, net: pandapowerNet) -> None: ...
     def init_all(self, net: pandapowerNet) -> None: ...
-    def dump_to_file(self, net: pandapowerNet, append: bool = False, recycle_options: Incomplete | None = None) -> None: ...
-    def dump(self, net: pandapowerNet, recycle_options: Incomplete | None = None) -> None: ...
-    time_step: Incomplete
+    def dump_to_file(
+        self, net: pandapowerNet, append: bool = False, recycle_options: Mapping[str, Incomplete] | Literal[False] | None = None
+    ) -> None: ...
+    def dump(self, net: pandapowerNet, recycle_options: Mapping[str, Incomplete] | Literal[False] | None = None) -> None: ...
     def save_results(
         self,
         net: pandapowerNet,
-        time_step: Incomplete,
+        time_step: _T,
         pf_converged: bool,
         ctrl_converged: bool,
-        recycle_options: Incomplete | None = None,
+        recycle_options: Mapping[str, Incomplete] | Literal[False] | None = None,
     ) -> None: ...
     def save_to_parameters(self) -> None: ...
     def save_nans_to_parameters(self) -> None: ...
@@ -47,10 +55,9 @@ class OutputWriter(JSONSerializableClass):
         self,
         table: str,
         variable: str,
-        index: Incomplete | None = None,
-        eval_function: Callable[[str, str, Incomplete], Incomplete] | None = None,
+        index: Sequence[int] | None = None,
+        eval_function: Callable[[NDArray], object] | None = None,
         eval_name: str | None = None,
     ) -> None: ...
-    time_step_lookup: dict[Incomplete, int]
-    def init_timesteps(self, time_steps: Incomplete) -> None: ...
-    def get_batch_outputs(self, net: pandapowerNet, recycle_options: Incomplete) -> None: ...
+    def init_timesteps(self, time_steps: Sequence[_T]) -> None: ...
+    def get_batch_outputs(self, net: pandapowerNet, recycle_options: Mapping[str, Incomplete]) -> None: ...

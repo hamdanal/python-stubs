@@ -9,7 +9,7 @@ from matplotlib.collections import Collection, LineCollection, PatchCollection
 from matplotlib.colors import Colormap, Normalize
 from matplotlib.font_manager import FontProperties
 from matplotlib.textpath import TextPath
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from pandapower.auxiliary import pandapowerNet
 
 _CollectionT = TypeVar("_CollectionT", bound=Collection)
@@ -22,7 +22,7 @@ class CustomTextPath(TextPath):
     prop: FontProperties
     def __init__(
         self,
-        xy: tuple[float, float] | np.ndarray,
+        xy: tuple[float, float] | NDArray[np.float_],
         s: str,
         size: float | None = None,
         prop: FontProperties | None = None,
@@ -33,7 +33,7 @@ class CustomTextPath(TextPath):
 
 def create_annotation_collection(
     texts: Iterable[str],
-    coords: Iterable[tuple],
+    coords: Iterable[tuple[float, float]],
     size: float | Iterable[float],
     prop: FontProperties | None = None,
     **kwargs: Incomplete,
@@ -57,9 +57,9 @@ def create_bus_collection(
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
     infofunc: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     bus_geodata: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "Bus Voltage [pu]",
     **kwargs,
 ) -> PatchCollection | None: ...
 def create_line_collection(
@@ -67,13 +67,13 @@ def create_line_collection(
     lines: Incomplete | None = None,
     line_geodata: Incomplete | None = None,
     bus_geodata: Incomplete | None = None,
-    use_bus_geodata: bool = ...,
+    use_bus_geodata: bool = False,
     infofunc: Incomplete | None = None,
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     z: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "Line Loading [%]",
     clim: Incomplete | None = None,
     plot_colormap: bool = True,
     **kwargs,
@@ -85,9 +85,9 @@ def create_dcline_collection(
     infofunc: Incomplete | None = None,
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     z: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "HVDC-Line Loading [%]",
     clim: Incomplete | None = None,
     plot_colormap: bool = True,
     **kwargs,
@@ -97,7 +97,7 @@ def create_impedance_collection(
     impedances: Incomplete | None = None,
     bus_geodata: Incomplete | None = None,
     infofunc: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     **kwargs,
 ) -> LineCollection | None: ...
 def create_trafo_connection_collection(
@@ -109,8 +109,8 @@ def create_trafo_connection_collection(
     clim: Incomplete | None = None,
     norm: Incomplete | None = None,
     z: Incomplete | None = None,
-    cbar_title: str = ...,
-    picker: bool = ...,
+    cbar_title: str = "Transformer Loading",
+    picker: bool = False,
     **kwargs,
 ) -> LineCollection: ...
 def create_trafo3w_connection_collection(
@@ -123,14 +123,14 @@ def create_trafo3w_connection_collection(
 def create_trafo_collection(
     net: pandapowerNet,
     trafos: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     size: Incomplete | None = None,
     infofunc: Incomplete | None = None,
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
     z: Incomplete | None = None,
     clim: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "Transformer Loading",
     plot_colormap: bool = True,
     bus_geodata: Incomplete | None = None,
     **kwargs,
@@ -138,13 +138,13 @@ def create_trafo_collection(
 def create_trafo3w_collection(
     net: pandapowerNet,
     trafo3ws: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     infofunc: Incomplete | None = None,
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
     z: Incomplete | None = None,
     clim: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "3W-Transformer Loading",
     plot_colormap: bool = True,
     bus_geodata: Incomplete | None = None,
     **kwargs,
@@ -155,9 +155,9 @@ def create_busbar_collection(
     infofunc: Incomplete | None = None,
     cmap: Incomplete | None = None,
     norm: Incomplete | None = None,
-    picker: bool = ...,
+    picker: bool = False,
     z: Incomplete | None = None,
-    cbar_title: str = ...,
+    cbar_title: str = "Bus Voltage [p.u.]",
     clim: Incomplete | None = None,
     **kwargs,
 ) -> LineCollection | None: ...
@@ -166,7 +166,7 @@ def create_load_collection(
     loads: Incomplete | None = None,
     size: float = 1.0,
     infofunc: Incomplete | None = None,
-    orientation: float = ...,
+    orientation: float = 3.14159265,
     picker: bool = False,
     **kwargs,
 ) -> tuple[PatchCollection, LineCollection]: ...
@@ -175,7 +175,7 @@ def create_gen_collection(
     gens: Incomplete | None = None,
     size: float = 1.0,
     infofunc: Incomplete | None = None,
-    orientation: float = ...,
+    orientation: float = 3.14159265,
     picker: bool = False,
     **kwargs,
 ) -> tuple[PatchCollection, LineCollection]: ...
@@ -184,7 +184,7 @@ def create_sgen_collection(
     sgens: Incomplete | None = None,
     size: float = 1.0,
     infofunc: Incomplete | None = None,
-    orientation: float = ...,
+    orientation: float = 3.14159265,
     picker: bool = False,
     **kwargs,
 ) -> tuple[PatchCollection, LineCollection]: ...
@@ -193,7 +193,7 @@ def create_storage_collection(
     storages: Incomplete | None = None,
     size: float = 1.0,
     infofunc: Incomplete | None = None,
-    orientation: float = ...,
+    orientation: float = 3.14159265,
     picker: bool = False,
     **kwargs,
 ) -> tuple[PatchCollection, LineCollection]: ...
@@ -220,11 +220,11 @@ def create_bus_bus_switch_collection(
 ) -> tuple[PatchCollection, LineCollection]: ...
 def draw_collections(
     collections: Iterable[Collection],
-    figsize: tuple[float, float] = ...,
+    figsize: tuple[float, float] = (10, 8),
     ax: Axes | None = None,
     plot_colorbars: bool = True,
     set_aspect: bool = True,
-    axes_visible: tuple[bool, bool] = ...,
+    axes_visible: tuple[bool, bool] = (False, False),
     copy_collections: bool = True,
     draw: bool = True,
 ) -> Axes: ...

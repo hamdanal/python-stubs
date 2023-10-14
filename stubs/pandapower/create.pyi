@@ -1,8 +1,8 @@
 from _typeshed import Incomplete
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal
+from typing import Literal
 
-from numpy import integer
+import numpy as np
 from numpy.typing import NDArray
 from pandapower.auxiliary import pandapowerNet
 
@@ -35,7 +35,7 @@ def create_buses(
     min_vm_pu: float | None = None,
     coords: list[list[tuple[int, int]]] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_load(
     net: pandapowerNet,
     bus: int,
@@ -75,7 +75,7 @@ def create_loads(
     min_q_mvar: float | Sequence[float] | None = None,
     controllable: bool | Sequence[bool] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_asymmetric_load(
     net: pandapowerNet,
     bus: int,
@@ -151,7 +151,7 @@ def create_sgens(
     kappa: float = ...,
     lrc_pu: float = ...,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_asymmetric_sgen(
     net: pandapowerNet,
     bus: int,
@@ -253,7 +253,7 @@ def create_gens(
     in_service: bool | Sequence[bool] = True,
     slack_weight: float = 0,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_motor(
     net: pandapowerNet,
     bus: int,
@@ -325,7 +325,7 @@ def create_lines(
     in_service: bool | Sequence[bool] = True,
     max_loading_percent: float | Sequence[float] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_line_from_parameters(
     net: pandapowerNet,
     from_bus: int,
@@ -378,7 +378,7 @@ def create_lines_from_parameters(
     c0_nf_per_km: float | Sequence[float] | None = None,
     g0_us_per_km: float | Sequence[float] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_transformer(
     net: pandapowerNet,
     hv_bus: int,
@@ -458,7 +458,7 @@ def create_transformers_from_parameters(
     tap_step_percent: Incomplete = ...,
     tap_step_degree: Incomplete = ...,
     tap_pos: Incomplete = ...,
-    tap_phase_shifter: bool = ...,
+    tap_phase_shifter: bool = False,
     in_service: bool = True,
     name: Sequence[str] | None = None,
     vector_group: Incomplete | None = None,
@@ -478,7 +478,7 @@ def create_transformers_from_parameters(
     vkr_percent_characteristic: Incomplete | None = None,
     xn_ohm: Incomplete | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_transformer3w(
     net: pandapowerNet,
     hv_bus: int,
@@ -581,7 +581,7 @@ def create_transformers3w_from_parameters(
     in_service: bool | Sequence[bool] = True,
     index: Sequence[int] | None = None,
     max_loading_percent: Incomplete | None = None,
-    tap_at_star_point: bool = ...,
+    tap_at_star_point: bool = False,
     vk0_hv_percent: Incomplete = ...,
     vk0_mv_percent: Incomplete = ...,
     vk0_lv_percent: Incomplete = ...,
@@ -597,7 +597,7 @@ def create_transformers3w_from_parameters(
     vk_lv_percent_characteristic: Incomplete | None = None,
     vkr_lv_percent_characteristic: Incomplete | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_switch(
     net: pandapowerNet,
     bus: int,
@@ -623,7 +623,7 @@ def create_switches(
     z_ohm: float | Sequence[float] = 0,
     in_ka: float | Sequence[float] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_shunt(
     net: pandapowerNet,
     bus: int,
@@ -643,13 +643,13 @@ def create_shunts(
     q_mvar: float | Sequence[float],
     p_mw: float | Sequence[float] = 0,
     vn_kv: float | Sequence[float] | None = None,
-    step: int | Sequence[int] = ...,
-    max_step: int | Sequence[int] = ...,
+    step: int | Sequence[int] = 1,
+    max_step: int | Sequence[int] = 1,
     name: Sequence[str] | None = None,
     in_service: bool | Sequence[bool] = True,
     index: Sequence[int] | None = None,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_shunt_as_capacitor(net: pandapowerNet, bus: int, q_mvar: float, loss_factor: float, **kwargs: Incomplete) -> int: ...
 def create_impedance(
     net: pandapowerNet,
@@ -763,7 +763,7 @@ def create_pwl_costs(
     index: Sequence[int] | None = None,
     check: bool | Sequence[bool] = True,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_poly_cost(
     net: pandapowerNet,
     element: int,
@@ -792,7 +792,7 @@ def create_poly_costs(
     index: Sequence[int] | None = None,
     check: bool | Sequence[bool] = True,
     **kwargs: Incomplete,
-) -> NDArray[integer[Any]]: ...
+) -> NDArray[np.int_]: ...
 def create_group(
     net: pandapowerNet,
     element_types: str | Sequence[str],
@@ -805,7 +805,7 @@ def create_group(
 def create_group_from_dict(
     net: pandapowerNet,
     elements_dict: Mapping[str, Sequence[Incomplete]],
-    name: str = ...,
+    name: str = "",
     reference_column: Incomplete | None = None,
     index: int | None = None,
     **kwargs: Incomplete,

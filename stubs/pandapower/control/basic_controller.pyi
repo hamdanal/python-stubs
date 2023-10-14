@@ -4,7 +4,7 @@ from pandapower.io_utils import JSONSerializableClass
 
 class BasicCtrl(JSONSerializableClass):
     index: Incomplete
-    def __init__(self, container, index: Incomplete | None = ..., **kwargs) -> None: ...
+    def __init__(self, container, index: Incomplete | None = None, **kwargs) -> None: ...
     def time_step(self, container, time) -> None: ...
     def initialize_control(self, container) -> None: ...
     def is_converged(self, container): ...
@@ -22,15 +22,15 @@ class Controller(BasicCtrl):
     def __init__(
         self,
         net,
-        in_service: bool = ...,
-        order: int = ...,
-        level: int = ...,
-        index: Incomplete | None = ...,
-        recycle: bool = ...,
-        drop_same_existing_ctrl: bool = ...,
-        initial_run: bool = ...,
-        overwrite: bool = ...,
-        matching_params: Incomplete | None = ...,
+        in_service: bool = True,
+        order: int = 0,
+        level: int = 0,
+        index: Incomplete | None = None,
+        recycle: bool = False,
+        drop_same_existing_ctrl: bool = False,
+        initial_run: bool = True,
+        overwrite: bool = False,
+        matching_params: Incomplete | None = None,
         **kwargs,
     ) -> None: ...
     def add_controller_to_net(

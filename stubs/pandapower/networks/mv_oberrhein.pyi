@@ -1,7 +1,8 @@
-from _typeshed import Incomplete
 from typing import Literal, overload
+from typing_extensions import Unpack
 
 from pandapower.auxiliary import pandapowerNet
+from pandapower.file_io import _FromJsonKwds
 
 @overload
 def mv_oberrhein(
@@ -11,7 +12,7 @@ def mv_oberrhein(
     include_substations: bool = False,
     *,
     separation_by_sub: Literal[True],
-    **kwargs: Incomplete,
+    **kwargs: Unpack[_FromJsonKwds],
 ) -> tuple[pandapowerNet, pandapowerNet]: ...
 @overload
 def mv_oberrhein(
@@ -20,7 +21,7 @@ def mv_oberrhein(
     cosphi_pv: float = 1,
     include_substations: bool = False,
     separation_by_sub: Literal[False] = False,
-    **kwargs: Incomplete,
+    **kwargs: Unpack[_FromJsonKwds],
 ) -> pandapowerNet: ...
 @overload
 def mv_oberrhein(
@@ -29,5 +30,5 @@ def mv_oberrhein(
     cosphi_pv: float = 1,
     include_substations: bool = False,
     separation_by_sub: bool = False,
-    **kwargs: Incomplete,
+    **kwargs: Unpack[_FromJsonKwds],
 ) -> pandapowerNet | tuple[pandapowerNet, pandapowerNet]: ...

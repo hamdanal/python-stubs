@@ -4,7 +4,7 @@ import pandas as pd
 
 class CimParser:
     cim: Incomplete
-    def __init__(self, cim: dict[str, dict[str, pd.DataFrame]] = ...) -> None: ...
+    def __init__(self, cim: dict[str, dict[str, pd.DataFrame]] = None) -> None: ...
     def parse_files(
         self,
         eq_file: str = ...,
@@ -14,9 +14,9 @@ class CimParser:
         eq_bd_file: str = ...,
         tp_bd_file: str = ...,
         file_list: None = None,
-        encoding: str = ...,
-        prepare_cim_net: bool = ...,
-        set_data_types: bool = ...,
+        encoding: str = "utf-8",
+        prepare_cim_net: bool = False,
+        set_data_types: bool = False,
     ) -> CimParser: ...
     def set_cim_data_types(self) -> CimParser: ...
     def prepare_cim_net(self) -> CimParser: ...

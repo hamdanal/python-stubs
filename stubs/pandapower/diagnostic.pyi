@@ -6,16 +6,16 @@ log_message_sep: str
 
 def diagnostic(
     net: pandapowerNet,
-    report_style: str = ...,
-    warnings_only: bool = ...,
-    return_result_dict: bool = ...,
-    overload_scaling_factor: float = ...,
-    min_r_ohm: float = ...,
-    min_x_ohm: float = ...,
-    min_r_pu: float = ...,
-    min_x_pu: float = ...,
-    nom_voltage_tolerance: float = ...,
-    numba_tolerance: float = ...,
+    report_style: str = "detailed",
+    warnings_only: bool = False,
+    return_result_dict: bool = True,
+    overload_scaling_factor: float = 0.001,
+    min_r_ohm: float = 0.001,
+    min_x_ohm: float = 0.001,
+    min_r_pu: float = 1e-05,
+    min_x_pu: float = 1e-05,
+    nom_voltage_tolerance: float = 0.3,
+    numba_tolerance: float = 1e-05,
 ) -> dict[str, Incomplete]: ...
 def check_greater_zero(element: Incomplete, element_index: int, column: str) -> int | None: ...
 def check_greater_equal_zero(element: Incomplete, element_index: int, column: str) -> int | None: ...

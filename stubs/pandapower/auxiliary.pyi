@@ -3,9 +3,10 @@ from collections.abc import Iterable, Mapping, MutableMapping, MutableSequence, 
 from typing import Any, NoReturn, SupportsInt, TypeVar
 from typing_extensions import Self
 
-from numpy import complexfloating, floating, integer
+import numpy as np
+import pandas as pd
 from numpy.typing import ArrayLike, NDArray
-from pandas import DataFrame
+from pandapower.std_types import _StdTypes
 
 _T = TypeVar("_T")
 
@@ -17,84 +18,84 @@ def warn_and_fix_parameter_renaming(
 class ADict(dict[_KT, _VT], MutableMapping[_KT, _VT]):
     def __call__(self, key: _KT) -> _VT: ...
 
-class pandapowerNet(ADict[str, DataFrame]):
+class pandapowerNet(ADict[str, pd.DataFrame]):
     # These attributes are not defined in the class body, but are added dynamically
-    asymmetric_load: DataFrame
-    asymmetric_sgen: DataFrame
-    bus: DataFrame
-    bus_geodata: DataFrame
-    characteristic: DataFrame
-    controller: DataFrame
+    asymmetric_load: pd.DataFrame
+    asymmetric_sgen: pd.DataFrame
+    bus: pd.DataFrame
+    bus_geodata: pd.DataFrame
+    characteristic: pd.DataFrame
+    controller: pd.DataFrame
     converged: bool
-    dcline: DataFrame
-    ext_grid: DataFrame
+    dcline: pd.DataFrame
+    ext_grid: pd.DataFrame
     f_hz: float
     format_version: str
-    gen: DataFrame
-    group: DataFrame
-    impedance: DataFrame
-    line: DataFrame
-    line_geodata: DataFrame
-    load: DataFrame
-    measurement: DataFrame
-    motor: DataFrame
+    gen: pd.DataFrame
+    group: pd.DataFrame
+    impedance: pd.DataFrame
+    line: pd.DataFrame
+    line_geodata: pd.DataFrame
+    load: pd.DataFrame
+    measurement: pd.DataFrame
+    motor: pd.DataFrame
     name: str
-    poly_cost: DataFrame
-    pwl_cost: DataFrame
-    res_asymmetric_load: DataFrame
-    res_asymmetric_load_3ph: DataFrame
-    res_asymmetric_sgen: DataFrame
-    res_asymmetric_sgen_3ph: DataFrame
-    res_bus: DataFrame
-    res_bus_3ph: DataFrame
-    res_bus_est: DataFrame
-    res_bus_sc: DataFrame
-    res_dcline: DataFrame
-    res_ext_grid: DataFrame
-    res_ext_grid_3ph: DataFrame
-    res_ext_grid_sc: DataFrame
-    res_gen: DataFrame
-    res_gen_sc: DataFrame
-    res_impedance: DataFrame
-    res_impedance_est: DataFrame
-    res_line: DataFrame
-    res_line_3ph: DataFrame
-    res_line_est: DataFrame
-    res_line_sc: DataFrame
-    res_load: DataFrame
-    res_load_3ph: DataFrame
-    res_motor: DataFrame
-    res_sgen: DataFrame
-    res_sgen_3ph: DataFrame
-    res_sgen_sc: DataFrame
-    res_shunt: DataFrame
-    res_shunt_3ph: DataFrame
-    res_storage: DataFrame
-    res_storage_3ph: DataFrame
-    res_switch: DataFrame
-    res_switch_est: DataFrame
-    res_switch_sc: DataFrame
-    res_trafo: DataFrame
-    res_trafo3w: DataFrame
-    res_trafo3w_est: DataFrame
-    res_trafo3w_sc: DataFrame
-    res_trafo_3ph: DataFrame
-    res_trafo_est: DataFrame
-    res_trafo_sc: DataFrame
-    res_ward: DataFrame
-    res_xward: DataFrame
-    sgen: DataFrame
-    shunt: DataFrame
+    poly_cost: pd.DataFrame
+    pwl_cost: pd.DataFrame
+    res_asymmetric_load: pd.DataFrame
+    res_asymmetric_load_3ph: pd.DataFrame
+    res_asymmetric_sgen: pd.DataFrame
+    res_asymmetric_sgen_3ph: pd.DataFrame
+    res_bus: pd.DataFrame
+    res_bus_3ph: pd.DataFrame
+    res_bus_est: pd.DataFrame
+    res_bus_sc: pd.DataFrame
+    res_dcline: pd.DataFrame
+    res_ext_grid: pd.DataFrame
+    res_ext_grid_3ph: pd.DataFrame
+    res_ext_grid_sc: pd.DataFrame
+    res_gen: pd.DataFrame
+    res_gen_sc: pd.DataFrame
+    res_impedance: pd.DataFrame
+    res_impedance_est: pd.DataFrame
+    res_line: pd.DataFrame
+    res_line_3ph: pd.DataFrame
+    res_line_est: pd.DataFrame
+    res_line_sc: pd.DataFrame
+    res_load: pd.DataFrame
+    res_load_3ph: pd.DataFrame
+    res_motor: pd.DataFrame
+    res_sgen: pd.DataFrame
+    res_sgen_3ph: pd.DataFrame
+    res_sgen_sc: pd.DataFrame
+    res_shunt: pd.DataFrame
+    res_shunt_3ph: pd.DataFrame
+    res_storage: pd.DataFrame
+    res_storage_3ph: pd.DataFrame
+    res_switch: pd.DataFrame
+    res_switch_est: pd.DataFrame
+    res_switch_sc: pd.DataFrame
+    res_trafo: pd.DataFrame
+    res_trafo3w: pd.DataFrame
+    res_trafo3w_est: pd.DataFrame
+    res_trafo3w_sc: pd.DataFrame
+    res_trafo_3ph: pd.DataFrame
+    res_trafo_est: pd.DataFrame
+    res_trafo_sc: pd.DataFrame
+    res_ward: pd.DataFrame
+    res_xward: pd.DataFrame
+    sgen: pd.DataFrame
+    shunt: pd.DataFrame
     sn_mva: float
-    std_types: dict[str, dict[str, Incomplete]]
-    storage: DataFrame
-    switch: DataFrame
-    trafo: DataFrame
-    trafo3w: DataFrame
+    std_types: _StdTypes
+    storage: pd.DataFrame
+    switch: pd.DataFrame
+    trafo: pd.DataFrame
+    trafo3w: pd.DataFrame
     user_pf_options: dict[Incomplete, Incomplete]
     version: str
-    ward: DataFrame
-    xward: DataFrame
+    ward: pd.DataFrame
+    xward: pd.DataFrame
     def deepcopy(self) -> Self: ...
     # Account for dynamic attributes
     def __getattr__(self, name: str) -> Any: ...
@@ -104,35 +105,35 @@ def get_free_id(df: Sized) -> int: ...
 class ppException(Exception): ...
 
 def get_indices(
-    selection: Iterable[int], lookup: Mapping[int, int] | Mapping[str, Mapping[int, int]], fused_indices: bool = ...
-) -> NDArray[integer]: ...
-def ensure_iterability(var: _T | Iterable[_T], len_: int | None = ...) -> Iterable[_T]: ...
-def get_values(source: Incomplete, selection: Iterable[SupportsInt], lookup: Mapping[int, int]) -> NDArray[integer]: ...
+    selection: Iterable[int], lookup: Mapping[int, int] | Mapping[str, Mapping[int, int]], fused_indices: bool = True
+) -> NDArray[np.int_]: ...
+def ensure_iterability(var: _T | Iterable[_T], len_: int | None = None) -> Iterable[_T]: ...
+def get_values(source: Incomplete, selection: Iterable[SupportsInt], lookup: Mapping[int, int]) -> NDArray[np.int_]: ...
 def set_elements_oos(ti: Sized, tis: Incomplete, bis: Incomplete, lis: MutableSequence[bool]) -> None: ...
 def set_isolated_buses_oos(
     bus_in_service: MutableSequence[bool], ppc_bus_isolated: Incomplete, bus_lookup: Incomplete
 ) -> None: ...
-def X012_to_X0(X012: ArrayLike) -> NDArray[complexfloating]: ...
-def X012_to_X1(X012: ArrayLike) -> NDArray[complexfloating]: ...
-def X012_to_X2(X012: ArrayLike) -> NDArray[complexfloating]: ...
-def combine_X012(X0: ArrayLike, X1: ArrayLike, X2: ArrayLike) -> NDArray[complexfloating]: ...
+def X012_to_X0(X012: ArrayLike) -> NDArray[np.complex_]: ...
+def X012_to_X1(X012: ArrayLike) -> NDArray[np.complex_]: ...
+def X012_to_X2(X012: ArrayLike) -> NDArray[np.complex_]: ...
+def combine_X012(X0: ArrayLike, X1: ArrayLike, X2: ArrayLike) -> NDArray[np.complex_]: ...
 def phase_shift_unit_operator(angle_deg: float) -> float: ...
 
 a: float
 asq: float
-Tabc: NDArray[floating]
-T012: NDArray[floating]
+Tabc: NDArray[np.float_]
+T012: NDArray[np.float_]
 
-def sequence_to_phase(X012: ArrayLike) -> NDArray[floating]: ...
-def phase_to_sequence(Xabc: ArrayLike) -> NDArray[floating]: ...
-def I0_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[complexfloating]: ...
-def I1_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[complexfloating]: ...
-def I2_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[complexfloating]: ...
-def V1_from_ppc(ppc: Mapping[str, ArrayLike]) -> NDArray[complexfloating]: ...
-def V_from_I(Y: ArrayLike, I: ArrayLike) -> NDArray[complexfloating]: ...
-def I_from_V(Y: ArrayLike, V: ArrayLike) -> NDArray[complexfloating]: ...
-def S_from_VI_elementwise(V: ArrayLike, I: ArrayLike) -> NDArray[complexfloating]: ...
-def I_from_SV_elementwise(S: ArrayLike, V: ArrayLike) -> NDArray[complexfloating]: ...
+def sequence_to_phase(X012: ArrayLike) -> NDArray[np.float_]: ...
+def phase_to_sequence(Xabc: ArrayLike) -> NDArray[np.float_]: ...
+def I0_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[np.complex_]: ...
+def I1_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[np.complex_]: ...
+def I2_from_V012(V012: ArrayLike, Y: ArrayLike) -> NDArray[np.complex_]: ...
+def V1_from_ppc(ppc: Mapping[str, ArrayLike]) -> NDArray[np.complex_]: ...
+def V_from_I(Y: ArrayLike, I: ArrayLike) -> NDArray[np.complex_]: ...
+def I_from_V(Y: ArrayLike, V: ArrayLike) -> NDArray[np.complex_]: ...
+def S_from_VI_elementwise(V: ArrayLike, I: ArrayLike) -> NDArray[np.complex_]: ...
+def I_from_SV_elementwise(S: ArrayLike, V: ArrayLike) -> NDArray[np.complex_]: ...
 def SVabc_from_SV012(
-    S012: ArrayLike, V012: ArrayLike, n_res: int | None = ..., idx: int | ArrayLike | None = ...
-) -> tuple[NDArray[complexfloating], NDArray[complexfloating]]: ...
+    S012: ArrayLike, V012: ArrayLike, n_res: int | None = None, idx: int | ArrayLike | None = None
+) -> tuple[NDArray[np.complex_], NDArray[np.complex_]]: ...
