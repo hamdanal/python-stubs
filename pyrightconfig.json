@@ -12,7 +12,6 @@
     "reportUnknownVariableType": "none",
     // Extra strict settings
     "reportCallInDefaultInitializer": "error",
-    "reportImplicitStringConcatenation": "error",
     "reportUnnecessaryTypeIgnoreComment": "error",
     // Leave "type: ignore" comments to mypy
     "enableTypeIgnoreComments": false,
@@ -36,4 +35,6 @@
     "reportOverlappingOverload": "none",
     // The name of the self/cls parameter is out of typeshed's control.
     "reportSelfClsParameterName": "none",
+    // We don't care about missing type stubs
+    "reportMissingTypeStubs": "none",
 }
