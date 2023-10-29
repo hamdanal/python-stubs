@@ -1,39 +1,31 @@
+[project]
+name = "python-stubs"
+version = "0.0.0"
+requires-python = ">=3.8"
+
 [tool.ruff]
 line-length = 130
-target-version = "py37"
 fix = true
 select = [
-    "E",  # pycodestyle (errors)
-    "W",  # pycodestyle (warnings)
-    "F",  # pyflakes
-    "B",  # flake8-bugbear
-    "PYI",  # flake8-pyi
-    "PGH004",  # flake8-noqa
-    "I",  # isort
-    "UP",  # pyupgrade
-    "RUF100",  # yesqa
+    "E",      # pycodestyle (errors)
+    "W",      # pycodestyle (warnings)
+    "F",      # pyflakes
+    "B",      # flake8-bugbear
+    "PYI",    # flake8-pyi
+    "PGH004", # flake8-noqa
+    "I",      # isort
+    "UP",     # pyupgrade
+    "RUF100", # yesqa
+    "FA",     # flake8-future-annotations
 ]
 # ignore = ["E301", "E302", "E305", "E501"]
-# Only enable fixes for rules that have safe autofixes;
 fixable = [
     "F401",   # Remove unused imports
-    "UP004",  # Remove explicit `object` inheritance
-    "UP006",  # PEP-585 autofixes
-    "UP007",  # PEP-604 autofixes
-    "UP013",  # Class-based syntax for TypedDicts
-    "UP014",  # Class-based syntax for NamedTuples
-    "UP019",  # Use str over typing.Text
-    "UP035",  # import from typing, not typing_extensions, wherever possible
-    "UP039",  # don't use parens after a class definition with no bases
-    "PYI009",  # use `...`, not `pass`, in empty class bodies
-    "PYI010",  # function bodies must be empty
-    "PYI012",  # class bodies must not contain `pass`
-    "PYI013",  # non-empty class bodies must not contain `...`
-    "PYI020",  # quoted annotations are always unnecessary in stubs
-    "PYI025",  # always alias `collections.abc.Set` as `AbstractSet` when importing it
-    "PYI032",  # use `object`, not `Any`, as the second parameter to `__eq__`
-    "I",  # isort
-    "RUF100",  # yesqa
+    "UP",
+    "PYI",
+    "I",
+    "RUF100",
+    "FA",
 ]
 
 [tool.ruff.format]
