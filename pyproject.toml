@@ -1,8 +1,3 @@
-[tool.black]
-line_length = 130
-target_version = ["py310"]
-skip_magic_trailing_comma = true
-
 [tool.ruff]
 line-length = 130
 target-version = "py37"
@@ -40,8 +35,14 @@ fixable = [
     "I",  # isort
     "RUF100",  # yesqa
 ]
-isort.combine-as-imports = true
-isort.extra-standard-library = ["typing_extensions", "_typeshed"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.ruff.isort]
+combine-as-imports = true
+split-on-trailing-comma = false
+extra-standard-library = ["typing_extensions", "_typeshed"]
 
 [tool.ruff.per-file-ignores]
 "*.pyi" = ["B", "E741", "F403", "F405"]

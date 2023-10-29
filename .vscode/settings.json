@@ -1,11 +1,10 @@
 {
-    "python.formatting.provider": "none",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": false, // disable isort et al.
-            "source.organizeImports.ruff": true,
+            "source.organizeImports": "never", // disable isort et al.
+            "source.organizeImports.ruff": "explicit",
         },
     },
     "[yaml]": {
@@ -15,7 +14,7 @@
         "editor.defaultFormatter": "redhat.vscode-yaml",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll": true,
+            "source.fixAll": "explicit",
         },
     },
 }
