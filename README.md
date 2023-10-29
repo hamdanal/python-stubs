@@ -49,8 +49,8 @@ to copy the stubs in this repository and use them as a starting point.
 ## TODO
 
 The project is already useful as is, but there are still some things to do:
-- [ ] The stubs are very incomplete; they are just enough to make Pylance *happy*.
-- [ ] The stubs are not tested. Must add pyright, mypy, stubtest and optionally pytype.
+- [ ] Some stubs are incomplete; they are just enough to make Pylance *happy*.
+- [ ] The stubs are not tested. Should be tested with pyright, mypy, stubtest and optionally pytype.
 - [ ] No CI is set up yet.
 
 ## List of available stubs
@@ -60,4 +60,5 @@ Project | Links | Status
 django-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Incomplete
 django-postgres-extra | [PyPI](https://pypi.org/project/django-postgres-extra/), [GitHub](https://github.com/SectorLabs/django-postgres-extra) | Incomplete
 pandapower | [PyPI](https://pypi.org/project/pandapower/), [GitHub](https://github.com/e2nIEE/pandapower) | Incomplete
-seaborn | [PyPI](https://pypi.org/project/seaborn/), [GitHub](https://github.com/mwaskom/seaborn) | Complete
+seaborn | [PyPI](https://pypi.org/project/seaborn/), [GitHub](https://github.com/mwaskom/seaborn) | Upstreamed to typeshed
+geopandas | [PyPI](https://pypi.org/project/geopandas/), [GitHub](https://github.com/geopandas/geopandas) | Complete
