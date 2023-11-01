@@ -1,5 +1,4 @@
-from _typeshed import Incomplete
-
+from psycopg2._psycopg import _type
 from psycopg2.extras import Inet
 
 class Macaddr(Inet):
@@ -8,14 +7,9 @@ class Macaddr(Inet):
 class Macaddr8(Inet):
     def getquoted(self) -> bytes: ...
 
-# ***ARRAY are psycopg type-casting objects (`psycopg2._psycopg.type`) with:
-# - name: str
-# - values: tuple[int, ...]
-# - __call__: Callable[[?, ?], ?]
-# - __eq__, __ge__, __gt__, __le__, __lt__, __ne__: Callable[[?], bool]
 CIDRARRAY_OID: int
-CIDRARRAY: Incomplete
+CIDRARRAY: _type
 MACADDRARRAY_OID: int
-MACADDRARRAY: Incomplete
+MACADDRARRAY: _type
 MACADDRARRAY8_OID: int
-MACADDRARRAY8: Incomplete
+MACADDRARRAY8: _type

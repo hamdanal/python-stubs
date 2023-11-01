@@ -5,5 +5,5 @@ from django.db import models
 
 _T = TypeVar("_T", bound=models.Model)
 
-class NetManager(models.BaseManager[_T]):
+class NetManager(models.Manager[_T]):
     use_for_related_fields: Literal[True]

@@ -57,7 +57,7 @@ The project is already useful as is, but there are still some things to do:
 
 Project | Links | Status
 ------- | ----- | ------
-django-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Incomplete
+django-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Complete
 django-postgres-extra | [PyPI](https://pypi.org/project/django-postgres-extra/), [GitHub](https://github.com/SectorLabs/django-postgres-extra) | Incomplete
 pandapower | [PyPI](https://pypi.org/project/pandapower/), [GitHub](https://github.com/e2nIEE/pandapower) | Incomplete
 seaborn | [PyPI](https://pypi.org/project/seaborn/), [GitHub](https://github.com/mwaskom/seaborn) | Upstreamed to typeshed

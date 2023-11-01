@@ -5,3 +5,5 @@ from netfields.fields import (
     MACAddressField as MACAddressField,
 )
 from netfields.managers import NetManager as NetManager
+
+default_app_config: str
