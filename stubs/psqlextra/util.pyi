@@ -3,7 +3,8 @@ from contextlib import contextmanager
 from typing import TypeVar
 
 from django.db.models import Model
-from psqlextra.manager import PostgresManager
+
+from .manager import PostgresManager
 
 _ModelT = TypeVar("_ModelT", bound=Model)
 

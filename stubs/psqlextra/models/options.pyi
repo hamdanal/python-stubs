@@ -1,4 +1,4 @@
-from psqlextra.types import PostgresPartitioningMethod, SQLWithParams
+from ..types import PostgresPartitioningMethod, SQLWithParams
 
 class PostgresPartitionedModelOptions:
     method: PostgresPartitioningMethod

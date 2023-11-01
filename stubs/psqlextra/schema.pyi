@@ -1,0 +1,26 @@
+from collections.abc import Generator
+from contextlib import contextmanager
+from typing_extensions import Self
+
+class PostgresSchema:
+    NAME_MAX_LENGTH: int
+    name: str
+    default: PostgresSchema
+
+    def __init__(self, name: str) -> None: ...
+    @classmethod
+    def create(cls, name: str, *, using: str = "default") -> Self: ...
+    @classmethod
+    def create_time_based(cls, prefix: str, *, using: str = "default") -> Self: ...
+    @classmethod
+    def create_random(cls, prefix: str, *, using: str = "default") -> Self: ...
+    @classmethod
+    def delete_and_create(cls, name: str, *, cascade: bool = False, using: str = "default") -> Self: ...
+    @classmethod
+    def exists(cls, name: str, *, using: str = "default") -> bool: ...
+    def delete(self, *, cascade: bool = False, using: str = "default") -> None: ...
+
+@contextmanager
+def postgres_temporary_schema(
+    prefix: str, *, cascade: bool = False, delete_on_throw: bool = False, using: str = "default"
+) -> Generator[PostgresSchema, None, None]: ...

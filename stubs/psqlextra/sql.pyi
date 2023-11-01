@@ -1,12 +1,13 @@
-from _typeshed import Incomplete
 from collections.abc import Iterable
 from typing import Any
 
+from django.db.backends.base.base import BaseDatabaseWrapper
 from django.db.models import Expression, Model, Q
 from django.db.models.fields import Field
 from django.db.models.sql import InsertQuery, Query, UpdateQuery
-from psqlextra.compiler import PostgresInsertOnConflictCompiler, SQLUpdateCompiler as PostgresUpdateCompiler
-from psqlextra.types import ConflictAction
+
+from .compiler import PostgresInsertOnConflictCompiler, SQLUpdateCompiler as PostgresUpdateCompiler
+from .types import ConflictAction
 
 class PostgresQuery(Query):
     def rename_annotations(self, annotations: dict[str, str]) -> None: ...
@@ -21,7 +22,9 @@ class PostgresInsertQuery(InsertQuery):
     def insert_on_conflict_values(
         self, objs: list[Model], insert_fields: Iterable[Field[Any, Any]], update_values: dict[str, Any | Expression] = {}
     ) -> None: ...
-    def get_compiler(self, using: str | None = None, connection: Incomplete = None) -> PostgresInsertOnConflictCompiler: ...
+    def get_compiler(
+        self, using: str | None = None, connection: BaseDatabaseWrapper | None = None
+    ) -> PostgresInsertOnConflictCompiler: ...
 
 class PostgresUpdateQuery(UpdateQuery):
-    def get_compiler(self, using: str | None = None, connection: Incomplete = None) -> PostgresUpdateCompiler: ...
+    def get_compiler(self, using: str | None = None, connection: BaseDatabaseWrapper | None = None) -> PostgresUpdateCompiler: ...

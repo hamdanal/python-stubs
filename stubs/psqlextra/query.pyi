@@ -6,8 +6,9 @@ from django.db import models
 from django.db.models import Expression, Q
 from django.db.models.constraints import BaseConstraint
 from django.db.models.indexes import Index
-from psqlextra.sql import PostgresQuery
-from psqlextra.types import ConflictAction
+
+from .sql import PostgresQuery
+from .types import ConflictAction
 
 ConflictTarget: TypeAlias = Sequence[str | tuple[str, ...]] | BaseConstraint | Index
 
