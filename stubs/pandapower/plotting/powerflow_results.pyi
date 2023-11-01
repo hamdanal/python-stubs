@@ -3,6 +3,7 @@ from collections.abc import Sequence
 
 import pandas as pd
 from matplotlib.axes import Axes
+
 from pandapower.auxiliary import pandapowerNet
 
 MATPLOTLIB_INSTALLED: bool

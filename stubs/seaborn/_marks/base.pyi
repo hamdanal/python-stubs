@@ -5,6 +5,7 @@ from typing_extensions import TypeAlias
 
 from numpy.typing import NDArray
 from pandas import DataFrame
+
 from seaborn._core.properties import DashPattern, DashPatternWithOffset, RGBATuple
 from seaborn._core.scales import Scale
 

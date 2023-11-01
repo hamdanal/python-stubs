@@ -1,8 +1,7 @@
 from _typeshed import Incomplete
 
 import pandapower.auxiliary
-
-from .. import cim_classes as cim_classes
+from pandapower.converter.cim import cim_classes
 
 sc: Incomplete
 

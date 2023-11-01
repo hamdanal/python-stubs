@@ -1,8 +1,9 @@
 from typing import Literal
 
+from plotly.graph_objs import Figure
+
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.traces import _MapStyle
-from plotly.graph_objs import Figure
 
 def vlevel_plotly(
     net: pandapowerNet,

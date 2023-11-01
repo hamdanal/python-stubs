@@ -4,6 +4,7 @@ from typing import Literal
 
 import numpy as np
 from numpy.typing import NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 def create_empty_network(name: str = "", f_hz: float = 50, sn_mva: int = 1, add_stdtypes: bool = True) -> pandapowerNet: ...

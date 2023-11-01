@@ -4,8 +4,9 @@ from typing import Literal
 from typing_extensions import TypeAlias
 
 import pandas as pd
-from pandapower.auxiliary import pandapowerNet
 from plotly.graph_objs import Figure
+
+from pandapower.auxiliary import pandapowerNet
 
 _MapStyle: TypeAlias = Literal["basic", "streets", "bright", "light", "dark", "satellite"]
 

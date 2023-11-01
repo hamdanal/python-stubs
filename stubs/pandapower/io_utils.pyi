@@ -6,6 +6,7 @@ from typing import Any, TypeVar
 from typing_extensions import Self
 
 import pandas as pd
+
 from pandapower.auxiliary import pandapowerNet
 
 _T = TypeVar("_T")

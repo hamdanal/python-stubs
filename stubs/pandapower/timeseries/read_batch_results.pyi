@@ -1,6 +1,7 @@
 from _typeshed import Incomplete
 
 from numpy.typing import ArrayLike, NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 def get_batch_bus_results(

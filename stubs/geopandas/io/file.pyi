@@ -4,7 +4,7 @@ from typing import Any, Literal, overload
 
 import pandas as pd
 
-from ..geodataframe import GeoDataFrame
+from geopandas.geodataframe import GeoDataFrame
 
 @overload
 def _read_file(

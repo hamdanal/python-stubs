@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from typing import Any
 from typing_extensions import TypeAlias
 
-from ..geodataframe import GeoDataFrame
+from geopandas.geodataframe import GeoDataFrame
 
 _GeoCoder: TypeAlias = Any
 

@@ -4,6 +4,7 @@ from typing_extensions import TypeAlias
 
 from django.db.models.base import ModelBase
 from django.db.models.query import QuerySet
+
 from psqlextra.models.base import PostgresModel
 from psqlextra.types import SQL, SQLWithParams
 

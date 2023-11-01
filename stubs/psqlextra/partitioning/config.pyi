@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 
-from ..models import PostgresPartitionedModel
-from .strategy import PostgresPartitioningStrategy
+from psqlextra.models import PostgresPartitionedModel
+from psqlextra.partitioning.strategy import PostgresPartitioningStrategy
 
 class PostgresPartitioningConfig:
     model: Incomplete

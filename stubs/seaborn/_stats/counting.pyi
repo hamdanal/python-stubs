@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from numpy.typing import ArrayLike
+
 from seaborn._stats.base import Stat
 
 @dataclass

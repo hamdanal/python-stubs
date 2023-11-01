@@ -1,6 +1,7 @@
 from typing import TypeVar
 
 from django.db import models
+
 from psqlextra.query import PostgresQuerySet
 
 _T = TypeVar("_T", bound=models.Model)

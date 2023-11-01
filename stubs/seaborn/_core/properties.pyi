@@ -7,6 +7,7 @@ from matplotlib.markers import MarkerStyle
 from matplotlib.path import Path
 from numpy.typing import ArrayLike
 from pandas import Series
+
 from seaborn._core.scales import Scale
 
 RGBTuple: TypeAlias = tuple[float, float, float]

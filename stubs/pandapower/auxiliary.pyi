@@ -6,6 +6,7 @@ from typing_extensions import Self
 import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike, NDArray
+
 from pandapower.std_types import _StdTypes
 
 _T = TypeVar("_T")

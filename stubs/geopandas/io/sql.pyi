@@ -3,11 +3,11 @@ from collections.abc import Generator, Mapping
 from typing import Any, overload
 from typing_extensions import TypeAlias
 
-from geopandas import GeoDataFrame as GeoDataFrame
 from pandas._typing import Scalar
 from sqlalchemy.engine import Connectable
 
-from ..base import _ConvertibleToCRS
+from geopandas import GeoDataFrame as GeoDataFrame
+from geopandas.base import _ConvertibleToCRS
 
 _SQLConnection: TypeAlias = str | Connectable | sqlite3.Connection  # coppied from pandas.io.sql
 

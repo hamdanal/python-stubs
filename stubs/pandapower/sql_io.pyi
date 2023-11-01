@@ -3,6 +3,7 @@ from _typeshed.dbapi import DBAPIConnection, DBAPICursor
 from collections.abc import Mapping
 
 import pandas as pd
+
 from pandapower.auxiliary import pandapowerNet
 
 PSYCOPG2_INSTALLED: bool

@@ -1,9 +1,10 @@
 from typing import Literal
 
+from plotly.graph_objs import Figure
+
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
 from pandapower.plotting.plotly.traces import _MapStyle
-from plotly.graph_objs import Figure
 
 def pf_res_plotly(
     net: pandapowerNet,

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from pandas import DataFrame
+
 from seaborn._core.groupby import GroupBy
 from seaborn._core.scales import Scale
 

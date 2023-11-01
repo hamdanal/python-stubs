@@ -5,6 +5,7 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
+
 from pandapower.auxiliary import pandapowerNet
 from pandapower.topology.graph_tool_interface import GraphToolInterface
 

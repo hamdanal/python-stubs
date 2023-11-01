@@ -5,6 +5,7 @@ from typing import Generic, Literal, TypeVar
 
 import pandas as pd
 from numpy.typing import NDArray
+
 from pandapower.auxiliary import pandapowerNet
 from pandapower.io_utils import JSONSerializableClass
 

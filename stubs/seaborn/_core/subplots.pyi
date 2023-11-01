@@ -3,6 +3,7 @@ from typing import Any
 
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure, SubFigure
+
 from seaborn._core.plot import FacetSpec, PairSpec
 
 class Subplots:

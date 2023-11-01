@@ -3,7 +3,7 @@ from typing_extensions import Self
 
 from django.db import models
 
-from ..manager import PostgresManager
+from psqlextra.manager import PostgresManager
 
 class PostgresModel(models.Model):
     class Meta:

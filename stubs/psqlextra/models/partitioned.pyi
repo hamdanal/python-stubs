@@ -1,6 +1,7 @@
 from collections.abc import Iterable
 
 from django.db.models.base import ModelBase
+
 from psqlextra.models.base import PostgresModel
 from psqlextra.types import PostgresPartitioningMethod
 

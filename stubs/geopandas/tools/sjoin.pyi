@@ -1,4 +1,4 @@
-from ..geodataframe import GeoDataFrame
+from geopandas.geodataframe import GeoDataFrame
 
 def sjoin(
     left_df: GeoDataFrame,

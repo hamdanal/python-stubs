@@ -1,4 +1,5 @@
 from django.db.migrations.state import ModelState
+
 from psqlextra.models import PostgresModel
 
 class PostgresModelState(ModelState):

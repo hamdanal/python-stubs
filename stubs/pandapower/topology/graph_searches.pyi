@@ -4,6 +4,7 @@ from typing_extensions import TypeAlias
 
 import networkx as nx
 import pandas as pd
+
 from pandapower.auxiliary import pandapowerNet
 
 _GraphCharKey: TypeAlias = Literal["connected", "articulation_points", "bridges", "stub_buses", "required_bridges", "notn1_areas"]

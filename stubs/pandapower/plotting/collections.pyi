@@ -10,6 +10,7 @@ from matplotlib.colors import Colormap, Normalize
 from matplotlib.font_manager import FontProperties
 from matplotlib.textpath import TextPath
 from numpy.typing import ArrayLike, NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 _CollectionT = TypeVar("_CollectionT", bound=Collection)

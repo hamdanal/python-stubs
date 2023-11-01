@@ -3,10 +3,11 @@ from collections.abc import Iterable
 from typing import Literal, overload
 
 import pandas as pd
+from plotly.graph_objs import Figure
+
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
 from pandapower.plotting.plotly.traces import _MapStyle
-from plotly.graph_objs import Figure
 
 @overload
 def get_hoverinfo(

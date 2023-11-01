@@ -1,6 +1,7 @@
-import geopandas
 import numpy
 import pandas
+
+import geopandas
 
 from . import datasets as datasets
 from ._config import options as options

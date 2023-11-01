@@ -4,6 +4,7 @@ from collections.abc import Iterable
 import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike, NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 def drop_group(net: pandapowerNet, index: int) -> None: ...

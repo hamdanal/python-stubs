@@ -7,8 +7,9 @@ from typing_extensions import TypeAlias
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
-from pandapower.auxiliary import pandapowerNet
 from pandas._typing import Axes
+
+from pandapower.auxiliary import pandapowerNet
 
 _PMode: TypeAlias = Literal["load", "gen"]
 _QMode: TypeAlias = Literal["underexcited", "overexcited"]

@@ -3,6 +3,7 @@ from typing import TypeVar
 
 import numpy as np
 from numpy.typing import NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 _T = TypeVar("_T")

@@ -1,4 +1,5 @@
 from matplotlib.axes import Axes
+
 from pandapower.auxiliary import pandapowerNet
 
 MATPLOTLIB_INSTALLED: bool

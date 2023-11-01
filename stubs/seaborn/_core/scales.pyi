@@ -10,6 +10,7 @@ from matplotlib.ticker import Formatter, Locator
 from matplotlib.units import ConversionInterface
 from numpy.typing import ArrayLike, NDArray
 from pandas import Series
+
 from seaborn._core.typing import Default
 
 TransFuncs: TypeAlias = tuple[Callable[[ArrayLike], ArrayLike], Callable[[ArrayLike], ArrayLike]]

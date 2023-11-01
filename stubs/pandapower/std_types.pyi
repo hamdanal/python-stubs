@@ -3,6 +3,7 @@ from typing import Any, Literal, TypedDict, overload
 from typing_extensions import TypeAlias
 
 import pandas as pd
+
 from pandapower.auxiliary import pandapowerNet
 
 _Element: TypeAlias = Literal["line", "trafo", "trafo3w"]

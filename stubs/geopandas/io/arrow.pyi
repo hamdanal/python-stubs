@@ -3,7 +3,7 @@ from _typeshed import SupportsKeysAndGetItem
 from collections.abc import Iterable
 from typing import Any
 
-from ..geodataframe import GeoDataFrame
+from geopandas.geodataframe import GeoDataFrame
 
 METADATA_VERSION: str
 SUPPORTED_VERSIONS: list[str]

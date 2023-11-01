@@ -2,6 +2,7 @@ from typing import Literal
 
 import numpy as np
 from numpy.typing import NDArray
+
 from pandapower.auxiliary import pandapowerNet
 
 def detect_power_station_unit(

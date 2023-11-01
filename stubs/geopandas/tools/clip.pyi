@@ -2,8 +2,8 @@ from typing import TypeVar
 
 from shapely import MultiPolygon, Polygon
 
-from ..geodataframe import GeoDataFrame
-from ..geoseries import GeoSeries
+from geopandas.geodataframe import GeoDataFrame
+from geopandas.geoseries import GeoSeries
 
 _G = TypeVar("_G", GeoDataFrame, GeoSeries)
 

@@ -4,6 +4,7 @@ from typing_extensions import TypeAlias
 
 import networkx as nx
 from numpy.typing import ArrayLike
+
 from pandapower.auxiliary import pandapowerNet
 
 IGRAPH_INSTALLED: bool

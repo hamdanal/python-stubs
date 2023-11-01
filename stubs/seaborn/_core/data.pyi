@@ -4,6 +4,7 @@ from typing import TypeVar, overload
 
 from pandas import DataFrame
 from pandas.core.interchange.dataframe_protocol import DataFrame as DataFrameProtocol
+
 from seaborn._core.typing import DataSource, VariableSpec
 
 _T = TypeVar("_T", Mapping[Incomplete, Incomplete], None)

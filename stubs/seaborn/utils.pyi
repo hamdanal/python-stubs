@@ -12,6 +12,7 @@ from matplotlib.ticker import Locator
 from matplotlib.typing import ColorType
 from numpy.typing import ArrayLike, NDArray
 from pandas import DataFrame
+
 from seaborn.axisgrid import Grid
 
 __all__ = [

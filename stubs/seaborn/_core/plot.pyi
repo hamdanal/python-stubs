@@ -9,6 +9,7 @@ from typing_extensions import Literal, TypedDict
 import matplotlib as mpl
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure, SubFigure
+
 from seaborn._core.data import PlotData
 from seaborn._core.moves import Move
 from seaborn._core.scales import Scale

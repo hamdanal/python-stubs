@@ -2,7 +2,7 @@ from typing import Any
 
 import pandas as pd
 
-from ..geodataframe import GeoDataFrame
+from geopandas.geodataframe import GeoDataFrame
 
 version: str
 urlbase: str

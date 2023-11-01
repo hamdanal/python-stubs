@@ -1,4 +1,5 @@
 from dateutil.relativedelta import relativedelta as relativedelta
+
 from psqlextra.models import PostgresPartitionedModel
 
 from .config import PostgresPartitioningConfig
