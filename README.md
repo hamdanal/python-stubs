@@ -10,13 +10,13 @@ every change).
 ## Usage
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/hamdanal/python-stubs /path/to/python-stubs
-    ```
+   ```bash
+   git clone https://github.com/hamdanal/python-stubs /path/to/python-stubs
+   ```
 2. Add the following to VSCode's `settings.json`:
-    ```json
-    "python.analysis.stubPath": "/path/to/python-stubs/stubs"
-    ```
+   ```json
+   "python.analysis.stubPath": "/path/to/python-stubs/stubs"
+   ```
 
 ## Contributing
 
@@ -55,10 +55,64 @@ The project is already useful as is, but there are still some things to do:
 
 ## List of available stubs
 
-Project | Links | Status
-------- | ----- | ------
-django-netfields | [PyPI](https://pypi.org/project/django-netfields/), [GitHub](https://github.com/jimfunk/django-postgresql-netfields) | Complete
-django-postgres-extra | [PyPI](https://pypi.org/project/django-postgres-extra/), [GitHub](https://github.com/SectorLabs/django-postgres-extra) | Incomplete
-pandapower | [PyPI](https://pypi.org/project/pandapower/), [GitHub](https://github.com/e2nIEE/pandapower) | Incomplete
-seaborn | [PyPI](https://pypi.org/project/seaborn/), [GitHub](https://github.com/mwaskom/seaborn) | Upstreamed to typeshed
-geopandas | [PyPI](https://pypi.org/project/geopandas/), [GitHub](https://github.com/geopandas/geopandas) | Complete
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Import name</th>
+    <th>Links</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <th>django-netfields</th>
+    <th><code>netfields</code></th>
+    <th>
+      <a href="https://pypi.org/project/django-netfields">PyPI</a>,
+      <a href="https://github.com/jimfunk/django-postgresql-netfields">GitHub</a>
+    </th>
+    <th>Complete</th>
+  </tr>
+  <tr>
+    <th>django-postgres-extra</th>
+    <th><code>psqlextra</code></th>
+    <th>
+      <a href="https://pypi.org/project/django-postgres-extra">PyPI</a>,
+      <a href="https://github.com/SectorLabs/django-postgres-extra">GitHub</a>
+    </th>
+    <th>Incomplete</th>
+  </tr>
+  <tr>
+    <th>pandapower</th>
+    <th><code>pandapower</code></th>
+    <th>
+      <a href="https://pypi.org/project/pandapower">PyPI</a>,
+      <a href="https://github.com/e2nIEE/pandapower">GitHub</a>
+    </th>
+    <th>Incomplete</th>
+  </tr>
+  <tr>
+    <th>geopandas</th>
+    <th><code>geopandas</code></th>
+    <th>
+      <a href="https://pypi.org/project/geopandas">PyPI</a>,
+      <a href="https://github.com/geopandas/geopandas">GitHub</a>
+    </th>
+    <th>Complete</th>
+  </tr>
+</table>
+
+## Upstreamed stubs
+
+These stubs were included here in the past and have been moved to typeshed or to the their libraries.
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Moved to</th>
+    <th>Installation</th>
+  </tr>
+  <tr>
+    <th><a href="https://pypi.org/project/seaborn">seaborn</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/seaborn">typeshed</a></th>
+    <th><code>pip install types-seaborn</code></th>
+  </tr>
+</table>
