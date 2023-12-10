@@ -1,11 +1,15 @@
 from _typeshed import Incomplete
 from collections.abc import Mapping, Sequence
 from typing import Literal
+from typing_extensions import TypeAlias
 
 import numpy as np
 from numpy.typing import NDArray
 
 from pandapower.auxiliary import pandapowerNet
+
+_CostElementType: TypeAlias = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
+_SGenGeneratorType: TypeAlias = Literal["current_source", "async", "async_doubly_fed"]
 
 def create_empty_network(name: str = "", f_hz: float = 50, sn_mva: int = 1, add_stdtypes: bool = True) -> pandapowerNet: ...
 def create_bus(
@@ -121,7 +125,7 @@ def create_sgen(
     k: float = ...,
     rx: float | None = None,
     current_source: bool = True,
-    generator_type: Literal["current_source", "async", "async_doubly_fed"] | None = None,
+    generator_type: _SGenGeneratorType | None = None,
     max_ik_ka: float = ...,
     kappa: float = ...,
     lrc_pu: float = ...,
@@ -146,8 +150,7 @@ def create_sgens(
     k: float | Sequence[float] | None = None,
     rx: float | Sequence[float] | None = None,
     current_source: bool | Sequence[bool] = True,
-    generator_type: Literal["current_source", "async", "async_doubly_fed"]
-    | Sequence[Literal["current_source", "async", "async_doubly_fed"]] = "current_source",
+    generator_type: _SGenGeneratorType | Sequence[_SGenGeneratorType] = "current_source",
     max_ik_ka: float = ...,
     kappa: float = ...,
     lrc_pu: float = ...,
@@ -451,8 +454,8 @@ def create_transformers_from_parameters(
     vk_percent,
     pfe_kw,
     i0_percent,
-    shift_degree=0,
-    tap_side: Incomplete | None = None,
+    shift_degree: float = 0,
+    tap_side: Literal["hv", "lv"] | None = None,
     tap_neutral: Incomplete = ...,
     tap_max: Incomplete = ...,
     tap_min: Incomplete = ...,
@@ -747,7 +750,7 @@ def create_measurement(
 def create_pwl_cost(
     net: pandapowerNet,
     element: int,
-    et: Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"],
+    et: _CostElementType,
     points: Sequence[Incomplete],
     power_type: Literal["p", "q"] = "p",
     index: int | None = None,
@@ -757,8 +760,7 @@ def create_pwl_cost(
 def create_pwl_costs(
     net: pandapowerNet,
     elements: Sequence[int],
-    et: Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
-    | Sequence[Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]],
+    et: _CostElementType | Sequence[_CostElementType],
     points: Sequence[Sequence[Incomplete]],
     power_type: Literal["p", "q"] | Sequence[Literal["p", "q"]] = "p",
     index: Sequence[int] | None = None,
@@ -768,7 +770,7 @@ def create_pwl_costs(
 def create_poly_cost(
     net: pandapowerNet,
     element: int,
-    et: Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"],
+    et: _CostElementType,
     cp1_eur_per_mw: float,
     cp0_eur: float = 0,
     cq1_eur_per_mvar: float = 0,
@@ -782,8 +784,7 @@ def create_poly_cost(
 def create_poly_costs(
     net: pandapowerNet,
     elements: Sequence[int],
-    et: Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
-    | Sequence[Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]],
+    et: _CostElementType | Sequence[_CostElementType],
     cp1_eur_per_mw: float | Sequence[float],
     cp0_eur: float | Sequence[float] = 0,
     cq1_eur_per_mvar: float | Sequence[float] = 0,

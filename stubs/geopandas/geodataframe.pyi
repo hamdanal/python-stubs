@@ -1,35 +1,70 @@
 import os
-from _typeshed import Incomplete
-from collections.abc import Generator, Hashable, Mapping, Sequence
+from _typeshed import Incomplete, SupportsRead, SupportsWrite
+from collections.abc import Generator, Hashable, Iterable, Mapping, Sequence
 from typing import Any, Literal, overload
-from typing_extensions import Self, TypeAlias
+from typing_extensions import Self, TypeAlias, deprecated
 
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
-from pandas._typing import Axes, ListLikeU, Scalar
+from pandas._typing import Axes, Dtype, ListLikeU, Scalar
 from pyproj import CRS
 from shapely.geometry.base import BaseGeometry
-from sqlalchemy.engine.base import Connection, Engine
 
 from .array import GeometryArray
 from .base import GeoPandasBase, _ConvertibleToCRS
 from .explore import _explore
 from .geoseries import GeoSeries
+from .io.file import _BboxLike, _MaskLike
+from .io.sql import _SQLConnection
 from .plotting import GeoplotAccessor
+from .tools.clip import _Mask as _ClipMask
 
-_Geometry: TypeAlias = Hashable | Sequence[BaseGeometry] | NDArray[np.object_] | pd.Series[BaseGeometry] | GeometryArray
+# XXX: cannot use pd.Series[BaseGeometry] because of pd.Series type variable bounds
+_GeometrySeries: TypeAlias = pd.Series[Incomplete]
+_Geometry: TypeAlias = Hashable | Sequence[BaseGeometry] | NDArray[np.object_] | _GeometrySeries | GeometryArray | GeoSeries
+_ConvertibleToDataFrame: TypeAlias = (
+    ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
+)
 
 crs_mismatch_error: str
 
 class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
-    def __init__(
-        self,
-        data: ListLikeU | None = None,
-        *args,
+    # Override the weird annotation of DataFrame.__new__ in pandas-stubs
+    @overload
+    def __new__(
+        cls,
+        data: _ConvertibleToDataFrame | None = None,
+        index: Axes | None = None,
+        columns: Axes | None = None,
+        dtype: Dtype | None = None,
+        copy: bool | None = None,
+        *,
         geometry: _Geometry | None = None,
         crs: _ConvertibleToCRS | None = None,
-        **kwargs,
+    ) -> Self: ...
+    @overload
+    def __new__(
+        cls,
+        data: Scalar,
+        index: Axes,
+        columns: Axes,
+        dtype: Dtype | None = None,
+        copy: bool | None = None,
+        *,
+        geometry: _Geometry | None = None,
+        crs: _ConvertibleToCRS | None = None,
+    ) -> Self: ...
+    def __init__(
+        self,
+        data: _ConvertibleToDataFrame | None = None,
+        index: Axes | None = None,
+        columns: Axes | None = None,
+        dtype: Dtype | None = None,
+        copy: bool | None = None,
+        *,
+        geometry: _Geometry | None = None,
+        crs: _ConvertibleToCRS | None = None,
     ) -> None: ...
     def __setattr__(self, attr: str, val: Any) -> None: ...
     @property
@@ -43,11 +78,21 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     @crs.setter
     def crs(self, value: _ConvertibleToCRS) -> None: ...
     @classmethod
-    def from_dict(
+    def from_dict(  # type: ignore[override]
         cls, data: Mapping[Hashable, Any], geometry: _Geometry | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
-    ) -> Self: ...  # type: ignore[override]
+    ) -> Self: ...
     @classmethod
-    def from_file(cls, filename: Incomplete, **kwargs) -> Self: ...
+    def from_file(
+        cls,
+        filename: str | os.PathLike[str] | SupportsRead[Any],
+        bbox: _BboxLike | None = None,
+        mask: _MaskLike | None = None,
+        rows: int | slice | None = None,
+        engine: Literal["fiona", "pyogrio"] | None = None,
+        *,
+        ignore_geometry: Literal[False] = False,
+        **kwargs: Any,  # depends on engine
+    ) -> Self: ...
     @classmethod
     def from_features(cls, features: Incomplete, crs: _ConvertibleToCRS | None = None, columns: Axes | None = None) -> Self: ...
     @overload
@@ -55,7 +100,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def from_postgis(
         cls,
         sql: str,
-        con: Connection | Engine,
+        con: _SQLConnection,
         geom_col: str = "geom",
         crs: _ConvertibleToCRS | None = None,
         index_col: str | list[str] | None = None,
@@ -70,7 +115,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def from_postgis(
         cls,
         sql: str,
-        con: Connection | Engine,
+        con: _SQLConnection,
         geom_col: str = "geom",
         crs: _ConvertibleToCRS | None = None,
         index_col: str | list[str] | None = None,
@@ -105,13 +150,19 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         schema_version: str | None = None,
         **kwargs,
     ) -> None: ...
+    # Keep method to_file roughly in line with GeoSeries.to_file
     def to_file(
         self,
-        filename: Incomplete,
+        # TODO verify SupportsWrite[Any] is correct and remove Incomplete
+        filename: str | os.PathLike[str] | SupportsWrite[Any] | Incomplete,
         driver: str | None = None,
-        schema: Incomplete | None = None,
+        schema: dict[str, Any] | None = None,
         index: bool | None = None,
-        **kwargs,
+        *,
+        mode: Literal["w", "a"] = "w",
+        crs: _ConvertibleToCRS | None = None,
+        engine: Literal["fiona", "pyogrio"] | None = None,
+        **kwargs: Any,  # depends on driver
     ) -> None: ...
     def set_crs(
         self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
@@ -151,7 +202,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def to_postgis(
         self,
         name: str,
-        con: Connection | Engine,
+        con: _SQLConnection,
         schema: str | None = None,
         if_exists: str = "fail",
         index: bool = False,
@@ -159,10 +210,14 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         chunksize: int | None = None,
         dtype: Incomplete | None = None,
     ) -> None: ...
-    def __xor__(self, other): ...  # deprecated
-    def __or__(self, other): ...  # deprecated
-    def __and__(self, other): ...  # deprecated
-    def __sub__(self, other): ...  # deprecated
+    @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
+    def __xor__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    @deprecated("'|' operator is deprecated. Use method `union` instead.")
+    def __or__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    @deprecated("'&' operator is deprecated. Use method `intersection` instead.")
+    def __and__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    @deprecated("'-' operator is deprecated. Use method `difference` instead.")
+    def __sub__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
     plot: GeoplotAccessor
     explore = _explore
     def sjoin(self, df: GeoDataFrame, *args, **kwargs) -> GeoDataFrame: ...
@@ -176,7 +231,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         distance_col: str | None = None,
         exclusive: bool = False,
     ) -> GeoDataFrame: ...
-    def clip(self, mask, keep_geom_type: bool = False) -> GeoDataFrame: ...
+    def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoDataFrame: ...
     def overlay(
         self, right: GeoDataFrame, how: str = "intersection", keep_geom_type: bool | None = None, make_valid: bool = True
     ) -> GeoDataFrame: ...

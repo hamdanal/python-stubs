@@ -7,6 +7,11 @@ requires-python = ">=3.8"
 line-length = 130
 fix = true
 src = ["stubs"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
 select = [
     "E",      # pycodestyle (errors)
     "W",      # pycodestyle (warnings)
@@ -20,7 +25,10 @@ select = [
     "FA",     # flake8-future-annotations
     "TID",    # flake8-tidy-imports
 ]
-# ignore = ["E301", "E302", "E305", "E501"]
+ignore = [
+    "E501",   # leave long lines to the formatter
+    "PYI053", # string > 50 chars in @deprecated is OK
+]
 fixable = [
     "F401",   # Remove unused imports
     "UP",
@@ -31,16 +39,45 @@ fixable = [
     "TID",
 ]
 
-[tool.ruff.format]
-skip-magic-trailing-comma = true
+[tool.ruff.lint.per-file-ignores]
+"*.pyi" = ["B", "E741", "F403", "F405"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 split-on-trailing-comma = false
 extra-standard-library = ["typing_extensions", "_typeshed"]
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "parents"
 
-[tool.ruff.per-file-ignores]
-"*.pyi" = ["B", "E741", "F403", "F405"]
+[tool.pyright]
+ignore = [
+    # Disable annoying checks in thirdparty library code
+    "**/site-packages/",
+]
+typeCheckingMode = "strict"
+# Extra strict settings
+reportIncompleteStub = "none"
+reportMissingParameterType = "none"
+reportUnknownMemberType = "none"
+reportUnknownParameterType = "none"
+reportUnknownVariableType = "none"
+reportCallInDefaultInitializer = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+# Leave "type: ignore" comments to mypy
+enableTypeIgnoreComments = false
+# Stubs are allowed to use private variables
+reportPrivateUsage = "none"
+# Stubs don't need the actual modules to be installed
+reportMissingModuleSource = "none"
+# Incompatible overrides and property type mismatches are out of control
+# of the stubs as they are inherited from the implementation.
+reportIncompatibleMethodOverride = "none"
+reportIncompatibleVariableOverride = "none"
+reportPropertyTypeMismatch = "none"
+# Overlapping overloads are often necessary in a stub
+reportOverlappingOverload = "none"
+# The name of the self/cls parameter is out of typeshed's control.
+reportSelfClsParameterName = "none"
+# We don't care about missing type stubs
+reportMissingTypeStubs = "none"

@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Iterable
-from typing import Any, Literal, Protocol
-from typing_extensions import TypeAlias
+from typing import Any, Literal, Protocol, overload
+from typing_extensions import TypeAlias, deprecated
 
 import numpy as np
 import pandas as pd
@@ -130,11 +130,21 @@ class GeoPandasBase:
     def hilbert_distance(
         self, total_bounds: tuple[float, float, float, float] | Iterable[float] | None = None, level: int = 16
     ) -> pd.Series[int]: ...
+    @overload
     def sample_points(
         self,
         size: int | ArrayLike,
         method: str = "uniform",
-        seed: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,  # deprecated alias for rng
+        rng: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
+        **kwargs,
+    ) -> GeoSeries: ...
+    @overload
+    @deprecated("Parameter `seed` is deprecated. Use `rng` instead.")
+    def sample_points(
+        self,
+        size: int | ArrayLike,
+        method: str = "uniform",
+        seed: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
         rng: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
         **kwargs,
     ) -> GeoSeries: ...
