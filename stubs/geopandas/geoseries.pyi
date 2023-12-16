@@ -12,7 +12,7 @@ from pandas.core.base import IndexOpsMixin
 from pyproj import CRS
 from shapely.geometry.base import BaseGeometry
 
-from .array import GeometryArray, GeometryDtype
+from .array import GeometryArray
 from .base import GeoPandasBase, _ConvertibleToCRS
 from .explore import _explore_geoseries
 from .io.file import _BboxLike, _MaskLike
@@ -23,7 +23,7 @@ from .tools.clip import _Mask as _ClipMask
 _GeoListLike: TypeAlias = ArrayLike | Sequence[BaseGeometry] | IndexOpsMixin[Incomplete]
 _ConvertibleToGeoSeries: TypeAlias = BaseGeometry | Mapping[int, BaseGeometry] | Mapping[str, BaseGeometry] | _GeoListLike
 
-class GeoSeries(GeoPandasBase, pd.Series[GeometryDtype]):  # type: ignore[misc]
+class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[misc]
     crs: CRS
     # Override the weird annotation of Series.__new__ in pandas-stubs
     def __new__(

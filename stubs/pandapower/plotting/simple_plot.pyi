@@ -1,4 +1,7 @@
+from typing import Literal
+
 from matplotlib.axes import Axes
+from matplotlib.typing import ColorType
 
 from pandapower.auxiliary import pandapowerNet
 
@@ -21,13 +24,13 @@ def simple_plot(
     switch_distance: float = 1.0,
     plot_line_switches: bool = False,
     scale_size: bool = True,
-    bus_color: str = "b",
-    line_color: str = "grey",
-    dcline_color: str = "c",
-    trafo_color: str = "k",
-    ext_grid_color: str = "y",
-    switch_color: str = "k",
-    library: str = "igraph",
+    bus_color: ColorType = "b",
+    line_color: ColorType = "grey",
+    dcline_color: ColorType = "c",
+    trafo_color: ColorType = "k",
+    ext_grid_color: ColorType = "y",
+    switch_color: ColorType = "k",
+    library: Literal["igraph", "networkx"] = "igraph",
     show_plot: bool = True,
     ax: Axes | None = None,
 ) -> Axes: ...

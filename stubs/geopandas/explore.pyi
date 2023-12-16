@@ -1,24 +1,23 @@
 from collections.abc import Callable, Hashable, MutableMapping, Sequence
 from typing import Any
-from typing_extensions import TypeAlias
 
+import branca
 import folium
 import pandas as pd
+import xyzservices
 from matplotlib.colors import Colormap
 from numpy.typing import ArrayLike, NDArray
 
 from .geodataframe import GeoDataFrame
 from .geoseries import GeoSeries
 
-_TileProvider: TypeAlias = Any  # xyzservices.TileProvider
-
 def _explore(
     df: GeoDataFrame,
     column: Hashable | NDArray[Any] | pd.Series[Any] | None = None,
-    cmap: str | Colormap | Sequence[str] | Callable[[Any], str] | None = None,
+    cmap: str | Colormap | branca.colormap.ColorMap | Sequence[str] | Callable[[Any], str] | None = None,
     color: str | ArrayLike | None = None,
     m: folium.Map | None = None,
-    tiles: str | _TileProvider = "OpenStreetMap",
+    tiles: str | folium.TileLayer | xyzservices.TileProvider | None = "OpenStreetMap",
     attr: str | None = None,
     tooltip: bool = True,
     popup: bool = False,
@@ -29,8 +28,8 @@ def _explore(
     k: int = 5,
     vmin: float | None = None,
     vmax: float | None = None,
-    width: int | str = "100%",
-    height: int | str = "100%",
+    width: float | str = "100%",
+    height: float | str = "100%",
     categories=None,
     classification_kwds: MutableMapping[str, Any] | None = None,
     control_scale: bool = True,
@@ -49,11 +48,11 @@ def _explore_geoseries(
     s: GeoSeries,
     color: str | ArrayLike | None = None,
     m: folium.Map | None = None,
-    tiles: str | _TileProvider = "OpenStreetMap",
+    tiles: str | folium.TileLayer | xyzservices.TileProvider | None = "OpenStreetMap",
     attr: str | None = None,
     highlight: bool = True,
-    width: int | str = "100%",
-    height: int | str = "100%",
+    width: float | str = "100%",
+    height: float | str = "100%",
     control_scale: bool = True,
     marker_type: str | folium.Marker | None = None,
     marker_kwds: MutableMapping[str, Any] = {},

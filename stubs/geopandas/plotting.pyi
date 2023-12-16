@@ -1,36 +1,59 @@
 from collections.abc import Hashable, Iterable, Sequence
-from typing import Any, Callable, Literal, TypeVar
-from typing_extensions import TypeAlias
+from typing import Any, Literal
+from typing_extensions import TypeAlias, deprecated
 
 import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.collections import Collection, LineCollection, PatchCollection
+from matplotlib.colors import Colormap
+from matplotlib.typing import MarkerType
 from numpy.typing import ArrayLike, NDArray
 from pandas.plotting import PlotAccessor
 
 from .geodataframe import GeoDataFrame
 from .geoseries import GeoSeries
 
-_F = TypeVar("_F", bound=Callable[..., Any])
 _Color: TypeAlias = str | Sequence[str] | pd.Index[str] | pd.Series[str] | NDArray[np.str_]
 
-def deprecated(new: _F, warning_type: type[Warning] = ...) -> _F: ...
-@deprecated
+@deprecated("Function `plot_polygon_collection` is deprecated.")
 def plot_polygon_collection(
-    ax: Axes, geoms, values=None, color=None, cmap=None, vmin=None, vmax=None, **kwargs
+    ax: Axes,
+    geoms: GeoSeries,
+    values: ArrayLike | None = None,
+    color: _Color | None = None,
+    cmap: str | Colormap | None = None,
+    vmin: float | None = None,
+    vmax: float | None = None,
+    **kwargs,
 ) -> PatchCollection: ...
-@deprecated
+@deprecated("Function `plot_linestring_collection` is deprecated.")
 def plot_linestring_collection(
-    ax: Axes, geoms, values=None, color=None, cmap=None, vmin=None, vmax=None, **kwargs
+    ax: Axes,
+    geoms: GeoSeries,
+    values: ArrayLike | None = None,
+    color: _Color | None = None,
+    cmap: str | Colormap | None = None,
+    vmin: float | None = None,
+    vmax: float | None = None,
+    **kwargs,
 ) -> LineCollection: ...
-@deprecated
+@deprecated("Function `plot_point_collection` is deprecated.")
 def plot_point_collection(
-    ax: Axes, geoms, values=None, color=None, cmap=None, vmin=None, vmax=None, marker="o", markersize=None, **kwargs
+    ax: Axes,
+    geoms: GeoSeries,
+    values: ArrayLike | None = None,
+    color: _Color | None = None,
+    cmap: str | Colormap | None = None,
+    vmin: float | None = None,
+    vmax: float | None = None,
+    marker: MarkerType = "o",
+    markersize: ArrayLike | None = None,
+    **kwargs,
 ) -> Collection: ...
 def plot_series(
     s: GeoSeries,
-    cmap: str | None = None,
+    cmap: str | Colormap | None = None,
     color: _Color | None = None,
     ax: Axes | None = None,
     figsize: tuple[int, int] | None = None,
@@ -40,7 +63,7 @@ def plot_series(
 def plot_dataframe(
     df: GeoDataFrame,
     column: Hashable | None = None,
-    cmap: str | None = None,
+    cmap: str | Colormap | None = None,
     color: _Color | None = None,
     ax: Axes | None = None,
     cax: Axes | None = None,
@@ -57,7 +80,7 @@ def plot_dataframe(
     classification_kwds: dict[str, Any] | None = None,
     missing_kwds: dict[str, Any] | None = None,
     aspect: Literal["auto", "equal"] | float | None = "auto",
-    **style_kwds,
+    **style_kwds: Any,
 ) -> Axes: ...
 
 class GeoplotAccessor(PlotAccessor):

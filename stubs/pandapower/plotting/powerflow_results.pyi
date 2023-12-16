@@ -1,8 +1,9 @@
 from _typeshed import Incomplete
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 
 import pandas as pd
 from matplotlib.axes import Axes
+from matplotlib.typing import ColorType
 
 from pandapower.auxiliary import pandapowerNet
 
@@ -14,23 +15,23 @@ def plot_voltage_profile(
     plot_transformers: bool = True,
     xlabel: str = "Distance from Slack [km]",
     ylabel: str = "Voltage [pu]",
-    x0: int = 0,
-    line_color: str = "grey",
-    trafo_color: str = "r",
-    bus_colors: str = "b",
+    x0: float = 0,
+    line_color: ColorType = "grey",
+    trafo_color: ColorType = "r",
+    bus_colors: str | Mapping[int, ColorType] = "b",
     line_loading_weight: bool = False,
-    bus_size: int = 3,
-    lines: Sequence[int] | pd.Index | None = None,
+    bus_size: float = 3,
+    lines: Sequence[int] | pd.Index[int] | None = None,
     **kwargs: Incomplete,
 ) -> Axes: ...
 def plot_loading(
     net: pandapowerNet,
     ax: Axes | None = None,
     element_type: str = "line",
-    box_color: str = "b",
-    median_color: str = "r",
-    whisker_color: str = "k",
-    index_subset: Sequence[int] | pd.Index | None = None,
+    box_color: ColorType = "b",
+    median_color: ColorType = "r",
+    whisker_color: ColorType = "k",
+    index_subset: Sequence[int] | pd.Index[int] | None = None,
     **kwargs: Incomplete,
 ) -> Axes: ...
 def voltage_profile_to_bus_geodata(net: pandapowerNet, voltages: pd.Series[float] | None = None) -> pd.DataFrame: ...

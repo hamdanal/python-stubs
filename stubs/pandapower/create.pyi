@@ -11,19 +11,19 @@ from pandapower.auxiliary import pandapowerNet
 _CostElementType: TypeAlias = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
 _SGenGeneratorType: TypeAlias = Literal["current_source", "async", "async_doubly_fed"]
 
-def create_empty_network(name: str = "", f_hz: float = 50, sn_mva: int = 1, add_stdtypes: bool = True) -> pandapowerNet: ...
+def create_empty_network(name: str = "", f_hz: float = 50, sn_mva: float = 1, add_stdtypes: bool = True) -> pandapowerNet: ...
 def create_bus(
     net: pandapowerNet,
     vn_kv: float,
     name: str | None = None,
     index: int | None = None,
-    geodata: tuple[int, int] | None = None,
+    geodata: tuple[float, float] | None = None,
     type: Literal["b", "m", "n"] = "b",
     zone: str | None = None,
     in_service: bool = True,
     max_vm_pu: float = ...,
     min_vm_pu: float = ...,
-    coords: list[tuple[int, int]] | None = None,
+    coords: list[tuple[float, float]] | None = None,
     **kwargs: Incomplete,
 ) -> int: ...
 def create_buses(
@@ -33,12 +33,12 @@ def create_buses(
     index: int | None = None,
     name: str | None = None,
     type: Literal["b", "m", "n"] = "b",
-    geodata: tuple[int, int] | list[tuple[int, int]] | None = None,
+    geodata: tuple[float, float] | list[tuple[float, float]] | None = None,
     zone: str | None = None,
     in_service: bool = True,
     max_vm_pu: float | None = None,
     min_vm_pu: float | None = None,
-    coords: list[list[tuple[int, int]]] | None = None,
+    coords: list[list[tuple[float, float]]] | None = None,
     **kwargs: Incomplete,
 ) -> NDArray[np.int_]: ...
 def create_load(
