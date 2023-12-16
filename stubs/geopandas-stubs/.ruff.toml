@@ -1,0 +1,2 @@
+extend = "../../pyproject.toml"
+isort.known-first-party = ["geopandas"]

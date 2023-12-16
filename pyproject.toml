@@ -41,6 +41,7 @@ fixable = [
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = ["B", "E741", "F403", "F405"]
+"__init__.pyi" = ["TID252"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
@@ -48,7 +49,7 @@ split-on-trailing-comma = false
 extra-standard-library = ["typing_extensions", "_typeshed"]
 
 [tool.ruff.lint.flake8-tidy-imports]
-ban-relative-imports = "parents"
+ban-relative-imports = "all"
 
 [tool.pyright]
 ignore = [

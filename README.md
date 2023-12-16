@@ -13,9 +13,9 @@ every change).
    ```bash
    git clone https://github.com/hamdanal/python-stubs /path/to/python-stubs
    ```
-2. Add the following to VSCode's `settings.json`:
+2. Add the stubs to `"extraPaths"` in your VSCode's `settings.json`:
    ```json
-   "python.analysis.stubPath": "/path/to/python-stubs/stubs"
+   "python.analysis.extraPaths": ["/path/to/python-stubs/stubs"]
    ```
 
 ## Contributing
@@ -25,11 +25,6 @@ Contributions of any kind are welcome. Please open an issue or a send pull reque
 ## License
 
 This project is licensed under the MIT License.
-
-## Acknowledgments
-
-Some of the project settings and development tools are taken from/based off the
-[typeshed](https://github.com/python/typeshed) project.
 
 ## Why not typeshed?
 

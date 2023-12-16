@@ -1,3 +1,0 @@
-from .view import PostgresViewModelState
-
-class PostgresMaterializedViewModelState(PostgresViewModelState): ...
