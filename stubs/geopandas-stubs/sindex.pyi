@@ -1,11 +1,11 @@
 from abc import ABCMeta, abstractmethod
+from collections.abc import Iterator
 from typing import Any, Literal, overload
-from typing_extensions import TypeAlias, deprecated
+from typing_extensions import deprecated
 
 import numpy as np
+import rtree.index
 from numpy.typing import NDArray
-
-_RTreeIndex: TypeAlias = type[Any]
 
 class BaseSpatialIndex(metaclass=ABCMeta):
     @property
@@ -31,7 +31,17 @@ class BaseSpatialIndex(metaclass=ABCMeta):
     @abstractmethod
     def is_empty(self) -> bool: ...
 
-class RTreeIndex(_RTreeIndex):  # type: ignore[misc]
+@deprecated("class `SpatialIndex` is deprecated. Use `GeoSeries.sindex` or `rtree.index.Index` instead.")
+class SpatialIndex(rtree.index.Index, BaseSpatialIndex):
+    def __init__(self, *args: Any) -> None: ...
+    def intersection(self, coordinates: Any, *args: Any, **kwargs: Any) -> Iterator[Any]: ...
+    def nearest(self, *args: Any, **kwargs: Any) -> Iterator[Any]: ...
+    @property
+    def size(self) -> int: ...
+    @property
+    def is_empty(self) -> bool: ...
+
+class RTreeIndex(rtree.index.Index):
     geometries: NDArray[np.object_]
     def __init__(self, geometry: NDArray[np.object_]) -> None: ...
     @property
@@ -39,6 +49,7 @@ class RTreeIndex(_RTreeIndex):  # type: ignore[misc]
     def query(self, geometry, predicate: str | None = None, sort: bool = False) -> NDArray[np.int_]: ...
     @deprecated("Method `query_bulk()` is deprecated. Use method `query()` instead.")
     def query_bulk(self, geometry, predicate: str | None = None, sort: bool = False) -> NDArray[np.int_]: ...
+    @deprecated("`sindex.nearest` using the rtree backend is deprecated. See `PyGEOSSTRTreeIndex.nearest` for details.")
     def nearest(self, coordinates, num_results: int = 1, objects: bool | str = False): ...
     def intersection(self, coordinates) -> NDArray[np.int_]: ...
     @property
