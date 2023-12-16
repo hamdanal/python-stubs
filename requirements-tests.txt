@@ -1,2 +1,2 @@
 mypy==1.7.1
-ruff==0.1.7  # must match .pre-commit-config.yaml
+ruff==0.1.8  # must match .pre-commit-config.yaml
