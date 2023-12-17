@@ -1,0 +1,6 @@
+from shapely.geometry.base import BaseGeometry
+
+__all__ = ["explain_validity", "make_valid"]
+
+def explain_validity(ob: BaseGeometry) -> str: ...
+def make_valid(ob: BaseGeometry) -> BaseGeometry: ...

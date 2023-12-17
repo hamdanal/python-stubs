@@ -93,6 +93,15 @@ The project is already useful as is, but there are still some things to do:
     </th>
     <th>Complete</th>
   </tr>
+  <tr>
+    <th>shapely</th>
+    <th><code>shapely</code></th>
+    <th>
+      <a href="https://pypi.org/project/shapely">PyPI</a>,
+      <a href="https://github.com/shapely/shapely">GitHub</a>
+    </th>
+    <th>Incomplete</th>
+  </tr>
 </table>
 
 ## Upstreamed stubs
