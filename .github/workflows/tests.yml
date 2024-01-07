@@ -13,9 +13,6 @@ on:
       - ".pre-commit-config.yaml"
       - "*.md"
 
-env:
-  PYTHONPATH: stubs
-
 jobs:
   build:
     strategy:
@@ -31,11 +28,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: pip install -r requirements-tests.txt
+      - name: Lint with ruff
+        run: python run.py ruff-check
+      - name: Format with ruff
+        run: python run.py ruff-format
       - name: Run the test suite
-        run: pytest
+        run: python run.py pytest
       - name: Run mypy on the tests and on the stubs
-        run: mypy tests/ stubs/shapely-stubs
+        run: python run.py mypy
       - name: Run pyright on the tests and on the stubs
-        run: pyright tests/ stubs/shapely-stubs
+        run: python run.py pyright
       - name: Run stubtest on the the stubs
-        run: stubtest shapely --allowlist stubtest_allowlist.txt
+        run: python run.py stubtest
