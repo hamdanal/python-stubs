@@ -22,6 +22,15 @@ every change).
 
 Contributions of any kind are welcome. Please open an issue or a send pull request.
 
+To set up a development environment:
+1. Create a virtual environment: `python -m .venv venv`
+2. Activate the virtual environment:
+   - Unix: `. .venv/bin/activate`
+   - Windows: `.venv\Scripts\activate`
+3. Install the dependencies: `python -m pip install -r requirements-tests.txt`
+
+Run `python run.py --help` for more.
+
 ## License
 
 This project is licensed under the MIT License.
