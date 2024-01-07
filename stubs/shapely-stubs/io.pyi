@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from typing import Literal, overload
 
 import numpy as np
@@ -11,7 +12,9 @@ from shapely.geometry.base import BaseGeometry
 __all__ = ["from_geojson", "from_ragged_array", "from_wkb", "from_wkt", "to_geojson", "to_ragged_array", "to_wkb", "to_wkt"]
 
 # raise is a reserved keyword, we cannot use the class syntax of enums
-DecodingErrorOptions = ParamEnum("DecodingErrorOptions", {"ignore": 0, "warn": 1, "raise": 2})  # type: ignore[call-arg,arg-type]
+# Mypy and stubtest aren't happy with the following definition
+# DecodingErrorOptions = ParamEnum("DecodingErrorOptions", {"ignore": 0, "warn": 1, "raise": 2})
+DecodingErrorOptions: Incomplete
 
 class WKBFlavorOptions(ParamEnum):
     extended: int
