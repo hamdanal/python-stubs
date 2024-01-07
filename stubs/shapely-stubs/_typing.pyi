@@ -1,6 +1,6 @@
 import sys
 from collections.abc import Sequence
-from typing import Any, Protocol, TypeVar
+from typing import Any, Protocol, TypeVar, type_check_only
 from typing_extensions import TypeAlias
 
 import numpy as np
@@ -12,10 +12,15 @@ _T = TypeVar("_T")
 _DType = TypeVar("_DType", bound=np.dtype[Any])
 _DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype[Any])
 
+GeoT = TypeVar("GeoT", bound=BaseGeometry)  # noqa: PYI001
+
+@type_check_only
 class SupportsArray(Protocol[_DType_co]):
     def __array__(self) -> np.ndarray[Any, _DType_co]: ...
 
-NestedSequence: TypeAlias = Sequence[_T] | Sequence[NestedSequence[_T]]
+# TODO revisit when mypy is happy with recursive type alias
+# NestedSequence: TypeAlias = Sequence[_T] | Sequence[NestedSequence[_T]]
+NestedSequence: TypeAlias = Sequence[_T] | Sequence[Sequence[_T]] | Sequence[Sequence[Sequence[_T]]]
 DualArrayLike: TypeAlias = SupportsArray[_DType] | NestedSequence[SupportsArray[_DType]] | NestedSequence[_T]
 
 if sys.version_info >= (3, 12):
@@ -33,5 +38,7 @@ GeoArrayLike: TypeAlias = BaseGeometry | GeoArrayLikeSeq
 OptGeoArrayLike: TypeAlias = BaseGeometry | None | OptGeoArrayLikeSeq
 GeoArray: TypeAlias = NDArray[np.object_]  # array of `BaseGeometry`
 
+@type_check_only
 class SupportsGeoInterface(Protocol):
+    @property
     def __geo_interface__(self) -> dict[str, Any]: ...

@@ -1,8 +1,9 @@
 from collections.abc import Iterable
-from typing import SupportsFloat
+from typing import Literal, SupportsFloat
 from typing_extensions import Self, TypeAlias
 
 from shapely._typing import ArrayLikeSeq
+from shapely.constructive import BufferCapStyle, BufferJoinStyle
 from shapely.geometry.base import BaseGeometry
 from shapely.geometry.multilinestring import MultiLineString
 from shapely.geometry.multipoint import MultiPoint
@@ -15,12 +16,12 @@ _ConvertibleToLineString: TypeAlias = LineString | ArrayLikeSeq[float] | Iterabl
 
 class LineString(BaseGeometry):
     def __new__(self, coordinates: _ConvertibleToLineString | None = None) -> Self: ...
-    def svg(self, scale_factor: float = 1.0, stroke_color: str | None = None, opacity: float | None = None) -> str: ...
+    def svg(self, scale_factor: float = 1.0, stroke_color: str | None = None, opacity: float | None = None) -> str: ...  # type: ignore[override]
     def offset_curve(
-        self, distance, quad_segs: int = 16, join_style=..., mitre_limit: float = 5.0
+        self, distance: float, quad_segs: int = 16, join_style=..., mitre_limit: float = 5.0
     ) -> LineString | MultiLineString: ...
     def parallel_offset(  # to be deprecated
-        self, distance, side: str = "right", resolution: int = 16, join_style=..., mitre_limit: float = 5.0
+        self, distance: float, side: str = "right", resolution: int = 16, join_style=..., mitre_limit: float = 5.0
     ) -> LineString | MultiLineString: ...
     # more precise base overrides
     @property
@@ -37,8 +38,11 @@ class LineString(BaseGeometry):
         self,
         distance: float,
         quad_segs: int = 16,
-        cap_style: str = "round",
-        join_style: str = "round",
+        cap_style: BufferCapStyle | Literal["round", "square", "flat"] = "round",
+        join_style: BufferJoinStyle | Literal["round", "mitre", "bevel"] = "round",
         mitre_limit: float = 5.0,
         single_sided: bool = False,
+        *,
+        quadsegs: int | None = None,  # deprecated
+        resolution: int | None = None,  # to be deprecated
     ) -> Polygon: ...

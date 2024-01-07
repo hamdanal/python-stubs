@@ -8,6 +8,8 @@ from shapely.geometry.linestring import LineString, _ConvertibleToLineString
 __all__ = ["Polygon", "LinearRing"]
 
 _ConvertibleToLinearRing: TypeAlias = _ConvertibleToLineString  # same alias but with better name for doc purposes
+_PolygonShellLike: TypeAlias = Polygon | _ConvertibleToLinearRing | None
+_PolygonHolesLike: TypeAlias = Collection[_ConvertibleToLinearRing | None] | None
 
 class LinearRing(LineString):
     def __new__(self, coordinates: _ConvertibleToLinearRing | None = None) -> Self: ...
@@ -25,18 +27,14 @@ class InteriorRingSequence:
     def __getitem__(self, key: slice) -> list[LinearRing]: ...
 
 class Polygon(BaseGeometry):
-    def __new__(
-        self,
-        shell: Polygon | _ConvertibleToLinearRing | None = None,
-        holes: Collection[_ConvertibleToLinearRing | None] | None = None,
-    ) -> Self: ...
+    def __new__(self, shell: _PolygonShellLike = None, holes: _PolygonHolesLike = None) -> Self: ...
     @property
     def exterior(self) -> LinearRing: ...
     @property
     def interiors(self) -> list[LinearRing] | InteriorRingSequence: ...
     @property
     def coords(self) -> NoReturn: ...
-    def svg(self, scale_factor: float = 1.0, fill_color: str | None = None, opacity: float | None = None) -> str: ...
+    def svg(self, scale_factor: float = 1.0, fill_color: str | None = None, opacity: float | None = None) -> str: ...  # type: ignore[override]
     @classmethod
     def from_bounds(cls, xmin: float, ymin: float, xmax: float, ymax: float) -> Self: ...
 

@@ -1,5 +1,10 @@
+# dirs
+__pycache__/
+/build/
+/dist/
+/.*_cache/
+/.?v?env/
+
+# files
 .coverage
 *.pyc
-build/
-dist/
-.*_cache/
