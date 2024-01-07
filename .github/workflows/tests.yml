@@ -38,4 +38,4 @@ jobs:
       - name: Run pyright on the tests and on the stubs
         run: pyright tests/ stubs/shapely-stubs
       - name: Run stubtest on the the stubs
-        run: stubtest stubtest shapely --allowlist stubtest_allowlist.txt
+        run: stubtest shapely --allowlist stubtest_allowlist.txt
