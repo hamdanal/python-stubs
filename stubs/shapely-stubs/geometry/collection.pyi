@@ -1,7 +1,7 @@
 from typing_extensions import Self
 
-from shapely._typing import GeoArrayLike
-from shapely.geometry.base import BaseGeometry, BaseMultipartGeometry
+from shapely._typing import OptGeoArrayLike
+from shapely.geometry.base import BaseMultipartGeometry
 
 class GeometryCollection(BaseMultipartGeometry):
-    def __new__(self, geoms: BaseGeometry | BaseMultipartGeometry | GeoArrayLike | None = None) -> Self: ...
+    def __new__(self, geoms: BaseMultipartGeometry | OptGeoArrayLike = None) -> Self: ...

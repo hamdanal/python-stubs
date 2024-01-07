@@ -1,6 +1,6 @@
 from _typeshed import Incomplete as I
-from typing import Any, Generic, Literal as L, SupportsIndex, TypeVar, overload, type_check_only
-from typing_extensions import Never, TypeAlias, TypeVarTuple, Unpack
+from typing import Any, Literal as L, Protocol, SupportsIndex, TypeVar, final, overload, type_check_only
+from typing_extensions import Never, TypeVarTuple, Unpack
 
 import numpy as np
 from numpy._typing import DTypeLike, _ArrayLikeBool_co, _ArrayLikeInt_co, _ShapeLike
@@ -11,47 +11,52 @@ _NIn = TypeVar("_NIn", bound=int)
 _NOut = TypeVar("_NOut", bound=int)
 _Ts = TypeVarTuple("_Ts")
 
-_UFuncOut: TypeAlias = NDArray[Any] | tuple[NDArray[Any], ...] | None
-
 @type_check_only
-class UFunc(np.ufunc, Generic[_NIn, _NOut, _Ts]):  # type: ignore[misc] # pyright: ignore
+class UFunc(np.ufunc, Protocol[_NIn, _NOut, Unpack[_Ts]]):  # type: ignore[misc] # pyright: ignore
     @property
     def __name__(self) -> str: ...
+    """The name of the ufunc."""
     @property
     def ntypes(self) -> L[1]: ...  # All shapely funcs checked have `ntypes=1`
+    """The number of types."""
     @property
     def identity(self) -> None: ...  # All shapely funcs checked have `identity=None`
+    """The identity value."""
     @property
     def nin(self) -> _NIn: ...
+    """The number of inputs."""
     @property
     def nout(self) -> _NOut: ...
+    """The number of outputs."""
     @property
     def nargs(self) -> int: ...  # nargs = nin + nout (I think!)
+    """The number of arguments."""
     @property
     def signature(self) -> str | None: ...
-    @overload  # overload 1: `out` is the last positional argument
+    """Definition of the core elements a generalized ufunc operates on."""
+    @overload  # overload 1: `out` is the last positional argument (does not accept tuple)
     def __call__(
         self,
-        *x: Unpack[tuple[Unpack[_Ts], _UFuncOut]],
+        *x: Unpack[tuple[Unpack[_Ts], NDArray[Any] | None]],
         where: _ArrayLikeBool_co | None = True,
         casting: np._CastingKind = "same_kind",
         order: np._OrderKACF = "K",
         dtype: DTypeLike = None,
         subok: bool = True,
-        signature: str | tuple[None | str, ...] = ...,
+        signature: str | tuple[str | None, ...] = ...,
         extobj: list[Any] = ...,
     ) -> Any: ...
-    @overload  # overload 2: `out` is the first keyword argument
+    @overload  # overload 2: `out` is the first keyword argument (accepts tuple)
     def __call__(
         self,
         *x: Unpack[_Ts],
-        out: _UFuncOut = None,
+        out: NDArray[Any] | tuple[NDArray[Any], ...] | None = None,
         where: _ArrayLikeBool_co | None = True,
         casting: np._CastingKind = "same_kind",
         order: np._OrderKACF = "K",
         dtype: DTypeLike = None,
         subok: bool = True,
-        signature: str | tuple[None | str, ...] = ...,
+        signature: str | tuple[str | None, ...] = ...,
         extobj: list[Any] = ...,
     ) -> Any: ...
     @overload  # N_in=1, N_out=1
@@ -96,7 +101,7 @@ class UFunc(np.ufunc, Generic[_NIn, _NOut, _Ts]):  # type: ignore[misc] # pyrigh
         order: np._OrderKACF = ...,
         dtype: DTypeLike = ...,
         subok: bool = ...,
-        signature: str | tuple[None | str, ...] = ...,
+        signature: str | tuple[str | None, ...] = ...,
         extobj: list[Any] = ...,
     ) -> Any: ...
 
@@ -492,11 +497,11 @@ class Geometry:
     def __le__(self, other: Never) -> bool: ...
     def __lt__(self, other: Never) -> bool: ...
 
+@final
 class STRtree:
     _ptr: int
     count: int
-    @classmethod
-    def __init__(cls, geoms: NDArray[Any], node_capacity: SupportsIndex, **kwargs: object) -> None: ...
+    def __init__(self, geoms: NDArray[Any], node_capacity: SupportsIndex, **kwargs: object) -> None: ...
     def dwithin(self, geoms: NDArray[Any], distances: NDArray[Any], /) -> Any: ...
     def nearest(self, geoms: NDArray[Any], /) -> NDArray[np.int64]: ...
     def query(self, geoms: NDArray[Any], predicate: SupportsIndex, /) -> NDArray[np.int64]: ...

@@ -51,11 +51,18 @@ extra-standard-library = ["typing_extensions", "_typeshed"]
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
+[tool.mypy]
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
 [tool.pyright]
 ignore = [
-    # Disable annoying checks in thirdparty library code
+    # Disable annoying checks in third-party library code
     "**/site-packages/",
 ]
+stubPath = "stubs/"
 typeCheckingMode = "strict"
 # Extra strict settings
 reportIncompleteStub = "none"
@@ -82,3 +89,6 @@ reportOverlappingOverload = "none"
 reportSelfClsParameterName = "none"
 # We don't care about missing type stubs
 reportMissingTypeStubs = "none"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -26,28 +26,6 @@ Contributions of any kind are welcome. Please open an issue or a send pull reque
 
 This project is licensed under the MIT License.
 
-## Why not typeshed?
-
-These stubs could ideally be added to typeshed, and everyone using IDEs like VSCode and PyCharm
-or static type checkers like mypy would benefit from them. Unfortunately, there are some reasons
-that make this difficult to add a new package to typeshed:
-- In the case of `netfields` and `psqlextra`: These packages depend on
-  [django-types](https://github.com/sbdchd/django-types) and
-  [djangorestframework-types](https://github.com/sbdchd/djangorestframework-types) projects that
-  are maintained outside of typeshed.
-- In the case of `pandapower`, the package is very large (about 330 .py files) and has a **lot**
-  of dependencies (18 direct dependencies with the extras, about 45 total dependencies)
-
-If you think otherwise and are interested in adding any of these stubs to typeshed, you are welcome
-to copy the stubs in this repository and use them as a starting point.
-
-## TODO
-
-The project is already useful as is, but there are still some things to do:
-- [ ] Some stubs are incomplete; they are just enough to make Pylance *happy*.
-- [ ] The stubs are not tested. Should be tested with pyright, mypy, stubtest and optionally pytype.
-- [ ] No CI is set up yet.
-
 ## List of available stubs
 
 <table>
@@ -56,6 +34,7 @@ The project is already useful as is, but there are still some things to do:
     <th>Import name</th>
     <th>Links</th>
     <th>Status</th>
+    <th>Tested</th>
   </tr>
   <tr>
     <th>django-netfields</th>
@@ -65,6 +44,7 @@ The project is already useful as is, but there are still some things to do:
       <a href="https://github.com/jimfunk/django-postgresql-netfields">GitHub</a>
     </th>
     <th>Complete</th>
+    <th>No</th>
   </tr>
   <tr>
     <th>django-postgres-extra</th>
@@ -74,6 +54,7 @@ The project is already useful as is, but there are still some things to do:
       <a href="https://github.com/SectorLabs/django-postgres-extra">GitHub</a>
     </th>
     <th>Incomplete</th>
+    <th>No</th>
   </tr>
   <tr>
     <th>pandapower</th>
@@ -83,6 +64,7 @@ The project is already useful as is, but there are still some things to do:
       <a href="https://github.com/e2nIEE/pandapower">GitHub</a>
     </th>
     <th>Incomplete</th>
+    <th>No</th>
   </tr>
   <tr>
     <th>geopandas</th>
@@ -92,6 +74,7 @@ The project is already useful as is, but there are still some things to do:
       <a href="https://github.com/geopandas/geopandas">GitHub</a>
     </th>
     <th>Complete</th>
+    <th>No</th>
   </tr>
   <tr>
     <th>shapely</th>
@@ -101,6 +84,7 @@ The project is already useful as is, but there are still some things to do:
       <a href="https://github.com/shapely/shapely">GitHub</a>
     </th>
     <th>Incomplete</th>
+    <th>Yes</th>
   </tr>
 </table>
 

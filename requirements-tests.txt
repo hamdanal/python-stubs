@@ -1,2 +1,11 @@
-mypy==1.7.1
-ruff==0.1.8  # must match .pre-commit-config.yaml
+# Tools
+ruff==0.1.11  # must match .pre-commit-config.yaml
+pytest>=7.0
+mypy==1.8.0
+pyright==1.1.344
+
+# Runtime
+shapely>=2.0,<2.1
+
+# Transient dependencies
+matplotlib>=3.8.0
