@@ -1,484 +1,370 @@
-from _typeshed import Incomplete as I
-from typing import Any, Literal as L, Protocol, SupportsIndex, TypeVar, final, overload, type_check_only
-from typing_extensions import Never, TypeVarTuple, Unpack
+from typing import Literal, SupportsIndex, final, overload
+from typing_extensions import Never
 
 import numpy as np
-from numpy._typing import DTypeLike, _ArrayLikeBool_co, _ArrayLikeInt_co, _ShapeLike
-from numpy._typing._ufunc import _SupportsArrayUFunc
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import NDArray
 
-_NIn = TypeVar("_NIn", bound=int)
-_NOut = TypeVar("_NOut", bound=int)
-_Ts = TypeVarTuple("_Ts")
+# ruff: noqa: PYI021
 
-@type_check_only
-class UFunc(np.ufunc, Protocol[_NIn, _NOut, Unpack[_Ts]]):  # type: ignore[misc] # pyright: ignore
-    @property
-    def __name__(self) -> str: ...
-    """The name of the ufunc."""
-    @property
-    def ntypes(self) -> L[1]: ...  # All shapely funcs checked have `ntypes=1`
-    """The number of types."""
-    @property
-    def identity(self) -> None: ...  # All shapely funcs checked have `identity=None`
-    """The identity value."""
-    @property
-    def nin(self) -> _NIn: ...
-    """The number of inputs."""
-    @property
-    def nout(self) -> _NOut: ...
-    """The number of outputs."""
-    @property
-    def nargs(self) -> int: ...  # nargs = nin + nout (I think!)
-    """The number of arguments."""
-    @property
-    def signature(self) -> str | None: ...
-    """Definition of the core elements a generalized ufunc operates on."""
-    @overload  # overload 1: `out` is the last positional argument (does not accept tuple)
-    def __call__(
-        self,
-        *x: Unpack[tuple[Unpack[_Ts], NDArray[Any] | None]],
-        where: _ArrayLikeBool_co | None = True,
-        casting: np._CastingKind = "same_kind",
-        order: np._OrderKACF = "K",
-        dtype: DTypeLike = None,
-        subok: bool = True,
-        signature: str | tuple[str | None, ...] = ...,
-        extobj: list[Any] = ...,
-    ) -> Any: ...
-    @overload  # overload 2: `out` is the first keyword argument (accepts tuple)
-    def __call__(
-        self,
-        *x: Unpack[_Ts],
-        out: NDArray[Any] | tuple[NDArray[Any], ...] | None = None,
-        where: _ArrayLikeBool_co | None = True,
-        casting: np._CastingKind = "same_kind",
-        order: np._OrderKACF = "K",
-        dtype: DTypeLike = None,
-        subok: bool = True,
-        signature: str | tuple[str | None, ...] = ...,
-        extobj: list[Any] = ...,
-    ) -> Any: ...
-    @overload  # N_in=1, N_out=1
-    def at(self: UFunc[L[1], L[1], Unpack[_Ts]], a: _SupportsArrayUFunc, indices: _ArrayLikeInt_co, /) -> None: ...
-    @overload  # N_in=2, N_out=1
-    def at(self: UFunc[L[2], L[1], Unpack[_Ts]], a: NDArray[Any], indices: _ArrayLikeInt_co, b: ArrayLike, /) -> None: ...
-    # N_in=2, N_out=1 only methods
-    def reduce(
-        self: UFunc[L[2], L[1], Unpack[_Ts]],
-        array: ArrayLike,
-        axis: _ShapeLike | None = ...,
-        dtype: DTypeLike = ...,
-        out: NDArray[Any] | None = ...,
-        keepdims: bool = ...,
-        initial: Any = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> Any: ...
-    def accumulate(
-        self: UFunc[L[2], L[1], Unpack[_Ts]],
-        array: ArrayLike,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: NDArray[Any] | None = ...,
-    ) -> NDArray[Any]: ...
-    def reduceat(
-        self: UFunc[L[2], L[1], Unpack[_Ts]],
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: NDArray[Any] | None = ...,
-    ) -> NDArray[Any]: ...
-    def outer(
-        self: UFunc[L[2], L[1], Unpack[_Ts]],
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        out: NDArray[Any] | tuple[NDArray[Any]] | None = ...,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | tuple[str | None, ...] = ...,
-        extobj: list[Any] = ...,
-    ) -> Any: ...
-
-# UFuncs type generator
-# ---------------------
-# for name in dir(shapely.lib):
-#     obj = getattr(shapely.lib, name)
-#     if not isinstance(obj, np.ufunc):
-#         continue
-#     assert obj.ntypes == 1, (obj.__name__, obj.ntypes)
-#     assert obj.identity is None, (obj.__name__, obj.identity)
-#     assert obj.nargs == obj.nin + obj.nout, (obj.__name__, obj.nargs, obj.nin, obj.nout)
-#     out = f"{name}: UFunc[L[{obj.nin!r}], L[{obj.nout!r}]{', I' * obj.nin}]"
-#     print(out)
-#     print(f'"""{obj.__doc__.strip()}"""\n')
-
-# START GENERATED CODE
-area: UFunc[L[1], L[1], I]
+area: np.ufunc
 """area(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-boundary: UFunc[L[1], L[1], I]
+boundary: np.ufunc
 """boundary(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-bounds: UFunc[L[1], L[1], I]
+bounds: np.ufunc
 """bounds(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-box: UFunc[L[5], L[1], I, I, I, I, I]
+box: np.ufunc
 """box(x1, x2, x3, x4, x5, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-buffer: UFunc[L[7], L[1], I, I, I, I, I, I, I]
+buffer: np.ufunc
 """buffer(x1, x2, x3, x4, x5, x6, x7, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-build_area: UFunc[L[1], L[1], I]
+build_area: np.ufunc
 """build_area(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-centroid: UFunc[L[1], L[1], I]
+centroid: np.ufunc
 """centroid(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-clip_by_rect: UFunc[L[5], L[1], I, I, I, I, I]
+clip_by_rect: np.ufunc
 """clip_by_rect(x1, x2, x3, x4, x5, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-concave_hull: UFunc[L[3], L[1], I, I, I]
+concave_hull: np.ufunc
 """concave_hull(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-contains: UFunc[L[2], L[1], I, I]
+contains: np.ufunc
 """contains(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-contains_properly: UFunc[L[2], L[1], I, I]
+contains_properly: np.ufunc
 """contains_properly(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-contains_xy: UFunc[L[3], L[1], I, I, I]
+contains_xy: np.ufunc
 """contains_xy(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-convex_hull: UFunc[L[1], L[1], I]
+convex_hull: np.ufunc
 """convex_hull(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-coverage_union: UFunc[L[1], L[1], I]
+coverage_union: np.ufunc
 """coverage_union(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-covered_by: UFunc[L[2], L[1], I, I]
+covered_by: np.ufunc
 """covered_by(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-covers: UFunc[L[2], L[1], I, I]
+covers: np.ufunc
 """covers(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-create_collection: UFunc[L[2], L[1], I, I]
+create_collection: np.ufunc
 """create_collection(x1, x2, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-crosses: UFunc[L[2], L[1], I, I]
+crosses: np.ufunc
 """crosses(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-delaunay_triangles: UFunc[L[3], L[1], I, I, I]
+delaunay_triangles: np.ufunc
 """delaunay_triangles(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-destroy_prepared: UFunc[L[1], L[0], I]
+destroy_prepared: np.ufunc
 """destroy_prepared(x, /, out=(), *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-difference: UFunc[L[2], L[1], I, I]
+difference: np.ufunc
 """difference(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-difference_prec: UFunc[L[3], L[1], I, I, I]
+difference_prec: np.ufunc
 """difference_prec(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-disjoint: UFunc[L[2], L[1], I, I]
+disjoint: np.ufunc
 """disjoint(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-distance: UFunc[L[2], L[1], I, I]
+distance: np.ufunc
 """distance(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-dwithin: UFunc[L[3], L[1], I, I, I]
+dwithin: np.ufunc
 """dwithin(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-envelope: UFunc[L[1], L[1], I]
+envelope: np.ufunc
 """envelope(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-equals: UFunc[L[2], L[1], I, I]
+equals: np.ufunc
 """equals(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-equals_exact: UFunc[L[3], L[1], I, I, I]
+equals_exact: np.ufunc
 """equals_exact(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-extract_unique_points: UFunc[L[1], L[1], I]
+extract_unique_points: np.ufunc
 """extract_unique_points(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-force_2d: UFunc[L[1], L[1], I]
+force_2d: np.ufunc
 """force_2d(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-force_3d: UFunc[L[2], L[1], I, I]
+force_3d: np.ufunc
 """force_3d(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-frechet_distance: UFunc[L[2], L[1], I, I]
+frechet_distance: np.ufunc
 """frechet_distance(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-frechet_distance_densify: UFunc[L[3], L[1], I, I, I]
+frechet_distance_densify: np.ufunc
 """frechet_distance_densify(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-from_geojson: UFunc[L[2], L[1], I, I]
+from_geojson: np.ufunc
 """from_geojson(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-from_wkb: UFunc[L[2], L[1], I, I]
+from_wkb: np.ufunc
 """from_wkb(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-from_wkt: UFunc[L[2], L[1], I, I]
+from_wkt: np.ufunc
 """from_wkt(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_coordinate_dimension: UFunc[L[1], L[1], I]
+get_coordinate_dimension: np.ufunc
 """get_coordinate_dimension(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_dimensions: UFunc[L[1], L[1], I]
+get_dimensions: np.ufunc
 """get_dimensions(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_exterior_ring: UFunc[L[1], L[1], I]
+get_exterior_ring: np.ufunc
 """get_exterior_ring(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_geometry: UFunc[L[2], L[1], I, I]
+get_geometry: np.ufunc
 """get_geometry(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_interior_ring: UFunc[L[2], L[1], I, I]
+get_interior_ring: np.ufunc
 """get_interior_ring(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_num_coordinates: UFunc[L[1], L[1], I]
+get_num_coordinates: np.ufunc
 """get_num_coordinates(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_num_geometries: UFunc[L[1], L[1], I]
+get_num_geometries: np.ufunc
 """get_num_geometries(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_num_interior_rings: UFunc[L[1], L[1], I]
+get_num_interior_rings: np.ufunc
 """get_num_interior_rings(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_num_points: UFunc[L[1], L[1], I]
+get_num_points: np.ufunc
 """get_num_points(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_point: UFunc[L[2], L[1], I, I]
+get_point: np.ufunc
 """get_point(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_precision: UFunc[L[1], L[1], I]
+get_precision: np.ufunc
 """get_precision(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_srid: UFunc[L[1], L[1], I]
+get_srid: np.ufunc
 """get_srid(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_type_id: UFunc[L[1], L[1], I]
+get_type_id: np.ufunc
 """get_type_id(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_x: UFunc[L[1], L[1], I]
+get_x: np.ufunc
 """get_x(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_y: UFunc[L[1], L[1], I]
+get_y: np.ufunc
 """get_y(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-get_z: UFunc[L[1], L[1], I]
+get_z: np.ufunc
 """get_z(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-has_z: UFunc[L[1], L[1], I]
+has_z: np.ufunc
 """has_z(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-hausdorff_distance: UFunc[L[2], L[1], I, I]
+hausdorff_distance: np.ufunc
 """hausdorff_distance(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-hausdorff_distance_densify: UFunc[L[3], L[1], I, I, I]
+hausdorff_distance_densify: np.ufunc
 """hausdorff_distance_densify(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-intersection: UFunc[L[2], L[1], I, I]
+intersection: np.ufunc
 """intersection(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-intersection_all: UFunc[L[1], L[1], I]
+intersection_all: np.ufunc
 """intersection_all(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-intersection_prec: UFunc[L[3], L[1], I, I, I]
+intersection_prec: np.ufunc
 """intersection_prec(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-intersects: UFunc[L[2], L[1], I, I]
+intersects: np.ufunc
 """intersects(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-intersects_xy: UFunc[L[3], L[1], I, I, I]
+intersects_xy: np.ufunc
 """intersects_xy(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_ccw: UFunc[L[1], L[1], I]
+is_ccw: np.ufunc
 """is_ccw(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_closed: UFunc[L[1], L[1], I]
+is_closed: np.ufunc
 """is_closed(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_empty: UFunc[L[1], L[1], I]
+is_empty: np.ufunc
 """is_empty(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_geometry: UFunc[L[1], L[1], I]
+is_geometry: np.ufunc
 """is_geometry(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_missing: UFunc[L[1], L[1], I]
+is_missing: np.ufunc
 """is_missing(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_prepared: UFunc[L[1], L[1], I]
+is_prepared: np.ufunc
 """is_prepared(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_ring: UFunc[L[1], L[1], I]
+is_ring: np.ufunc
 """is_ring(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_simple: UFunc[L[1], L[1], I]
+is_simple: np.ufunc
 """is_simple(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_valid: UFunc[L[1], L[1], I]
+is_valid: np.ufunc
 """is_valid(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_valid_input: UFunc[L[1], L[1], I]
+is_valid_input: np.ufunc
 """is_valid_input(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-is_valid_reason: UFunc[L[1], L[1], I]
+is_valid_reason: np.ufunc
 """is_valid_reason(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-length: UFunc[L[1], L[1], I]
+length: np.ufunc
 """length(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_interpolate_point: UFunc[L[2], L[1], I, I]
+line_interpolate_point: np.ufunc
 """line_interpolate_point(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_interpolate_point_normalized: UFunc[L[2], L[1], I, I]
+line_interpolate_point_normalized: np.ufunc
 """line_interpolate_point_normalized(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_locate_point: UFunc[L[2], L[1], I, I]
+line_locate_point: np.ufunc
 """line_locate_point(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_locate_point_normalized: UFunc[L[2], L[1], I, I]
+line_locate_point_normalized: np.ufunc
 """line_locate_point_normalized(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_merge: UFunc[L[1], L[1], I]
+line_merge: np.ufunc
 """line_merge(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-line_merge_directed: UFunc[L[1], L[1], I]
+line_merge_directed: np.ufunc
 """line_merge_directed(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-linearrings: UFunc[L[1], L[1], I]
+linearrings: np.ufunc
 """linearrings(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-linestrings: UFunc[L[1], L[1], I]
+linestrings: np.ufunc
 """linestrings(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-make_valid: UFunc[L[1], L[1], I]
+make_valid: np.ufunc
 """make_valid(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-minimum_bounding_circle: UFunc[L[1], L[1], I]
+minimum_bounding_circle: np.ufunc
 """minimum_bounding_circle(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-minimum_bounding_radius: UFunc[L[1], L[1], I]
+minimum_bounding_radius: np.ufunc
 """minimum_bounding_radius(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-minimum_clearance: UFunc[L[1], L[1], I]
+minimum_clearance: np.ufunc
 """minimum_clearance(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-node: UFunc[L[1], L[1], I]
+node: np.ufunc
 """node(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-normalize: UFunc[L[1], L[1], I]
+normalize: np.ufunc
 """normalize(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-offset_curve: UFunc[L[5], L[1], I, I, I, I, I]
+offset_curve: np.ufunc
 """offset_curve(x1, x2, x3, x4, x5, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-oriented_envelope: UFunc[L[1], L[1], I]
+oriented_envelope: np.ufunc
 """oriented_envelope(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-overlaps: UFunc[L[2], L[1], I, I]
+overlaps: np.ufunc
 """overlaps(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-point_on_surface: UFunc[L[1], L[1], I]
+point_on_surface: np.ufunc
 """point_on_surface(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-points: UFunc[L[1], L[1], I]
+points: np.ufunc
 """points(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-polygonize: UFunc[L[1], L[1], I]
+polygonize: np.ufunc
 """polygonize(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-polygonize_full: UFunc[L[1], L[4], I]
+polygonize_full: np.ufunc
 """polygonize_full(x[, out1, out2, out3, out4], / [, out=(None, None, None, None)], *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-polygons: UFunc[L[2], L[1], I, I]
+polygons: np.ufunc
 """polygons(x1, x2, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-prepare: UFunc[L[1], L[0], I]
+prepare: np.ufunc
 """prepare(x, /, out=(), *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-relate: UFunc[L[2], L[1], I, I]
+relate: np.ufunc
 """relate(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-relate_pattern: UFunc[L[3], L[1], I, I, I]
+relate_pattern: np.ufunc
 """relate_pattern(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-remove_repeated_points: UFunc[L[2], L[1], I, I]
+remove_repeated_points: np.ufunc
 """remove_repeated_points(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-reverse: UFunc[L[1], L[1], I]
+reverse: np.ufunc
 """reverse(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-segmentize: UFunc[L[2], L[1], I, I]
+segmentize: np.ufunc
 """segmentize(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-set_precision: UFunc[L[3], L[1], I, I, I]
+set_precision: np.ufunc
 """set_precision(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-set_srid: UFunc[L[2], L[1], I, I]
+set_srid: np.ufunc
 """set_srid(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-shared_paths: UFunc[L[2], L[1], I, I]
+shared_paths: np.ufunc
 """shared_paths(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-shortest_line: UFunc[L[2], L[1], I, I]
+shortest_line: np.ufunc
 """shortest_line(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-simplify: UFunc[L[2], L[1], I, I]
+simplify: np.ufunc
 """simplify(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-simplify_preserve_topology: UFunc[L[2], L[1], I, I]
+simplify_preserve_topology: np.ufunc
 """simplify_preserve_topology(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-snap: UFunc[L[3], L[1], I, I, I]
+snap: np.ufunc
 """snap(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-symmetric_difference: UFunc[L[2], L[1], I, I]
+symmetric_difference: np.ufunc
 """symmetric_difference(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-symmetric_difference_all: UFunc[L[1], L[1], I]
+symmetric_difference_all: np.ufunc
 """symmetric_difference_all(x, /, out=None, *, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj, axes, axis])"""
 
-symmetric_difference_prec: UFunc[L[3], L[1], I, I, I]
+symmetric_difference_prec: np.ufunc
 """symmetric_difference_prec(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-to_geojson: UFunc[L[2], L[1], I, I]
+to_geojson: np.ufunc
 """to_geojson(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-to_wkb: UFunc[L[6], L[1], I, I, I, I, I, I]
+to_wkb: np.ufunc
 """to_wkb(x1, x2, x3, x4, x5, x6, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-to_wkt: UFunc[L[5], L[1], I, I, I, I, I]
+to_wkt: np.ufunc
 """to_wkt(x1, x2, x3, x4, x5, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-touches: UFunc[L[2], L[1], I, I]
+touches: np.ufunc
 """touches(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-unary_union: UFunc[L[1], L[1], I]
+unary_union: np.ufunc
 """unary_union(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-unary_union_prec: UFunc[L[2], L[1], I, I]
+unary_union_prec: np.ufunc
 """unary_union_prec(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-union: UFunc[L[2], L[1], I, I]
+union: np.ufunc
 """union(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-union_prec: UFunc[L[3], L[1], I, I, I]
+union_prec: np.ufunc
 """union_prec(x1, x2, x3, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-voronoi_polygons: UFunc[L[4], L[1], I, I, I, I]
+voronoi_polygons: np.ufunc
 """voronoi_polygons(x1, x2, x3, x4, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
 
-within: UFunc[L[2], L[1], I, I]
+within: np.ufunc
 """within(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])"""
-# END GENERATED CODE
 
 geos_capi_version: tuple[int, int, int]
 geos_capi_version_string: str
@@ -487,8 +373,8 @@ geos_version_string: str
 registry: list[Geometry]
 
 class Geometry:
-    _geom: int
-    _geom_prepared: int
+    """Geometry type"""
+
     def __hash__(self) -> int: ...
     def __eq__(self, other: object) -> bool: ...
     def __ne__(self, other: object) -> bool: ...
@@ -499,20 +385,39 @@ class Geometry:
 
 @final
 class STRtree:
-    _ptr: int
+    """A query-only R-tree created using the Sort-Tile-Recursive (STR) algorithm."""
+
     count: int
-    def __init__(self, geoms: NDArray[Any], node_capacity: SupportsIndex, **kwargs: object) -> None: ...
-    def dwithin(self, geoms: NDArray[Any], distances: NDArray[Any], /) -> Any: ...
-    def nearest(self, geoms: NDArray[Any], /) -> NDArray[np.int64]: ...
-    def query(self, geoms: NDArray[Any], predicate: SupportsIndex, /) -> NDArray[np.int64]: ...
+    """The number of geometries inside the tree"""
+    def __init__(self, geoms: NDArray[np.object_], node_capacity: SupportsIndex, /, **kwargs: object) -> None: ...
+    def dwithin(self, geoms: NDArray[np.object_], distances: NDArray[np.float64], /) -> NDArray[np.int64]:
+        """Queries the index for all item(s) in the tree within given distance of search geometries"""
+    def nearest(self, geoms: NDArray[np.object_], /) -> NDArray[np.int64]:
+        """Queries the index for the nearest item to each of the given search geometries"""
+    def query(self, geoms: NDArray[np.object_], predicate: SupportsIndex, /) -> NDArray[np.int64]:
+        """Queries the index for all items whose extents intersect the given search geometries, and optionally tests them against predicate function if provided."""
     def query_nearest(
-        self, geoms: NDArray[Any], max_distance: float, exclusive: SupportsIndex, all_matches: SupportsIndex, /
-    ) -> tuple[NDArray[np.int64], NDArray[np.float64]]: ...
+        self, geoms: NDArray[np.object_], max_distance: float, exclusive: SupportsIndex, all_matches: SupportsIndex, /
+    ) -> tuple[NDArray[np.int64], NDArray[np.float64]]:
+        """Queries the index for all nearest item(s) to each of the given search geometries"""
 
 class ShapelyError(Exception): ...
 class GEOSException(ShapelyError): ...
 
-def _setup_signal_checks(*args, **kwargs) -> Any: ...
-def count_coordinates(geoms: NDArray[Any], /) -> int: ...
-def get_coordinates(*args, **kwargs) -> Any: ...
-def set_coordinates(*args, **kwargs) -> Any: ...
+def count_coordinates(geoms: NDArray[np.object_], /) -> int:
+    """Counts the total amount of coordinates in a array with geometry objects"""
+
+@overload
+def get_coordinates(arr: NDArray[np.object_], include_z: bool, return_index: Literal[False], /) -> NDArray[np.float64]: ...
+@overload
+def get_coordinates(
+    arr: NDArray[np.object_], include_z: bool, return_index: Literal[True], /
+) -> tuple[NDArray[np.float64], NDArray[np.int64]]: ...
+@overload
+def get_coordinates(
+    arr: NDArray[np.object_], include_z: bool, return_index: bool, /
+) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.int64]]:
+    """Gets the coordinates as an (N, 2) shaped ndarray of floats"""
+
+def set_coordinates(geoms: NDArray[np.object_], coords: NDArray[np.float64], /) -> NDArray[np.object_]:
+    """Sets coordinates to a geometry array"""

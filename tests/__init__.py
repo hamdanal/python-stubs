@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from typing import Any, TypeVar, cast
+from types import UnionType
+from typing import Any, TypeAlias, TypeVar, cast
 
 import numpy as np
 
 T = TypeVar("T")
+_ClassInfo: TypeAlias = type | UnionType | tuple["_ClassInfo", ...]  # see isinstance
 
 
-def check(obj: T, cls: type, dtype: type | None = None) -> T:
+def check(obj: T, cls: type, dtype: _ClassInfo | None = None) -> T:
     __tracebackhide__ = True
     if not isinstance(obj, cls):
         raise RuntimeError(f"Expected type '{cls}' but got '{type(obj)}'")
