@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import NoneType
 from typing import TYPE_CHECKING
 
+import pyproj
 import pytest
 import shapely.ops
 from shapely import GeometryCollection, LineString, MultiLineString, MultiPoint, Point, Polygon
@@ -180,16 +181,11 @@ def test_transform() -> None:
     with pytest.raises(TypeError):
         shapely.ops.transform(wrong_id_func, P)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
 
-    try:
-        import pyproj
-    except ImportError:
-        pass
-    else:
-        wgs84_pt = Point(-72.2495, 43.886)
-        wgs84 = pyproj.CRS("EPSG:4326")
-        utm = pyproj.CRS("EPSG:32618")
-        project = pyproj.Transformer.from_crs(wgs84, utm, always_xy=True).transform
-        check(assert_type(shapely.ops.transform(project, wgs84_pt), Point), Point)
+    wgs84_pt = Point(-72.2495, 43.886)
+    wgs84 = pyproj.CRS("EPSG:4326")
+    utm = pyproj.CRS("EPSG:32618")
+    project = pyproj.Transformer.from_crs(wgs84, utm, always_xy=True).transform
+    check(assert_type(shapely.ops.transform(project, wgs84_pt), Point), Point)
 
 
 def test_nearest_points() -> None:

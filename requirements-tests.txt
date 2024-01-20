@@ -9,3 +9,4 @@ shapely>=2.0,<2.1
 
 # Transient dependencies
 matplotlib>=3.8.0
+pyproj>=3.6.1
