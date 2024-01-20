@@ -4,41 +4,44 @@ from typing import Literal, overload
 import numpy as np
 from numpy.typing import NDArray
 
-from shapely._typing import ArrayLike, GeoArray, GeoArrayLike, GeoArrayLikeSeq
-from shapely.geometry.base import BaseGeometry
+from shapely._typing import ArrayLikeSeq, GeoArray, GeoT, OptGeoArrayLike, OptGeoArrayLikeSeq
 
 __all__ = ["transform", "count_coordinates", "get_coordinates", "set_coordinates"]
 
 @overload
 def transform(
-    geometry: BaseGeometry, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
-) -> BaseGeometry: ...
+    geometry: None, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
+) -> None: ...
 @overload
 def transform(
-    geometry: GeoArrayLikeSeq, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
+    geometry: GeoT, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
+) -> GeoT: ...
+@overload
+def transform(
+    geometry: OptGeoArrayLikeSeq, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
 ) -> GeoArray: ...
-def count_coordinates(geometry: GeoArrayLike | None) -> int: ...
+def count_coordinates(geometry: OptGeoArrayLike) -> int: ...
 @overload
 def get_coordinates(
-    geometry: GeoArrayLike, include_z: bool = False, return_index: Literal[False] = False
+    geometry: OptGeoArrayLike, include_z: bool = False, return_index: Literal[False] = False
 ) -> NDArray[np.float64]: ...
 @overload
 def get_coordinates(
-    geometry: GeoArrayLike, include_z: bool = False, *, return_index: Literal[True]
+    geometry: OptGeoArrayLike, include_z: bool = False, *, return_index: Literal[True]
 ) -> tuple[NDArray[np.float64], NDArray[np.int64]]: ...
 @overload
 def get_coordinates(
-    geometry: GeoArrayLike, include_z: bool, return_index: Literal[True]
+    geometry: OptGeoArrayLike, include_z: bool, return_index: Literal[True]
 ) -> tuple[NDArray[np.float64], NDArray[np.int64]]: ...
 @overload
 def get_coordinates(
-    geometry: GeoArrayLike, include_z: bool = False, *, return_index: bool
+    geometry: OptGeoArrayLike, include_z: bool = False, *, return_index: bool
 ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.int64]]: ...
 @overload
 def get_coordinates(
-    geometry: GeoArrayLike, include_z: bool, return_index: bool
+    geometry: OptGeoArrayLike, include_z: bool, return_index: bool
 ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.int64]]: ...
 @overload
-def set_coordinates(geometry: BaseGeometry, coordinates: ArrayLike[float]) -> BaseGeometry: ...
+def set_coordinates(geometry: GeoT, coordinates: ArrayLikeSeq[float]) -> GeoT: ...
 @overload
-def set_coordinates(geometry: GeoArrayLikeSeq, coordinates: ArrayLike[float]) -> GeoArray: ...
+def set_coordinates(geometry: OptGeoArrayLikeSeq, coordinates: ArrayLikeSeq[float]) -> GeoArray: ...

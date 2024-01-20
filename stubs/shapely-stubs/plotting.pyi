@@ -6,7 +6,7 @@ from matplotlib.patches import PathPatch
 from matplotlib.typing import ColorType
 
 from shapely.geometry import LinearRing, LineString, MultiLineString, MultiPolygon, Polygon
-from shapely.geometry.base import BaseGeometry
+from shapely.lib import Geometry
 
 def patch_from_polygon(polygon: Polygon | MultiPolygon, **kwargs: Any) -> PathPatch: ...
 @overload
@@ -52,5 +52,5 @@ def plot_line(
     **kwargs: Any,
 ) -> PathPatch: ...
 def plot_points(
-    geom: BaseGeometry, ax: Axes | None = None, color: ColorType | None = None, marker: str = "o", **kwargs: Any
+    geom: Geometry, ax: Axes | None = None, color: ColorType | None = None, marker: str = "o", **kwargs: Any
 ) -> Line2D: ...

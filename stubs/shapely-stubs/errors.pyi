@@ -1,5 +1,3 @@
-from typing_extensions import deprecated
-
 from shapely.lib import GEOSException as GEOSException, ShapelyError as ShapelyError
 
 def setup_signal_checks(interval: int = 10000) -> None: ...
@@ -11,17 +9,9 @@ class ShapelyDeprecationWarning(FutureWarning): ...
 class EmptyPartError(ShapelyError): ...
 class GeometryTypeError(ShapelyError): ...
 
-@deprecated("Excpetion class `ReadingError` is a deprecated alias to `ShapelyError`.")
-class ReadingError(ShapelyError): ...
-
-@deprecated("Exception class `WKBReadingError` is a deprecated alias to `ShapelyError`.")
-class WKBReadingError(ShapelyError): ...
-
-@deprecated("Exception class `WKTReadingError` is a deprecated alias to `ShapelyError`.")
-class WKTReadingError(ShapelyError): ...
-
-@deprecated("Exception class `PredicateError` is a deprecated alias to `ShapelyError`.")
-class PredicateError(ShapelyError): ...
-
-@deprecated("Exception class `InvalidGeometryError` is a deprecated alias to `ShapelyError`.")
-class InvalidGeometryError(ShapelyError): ...
+# deprecated aliases
+ReadingError = ShapelyError
+WKBReadingError = ShapelyError
+WKTReadingError = ShapelyError
+PredicateError = ShapelyError
+InvalidGeometryError = ShapelyError

@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import NoneType
 
 import numpy as np
+import pytest
 import shapely
 from numpy.typing import NDArray
 from shapely import Point, Polygon
@@ -211,10 +212,8 @@ def test_coverage_union() -> None:
     check(assert_type(shapely.coverage_union(PO, PO2), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union(PO, None), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union(None, PO), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.coverage_union(None, None), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union([PO], [PO2]), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union([PO], [None]), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.coverage_union([None], [None]), BaseGeometry), BaseGeometry)
     check(
         assert_type(shapely.coverage_union(PO, PO2, axis=0), BaseGeometry | NDArray[np.object_]),
         BaseGeometry,
@@ -227,12 +226,14 @@ def test_coverage_union() -> None:
         dtype=BaseGeometry,
     )
 
+    with pytest.warns(RuntimeWarning):
+        check(assert_type(shapely.coverage_union(None, None), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.coverage_union([None], [None]), BaseGeometry), BaseGeometry)
+
 
 def test_coverage_union_all() -> None:
     check(assert_type(shapely.coverage_union_all(PO), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.coverage_union_all(None), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union_all([PO]), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.coverage_union_all([None]), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union_all([PO, PO2]), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.coverage_union_all([PO, None]), BaseGeometry), BaseGeometry)
     check(
@@ -244,14 +245,20 @@ def test_coverage_union_all() -> None:
         np.ndarray,
         dtype=BaseGeometry,
     )
-    check(
-        assert_type(shapely.coverage_union_all([None], axis=0), BaseGeometry | NDArray[np.object_]),
-        BaseGeometry,
-    )
-    check(
-        assert_type(
-            shapely.coverage_union_all([[None]], axis=0), BaseGeometry | NDArray[np.object_]
-        ),
-        np.ndarray,
-        dtype=BaseGeometry,
-    )
+
+    with pytest.warns(RuntimeWarning):
+        check(assert_type(shapely.coverage_union_all(None), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.coverage_union_all([None]), BaseGeometry), BaseGeometry)
+        check(
+            assert_type(
+                shapely.coverage_union_all([None], axis=0), BaseGeometry | NDArray[np.object_]
+            ),
+            BaseGeometry,
+        )
+        check(
+            assert_type(
+                shapely.coverage_union_all([[None]], axis=0), BaseGeometry | NDArray[np.object_]
+            ),
+            np.ndarray,
+            dtype=BaseGeometry,
+        )

@@ -5,9 +5,10 @@ import numpy as np
 from numpy.typing import NDArray
 
 from shapely._enum import ParamEnum
-from shapely._ragged_array import from_ragged_array, to_ragged_array
+from shapely._ragged_array import from_ragged_array as from_ragged_array, to_ragged_array as to_ragged_array
 from shapely._typing import ArrayLikeSeq, GeoArray, OptGeoArrayLikeSeq
 from shapely.geometry.base import BaseGeometry
+from shapely.lib import Geometry
 
 __all__ = ["from_geojson", "from_ragged_array", "from_wkb", "from_wkt", "to_geojson", "to_ragged_array", "to_wkb", "to_wkt"]
 
@@ -26,12 +27,7 @@ def to_wkt(
 ) -> None: ...
 @overload
 def to_wkt(
-    geometry: BaseGeometry,
-    rounding_precision: int = 6,
-    trim: bool = True,
-    output_dimension: int = 3,
-    old_3d: bool = False,
-    **kwargs,
+    geometry: Geometry, rounding_precision: int = 6, trim: bool = True, output_dimension: int = 3, old_3d: bool = False, **kwargs
 ) -> str: ...
 @overload
 def to_wkt(
@@ -54,7 +50,7 @@ def to_wkb(
 ) -> None: ...
 @overload
 def to_wkb(
-    geometry: BaseGeometry,
+    geometry: Geometry,
     hex: Literal[False] = False,
     output_dimension: int = 3,
     byte_order: int = -1,
@@ -64,7 +60,7 @@ def to_wkb(
 ) -> bytes: ...
 @overload
 def to_wkb(
-    geometry: BaseGeometry,
+    geometry: Geometry,
     hex: Literal[True],
     output_dimension: int = 3,
     byte_order: int = -1,
@@ -74,7 +70,7 @@ def to_wkb(
 ) -> str: ...
 @overload
 def to_wkb(
-    geometry: BaseGeometry,
+    geometry: Geometry,
     hex: bool,
     output_dimension: int = 3,
     byte_order: int = -1,
@@ -115,7 +111,7 @@ def to_wkb(
 @overload
 def to_geojson(geometry: None, indent: int | None = None, **kwargs) -> None: ...
 @overload
-def to_geojson(geometry: BaseGeometry, indent: int | None = None, **kwargs) -> str: ...
+def to_geojson(geometry: Geometry, indent: int | None = None, **kwargs) -> str: ...
 @overload
 def to_geojson(geometry: OptGeoArrayLikeSeq, indent: int | None = None, **kwargs) -> NDArray[np.str_]: ...
 @overload

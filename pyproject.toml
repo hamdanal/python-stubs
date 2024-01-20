@@ -12,11 +12,7 @@ src = ["stubs"]
 skip-magic-trailing-comma = true
 
 [tool.ruff.lint]
-select = [
-    "E",      # pycodestyle (errors)
-    "W",      # pycodestyle (warnings)
-    "F",      # pyflakes
-    "B",      # flake8-bugbear
+extend-select = [
     "PYI",    # flake8-pyi
     "PGH004", # flake8-noqa
     "I",      # isort
@@ -24,10 +20,6 @@ select = [
     "RUF100", # yesqa
     "FA",     # flake8-future-annotations
     "TID",    # flake8-tidy-imports
-]
-ignore = [
-    "E501",   # leave long lines to the formatter
-    "PYI053", # string > 50 chars in @deprecated is OK
 ]
 fixable = [
     "F401",   # Remove unused imports
@@ -39,8 +31,12 @@ fixable = [
     "TID",
 ]
 
-[tool.ruff.lint.per-file-ignores]
-"*.pyi" = ["B", "E741", "F403", "F405"]
+[tool.ruff.lint.extend-per-file-ignores]
+"*.pyi" = [
+    "E741", # ambiguous-variable-name
+    "F403", # undefined-local-with-import-star
+    "F405", # undefined-local-with-import-star-usage
+]
 "__init__.pyi" = ["TID252"]
 
 [tool.ruff.lint.isort]
@@ -52,43 +48,43 @@ extra-standard-library = ["typing_extensions", "_typeshed"]
 ban-relative-imports = "all"
 
 [tool.mypy]
+mypy_path = "stubs/"
 strict = true
 warn_unused_ignores = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 
 [tool.pyright]
-ignore = [
-    # Disable annoying checks in third-party library code
-    "**/site-packages/",
-]
+# Project settings
 stubPath = "stubs/"
+enableTypeIgnoreComments = false # Leave "type: ignore" comments to mypy
+ignore = [
+    "**/site-packages/", # Disable annoying checks in third-party library code
+]
+
+# Strict mode
 typeCheckingMode = "strict"
-# Extra strict settings
+reportCallInDefaultInitializer = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+
+# Disable extra strict settings
 reportIncompleteStub = "none"
 reportMissingParameterType = "none"
 reportUnknownMemberType = "none"
 reportUnknownParameterType = "none"
 reportUnknownVariableType = "none"
-reportCallInDefaultInitializer = "error"
-reportUnnecessaryTypeIgnoreComment = "error"
-# Leave "type: ignore" comments to mypy
-enableTypeIgnoreComments = false
-# Stubs are allowed to use private variables
-reportPrivateUsage = "none"
-# Stubs don't need the actual modules to be installed
+
+# Not relevant for stubs
 reportMissingModuleSource = "none"
-# Incompatible overrides and property type mismatches are out of control
-# of the stubs as they are inherited from the implementation.
+reportMissingTypeStubs = "none"
+reportPrivateUsage = "none"
+reportOverlappingOverload = "none" # Overlapping overloads are often necessary in stubs
+
+# Out of control of the stubs (inherited from implementation)
 reportIncompatibleMethodOverride = "none"
 reportIncompatibleVariableOverride = "none"
 reportPropertyTypeMismatch = "none"
-# Overlapping overloads are often necessary in a stub
-reportOverlappingOverload = "none"
-# The name of the self/cls parameter is out of typeshed's control.
 reportSelfClsParameterName = "none"
-# We don't care about missing type stubs
-reportMissingTypeStubs = "none"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

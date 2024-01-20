@@ -1,13 +1,12 @@
-from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Literal, SupportsIndex
+from typing import Literal, SupportsIndex, overload
 
 import numpy as np
 from numpy.typing import NDArray
 
 from shapely._geometry import GeometryType
-from shapely._typing import ArrayLike, OptGeoArrayLike
-from shapely.prepared import PreparedGeometry
+from shapely._typing import ArrayLike, ArrayLikeSeq, GeoArray, OptGeoArrayLike, OptGeoArrayLikeSeq
+from shapely.geometry import LinearRing, LineString, Point, Polygon
 
 __all__ = [
     "points",
@@ -24,44 +23,175 @@ __all__ = [
     "empty",
 ]
 
+@overload
 def points(
-    coords,
-    y: Incomplete | None = None,
-    z: Incomplete | None = None,
-    indices: Incomplete | None = None,
+    coords: float,  # acts as x
+    y: float,
+    z: float | None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> Point: ...
+@overload
+def points(
+    coords: Sequence[float],  # acts as x, y[, z]
+    y: None = None,
+    z: None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> Point: ...
+@overload
+def points(
+    coords: Sequence[float],  # acts as (x1, x2, ...)
+    y: Sequence[float],  # must be (y1, y2, ...)
+    z: Sequence[float] | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
     out: NDArray[np.object_] | None = None,
     **kwargs,
-): ...
+) -> GeoArray: ...
+@overload
+def points(
+    coords: Sequence[Sequence[float]],  # acts as (x1, x2, ...), (y1, y2, ...)[, (z1, z2, ...)]
+    y: None = None,
+    z: None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> GeoArray: ...
+@overload
+def points(
+    coords: ArrayLike[float],
+    y: ArrayLike[float],
+    z: ArrayLike[float] | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> Point | GeoArray: ...
+@overload
+def points(
+    coords: ArrayLikeSeq[float],
+    y: ArrayLike[float] | None = None,
+    z: ArrayLike[float] | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> Point | GeoArray: ...
+@overload
 def linestrings(
-    coords,
-    y: Incomplete | None = None,
-    z: Incomplete | None = None,
-    indices: Incomplete | None = None,
+    coords: Sequence[float],  # acts as (x1, x2, ...)
+    y: Sequence[float],
+    z: Sequence[float] | None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> LineString: ...
+@overload
+def linestrings(
+    coords: Sequence[Sequence[float]],  # acts as (x1, y1[, z1]), (x2, y2[, z2]), ...
+    y: None = None,
+    z: None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> LineString: ...
+@overload
+def linestrings(
+    coords: Sequence[Sequence[Sequence[float]]],  # acts as seq of (x1, y1[, z1]), (x2, y2[, z2]), ...
+    y: None = None,
+    z: None = None,
+    indices: ArrayLikeSeq[int] | None = None,
     out: NDArray[np.object_] | None = None,
     **kwargs,
-): ...
+) -> GeoArray: ...
+@overload
+def linestrings(
+    coords: ArrayLikeSeq[float],
+    y: ArrayLikeSeq[float] | None = None,
+    z: ArrayLikeSeq[float] | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> LineString | GeoArray: ...
+@overload
 def linearrings(
-    coords,
-    y: Incomplete | None = None,
-    z: Incomplete | None = None,
-    indices: Incomplete | None = None,
+    coords: Sequence[float],  # acts as (x1, x2, ...)
+    y: Sequence[float],
+    z: Sequence[float] | None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> LinearRing: ...
+@overload
+def linearrings(
+    coords: Sequence[Sequence[float]],  # acts as (x1, y1[, z1]), (x2, y2[, z2]), ...
+    y: None = None,
+    z: None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> LinearRing: ...
+@overload
+def linearrings(
+    coords: Sequence[Sequence[Sequence[float]]],  # acts as seq of (x1, y1[, z1]), (x2, y2[, z2]), ...
+    y: None = None,
+    z: None = None,
+    indices: ArrayLikeSeq[int] | None = None,
     out: NDArray[np.object_] | None = None,
     **kwargs,
-): ...
+) -> GeoArray: ...
+@overload
+def linearrings(
+    coords: ArrayLikeSeq[float],
+    y: ArrayLikeSeq[float] | None = None,
+    z: ArrayLikeSeq[float] | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> LinearRing | GeoArray: ...
+@overload
 def polygons(
-    geometries,
-    holes: Incomplete | None = None,
-    indices: Incomplete | None = None,
+    geometries: LinearRing | Sequence[Sequence[float]] | None,
+    holes: ArrayLikeSeq[float] | OptGeoArrayLikeSeq | None = None,
+    indices: None = None,
+    out: None = None,
+    **kwargs,
+) -> Polygon: ...
+@overload
+def polygons(
+    geometries: Sequence[LinearRing | Sequence[Sequence[float]] | None],
+    holes: ArrayLikeSeq[float] | OptGeoArrayLikeSeq | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
     out: NDArray[np.object_] | None = None,
     **kwargs,
+) -> GeoArray: ...
+@overload
+def polygons(
+    geometries: ArrayLikeSeq[float] | OptGeoArrayLikeSeq,
+    holes: ArrayLikeSeq[float] | OptGeoArrayLikeSeq | None = None,
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> Polygon | GeoArray: ...
+@overload
+def box(xmin: float, ymin: float, xmax: float, ymax: float, ccw: bool = True, **kwargs) -> Polygon: ...
+@overload
+def box(
+    xmin: ArrayLikeSeq[float],
+    ymin: ArrayLikeSeq[float],
+    xmax: ArrayLikeSeq[float],
+    ymax: ArrayLikeSeq[float],
+    ccw: bool = True,
+    **kwargs,
+) -> GeoArray: ...
+def multipoints(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
+def multilinestrings(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
+def multipolygons(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
+def geometrycollections(
+    geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
 ): ...
-def box(xmin, ymin, xmax, ymax, ccw: bool = True, **kwargs): ...
-def multipoints(geometries, indices: Incomplete | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
-def multilinestrings(geometries, indices: Incomplete | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
-def multipolygons(geometries, indices: Incomplete | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
-def geometrycollections(geometries, indices: Incomplete | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
-def prepare(geometry, **kwargs) -> None: ...
-def destroy_prepared(geometry: OptGeoArrayLike | ArrayLike[PreparedGeometry[Any]], **kwargs) -> None: ...
+def prepare(geometry: OptGeoArrayLike, **kwargs) -> None: ...
+def destroy_prepared(geometry: OptGeoArrayLike, **kwargs) -> None: ...
 def empty(
     shape: SupportsIndex | Sequence[SupportsIndex], geom_type: GeometryType | int | None = None, order: Literal["C", "F"] = "C"
 ) -> NDArray[np.object_]: ...

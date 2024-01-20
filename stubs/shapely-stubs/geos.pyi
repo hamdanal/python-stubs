@@ -1,5 +1,3 @@
-from _typeshed import Incomplete
-
-geos_version_string: Incomplete
-geos_version: Incomplete
-geos_capi_version: Incomplete
+geos_version_string: str
+geos_version: tuple[int, int, int]
+geos_capi_version: tuple[int, int, int]
