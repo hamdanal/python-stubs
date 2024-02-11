@@ -193,7 +193,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         self, column: Hashable | None = None, ignore_index: bool = False, index_parts: bool | None = None, **kwargs
     ) -> Self: ...
     def astype(self, dtype, copy: bool = True, errors: str = "raise", **kwargs) -> GeoDataFrame | pd.DataFrame: ...
-    def convert_dtypes(  # type: ignore[override] # TODO needs fixing in pandas-stubs
+    def convert_dtypes(
         self,
         infer_objects: bool = True,
         convert_string: bool = True,
