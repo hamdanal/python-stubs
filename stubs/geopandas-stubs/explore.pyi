@@ -1,10 +1,10 @@
 from collections.abc import Callable, Hashable, MutableMapping, Sequence
 from typing import Any
 
-import branca
-import folium
+import branca  # type: ignore[import-untyped]
+import folium  # type: ignore[import-untyped]
 import pandas as pd
-import xyzservices
+import xyzservices  # type: ignore[import-untyped]
 from matplotlib.colors import Colormap
 from numpy.typing import ArrayLike, NDArray
 

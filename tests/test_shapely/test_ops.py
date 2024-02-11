@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from types import NoneType
-from typing import TYPE_CHECKING
 
 import pyproj
 import pytest
@@ -12,9 +11,6 @@ from typing_extensions import assert_type
 
 from tests import check
 
-if TYPE_CHECKING:
-    from shapely.ops import _PolygonSequence  # noqa: F401
-
 P = Point(1, 2)
 LS = LineString([(0, 0), (1, 1)])
 PO: Polygon = P.buffer(1)
@@ -23,7 +19,9 @@ MP = MultiPoint([(0, 0), (1, 1), (0, 2), (2, 2), (3, 1), (1, 0)])
 
 def test_polygonize() -> None:
     check(
-        assert_type(shapely.ops.polygonize(PO), "_PolygonSequence"), GeometrySequence, dtype=Polygon
+        assert_type(shapely.ops.polygonize(PO), "GeometrySequence[GeometryCollection]"),
+        GeometrySequence,
+        dtype=Polygon,
     )
     line_likes = [
         ((0, 0), (1, 1)),
@@ -33,7 +31,7 @@ def test_polygonize() -> None:
         ((1, 0), (0, 0)),
     ]
     check(
-        assert_type(shapely.ops.polygonize(line_likes), "_PolygonSequence"),
+        assert_type(shapely.ops.polygonize(line_likes), "GeometrySequence[GeometryCollection]"),
         GeometrySequence,
         dtype=Polygon,
     )
@@ -43,10 +41,13 @@ def test_polygonize() -> None:
         LineString([(0, 1), (1, 1)]),
     ]
     poly = shapely.ops.polygonize(lines)
-    check(assert_type(poly, "_PolygonSequence"), GeometrySequence, dtype=Polygon)
-    check(assert_type(poly[0], Polygon), Polygon)
+    check(
+        assert_type(poly, "GeometrySequence[GeometryCollection]"), GeometrySequence, dtype=Polygon
+    )
+    check(assert_type(poly[0], BaseGeometry), Polygon)
     check(assert_type(poly[:], GeometryCollection), GeometryCollection)
-    check(assert_type(list(poly), list[Polygon]), list, dtype=Polygon)
+    # TODO: mypy does not correctly handle the next line
+    check(assert_type(list(poly), list[BaseGeometry]), list, dtype=Polygon)  # type: ignore[assert-type]
     check(assert_type(len(poly), int), int)
 
     check(
@@ -60,7 +61,7 @@ def test_polygonize() -> None:
                     None,
                 )
             ),
-            "_PolygonSequence",
+            "GeometrySequence[GeometryCollection]",
         ),
         GeometrySequence,
         dtype=Polygon,
@@ -150,7 +151,7 @@ def test_triangulate() -> None:
     check(
         assert_type(shapely.ops.triangulate(MP, edges=bool("")), list[Polygon] | list[LineString]),
         list,
-        dtype=LineString | Polygon,  # pyright: ignore[reportGeneralTypeIssues]  # TODO report to pyright
+        dtype=LineString | Polygon,
     )
 
 
@@ -179,7 +180,7 @@ def test_transform() -> None:
         return x, y, z
 
     with pytest.raises(TypeError):
-        shapely.ops.transform(wrong_id_func, P)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.ops.transform(wrong_id_func, P)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
     wgs84_pt = Point(-72.2495, 43.886)
     wgs84 = pyproj.CRS("EPSG:4326")
@@ -205,7 +206,7 @@ def test_shared_paths() -> None:
     shared = shapely.ops.shared_paths(LS, PO.exterior)
     check(assert_type(shared, GeometryCollection), GeometryCollection)
     with pytest.raises(Exception):
-        shapely.ops.shared_paths(LS, PO)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.ops.shared_paths(LS, PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 def test_split() -> None:

@@ -1,8 +1,6 @@
-from collections.abc import Callable, Iterable, Iterator
+from collections.abc import Callable, Iterable
 from typing import Any, Literal, overload
 from typing_extensions import deprecated
-
-import numpy as np
 
 from shapely._typing import GeoT, OptGeoArrayLike, SupportsGeoInterface
 from shapely.algorithms.polylabel import polylabel as polylabel
@@ -31,15 +29,6 @@ __all__ = [
     "substring",
 ]
 
-# A more precise "fake" return type for polygonize
-class _PolygonSequence(GeometrySequence[GeometryCollection]):
-    def __init__(self, parent: GeometryCollection) -> None: ...
-    def __iter__(self) -> Iterator[Polygon]: ...
-    @overload
-    def __getitem__(self, key: int | np.integer[Any]) -> Polygon: ...
-    @overload
-    def __getitem__(self, key: slice) -> GeometryCollection: ...
-
 class CollectionOperator:
     @overload
     def shapeup(self, ob: GeoT) -> GeoT: ...  # type: ignore[overload-overlap]
@@ -47,7 +36,9 @@ class CollectionOperator:
     def shapeup(self, ob: dict[str, Any] | SupportsGeoInterface) -> BaseGeometry: ...  # type: ignore[overload-overlap]
     @overload
     def shapeup(self, ob: _ConvertibleToLineString) -> LineString: ...
-    def polygonize(self, lines: OptGeoArrayLike | Iterable[_ConvertibleToLineString | None]) -> _PolygonSequence: ...
+    def polygonize(
+        self, lines: OptGeoArrayLike | Iterable[_ConvertibleToLineString | None]
+    ) -> GeometrySequence[GeometryCollection]: ...
     def polygonize_full(
         self, lines: OptGeoArrayLike | Iterable[_ConvertibleToLineString | None]
     ) -> tuple[GeometryCollection, GeometryCollection, GeometryCollection, GeometryCollection]: ...

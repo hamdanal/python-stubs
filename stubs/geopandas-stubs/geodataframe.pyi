@@ -9,7 +9,7 @@ import pandas as pd
 from numpy.typing import NDArray
 from pandas._typing import Axes, Dtype, ListLikeU, Scalar
 from pyproj import CRS
-from shapely.geometry.base import BaseGeometry
+from shapely import Geometry
 
 from geopandas.array import GeometryArray
 from geopandas.base import GeoPandasBase, _ConvertibleToCRS
@@ -20,9 +20,8 @@ from geopandas.io.sql import _SQLConnection
 from geopandas.plotting import GeoplotAccessor
 from geopandas.tools.clip import _Mask as _ClipMask
 
-# XXX: cannot use pd.Series[BaseGeometry] because of pd.Series type variable bounds
-_GeometrySeries: TypeAlias = pd.Series[Incomplete]
-_Geometry: TypeAlias = Hashable | Sequence[BaseGeometry] | NDArray[np.object_] | _GeometrySeries | GeometryArray | GeoSeries
+# XXX: cannot use pd.Series[Geometry] because of pd.Series type variable bounds
+_GeometryColumn: TypeAlias = Hashable | Sequence[Geometry] | NDArray[np.object_] | pd.Series[Any] | GeometryArray | GeoSeries
 _ConvertibleToDataFrame: TypeAlias = (
     ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
 )
@@ -40,7 +39,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _Geometry | None = None,
+        geometry: _GeometryColumn | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> Self: ...
     @overload
@@ -52,7 +51,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _Geometry | None = None,
+        geometry: _GeometryColumn | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> Self: ...
     def __init__(
@@ -63,15 +62,17 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _Geometry | None = None,
+        geometry: _GeometryColumn | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> None: ...
     def __setattr__(self, attr: str, val: Any) -> None: ...
     @property
     def geometry(self) -> GeoSeries: ...
     @geometry.setter
-    def geometry(self, col: _Geometry) -> None: ...
-    def set_geometry(self, col: _Geometry, drop: bool = False, inplace: bool = False, crs: _ConvertibleToCRS | None = None): ...
+    def geometry(self, col: _GeometryColumn) -> None: ...
+    def set_geometry(
+        self, col: _GeometryColumn, drop: bool = False, inplace: bool = False, crs: _ConvertibleToCRS | None = None
+    ): ...
     def rename_geometry(self, col: Hashable, inplace: bool = False): ...
     @property
     def crs(self) -> CRS | None: ...
@@ -79,17 +80,17 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def crs(self, value: _ConvertibleToCRS) -> None: ...
     @classmethod
     def from_dict(  # type: ignore[override]
-        cls, data: Mapping[Hashable, Any], geometry: _Geometry | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
+        cls, data: Mapping[Hashable, Any], geometry: _GeometryColumn | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
     ) -> Self: ...
     @classmethod
     def from_file(
         cls,
         filename: str | os.PathLike[str] | SupportsRead[Any],
+        *,
         bbox: _BboxLike | None = None,
         mask: _MaskLike | None = None,
         rows: int | slice | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
-        *,
         ignore_geometry: Literal[False] = False,
         **kwargs: Any,  # depends on engine
     ) -> Self: ...
@@ -134,17 +135,19 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     ) -> Generator[dict[str, Any], None, None]: ...
     def to_wkb(self, hex: bool = False, **kwargs) -> pd.DataFrame: ...
     def to_wkt(self, **kwargs) -> pd.DataFrame: ...
-    def to_parquet(
+    def to_parquet(  # type: ignore[override]
         self,
-        path: str | os.PathLike[str],
+        path: str | os.PathLike[str] | SupportsWrite[Incomplete],
         index: bool | None = None,
         compression: Literal["snappy", "gzip", "brotli"] | None = "snappy",
         schema_version: str | None = None,
+        *,
+        engine: Literal["auto", "pyarrow"] = "auto",  # Only these engines are supported, unlike pandas
         **kwargs,
     ) -> None: ...
     def to_feather(
         self,
-        path: str | os.PathLike[str],
+        path: str | os.PathLike[str] | SupportsWrite[Incomplete],
         index: bool | None = None,
         compression: Literal["zstd", "lz4", "uncompressed"] | None = None,
         schema_version: str | None = None,
@@ -173,7 +176,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     # def __setitem__(self, key, value) -> None: ...
     def copy(self, deep: bool = True) -> Self: ...
     def merge(self, *args, **kwargs) -> GeoDataFrame | pd.DataFrame: ...
-    def apply(self, func, axis: int = 0, raw: bool = False, result_type: Incomplete | None = None, args=(), **kwargs): ...
+    def apply(self, func, axis: int = 0, raw: bool = False, result_type: Incomplete | None = None, args=(), **kwargs): ...  # type: ignore[override]
     def __finalize__(self, other, method: Incomplete | None = None, **kwargs) -> Self: ...
     def dissolve(
         self,
@@ -211,14 +214,15 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Incomplete | None = None,
     ) -> None: ...
     @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
-    def __xor__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'|' operator is deprecated. Use method `union` instead.")
-    def __or__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __or__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'&' operator is deprecated. Use method `intersection` instead.")
-    def __and__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __and__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'-' operator is deprecated. Use method `difference` instead.")
-    def __sub__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
-    plot: GeoplotAccessor
+    def __sub__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
+    @property
+    def plot(self) -> GeoplotAccessor: ...
     explore = _explore
     def sjoin(self, df: GeoDataFrame, *args, **kwargs) -> GeoDataFrame: ...
     def sjoin_nearest(
@@ -231,7 +235,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         distance_col: str | None = None,
         exclusive: bool = False,
     ) -> GeoDataFrame: ...
-    def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoDataFrame: ...
+    def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoDataFrame: ...  # type: ignore[override]
     def overlay(
         self, right: GeoDataFrame, how: str = "intersection", keep_geom_type: bool | None = None, make_valid: bool = True
     ) -> GeoDataFrame: ...

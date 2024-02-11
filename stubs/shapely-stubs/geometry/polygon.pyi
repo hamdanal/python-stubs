@@ -4,6 +4,7 @@ from typing_extensions import Self, TypeAlias
 
 from shapely.geometry.base import BaseGeometry
 from shapely.geometry.linestring import LineString, _ConvertibleToLineString
+from shapely.geometry.multilinestring import MultiLineString
 
 __all__ = ["Polygon", "LinearRing"]
 
@@ -37,5 +38,8 @@ class Polygon(BaseGeometry):
     def svg(self, scale_factor: float = 1.0, fill_color: str | None = None, opacity: float | None = None) -> str: ...  # type: ignore[override]
     @classmethod
     def from_bounds(cls, xmin: float, ymin: float, xmax: float, ymax: float) -> Self: ...
+    # more precise base overrides
+    @property
+    def boundary(self) -> MultiLineString: ...
 
 def orient(polygon: Polygon, sign: float = 1.0) -> Polygon: ...

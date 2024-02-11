@@ -6,7 +6,7 @@ from typing_extensions import TypeAlias, deprecated
 
 from pandas._typing import Scalar
 
-from geopandas import GeoDataFrame as GeoDataFrame
+from geopandas import GeoDataFrame
 from geopandas.base import _ConvertibleToCRS
 
 # Start SQLAlchemy hack

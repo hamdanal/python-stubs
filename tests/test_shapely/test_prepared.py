@@ -42,4 +42,4 @@ def test_prepared_geometry() -> None:
 
     # comparison to array-like sequences is not allowed
     with pytest.raises(TypeError):
-        PG.contains_properly([P, None])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        PG.contains_properly([P, None])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]

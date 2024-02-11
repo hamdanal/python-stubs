@@ -1,9 +1,18 @@
-from typing import SupportsIndex
+from typing import Any, Literal, SupportsIndex, overload
+from typing_extensions import TypeAlias
+
+import numpy as np
+from numpy.typing import NDArray
 
 from shapely._enum import ParamEnum
-from shapely._typing import ArrayLike, GeoArray, GeoArrayLike, GeoArrayLikeSeq
+from shapely._typing import ArrayLike, GeoArray, GeoArrayLikeSeq, OptGeoArrayLike
+from shapely.lib import Geometry
 
 __all__ = ["STRtree"]
+
+_BinaryPredicate: TypeAlias = Literal[
+    "intersects", "within", "contains", "overlaps", "crosses", "touches", "covers", "covered_by", "contains_properly"
+]
 
 class BinaryPredicate(ParamEnum):
     intersects: int
@@ -21,15 +30,53 @@ class STRtree:
     def __len__(self) -> int: ...
     @property
     def geometries(self) -> GeoArray: ...
+    @overload
     def query(
-        self, geometry: GeoArrayLike, predicate: str | None = None, distance: ArrayLike[float] | None = None
-    ): ...  # -> int | NDArray[np.int64]
-    def nearest(self, geometry: GeoArrayLike): ...  # -> int | NDArray[np.int64] | None
+        self, geometry: OptGeoArrayLike, predicate: Literal["dwithin"], distance: ArrayLike[float]
+    ) -> NDArray[np.int64]: ...
+    @overload
+    def query(
+        self, geometry: OptGeoArrayLike, predicate: _BinaryPredicate | None = None, distance: object = None
+    ) -> NDArray[np.int64]: ...
+    # nearest may return `None` if the tree is empty, use the "Any trick"
+    @overload
+    def nearest(self, geometry: Geometry) -> int | Any: ...
+    @overload
+    def nearest(self, geometry: GeoArrayLikeSeq) -> NDArray[np.int64] | Any: ...
+    @overload  # return_distance=False
     def query_nearest(
         self,
-        geometry: GeoArrayLike,
+        geometry: OptGeoArrayLike,
+        max_distance: float | None = None,
+        return_distance: Literal[False] = False,
+        exclusive: bool = False,
+        all_matches: bool = True,
+    ) -> NDArray[np.int64]: ...
+    @overload  # return_distance=True keyword
+    def query_nearest(
+        self,
+        geometry: OptGeoArrayLike,
+        max_distance: float | None = None,
+        *,
+        return_distance: Literal[True],
+        exclusive: bool = False,
+        all_matches: bool = True,
+    ) -> tuple[NDArray[np.int64], NDArray[np.float64]]: ...
+    @overload  # return_distance=True positional
+    def query_nearest(
+        self,
+        geometry: OptGeoArrayLike,
+        max_distance: float | None,
+        return_distance: Literal[True],
+        exclusive: bool = False,
+        all_matches: bool = True,
+    ) -> tuple[NDArray[np.int64], NDArray[np.float64]]: ...
+    @overload  # return_distance=bool fallback
+    def query_nearest(
+        self,
+        geometry: OptGeoArrayLike,
         max_distance: float | None = None,
         return_distance: bool = False,
         exclusive: bool = False,
         all_matches: bool = True,
-    ): ...  # very complex return type
+    ) -> NDArray[np.int64] | tuple[NDArray[np.int64], NDArray[np.float64]]: ...

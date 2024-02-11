@@ -10,12 +10,12 @@ T = TypeVar("T")
 _ClassInfo: TypeAlias = type | UnionType | tuple["_ClassInfo", ...]  # see isinstance
 
 
-def check(obj: T, cls: type, dtype: _ClassInfo | None = None) -> T:
+def check(obj: T, cls: _ClassInfo, dtype: _ClassInfo | None = None) -> T:
     __tracebackhide__ = True
     if not isinstance(obj, cls):
         raise RuntimeError(f"Expected type '{cls}' but got '{type(obj)}'")
     if dtype is None:
-        return obj  # type: ignore[return-value]
+        return obj
 
     value: Any
     if isinstance(obj, np.ndarray):
@@ -27,7 +27,7 @@ def check(obj: T, cls: type, dtype: _ClassInfo | None = None) -> T:
 
     if not isinstance(value, dtype):
         raise RuntimeError(f"Expected type '{dtype}' but got '{type(value)}'")
-    return obj  # type: ignore[return-value]
+    return obj
 
 
 class HasArray:

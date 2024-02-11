@@ -20,7 +20,7 @@ from shapely import (
     Polygon,
 )
 from shapely.coords import CoordinateSequence
-from shapely.geometry.base import BaseGeometry, GeometrySequence
+from shapely.geometry.base import BaseGeometry, BaseMultipartGeometry, GeometrySequence
 from shapely.geometry.geo import box, mapping, shape
 from shapely.geometry.polygon import InteriorRingSequence
 from typing_extensions import assert_never, assert_type
@@ -94,7 +94,7 @@ def test_geometry_real_values() -> None:
 
 
 def test_geometry_topology() -> None:
-    check(assert_type(BG.boundary, BaseGeometry), BaseGeometry)
+    check(assert_type(BG.boundary, BaseMultipartGeometry | Any), BaseGeometry)
     check(assert_type(BG.bounds, tuple[float, float, float, float]), tuple, dtype=float)
     check(assert_type(BG.centroid, Point), Point)
     check(assert_type(BG.point_on_surface(), Point), Point)
@@ -103,7 +103,7 @@ def test_geometry_topology() -> None:
     check(assert_type(BG.envelope, BaseGeometry), BaseGeometry)
     check(assert_type(BG.oriented_envelope, BaseGeometry), BaseGeometry)
     check(assert_type(BG.minimum_rotated_rectangle, BaseGeometry), BaseGeometry)
-    check(assert_type(BG.buffer(1.5), BaseGeometry), BaseGeometry)
+    check(assert_type(BG.buffer(1.5), Polygon), Polygon)
     check(assert_type(BG.simplify(1.5), BaseGeometry), BaseGeometry)
     check(assert_type(BG.normalize(), BaseGeometry), BaseGeometry)
 
@@ -380,6 +380,7 @@ def test_polygon() -> None:
     check(assert_type(PO.interiors[:], list[LinearRing]), list, dtype=LinearRing)
 
     # Test BaseGeometry overrides
+    check(assert_type(PO.boundary, MultiLineString), MultiLineString)
     with pytest.raises(NotImplementedError):
         assert_never(PO.coords)
 
@@ -394,15 +395,18 @@ def test_multipoint() -> None:
     t: tuple[Point | tuple[float, float] | list[float], ...] = (P, (1, 2), [1, 2])
     MultiPoint(t)
     with pytest.raises(TypeError):
-        MultiPoint(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPoint(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPoint(BG)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPoint(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPoint((PO,))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPoint((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPoint((None,))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPoint((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPoint((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPoint((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+
+    # Test BaseGeometry overrides
+    check(assert_type(MP.boundary, GeometryCollection), GeometryCollection)
 
 
 def test_multilinestring() -> None:
@@ -414,15 +418,18 @@ def test_multilinestring() -> None:
     t: tuple[LineString | list[Point], ...] = (LS, LS, LS, [P, P])
     MultiLineString(t)
     with pytest.raises(TypeError):
-        MultiLineString(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiLineString(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiLineString(BG)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiLineString(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiLineString((PO,))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiLineString((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(shapely.errors.ShapelyError):
-        MultiLineString((None,))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiLineString((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiLineString((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiLineString((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+
+    # Test BaseGeometry overrides
+    check(assert_type(MLS.boundary, MultiPoint), MultiPoint)
 
 
 def test_multipolygon() -> None:
@@ -436,23 +443,30 @@ def test_multipolygon() -> None:
     t: tuple[Polygon, None] = (PO, None)
     MultiPolygon(t)
     with pytest.raises(TypeError):
-        MultiPolygon(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPolygon(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPolygon(BG)  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPolygon(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPolygon((MLS,))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPolygon((MLS,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(TypeError):
-        MultiPolygon((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        MultiPolygon((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+
+    # Test BaseGeometry overrides
+    check(assert_type(MPO.boundary, MultiLineString), MultiLineString)
 
 
 def test_geometry_collection() -> None:
     GeometryCollection(None)
     GeometryCollection(BG)
     GeometryCollection([BG])
+    GeometryCollection(MP.geoms)
     GeometryCollection([None])
     GeometryCollection([P, PO, None])
     with pytest.raises(TypeError):
-        GeometryCollection(o for o in [P, PO, None])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        GeometryCollection(o for o in [P, PO, None])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+
+    # Test BaseGeometry overrides
+    check(assert_type(GC.boundary, None), NoneType)
 
 
 def test_geo() -> None:
@@ -591,8 +605,8 @@ def test_generic_getset() -> None:
         dtype=Point,
     )
     with pytest.raises(Exception):
-        shapely.set_precision(LS, 1.0, mode="something")  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
-        shapely.set_precision(LS, 1.0, mode=10)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.set_precision(LS, 1.0, mode="something")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
+        shapely.set_precision(LS, 1.0, mode=10)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
 
     # force_dimension
     check(assert_type(shapely.force_2d(None), None), NoneType)

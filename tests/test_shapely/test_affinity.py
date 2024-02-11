@@ -57,7 +57,7 @@ def test_rotate() -> None:
     check(assert_type(shapely.affinity.rotate(LS, 90, origin=(x, y, 0)), LineString), LineString)
 
     with pytest.raises(Exception):
-        shapely.affinity.rotate(LS, 90, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.affinity.rotate(LS, 90, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 def test_scale() -> None:
@@ -77,7 +77,7 @@ def test_scale() -> None:
     check(assert_type(shapely.affinity.scale(LS, 90, origin=(1, 1.0, 0.0)), LineString), LineString)
 
     with pytest.raises(Exception):
-        shapely.affinity.scale(PO, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.affinity.scale(PO, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 def test_skew() -> None:
@@ -93,7 +93,7 @@ def test_skew() -> None:
     check(assert_type(shapely.affinity.skew(PO, 20, origin=(1.0, 2.0, 0)), Polygon), Polygon)
 
     with pytest.raises(Exception):
-        shapely.affinity.skew(PO, 20, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.affinity.skew(PO, 20, origin="centred")  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 def test_translate() -> None:

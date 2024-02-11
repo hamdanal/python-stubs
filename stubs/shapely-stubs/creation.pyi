@@ -6,7 +6,7 @@ from numpy.typing import NDArray
 
 from shapely._geometry import GeometryType
 from shapely._typing import ArrayLike, ArrayLikeSeq, GeoArray, OptGeoArrayLike, OptGeoArrayLikeSeq
-from shapely.geometry import LinearRing, LineString, Point, Polygon
+from shapely.geometry import LinearRing, LineString, MultiLineString, MultiPoint, Point, Polygon
 
 __all__ = [
     "points",
@@ -184,8 +184,36 @@ def box(
     ccw: bool = True,
     **kwargs,
 ) -> GeoArray: ...
-def multipoints(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
-def multilinestrings(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
+@overload
+def multipoints(
+    geometries: Sequence[Point | Sequence[float] | None], indices: None = None, out: None = None, **kwargs
+) -> MultiPoint: ...
+@overload
+def multipoints(
+    geometries: Sequence[Sequence[Point | Sequence[float] | None]],
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> GeoArray: ...
+@overload
+def multipoints(
+    geometries: OptGeoArrayLikeSeq, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
+) -> MultiPoint | GeoArray: ...
+@overload
+def multilinestrings(
+    geometries: Sequence[LineString | Sequence[Sequence[float]] | None], indices: None = None, out: None = None, **kwargs
+) -> MultiLineString: ...
+@overload
+def multilinestrings(
+    geometries: Sequence[Sequence[LineString | Sequence[Sequence[float]] | None]],
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> GeoArray: ...
+@overload
+def multilinestrings(
+    geometries: OptGeoArrayLikeSeq, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
+) -> MultiLineString | GeoArray: ...
 def multipolygons(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
 def geometrycollections(
     geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs

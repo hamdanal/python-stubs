@@ -21,6 +21,7 @@ def sjoin(
     predicate: str = "intersects",
     lsuffix: str = "left",
     rsuffix: str = "right",
+    *,
     op: str = ...,
 ) -> GeoDataFrame: ...
 def sjoin_nearest(

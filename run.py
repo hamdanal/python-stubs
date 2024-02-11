@@ -7,9 +7,9 @@ import subprocess
 import sys
 
 default_args = {
-    "mypy": ["tests", "stubs/shapely-stubs"],
-    "pyright": ["tests", "stubs/shapely-stubs"],
-    "stubtest": ["--allowlist=stubtest_allowlist.txt", "shapely"],
+    "mypy": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
+    "pyright": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
+    "stubtest": ["--allowlist=stubtest_allowlist.txt", "shapely", "geopandas"],
     "ruff-check": ["tests", "stubs"],
     "ruff-format": ["tests", "stubs"],
     "pytest": [],
