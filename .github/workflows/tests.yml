@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/setup
+      - uses: ./.github/setup
       - name: Lint with ruff
         run: python run.py ruff-check
       - name: Format with ruff
@@ -36,26 +36,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/setup
+      - uses: ./.github/setup
       - run: python run.py pytest
   mypy:
     name: Run mypy on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/setup
+      - uses: ./.github/setup
       - run: python run.py mypy
   stubtest:
     name: Run stubtest on the the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/setup
+      - uses: ./.github/setup
       - run: python run.py stubtest
   pyright:
     name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./github/setup
+      - uses: ./.github/setup
       - run: python run.py pyright
