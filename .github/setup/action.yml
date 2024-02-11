@@ -1,20 +1,14 @@
 name: Setup
 description: Setup Python and install dependencies
 
-inputs:
-  python-version:
-    required: false
-    default: "3.10"
-    description: "The version of Python to use, default ${{ default }}"
-
 runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ inputs.python-version }}
+    - name: Set up Python 3.10
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ inputs.python-version }}
+        python-version: "3.10"
         cache: pip
         cache-dependency-path: requirements-tests.txt
     - name: Install dependencies

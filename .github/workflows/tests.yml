@@ -12,6 +12,7 @@ on:
       - ".vscode/**"
       - ".pre-commit-config.yaml"
       - "*.md"
+  workflow_dispatch:
 
 permissions:
   contents: read
