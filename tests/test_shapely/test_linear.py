@@ -47,7 +47,7 @@ def test_line_interpolate_point() -> None:
         dtype=Point,
     )
     with pytest.raises(TypeError):
-        shapely.line_interpolate_point(P, 1.0)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.line_interpolate_point(P, 1.0)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
 
 def test_line_locate_point() -> None:
@@ -79,10 +79,10 @@ def test_line_locate_point() -> None:
         dtype=float,
     )
     with pytest.raises(Exception):
-        shapely.line_locate_point(P, P)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.line_locate_point(P, P)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
     with pytest.raises(Exception):
-        shapely.line_locate_point(MLS, LS)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.line_locate_point(MLS, LS)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
 
 def test_line_merge() -> None:
@@ -133,11 +133,11 @@ def test_shared_paths() -> None:
         dtype=GeometryCollection,
     )
     with pytest.raises(Exception):
-        shapely.shared_paths(MLS, P)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.shared_paths(MLS, P)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
     with pytest.raises(Exception):
-        shapely.shared_paths(P, MLS)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.shared_paths(P, MLS)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
     with pytest.raises(Exception):
-        shapely.shared_paths(GeometryCollection(MLS), LS)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.shared_paths(GeometryCollection(MLS), LS)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
 
 def test_shortest_line() -> None:

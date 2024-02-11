@@ -7,9 +7,10 @@ from typing_extensions import Self, TypeAlias, deprecated
 
 import pandas as pd
 from numpy.typing import ArrayLike
-from pandas._typing import Axes, Axis, Dtype
+from pandas._typing import Axes, AxisIndex, Dtype
 from pandas.core.base import IndexOpsMixin
 from pyproj import CRS
+from shapely import Geometry
 from shapely.geometry.base import BaseGeometry
 
 from geopandas.array import GeometryArray
@@ -19,11 +20,11 @@ from geopandas.io.file import _BboxLike, _MaskLike
 from geopandas.plotting import plot_series
 from geopandas.tools.clip import _Mask as _ClipMask
 
-# XXX: cannot use IndexOpsMixin[BaseGeometry] because of IndexOpsMixin type variable bounds
-_GeoListLike: TypeAlias = ArrayLike | Sequence[BaseGeometry] | IndexOpsMixin[Incomplete]
-_ConvertibleToGeoSeries: TypeAlias = BaseGeometry | Mapping[int, BaseGeometry] | Mapping[str, BaseGeometry] | _GeoListLike
+# XXX: cannot use IndexOpsMixin[Geometry] because of IndexOpsMixin type variable bounds
+_GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Incomplete]
+_ConvertibleToGeoSeries: TypeAlias = Geometry | Mapping[int, Geometry] | Mapping[str, Geometry] | _GeoListLike
 
-class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[misc]
+class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-var,misc]  # pyright: ignore[reportInvalidTypeArguments]
     crs: CRS
     # Override the weird annotation of Series.__new__ in pandas-stubs
     def __new__(
@@ -64,11 +65,11 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[misc]
     def from_file(
         cls,
         filename: str | os.PathLike[str] | SupportsRead[Any],
+        *,
         bbox: _BboxLike | None = None,
         mask: _MaskLike | None = None,
         rows: int | slice | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
-        *,
         ignore_geometry: Literal[False] = False,
         **kwargs: Any,  # depends on engine
     ) -> GeoSeries: ...
@@ -130,7 +131,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[misc]
     # def __getitem__(self, key): ...
     # *** `sort_index` is annotated with `-> Self` in pandas-stubs; no need to override it ***
     # def sort_index(self, *args, **kwargs): ...
-    def take(self, indices: ArrayLike, axis: Axis = 0, **kwargs: Unused) -> GeoSeries: ...
+    def take(self, indices: ArrayLike, axis: AxisIndex = 0, **kwargs: Unused) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("Method `Series.select()` has been removed in pandas version '0.25'.")
     def select(self, *args: Any, **kwargs: Any) -> Any: ...
     # *** `apply` annotation in pandas-stubs is compatible except for deprecated `convert_dtype` argument ***
@@ -173,11 +174,11 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[misc]
     def to_wkb(self, hex: bool = False, **kwargs) -> pd.Series[str] | pd.Series[bytes]: ...
     def to_wkt(self, **kwargs) -> pd.Series[str]: ...
     @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
-    def __xor__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'|' operator is deprecated. Use method `union` instead.")
-    def __or__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __or__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'&' operator is deprecated. Use method `intersection` instead.")
-    def __and__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __and__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @deprecated("'-' operator is deprecated. Use method `difference` instead.")
-    def __sub__(self, other: GeoSeries | BaseGeometry, align: bool = True) -> GeoSeries: ...
+    def __sub__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoSeries: ...  # type: ignore[override]

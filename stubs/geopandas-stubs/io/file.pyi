@@ -7,14 +7,14 @@ from typing_extensions import TypeAlias, deprecated
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
-from shapely.geometry.base import BaseGeometry
+from shapely import Geometry
 
 from geopandas.base import _ConvertibleToCRS
 from geopandas.geodataframe import GeoDataFrame
 from geopandas.geoseries import GeoSeries
 
-_BboxLike: TypeAlias = Sequence[float] | NDArray[np.floating[Any]] | BaseGeometry | GeoDataFrame | GeoSeries
-_MaskLike: TypeAlias = dict[str, Any] | BaseGeometry | GeoDataFrame | GeoSeries
+_BboxLike: TypeAlias = Sequence[float] | NDArray[np.floating[Any]] | Geometry | GeoDataFrame | GeoSeries
+_MaskLike: TypeAlias = dict[str, Any] | Geometry | GeoDataFrame | GeoSeries
 
 @overload
 def _read_file(

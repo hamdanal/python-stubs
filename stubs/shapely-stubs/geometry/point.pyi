@@ -1,12 +1,10 @@
 from collections.abc import Iterable
-from typing import Literal, overload
+from typing import overload
 from typing_extensions import Self, TypeAlias
 
 from shapely._typing import ArrayLikeSeq
-from shapely.constructive import BufferCapStyle, BufferJoinStyle
 from shapely.geometry.base import BaseGeometry
 from shapely.geometry.collection import GeometryCollection
-from shapely.geometry.polygon import Polygon
 
 __all__ = ["Point"]
 
@@ -39,15 +37,3 @@ class Point(BaseGeometry):
     def oriented_envelope(self) -> Point: ...
     @property
     def minimum_rotated_rectangle(self) -> Point: ...
-    def buffer(
-        self,
-        distance: float,
-        quad_segs: int = 16,
-        cap_style: BufferCapStyle | Literal["round", "square", "flat"] = "round",
-        join_style: BufferJoinStyle | Literal["round", "mitre", "bevel"] = "round",
-        mitre_limit: float = 5.0,
-        single_sided: bool = False,
-        *,
-        quadsegs: int | None = None,  # deprecated
-        resolution: int | None = None,  # to be deprecated
-    ) -> Polygon: ...

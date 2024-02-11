@@ -4,18 +4,14 @@ from typing import Literal, overload
 import numpy as np
 from numpy.typing import NDArray
 
-from shapely._typing import ArrayLikeSeq, GeoArray, GeoT, OptGeoArrayLike, OptGeoArrayLikeSeq
+from shapely._typing import ArrayLikeSeq, GeoArray, GeoT, OptGeoArrayLike, OptGeoArrayLikeSeq, OptGeoT
 
 __all__ = ["transform", "count_coordinates", "get_coordinates", "set_coordinates"]
 
 @overload
 def transform(
-    geometry: None, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
-) -> None: ...
-@overload
-def transform(
-    geometry: GeoT, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
-) -> GeoT: ...
+    geometry: OptGeoT, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False
+) -> OptGeoT: ...
 @overload
 def transform(
     geometry: OptGeoArrayLikeSeq, transformation: Callable[[NDArray[np.float64]], NDArray[np.float64]], include_z: bool = False

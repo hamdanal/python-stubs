@@ -18,6 +18,7 @@ _DType = TypeVar("_DType", bound=np.dtype[Any])
 _DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype[Any])
 
 GeoT = TypeVar("GeoT", bound=Geometry)  # noqa: PYI001
+OptGeoT = TypeVar("OptGeoT", bound=Geometry | None)  # noqa: PYI001
 
 @type_check_only
 class SupportsArray(Protocol[_DType_co]):

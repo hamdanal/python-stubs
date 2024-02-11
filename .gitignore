@@ -2,8 +2,11 @@
 __pycache__/
 /build/
 /dist/
-/.*_cache/
-/.?v?env/
+.*_cache/
+/.venv/
+/.env/
+/venv/
+/env/
 
 # files
 .coverage

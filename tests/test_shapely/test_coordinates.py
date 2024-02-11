@@ -125,6 +125,8 @@ def test_set_coordinates() -> None:
         dtype=Point,
     )
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
-        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
-        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+    with pytest.raises(Exception):
+        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+    with pytest.raises(Exception):
+        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]

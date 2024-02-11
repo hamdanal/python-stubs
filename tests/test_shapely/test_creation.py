@@ -4,7 +4,15 @@ import numpy as np
 import pytest
 import shapely
 from numpy.typing import NDArray
-from shapely import GeometryType, LinearRing, LineString, Point, Polygon
+from shapely import (
+    GeometryType,
+    LinearRing,
+    LineString,
+    MultiLineString,
+    MultiPoint,
+    Point,
+    Polygon,
+)
 from shapely.prepared import PreparedGeometry
 from typing_extensions import assert_type
 
@@ -62,9 +70,9 @@ def test_points() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.points(0)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.points(0)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
     with pytest.raises(Exception):
-        shapely.points(0, None, 1)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.points(0, None, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
     with pytest.raises(Exception):
         shapely.points(0, 1, indices=[0])  # False negative (difficult to catch)
 
@@ -96,7 +104,7 @@ def test_linestrings() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.linestrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.linestrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
 
 def test_linearrings() -> None:
@@ -138,11 +146,10 @@ def test_linearrings() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.linearrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.linearrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
 
 
 def test_polygons() -> None:
-    # Polygons are constructed from rings:
     ring_1 = LinearRing([[0, 0], [0, 10], [10, 10], [10, 0]])
     ring_2 = LinearRing([[2, 6], [2, 7], [3, 7], [3, 6]])
 
@@ -216,11 +223,136 @@ def test_box() -> None:
 
 
 def test_multipoints() -> None:
-    ...  # TODO multipoints is not typed yet
+    p1 = Point([1, 1])
+    p2 = Point([2, 2])
+
+    check(assert_type(shapely.multipoints([None]), MultiPoint), MultiPoint)
+    check(assert_type(shapely.multipoints([p1, p2]), MultiPoint), MultiPoint)
+    check(assert_type(shapely.multipoints((p1, None)), MultiPoint), MultiPoint)
+    check(assert_type(shapely.multipoints([[0, 0], [2, 2], [3, 3.0]]), MultiPoint), MultiPoint)
+
+    check(
+        assert_type(shapely.multipoints([(p1, None)]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
+    check(
+        assert_type(shapely.multipoints([[[0, 0], [2, 2], [3, 3.0]]]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
+
+    # less precise types
+    check(
+        assert_type(shapely.multipoints(np.array((p1, None))), MultiPoint | NDArray[np.object_]),
+        MultiPoint,
+    )
+    check(
+        assert_type(
+            shapely.multipoints(np.array((p1, None)), indices=[0, 0]),
+            MultiPoint | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
+    check(
+        assert_type(
+            shapely.multipoints(np.array((p1, None)), out=np.array([None], dtype=object)),
+            MultiPoint | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
+    check(
+        assert_type(
+            shapely.multipoints(np.array([[0, 0], [2, 2], [3, 3.0]])),
+            MultiPoint | NDArray[np.object_],
+        ),
+        MultiPoint,
+    )
+    check(
+        assert_type(shapely.multipoints(np.array([(p1, None)])), MultiPoint | NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
+    check(
+        assert_type(
+            shapely.multipoints(np.array([[[0, 0], [2, 2], [3, 3.0]]])),
+            MultiPoint | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiPoint,
+    )
 
 
 def test_multilinestrings() -> None:
-    ...  # TODO multilinestrings is not typed yet
+    ls1 = LineString([[0, 0], [0, 10], [10, 10], [10, 0]])
+    ls2 = LineString([[2, 6], [2, 7], [3, 7], [3, 6]])
+
+    check(assert_type(shapely.multilinestrings([None]), MultiLineString), MultiLineString)
+    check(assert_type(shapely.multilinestrings([ls1, ls2]), MultiLineString), MultiLineString)
+    check(assert_type(shapely.multilinestrings((ls1, None)), MultiLineString), MultiLineString)
+    check(
+        assert_type(shapely.multilinestrings([[[0, 0], [2, 2], [3, 3.0]]]), MultiLineString),
+        MultiLineString,
+    )
+
+    check(
+        assert_type(shapely.multilinestrings([(ls1, None)]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
+    check(
+        assert_type(shapely.multilinestrings([[[[0, 0], [2, 2], [3, 3.0]]]]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
+
+    # less precise types
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array((ls1, None))), MultiLineString | NDArray[np.object_]
+        ),
+        MultiLineString,
+    )
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array((ls1, None)), indices=[0, 0]),
+            MultiLineString | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array((ls1, None)), out=np.array([None], dtype=object)),
+            MultiLineString | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array([[[0, 0], [2, 2], [3, 3.0]]])),
+            MultiLineString | NDArray[np.object_],
+        ),
+        MultiLineString,
+    )
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array([(ls1, None)])), MultiLineString | NDArray[np.object_]
+        ),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
+    check(
+        assert_type(
+            shapely.multilinestrings(np.array([[[[0, 0], [2, 2], [3, 3.0]]]])),
+            MultiLineString | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiLineString,
+    )
 
 
 def test_multipolygons() -> None:
@@ -248,13 +380,13 @@ def test_destroy_prepared() -> None:
     shapely.destroy_prepared((P, None))
     shapely.destroy_prepared(np.array((P, None)))
 
-    # despites its name, it doesn't accept PreparedGeometry
+    # despite its name, this function doesn't accept PreparedGeometry
     with pytest.raises(Exception):
-        shapely.destroy_prepared(PreparedGeometry(P))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.destroy_prepared(PreparedGeometry(P))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(Exception):
-        shapely.destroy_prepared([PreparedGeometry(P)])  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.destroy_prepared([PreparedGeometry(P)])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(Exception):
-        shapely.destroy_prepared((PreparedGeometry(P), None))  # type: ignore[arg-type] # pyright: ignore[reportGeneralTypeIssues]
+        shapely.destroy_prepared((PreparedGeometry(P), None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 def test_empty() -> None:
