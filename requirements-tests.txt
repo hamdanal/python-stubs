@@ -11,3 +11,5 @@ shapely>=2.0,<2.1
 matplotlib>=3.8.0
 pyproj>=3.6.1
 folium>=0.15.1
+rtree>=1.1.0
+pandas-stubs>=2.1.4.231227

@@ -13,30 +13,64 @@ on:
       - ".pre-commit-config.yaml"
       - "*.md"
 
+permissions:
+  contents: read
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+  FORCE_COLOR: 1
+
 jobs:
-  build:
+  setup:
+    name: Setup Python and install dependencies
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest]
         python-version: ["3.10"]
-    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements-tests.txt
       - name: Install dependencies
         run: pip install -r requirements-tests.txt
+  ruff:
+    name: Run ruff check and ruff format
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
       - name: Lint with ruff
         run: python run.py ruff-check
       - name: Format with ruff
         run: python run.py ruff-format
+  pytest:
+    name: Run ruff check and ruff format
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
       - name: Run the test suite
         run: python run.py pytest
+  mypy:
+    name: Run ruff check and ruff format
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
       - name: Run mypy on the tests and on the stubs
         run: python run.py mypy
-      - name: Run pyright on the tests and on the stubs
-        run: python run.py pyright
+  stubtest:
+    name: Run ruff check and ruff format
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
       - name: Run stubtest on the the stubs
         run: python run.py stubtest
+  pyright:
+    name: Run ruff check and ruff format
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: Run pyright on the tests and on the stubs
+        run: python run.py pyright
