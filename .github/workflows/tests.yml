@@ -42,35 +42,36 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
+      - uses: actions/checkout@v4
       - name: Lint with ruff
         run: python run.py ruff-check
       - name: Format with ruff
         run: python run.py ruff-format
   pytest:
-    name: Run ruff check and ruff format
+    name: Run the test suite
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
-      - name: Run the test suite
-        run: python run.py pytest
+      - uses: actions/checkout@v4
+      - run: python run.py pytest
   mypy:
-    name: Run ruff check and ruff format
+    name: Run mypy on the tests and on the stubs
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
-      - name: Run mypy on the tests and on the stubs
-        run: python run.py mypy
+      - uses: actions/checkout@v4
+      - run: python run.py mypy
   stubtest:
-    name: Run ruff check and ruff format
+    name: Run stubtest on the the stubs
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
-      - name: Run stubtest on the the stubs
-        run: python run.py stubtest
+      - uses: actions/checkout@v4
+      - run: python run.py stubtest
   pyright:
-    name: Run ruff check and ruff format
+    name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
     needs: [setup]
     steps:
-      - name: Run pyright on the tests and on the stubs
-        run: python run.py pyright
+      - uses: actions/checkout@v4
+      - run: python run.py pyright
