@@ -43,6 +43,7 @@ This project is licensed under the MIT License.
     <th>Import name</th>
     <th>Links</th>
     <th>Status</th>
+    <th>Type-checked</th>
     <th>Tested</th>
   </tr>
   <tr>
@@ -53,6 +54,7 @@ This project is licensed under the MIT License.
       <a href="https://github.com/jimfunk/django-postgresql-netfields">GitHub</a>
     </th>
     <th>Complete</th>
+    <th>Yes</th>
     <th>No</th>
   </tr>
   <tr>
@@ -63,6 +65,7 @@ This project is licensed under the MIT License.
       <a href="https://github.com/SectorLabs/django-postgres-extra">GitHub</a>
     </th>
     <th>Incomplete</th>
+    <th>Yes</th>
     <th>No</th>
   </tr>
   <tr>
@@ -73,6 +76,7 @@ This project is licensed under the MIT License.
       <a href="https://github.com/e2nIEE/pandapower">GitHub</a>
     </th>
     <th>Incomplete</th>
+    <th>Yes</th>
     <th>No</th>
   </tr>
   <tr>
@@ -83,6 +87,7 @@ This project is licensed under the MIT License.
       <a href="https://github.com/geopandas/geopandas">GitHub</a>
     </th>
     <th>Complete</th>
+    <th>Yes</th>
     <th>Partially</th>
   </tr>
   <tr>
@@ -92,7 +97,8 @@ This project is licensed under the MIT License.
       <a href="https://pypi.org/project/shapely">PyPI</a>,
       <a href="https://github.com/shapely/shapely">GitHub</a>
     </th>
-    <th>Incomplete</th>
+    <th>Complete</th>
+    <th>Yes</th>
     <th>Yes</th>
   </tr>
 </table>
