@@ -1,8 +1,9 @@
+from _typeshed import Incomplete
 from collections.abc import Collection, Container, Generator, Iterable, Set as AbstractSet
 from typing import Literal, TypedDict
 from typing_extensions import TypeAlias
 
-import networkx as nx
+import networkx as nx  # type: ignore[import-untyped]
 import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
@@ -24,8 +25,8 @@ class _BasicGraphCharDict(TypedDict, total=False):
     articulation_points: set[int]
     notn1_starts: set[int]
 
-def connected_component(mg: nx.Graph, bus: int, notravbuses: Container[int] = []) -> Generator[int, None, None]: ...
-def connected_components(mg: nx.Graph, notravbuses: AbstractSet[int] = ...) -> Generator[set[int], None, None]: ...
+def connected_component(mg: nx.Graph[Incomplete], bus: int, notravbuses: Container[int] = []) -> Generator[int, None, None]: ...
+def connected_components(mg: nx.Graph[Incomplete], notravbuses: AbstractSet[int] = ...) -> Generator[set[int], None, None]: ...
 def calc_distance_to_bus(
     net: pandapowerNet,
     bus: int,
@@ -35,20 +36,23 @@ def calc_distance_to_bus(
     weight: str | None = "weight",
 ) -> pd.Series[float]: ...
 def unsupplied_buses(
-    net: pandapowerNet, mg: nx.Graph | None = None, slacks: AbstractSet[int] | None = None, respect_switches: bool = True
+    net: pandapowerNet,
+    mg: nx.Graph[Incomplete] | None = None,
+    slacks: AbstractSet[int] | None = None,
+    respect_switches: bool = True,
 ) -> set[int]: ...
 def find_basic_graph_characteristics(
-    g: nx.Graph, roots: Iterable[int], characteristics: Collection[_GraphCharKey]
+    g: nx.Graph[Incomplete], roots: Iterable[int], characteristics: Collection[_GraphCharKey]
 ) -> _BasicGraphCharDict: ...
 def find_graph_characteristics(
-    g: nx.Graph, roots: Iterable[int], characteristics: Collection[_GraphCharKey]
+    g: nx.Graph[Incomplete], roots: Iterable[int], characteristics: Collection[_GraphCharKey]
 ) -> _GraphCharDict: ...
-def get_2connected_buses(g: nx.Graph, roots: Iterable[int]) -> tuple[set[int], set[int]]: ...
+def get_2connected_buses(g: nx.Graph[Incomplete], roots: Iterable[int]) -> tuple[set[int], set[int]]: ...
 def determine_stubs(
-    net: pandapowerNet, roots: Iterable[int] | None = None, mg: nx.Graph | None = None, respect_switches: bool = False
+    net: pandapowerNet, roots: Iterable[int] | None = None, mg: nx.Graph[Incomplete] | None = None, respect_switches: bool = False
 ) -> set[int]: ...
-def lines_on_path(mg: nx.Graph, path: Iterable[int]) -> list[int]: ...
+def lines_on_path(mg: nx.Graph[Incomplete], path: Iterable[int]) -> list[int]: ...
 def elements_on_path(
-    mg: nx.Graph, path: Iterable[int], element: Literal["line", "switch", "trafo", "trafo3w"] = "line"
+    mg: nx.Graph[Incomplete], path: Iterable[int], element: Literal["line", "switch", "trafo", "trafo3w"] = "line"
 ) -> list[int]: ...
 def get_end_points_of_continuously_connected_lines(net: pandapowerNet, lines: slice | Iterable[int]) -> tuple[int, int]: ...

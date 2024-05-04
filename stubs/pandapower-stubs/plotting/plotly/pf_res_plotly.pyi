@@ -1,6 +1,6 @@
 from typing import Literal
 
-from plotly.graph_objs import Figure
+from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *

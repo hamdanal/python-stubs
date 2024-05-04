@@ -18,8 +18,8 @@ except ModuleNotFoundError:
 default_args = {
     "ruff-check": ["tests", "stubs"],
     "ruff-format": ["tests", "stubs"],
-    "mypy": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
-    "pyright": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
+    "mypy": ["tests", "stubs"],
+    "pyright": ["tests", "stubs"],
     "stubtest": ["--allowlist=stubtest_allowlist.txt", "shapely", "geopandas"],
     "pytest": [],
 }

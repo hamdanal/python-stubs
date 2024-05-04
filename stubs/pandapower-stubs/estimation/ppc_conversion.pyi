@@ -16,7 +16,7 @@ def pp2eppci(
     eppci: Incomplete | None = None,
 ): ...
 
-class ExtendedPPCI(UserDict):
+class ExtendedPPCI(UserDict[str, Incomplete]):
     data: Incomplete
     z: Incomplete
     r_cov: Incomplete

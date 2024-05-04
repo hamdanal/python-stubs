@@ -23,7 +23,7 @@ class PostgresQuerySet(models.QuerySet[_ModelT], Generic[_ModelT, _TargetT, _Act
     conflict_update_condition: Expression | Q | str | None
     index_predicate: Expression | Q | str | None
     update_values: dict[str, Any]
-    def annotate(self, **annotations: Any) -> Self: ...  # type: ignore[override]
+    def annotate(self, **annotations: Any) -> Self: ...
     def rename_annotations(self, **annotations: str) -> Self: ...
     # Calling on_conflict on a queryset without a conflict target or action fills in the
     # conflict target and action for the queryset (cf. first overload).

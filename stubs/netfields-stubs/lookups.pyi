@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from typing import Any, NoReturn
 
 from django.db.backends.base.base import BaseDatabaseWrapper
@@ -5,10 +6,10 @@ from django.db.models import IntegerField, Lookup, Transform, lookups
 from django.db.models.expressions import BaseExpression
 from django.db.models.sql.compiler import SQLCompiler
 
-class InvalidLookup(Lookup):
+class InvalidLookup(Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> NoReturn: ...
 
-class InvalidSearchLookup(Lookup):
+class InvalidSearchLookup(Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> NoReturn: ...
 
 class NetFieldDecoratorMixin:
@@ -29,22 +30,22 @@ class NetworkLookup:
 class AddressLookup:
     def get_prep_lookup(self) -> str | BaseExpression: ...
 
-class NetContains(AddressLookup, Lookup):
+class NetContains(AddressLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
-class NetContained(NetworkLookup, Lookup):
+class NetContained(NetworkLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
-class NetContainsOrEquals(AddressLookup, Lookup):
+class NetContainsOrEquals(AddressLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
-class NetContainedOrEqual(NetworkLookup, Lookup):
+class NetContainedOrEqual(NetworkLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
-class NetOverlaps(NetworkLookup, Lookup):
+class NetOverlaps(NetworkLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
-class HostMatches(AddressLookup, Lookup):
+class HostMatches(AddressLookup, Lookup[Incomplete]):
     def as_sql(self, qn: SQLCompiler, connection: BaseDatabaseWrapper) -> tuple[str, list[Any]]: ...
 
 class Family(Transform):
@@ -60,10 +61,10 @@ class _PrefixlenMixin:
     ) -> tuple[str, list[Any]]: ...
     def get_prep_lookup(self) -> int: ...
 
-class MaxPrefixlen(_PrefixlenMixin, Lookup):
+class MaxPrefixlen(_PrefixlenMixin, Lookup[Incomplete]):
     format_string: str
 
-class MinPrefixlen(_PrefixlenMixin, Lookup):
+class MinPrefixlen(_PrefixlenMixin, Lookup[Incomplete]):
     format_string: str
 
 class Prefixlen(Transform):
