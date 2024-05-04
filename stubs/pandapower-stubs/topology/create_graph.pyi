@@ -1,7 +1,8 @@
+from _typeshed import Incomplete
 from collections.abc import Iterable, Mapping
 from typing import Any, Literal, overload
 
-import networkx as nx
+import networkx as nx  # type: ignore[import-untyped]
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
@@ -35,7 +36,7 @@ def create_nxgraph(
     branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
     library: Literal["networkx"] = "networkx",
     include_out_of_service: bool = False,
-) -> nx.Graph: ...
+) -> nx.Graph[Incomplete]: ...
 @overload
 def create_nxgraph(
     net: pandapowerNet,
@@ -71,10 +72,10 @@ def create_nxgraph(
     branch_impedance_unit: Literal["ohm", "pu"] = "ohm",
     library: Literal["networkx"] = "networkx",
     include_out_of_service: bool = False,
-) -> nx.MultiGraph: ...
+) -> nx.MultiGraph[Incomplete]: ...
 def get_edge_table(net: pandapowerNet, table_name: str, include_edges: bool | Iterable[int]) -> pd.DataFrame | None: ...
 def add_edges(
-    mg: nx.Graph | GraphToolInterface,
+    mg: nx.Graph[Incomplete] | GraphToolInterface,
     indices,
     parameter,
     in_service,

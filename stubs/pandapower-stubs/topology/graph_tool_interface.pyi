@@ -2,9 +2,9 @@ from _typeshed import Incomplete
 from collections.abc import Iterable
 from typing import Literal
 
-from graph_tool import Graph
+from graph_tool import Graph  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
-class GraphToolInterface(Graph):
+class GraphToolInterface(Graph):  # type: ignore[misc] # pyright: ignore[reportUntypedBaseClass]
     pp_buses: set[int]
     def __init__(
         self,

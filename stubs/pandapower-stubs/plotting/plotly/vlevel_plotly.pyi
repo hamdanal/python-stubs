@@ -1,6 +1,7 @@
+from _typeshed import Incomplete
 from typing import Literal
 
-from plotly.graph_objs import Figure
+from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.traces import _MapStyle
@@ -9,7 +10,7 @@ def vlevel_plotly(
     net: pandapowerNet,
     respect_switches: bool = True,
     use_line_geodata: bool | None = None,
-    colors_dict: dict | None = None,
+    colors_dict: dict[float, Incomplete] | None = None,
     on_map: bool = False,
     projection: str | None = None,
     map_style: _MapStyle = "basic",

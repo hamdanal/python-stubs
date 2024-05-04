@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from typing import Literal, overload
 
 import pandas as pd
-from plotly.graph_objs import Figure
+from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
@@ -15,11 +15,11 @@ def get_hoverinfo(
     element: Literal["bus", "line", "trafo", "trafo3w", "ext_grid"],
     precision: int = 3,
     sub_index: Iterable[int] | None = None,
-) -> pd.Series: ...
+) -> pd.Series[str]: ...
 @overload
 def get_hoverinfo(
     net: pandapowerNet, element: str, precision: int = 3, sub_index: Iterable[int] | None = None
-) -> pd.Series | None: ...
+) -> pd.Series[str] | None: ...
 def simple_plotly(
     net: pandapowerNet,
     respect_switches: bool = True,

@@ -10,7 +10,7 @@ from rest_framework.serializers import ModelSerializer
 
 _IPAddress: TypeAlias = IPv4Address | IPv6Address
 _IPNetwork: TypeAlias = IPv4Network | IPv6Network
-_InetDefaultInitial: TypeAlias = _IPAddress | None | Callable[[], _IPAddress | None] | type[empty]  # type: ignore[valid-type]
+_InetDefaultInitial: TypeAlias = _IPAddress | None | Callable[[], _IPAddress | None] | type[empty]  # type: ignore[valid-type]  # pyright: ignore[reportInvalidTypeForm]
 
 class InetAddressField(Field[_IPAddress | None, _IPAddress | int | str | None, str | None, Incomplete]):
     store_prefix: bool

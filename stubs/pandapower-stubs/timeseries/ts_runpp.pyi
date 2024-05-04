@@ -13,11 +13,11 @@ from pandapower.pypower.idx_brch import (
     TAP as TAP,
 )
 from pandapower.results_bus import write_pq_results_to_element as write_pq_results_to_element
-from pandapower.timeseries.output_writer import OutputWriter as OutputWriter
+from pandapower.timeseries.output_writer import OutputWriter
 
 class TimeSeriesRunpp:
     net: pandapowerNet
-    output_writer: OutputWriter
+    output_writer: OutputWriter[Incomplete]
     update_pq: bool
     update_trafo: bool
     baseMVA: Incomplete | None

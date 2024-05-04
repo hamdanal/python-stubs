@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from logging import StreamHandler
 
-class AppHandler(StreamHandler):
+class AppHandler(StreamHandler[Incomplete]):
     app: Incomplete
     PrintPlain: Incomplete
     PrintInfo: Incomplete

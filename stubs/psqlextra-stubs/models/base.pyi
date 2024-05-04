@@ -10,4 +10,4 @@ class PostgresModel(models.Model):
         abstract: bool
         base_manager_name: str
 
-    objects: ClassVar[PostgresManager[Self]]
+    objects: ClassVar[PostgresManager[Self]]  # type: ignore[assignment]

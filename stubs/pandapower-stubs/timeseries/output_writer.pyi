@@ -15,11 +15,13 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
     output_path: str | None
     output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"]
     write_time: float | None
-    log_variables: list[tuple[str, str] | [tuple[str, str, list[int], Callable[[NDArray], object] | None, str | None]]] | None
+    log_variables: (
+        list[tuple[str, str] | tuple[str, str, list[int], Callable[[NDArray[Incomplete]], object] | None, str | None]] | None
+    )
     default_log_variables: list[tuple[str, str]]
     csv_separator: str
     output: dict[str, pd.DataFrame]
-    np_results: dict[str, NDArray]
+    np_results: dict[str, NDArray[Incomplete]]
     output_list: list[partial[object]]  # also list[tuple[str, str]] in self.get_batch_outputs
     cur_realtime: float
     time_steps: Sequence[_T] | None
@@ -57,7 +59,7 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
         table: str,
         variable: str,
         index: Sequence[int] | None = None,
-        eval_function: Callable[[NDArray], object] | None = None,
+        eval_function: Callable[[NDArray[Incomplete]], object] | None = None,
         eval_name: str | None = None,
     ) -> None: ...
     def init_timesteps(self, time_steps: Sequence[_T]) -> None: ...
