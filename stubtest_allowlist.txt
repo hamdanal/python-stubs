@@ -11,16 +11,16 @@ shapely\._typing
 # Geopandas
 # =========
 
-# Stub missing
+# Stub missing OK
 geopandas\.conftest
 geopandas\.(.*\.)?tests.*
 geopandas\.array\.geos
 geopandas\.io\.file\.FIONA_GE_19
-geopandas\.io\.file\.fiona_import_error
-geopandas\.io\.file\.pyogrio
-geopandas\.io\.file\.pyogrio_import_error
+geopandas\.io\.file\.fiona(_env|_import_error)?
+geopandas\.io\.file\.pyogrio(_import_error)?
+geopandas\.io\.util
 
-# Is not a type
+# Is not a type OK
 geopandas\.plotting\.deprecated
 
 # Inconsistent OK

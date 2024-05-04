@@ -125,7 +125,10 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         mode: Literal["w", "a"] = "w",
         crs: _ConvertibleToCRS | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
-        **kwargs: Any,  # depends on driver
+        layer: int | str | None = None,
+        encoding: str | None = None,
+        overwrite: bool | Incomplete = ...,  # TODO can it be None? (accepted by fiona, not sure about pyogrio)
+        **kwargs: Any,  # engine and driver dependent
     ) -> None: ...
     # *** TODO: compare `__getitem__` with pandas-stubs ***
     # def __getitem__(self, key): ...

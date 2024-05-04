@@ -83,7 +83,7 @@ This project is licensed under the MIT License.
       <a href="https://github.com/geopandas/geopandas">GitHub</a>
     </th>
     <th>Complete</th>
-    <th>No</th>
+    <th>Partially</th>
   </tr>
   <tr>
     <th>shapely</th>

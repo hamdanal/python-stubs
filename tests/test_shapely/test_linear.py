@@ -108,7 +108,10 @@ def test_line_merge() -> None:
 
 
 def test_shared_paths() -> None:
-    check(assert_type(shapely.shared_paths(MLS, LS), GeometryCollection), GeometryCollection)
+    check(
+        assert_type(shapely.shared_paths(MLS, LS), "GeometryCollection[MultiLineString]"),
+        GeometryCollection,
+    )
     check(assert_type(shapely.shared_paths(MLS, None), None), NoneType)
     check(assert_type(shapely.shared_paths(None, MLS), None), NoneType)
     check(assert_type(shapely.shared_paths(None, None), None), NoneType)

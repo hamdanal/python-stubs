@@ -1,19 +1,15 @@
 from array import array
 from collections.abc import Iterator
-from typing import Any, Generic, Literal, NoReturn, TypeVar, overload
-from typing_extensions import Self, deprecated
+from typing import Any, Generic, Literal, NoReturn, overload
+from typing_extensions import Self, TypeVar, deprecated
 
 import numpy as np
 from numpy.typing import NDArray
 
-from shapely._typing import ArrayLikeSeq, GeoArray, OptGeoArrayLike, OptGeoArrayLikeSeq
+from shapely._typing import ArrayLikeSeq, GeoArray, GeoT, OptGeoArrayLike, OptGeoArrayLikeSeq
 from shapely.constructive import BufferCapStyle, BufferJoinStyle
 from shapely.coords import CoordinateSequence
 from shapely.geometry.collection import GeometryCollection
-from shapely.geometry.linestring import LineString
-from shapely.geometry.multilinestring import MultiLineString
-from shapely.geometry.multipoint import MultiPoint
-from shapely.geometry.multipolygon import MultiPolygon
 from shapely.geometry.point import Point
 from shapely.geometry.polygon import Polygon
 from shapely.lib import Geometry
@@ -261,38 +257,23 @@ class BaseGeometry(Geometry):
     def segmentize(self, max_segment_length: ArrayLikeSeq[float]) -> GeoArray: ...
     def reverse(self) -> Self: ...
 
-class BaseMultipartGeometry(BaseGeometry):
+_GeoT_co = TypeVar("_GeoT_co", bound=Geometry, default=BaseGeometry, covariant=True)
+
+class BaseMultipartGeometry(BaseGeometry, Generic[_GeoT_co]):
     @property
     def coords(self) -> NoReturn: ...
     @property
     def geoms(self) -> GeometrySequence[Self]: ...
     def svg(self, scale_factor: float = 1.0, color: str | None = None) -> str: ...  # type: ignore[override]
 
-_P_co = TypeVar("_P_co", covariant=True, bound=BaseMultipartGeometry)
+_P_co = TypeVar("_P_co", covariant=True, bound=BaseMultipartGeometry[Geometry])
 
 class GeometrySequence(Generic[_P_co]):
     def __init__(self, parent: _P_co) -> None: ...
-    @overload
-    def __iter__(self: GeometrySequence[MultiPoint]) -> Iterator[Point]: ...
-    @overload
-    def __iter__(self: GeometrySequence[MultiLineString]) -> Iterator[LineString]: ...
-    @overload
-    def __iter__(self: GeometrySequence[MultiPolygon]) -> Iterator[Polygon]: ...
-    @overload
-    def __iter__(self: GeometrySequence[GeometryCollection]) -> Iterator[BaseGeometry]: ...
-    @overload
-    def __iter__(self: GeometrySequence[BaseMultipartGeometry]) -> Iterator[BaseGeometry]: ...
+    def __iter__(self: GeometrySequence[BaseMultipartGeometry[GeoT]]) -> Iterator[GeoT]: ...
     def __len__(self) -> int: ...
     @overload
-    def __getitem__(self: GeometrySequence[MultiPoint], key: int | np.integer[Any]) -> Point: ...
-    @overload
-    def __getitem__(self: GeometrySequence[MultiLineString], key: int | np.integer[Any]) -> LineString: ...
-    @overload
-    def __getitem__(self: GeometrySequence[MultiPolygon], key: int | np.integer[Any]) -> Polygon: ...
-    @overload
-    def __getitem__(self: GeometrySequence[GeometryCollection], key: int | np.integer[Any]) -> BaseGeometry: ...
-    @overload
-    def __getitem__(self: GeometrySequence[BaseMultipartGeometry], key: int | np.integer[Any]) -> BaseGeometry: ...
+    def __getitem__(self: GeometrySequence[BaseMultipartGeometry[GeoT]], key: int | np.integer[Any]) -> GeoT: ...
     @overload
     def __getitem__(self, key: slice) -> _P_co: ...
 

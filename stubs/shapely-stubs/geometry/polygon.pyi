@@ -6,7 +6,7 @@ from shapely.geometry.base import BaseGeometry
 from shapely.geometry.linestring import LineString, _ConvertibleToLineString
 from shapely.geometry.multilinestring import MultiLineString
 
-__all__ = ["Polygon", "LinearRing"]
+__all__ = ["orient", "Polygon", "LinearRing"]
 
 _ConvertibleToLinearRing: TypeAlias = _ConvertibleToLineString  # same alias but with better name for doc purposes
 _PolygonShellLike: TypeAlias = Polygon | _ConvertibleToLinearRing | None

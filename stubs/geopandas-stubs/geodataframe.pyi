@@ -1,13 +1,13 @@
 import os
-from _typeshed import Incomplete, SupportsRead, SupportsWrite
-from collections.abc import Generator, Hashable, Iterable, Mapping, Sequence
-from typing import Any, Literal, overload
+from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
+from collections.abc import Callable, Generator, Hashable, Iterable, Mapping, Sequence
+from typing import Any, Literal, Protocol, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
 
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
-from pandas._typing import Axes, Dtype, ListLikeU, Scalar
+from pandas._typing import AggFuncTypeFrame, AstypeArg, Axes, Axis, Dtype, GroupByObject, IndexLabel, ListLikeU, Scalar
 from pyproj import CRS
 from shapely import Geometry
 
@@ -25,6 +25,11 @@ _GeometryColumn: TypeAlias = Hashable | Sequence[Geometry] | NDArray[np.object_]
 _ConvertibleToDataFrame: TypeAlias = (
     ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
 )
+
+@type_check_only
+class _SupportsGeoInterface(Protocol):
+    @property
+    def __geo_interface__(self) -> dict[str, Any]: ...
 
 crs_mismatch_error: str
 
@@ -73,7 +78,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def set_geometry(
         self, col: _GeometryColumn, drop: bool = False, inplace: bool = False, crs: _ConvertibleToCRS | None = None
     ): ...
-    def rename_geometry(self, col: Hashable, inplace: bool = False): ...
+    def rename_geometry(self, col: Hashable, inplace: bool = False) -> Self: ...
     @property
     def crs(self) -> CRS | None: ...
     @crs.setter
@@ -95,7 +100,16 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         **kwargs: Any,  # depends on engine
     ) -> Self: ...
     @classmethod
-    def from_features(cls, features: Incomplete, crs: _ConvertibleToCRS | None = None, columns: Axes | None = None) -> Self: ...
+    def from_features(
+        cls,
+        features: (
+            _SupportsGeoInterface
+            | Mapping[str, _SupportsGeoInterface | SupportsGetItem[str, Any]]
+            | Iterable[_SupportsGeoInterface | SupportsGetItem[str, Any]]
+        ),
+        crs: _ConvertibleToCRS | None = None,
+        columns: Axes | None = None,
+    ) -> Self: ...
     @overload
     @classmethod
     def from_postgis(
@@ -165,7 +179,10 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         mode: Literal["w", "a"] = "w",
         crs: _ConvertibleToCRS | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
-        **kwargs: Any,  # depends on driver
+        layer: int | str | None = None,
+        encoding: str | None = None,
+        overwrite: bool | Incomplete = ...,  # TODO can it be None? (accepted by fiona, not sure about pyogrio)
+        **kwargs: Any,  # engine and driver dependent
     ) -> None: ...
     def set_crs(
         self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
@@ -176,23 +193,38 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     # def __setitem__(self, key, value) -> None: ...
     def copy(self, deep: bool = True) -> Self: ...
     def merge(self, *args, **kwargs) -> GeoDataFrame | pd.DataFrame: ...
-    def apply(self, func, axis: int = 0, raw: bool = False, result_type: Incomplete | None = None, args=(), **kwargs): ...  # type: ignore[override]
-    def __finalize__(self, other, method: Incomplete | None = None, **kwargs) -> Self: ...
+    def apply(  # type: ignore[override]
+        self,
+        func: Callable[..., Incomplete],
+        axis: Axis = 0,
+        raw: bool = False,
+        result_type: Literal["expand", "reduce", "broadcast"] | None = None,
+        args: tuple[Any, ...] = (),
+        *,
+        by_row: Literal[False, "compat"] = "compat",
+        engine: Literal["python", "numba"] = "python",
+        engine_kwargs: dict[str, bool] | None = None,
+        **kwargs,
+    ) -> pd.DataFrame | pd.Series[Any]: ...
+    def __finalize__(self, other, method: str | None = None, **kwargs) -> Self: ...
     def dissolve(
         self,
-        by: Incomplete | None = None,
-        aggfunc: str | Incomplete = "first",
+        by: GroupByObject | None = None,
+        aggfunc: AggFuncTypeFrame = "first",
         as_index: bool = True,
-        level: Incomplete | None = None,
+        level: IndexLabel | None = None,
         sort: bool = True,
         observed: bool = False,
         dropna: bool = True,
         **kwargs,
     ) -> GeoDataFrame: ...
-    def explode(
-        self, column: Hashable | None = None, ignore_index: bool = False, index_parts: bool | None = None, **kwargs
-    ) -> Self: ...
-    def astype(self, dtype, copy: bool = True, errors: str = "raise", **kwargs) -> GeoDataFrame | pd.DataFrame: ...
+    def explode(self, column: IndexLabel | None = None, ignore_index: bool = False, index_parts: bool | None = None) -> Self: ...
+    def astype(
+        self,
+        dtype: AstypeArg | Mapping[Any, Dtype] | pd.Series[Any],
+        copy: bool | None = None,
+        errors: Literal["ignore", "raise"] = "raise",
+    ) -> GeoDataFrame | pd.DataFrame: ...
     def convert_dtypes(
         self,
         infer_objects: bool = True,
@@ -207,11 +239,11 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         name: str,
         con: _SQLConnection,
         schema: str | None = None,
-        if_exists: str = "fail",
+        if_exists: Literal["fail", "replace", "append"] = "fail",
         index: bool = False,
-        index_label: Incomplete | None = None,
+        index_label: IndexLabel | None = None,
         chunksize: int | None = None,
-        dtype: Incomplete | None = None,
+        dtype: dict[Any, Incomplete] | None = None,
     ) -> None: ...
     @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
     def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]

@@ -19,7 +19,7 @@ MP = MultiPoint([(0, 0), (1, 1), (0, 2), (2, 2), (3, 1), (1, 0)])
 
 def test_polygonize() -> None:
     check(
-        assert_type(shapely.ops.polygonize(PO), "GeometrySequence[GeometryCollection]"),
+        assert_type(shapely.ops.polygonize(PO), "GeometrySequence[GeometryCollection[Polygon]]"),
         GeometrySequence,
         dtype=Polygon,
     )
@@ -31,7 +31,9 @@ def test_polygonize() -> None:
         ((1, 0), (0, 0)),
     ]
     check(
-        assert_type(shapely.ops.polygonize(line_likes), "GeometrySequence[GeometryCollection]"),
+        assert_type(
+            shapely.ops.polygonize(line_likes), "GeometrySequence[GeometryCollection[Polygon]]"
+        ),
         GeometrySequence,
         dtype=Polygon,
     )
@@ -42,12 +44,13 @@ def test_polygonize() -> None:
     ]
     poly = shapely.ops.polygonize(lines)
     check(
-        assert_type(poly, "GeometrySequence[GeometryCollection]"), GeometrySequence, dtype=Polygon
+        assert_type(poly, "GeometrySequence[GeometryCollection[Polygon]]"),
+        GeometrySequence,
+        dtype=Polygon,
     )
-    check(assert_type(poly[0], BaseGeometry), Polygon)
-    check(assert_type(poly[:], GeometryCollection), GeometryCollection)
-    # TODO: mypy does not correctly handle the next line
-    check(assert_type(list(poly), list[BaseGeometry]), list, dtype=Polygon)  # type: ignore[assert-type]
+    check(assert_type(poly[0], Polygon), Polygon)
+    check(assert_type(poly[:], "GeometryCollection[Polygon]"), GeometryCollection)
+    check(assert_type(list(poly), list[Polygon]), list, dtype=Polygon)
     check(assert_type(len(poly), int), int)
 
     check(
@@ -61,7 +64,7 @@ def test_polygonize() -> None:
                     None,
                 )
             ),
-            "GeometrySequence[GeometryCollection]",
+            "GeometrySequence[GeometryCollection[Polygon]]",
         ),
         GeometrySequence,
         dtype=Polygon,
@@ -70,7 +73,10 @@ def test_polygonize() -> None:
 
 def test_polygonize_full() -> None:
     expected_type = tuple[
-        GeometryCollection, GeometryCollection, GeometryCollection, GeometryCollection
+        "GeometryCollection[Polygon]",
+        "GeometryCollection[LineString]",
+        "GeometryCollection[LineString]",
+        "GeometryCollection[Polygon]",
     ]
     check(
         assert_type(shapely.ops.polygonize_full(PO), expected_type), tuple, dtype=GeometryCollection
@@ -157,10 +163,12 @@ def test_triangulate() -> None:
 
 def test_voronoi_diagram() -> None:
     regions = shapely.ops.voronoi_diagram(MP)
-    check(assert_type(regions, GeometryCollection), GeometryCollection)
+    check(assert_type(regions, "GeometryCollection[Polygon]"), GeometryCollection)
     check(list(regions.geoms), list, dtype=Polygon)
     edges = shapely.ops.voronoi_diagram(MP, edges=True)
-    check(assert_type(edges, GeometryCollection), GeometryCollection)
+    check(
+        assert_type(edges, "GeometryCollection[LineString | MultiLineString]"), GeometryCollection
+    )
     check(list(edges.geoms), list, dtype=MultiLineString)
 
 
@@ -204,7 +212,7 @@ def test_snap() -> None:
 
 def test_shared_paths() -> None:
     shared = shapely.ops.shared_paths(LS, PO.exterior)
-    check(assert_type(shared, GeometryCollection), GeometryCollection)
+    check(assert_type(shared, "GeometryCollection[MultiLineString]"), GeometryCollection)
     with pytest.raises(Exception):
         shapely.ops.shared_paths(LS, PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 

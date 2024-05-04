@@ -336,7 +336,7 @@ def snap(geometry: OptGeoArrayLike, reference: OptGeoArrayLike, tolerance: Array
 @overload
 def voronoi_polygons(
     geometry: Geometry, tolerance: float = 0.0, extend_to: Geometry | None = None, only_edges: Literal[False] = False, **kwargs
-) -> GeometryCollection: ...
+) -> GeometryCollection[Polygon]: ...
 @overload
 def voronoi_polygons(
     geometry: Geometry, tolerance: float, extend_to: Geometry | None, only_edges: Literal[True], **kwargs
@@ -348,7 +348,7 @@ def voronoi_polygons(
 @overload
 def voronoi_polygons(
     geometry: Geometry, tolerance: float = 0.0, extend_to: Geometry | None = None, only_edges: bool = False, **kwargs
-) -> GeometryCollection | LineString | MultiLineString: ...
+) -> GeometryCollection[Polygon] | LineString | MultiLineString: ...
 @overload
 def voronoi_polygons(
     geometry: None, tolerance: float = 0.0, extend_to: Geometry | None = None, only_edges: bool = False, **kwargs
@@ -356,7 +356,7 @@ def voronoi_polygons(
 @overload
 def voronoi_polygons(
     geometry: Geometry | None, tolerance: float = 0.0, extend_to: Geometry | None = None, only_edges: bool = False, **kwargs
-) -> GeometryCollection | LineString | MultiLineString | None: ...
+) -> GeometryCollection[Polygon] | LineString | MultiLineString | None: ...
 @overload
 def voronoi_polygons(
     geometry: OptGeoArrayLikeSeq,

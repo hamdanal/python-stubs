@@ -36,7 +36,7 @@ PO = Polygon([P, P, P, P], holes=[[(0.1, 0.2), (0.3, 0.4), (0.5, 0.6), (0.7, 0.8
 MP = MultiPoint([P, P])
 MLS = MultiLineString([LS, [P, P]])
 MPO = MultiPolygon([PO, (LR,)])
-GC = GeometryCollection([P, LS, PO])
+GC: GeometryCollection = GeometryCollection([P, LS, PO])
 
 
 def test_base_geometry_constructor() -> None:
@@ -246,10 +246,12 @@ def test_multipart_geometry() -> None:
         BaseGeometry,
     )
     check(assert_type(iter(MP.geoms), Iterator[Point]), Iterator, dtype=Point)
-    # TODO: mypy does not correctly handle the next 3 lines
-    check(assert_type(iter(MLS.geoms), Iterator[LineString]), Iterator, dtype=LineString)  # type: ignore[assert-type]
-    check(assert_type(iter(MPO.geoms), Iterator[Polygon]), Iterator, dtype=Polygon)  # type: ignore[assert-type]
-    check(assert_type(iter(GC.geoms), Iterator[BaseGeometry]), Iterator, dtype=BaseGeometry)  # type: ignore[assert-type]
+    check(assert_type(iter(MLS.geoms), Iterator[LineString]), Iterator, dtype=LineString)
+    check(assert_type(iter(MPO.geoms), Iterator[Polygon]), Iterator, dtype=Polygon)
+    check(assert_type(iter(GC.geoms), Iterator[BaseGeometry]), Iterator, dtype=BaseGeometry)
+    polygons_collection = GeometryCollection(MPO)
+    check(assert_type(polygons_collection, "GeometryCollection[Polygon]"), GeometryCollection)
+    check(assert_type(iter(polygons_collection.geoms), Iterator[Polygon]), Iterator, dtype=Polygon)
     check(assert_type(MP.geoms[0], Point), Point)
     check(assert_type(MLS.geoms[0], LineString), LineString)
     check(assert_type(MPO.geoms[0], Polygon), Polygon)
@@ -463,7 +465,7 @@ def test_geometry_collection() -> None:
     GeometryCollection([None])
     GeometryCollection([P, PO, None])
     with pytest.raises(TypeError):
-        GeometryCollection(o for o in [P, PO, None])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        GeometryCollection(o for o in [P, PO, None])  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]
 
     # Test BaseGeometry overrides
     check(assert_type(GC.boundary, None), NoneType)

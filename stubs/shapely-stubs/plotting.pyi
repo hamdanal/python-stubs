@@ -33,6 +33,17 @@ def plot_polygon(
     **kwargs: Any,
 ) -> PathPatch: ...
 @overload
+def plot_polygon(
+    polygon: Polygon | MultiPolygon,
+    ax: Axes | None,
+    add_points: Literal[False],
+    color: ColorType | None = None,
+    facecolor: ColorType | None = None,
+    edgecolor: ColorType | None = None,
+    linewidth: float | None = None,
+    **kwargs: Any,
+) -> PathPatch: ...
+@overload
 def plot_line(
     line: LineString | LinearRing | MultiLineString,
     ax: Axes | None = None,
@@ -46,6 +57,15 @@ def plot_line(
     line: LineString | LinearRing | MultiLineString,
     ax: Axes | None = None,
     *,
+    add_points: Literal[False],
+    color: ColorType | None = None,
+    linewidth: float = 2,
+    **kwargs: Any,
+) -> PathPatch: ...
+@overload
+def plot_line(
+    line: LineString | LinearRing | MultiLineString,
+    ax: Axes | None,
     add_points: Literal[False],
     color: ColorType | None = None,
     linewidth: float = 2,

@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from collections.abc import Collection
 from typing import Any
 
 import pandas as pd
@@ -7,4 +7,4 @@ from shapely.geometry.base import BaseGeometry
 
 from geopandas.geoseries import GeoSeries
 
-def collect(x: Iterable[Geometry] | GeoSeries | pd.Series[Any] | Geometry, multi: bool = False) -> BaseGeometry: ...
+def collect(x: Collection[Geometry] | GeoSeries | pd.Series[Any] | Geometry, multi: bool = False) -> BaseGeometry: ...
