@@ -49,7 +49,7 @@ def test_polygonize() -> None:
         dtype=Polygon,
     )
     check(assert_type(poly[0], Polygon), Polygon)
-    check(assert_type(poly[:], GeometryCollection[Polygon]), GeometryCollection)
+    check(assert_type(poly[:], "GeometryCollection[Polygon]"), GeometryCollection)
     check(assert_type(list(poly), list[Polygon]), list, dtype=Polygon)
     check(assert_type(len(poly), int), int)
 

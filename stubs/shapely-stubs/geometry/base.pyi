@@ -257,9 +257,9 @@ class BaseGeometry(Geometry):
     def segmentize(self, max_segment_length: ArrayLikeSeq[float]) -> GeoArray: ...
     def reverse(self) -> Self: ...
 
-_GeoT = TypeVar("_GeoT", bound=Geometry, default=BaseGeometry, covariant=True)
+_GeoT_co = TypeVar("_GeoT_co", bound=Geometry, default=BaseGeometry, covariant=True)
 
-class BaseMultipartGeometry(BaseGeometry, Generic[_GeoT]):
+class BaseMultipartGeometry(BaseGeometry, Generic[_GeoT_co]):
     @property
     def coords(self) -> NoReturn: ...
     @property
