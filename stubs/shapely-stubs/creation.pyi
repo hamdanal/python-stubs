@@ -6,7 +6,8 @@ from numpy.typing import NDArray
 
 from shapely._geometry import GeometryType
 from shapely._typing import ArrayLike, ArrayLikeSeq, GeoArray, OptGeoArrayLike, OptGeoArrayLikeSeq
-from shapely.geometry import LinearRing, LineString, MultiLineString, MultiPoint, Point, Polygon
+from shapely.geometry import GeometryCollection, LinearRing, LineString, MultiLineString, MultiPoint, MultiPolygon, Point, Polygon
+from shapely.lib import Geometry
 
 __all__ = [
     "points",
@@ -214,10 +215,36 @@ def multilinestrings(
 def multilinestrings(
     geometries: OptGeoArrayLikeSeq, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
 ) -> MultiLineString | GeoArray: ...
-def multipolygons(geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs): ...
+@overload
+def multipolygons(
+    geometries: Sequence[Polygon | Sequence[Sequence[float]] | None], indices: None = None, out: None = None, **kwargs
+) -> MultiPolygon: ...
+@overload
+def multipolygons(
+    geometries: Sequence[Sequence[Polygon | Sequence[Sequence[float]] | None]],
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> GeoArray: ...
+@overload
+def multipolygons(
+    geometries: OptGeoArrayLikeSeq, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
+) -> MultiPolygon | GeoArray: ...
+@overload
 def geometrycollections(
-    geometries, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
-): ...
+    geometries: Sequence[Geometry | None], indices: None = None, out: None = None, **kwargs
+) -> GeometryCollection: ...
+@overload
+def geometrycollections(
+    geometries: Sequence[Sequence[Geometry | None]],
+    indices: ArrayLikeSeq[int] | None = None,
+    out: NDArray[np.object_] | None = None,
+    **kwargs,
+) -> GeoArray: ...
+@overload
+def geometrycollections(
+    geometries: OptGeoArrayLikeSeq, indices: ArrayLikeSeq[int] | None = None, out: NDArray[np.object_] | None = None, **kwargs
+) -> GeometryCollection | GeoArray: ...
 def prepare(geometry: OptGeoArrayLike, **kwargs) -> None: ...
 def destroy_prepared(geometry: OptGeoArrayLike, **kwargs) -> None: ...
 def empty(

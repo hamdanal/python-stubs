@@ -3,11 +3,11 @@ from typing_extensions import Self
 
 from shapely.geometry.base import BaseMultipartGeometry
 from shapely.geometry.collection import GeometryCollection
-from shapely.geometry.point import _PointLike
+from shapely.geometry.point import Point, _PointLike
 
 __all__ = ["MultiPoint"]
 
-class MultiPoint(BaseMultipartGeometry):
+class MultiPoint(BaseMultipartGeometry[Point]):
     # Note on "points" type in `__new__`:
     # * `Collection` here is loose as the expected type should support "__getitem__".
     # * `Sequence` is more correct but it will lead to False positives with common types

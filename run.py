@@ -6,12 +6,21 @@ import os
 import subprocess
 import sys
 
+try:
+    from rich.text import Text  # pyright: ignore[reportAssignmentType]
+    from rich_argparse import RawDescriptionRichHelpFormatter as RawDescriptionHelpFormatter
+except ModuleNotFoundError:
+    RawDescriptionHelpFormatter = argparse.RawDescriptionHelpFormatter
+
+    class Text(str): ...
+
+
 default_args = {
+    "ruff-check": ["tests", "stubs"],
+    "ruff-format": ["tests", "stubs"],
     "mypy": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
     "pyright": ["tests", "stubs/shapely-stubs", "stubs/geopandas-stubs"],
     "stubtest": ["--allowlist=stubtest_allowlist.txt", "shapely", "geopandas"],
-    "ruff-check": ["tests", "stubs"],
-    "ruff-format": ["tests", "stubs"],
     "pytest": [],
 }
 
@@ -36,16 +45,21 @@ Run `python -m pip install -r requirements-tests.txt` to install dependencies.
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        usage="%(prog)s [-h] command [args]",
-        description=description,
-        formatter_class=argparse.RawTextHelpFormatter,
-        add_help=False,
+    parser = argparse.ArgumentParser(description=Text(description), formatter_class=RawDescriptionHelpFormatter, add_help=False)
+    parser.add_argument(
+        "tool",
+        nargs="?",
+        metavar="command",
+        choices=default_args,
+        help="A command from (%(choices)s) to run, optionally with args. See the table above for more information.",
     )
-    parser.add_argument("tool", nargs="?", metavar="tool", choices=default_args, help=argparse.SUPPRESS)
-    options = parser.add_argument_group("Options")
-    options.add_argument("-h", "--help", action="store_true", help="show this help message and exit")
-    options.add_argument("--all", action="store_true", help="run all checks")
+    parser.add_argument(
+        "-h",
+        "--help",
+        action="store_true",
+        help="Show this help message and exit. Use `--help CMD` to print the help of a command `CMD`.",
+    )
+    parser.add_argument("--all", action="store_true", help="Run all the commands in the table above.")
 
     args, rest = parser.parse_known_args()
 
@@ -65,8 +79,7 @@ def main() -> int:
     elif tool:
         tools = [tool]
     else:
-        parser.print_usage()
-        parser.exit(1)
+        parser.error(f"missing command from ({', '.join(default_args)}) or `--all`")
 
     ret = 0
     for tool in tools:

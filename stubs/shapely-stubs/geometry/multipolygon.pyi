@@ -7,7 +7,7 @@ from shapely.geometry.polygon import Polygon, _PolygonHolesLike, _PolygonShellLi
 
 __all__ = ["MultiPolygon"]
 
-class MultiPolygon(BaseMultipartGeometry):
+class MultiPolygon(BaseMultipartGeometry[Polygon]):
     def __new__(
         self,
         polygons: (

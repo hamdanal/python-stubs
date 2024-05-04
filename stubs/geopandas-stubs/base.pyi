@@ -1,7 +1,7 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, SupportsGetItem
 from collections.abc import Iterable
-from typing import Any, Literal, Protocol, overload
-from typing_extensions import TypeAlias, deprecated
+from typing import Any, Literal, Protocol, SupportsIndex, overload, type_check_only
+from typing_extensions import Self, TypeAlias, deprecated
 
 import numpy as np
 import pandas as pd
@@ -15,6 +15,7 @@ from geopandas.array import _Origin
 from geopandas.geoseries import GeoSeries
 from geopandas.sindex import BaseSpatialIndex
 
+@type_check_only
 class _SupportsToWkt(Protocol):
     def to_wkt(self) -> str: ...
 
@@ -128,7 +129,7 @@ class GeoPandasBase:
     def scale(self, xfact: float = 1.0, yfact: float = 1.0, zfact: float = 1.0, origin: _Origin = "center") -> GeoSeries: ...
     def skew(self, xs: float = 0.0, ys: float = 0.0, origin: _Origin = "center", use_radians: bool = False) -> GeoSeries: ...
     @property
-    def cx(self) -> _CoordinateIndexer: ...
+    def cx(self) -> SupportsGetItem[tuple[SupportsIndex | slice, SupportsIndex | slice], Self]: ...
     def get_coordinates(self, include_z: bool = False, ignore_index: bool = False, index_parts: bool = False) -> pd.DataFrame: ...
     def hilbert_distance(
         self, total_bounds: tuple[float, float, float, float] | Iterable[float] | None = None, level: int = 16
@@ -138,6 +139,7 @@ class GeoPandasBase:
         self,
         size: int | ArrayLike,
         method: str = "uniform",
+        seed: None = None,
         rng: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
         **kwargs,
     ) -> GeoSeries: ...
@@ -147,12 +149,8 @@ class GeoPandasBase:
         self,
         size: int | ArrayLike,
         method: str = "uniform",
-        seed: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
+        *,
+        seed: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator,
         rng: int | ArrayLike | SeedSequence | BitGenerator | RandomGenerator | None = None,
         **kwargs,
     ) -> GeoSeries: ...
-
-class _CoordinateIndexer:
-    obj: GeoPandasBase
-    def __init__(self, obj: GeoPandasBase) -> None: ...
-    def __getitem__(self, key: tuple[int | slice, int | slice]) -> GeoSeries: ...

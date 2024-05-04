@@ -5,11 +5,13 @@ import pytest
 import shapely
 from numpy.typing import NDArray
 from shapely import (
+    GeometryCollection,
     GeometryType,
     LinearRing,
     LineString,
     MultiLineString,
     MultiPoint,
+    MultiPolygon,
     Point,
     Polygon,
 )
@@ -356,11 +358,99 @@ def test_multilinestrings() -> None:
 
 
 def test_multipolygons() -> None:
-    ...  # TODO multipolygons is not typed yet
+    ring_1 = LinearRing([[0, 0], [0, 10], [10, 10], [10, 0]])
+    ring_2 = LinearRing([[2, 6], [2, 7], [3, 7], [3, 6]])
+
+    polygon1 = shapely.Polygon(ring_1)
+    polygon2 = shapely.Polygon(ring_1, holes=[ring_2])
+
+    check(
+        assert_type(shapely.multipolygons([[[0, 0], [0, 10], [10, 10], [10, 0]]]), MultiPolygon),
+        MultiPolygon,
+    )
+    check(assert_type(shapely.multipolygons([polygon1]), MultiPolygon), MultiPolygon)
+    check(assert_type(shapely.multipolygons([None]), MultiPolygon), MultiPolygon)
+    check(
+        assert_type(shapely.multipolygons((polygon1, None, polygon2)), MultiPolygon), MultiPolygon
+    )
+    check(
+        assert_type(shapely.multipolygons([[polygon1]]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=MultiPolygon,
+    )
+    check(
+        assert_type(
+            shapely.multipolygons((polygon1, None, polygon2), indices=[0, 0, 1]),
+            MultiPolygon | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=MultiPolygon,
+    )
+    check(
+        assert_type(
+            shapely.multipolygons(np.array([[polygon1]])), MultiPolygon | NDArray[np.object_]
+        ),
+        np.ndarray,
+        dtype=MultiPolygon,
+    )
+    check(
+        assert_type(
+            shapely.multipolygons(np.array([polygon1])), MultiPolygon | NDArray[np.object_]
+        ),
+        MultiPolygon,
+    )
 
 
 def test_geometrycollections() -> None:
-    ...  # TODO geometrycollections is not typed yet
+    p1 = Point([1, 1])
+    p2 = Point([2, 2])
+
+    check(assert_type(shapely.geometrycollections([None]), GeometryCollection), GeometryCollection)
+    check(
+        assert_type(shapely.geometrycollections([p1, p2]), GeometryCollection), GeometryCollection
+    )
+    check(
+        assert_type(shapely.geometrycollections((p1, None)), GeometryCollection), GeometryCollection
+    )
+
+    check(
+        assert_type(shapely.geometrycollections([(p1, None)]), NDArray[np.object_]),
+        np.ndarray,
+        dtype=GeometryCollection,
+    )
+
+    # less precise types
+    check(
+        assert_type(
+            shapely.geometrycollections(np.array((p1, None))),
+            GeometryCollection | NDArray[np.object_],
+        ),
+        GeometryCollection,
+    )
+    check(
+        assert_type(
+            shapely.geometrycollections(np.array((p1, None)), indices=[0, 0]),
+            GeometryCollection | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=GeometryCollection,
+    )
+    check(
+        assert_type(
+            shapely.geometrycollections(np.array((p1, None)), out=np.array([None], dtype=object)),
+            GeometryCollection | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=GeometryCollection,
+    )
+    check(
+        assert_type(
+            shapely.geometrycollections(np.array([(p1, None)])),
+            GeometryCollection | NDArray[np.object_],
+        ),
+        np.ndarray,
+        dtype=GeometryCollection,
+    )
 
 
 def test_prepare() -> None:

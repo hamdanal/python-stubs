@@ -1,7 +1,8 @@
 import os
 from _typeshed import SupportsRead, SupportsWrite
+from collections import OrderedDict
 from collections.abc import Sequence
-from typing import Any, Literal, overload
+from typing import Any, Literal, TypedDict, overload
 from typing_extensions import TypeAlias, deprecated
 
 import numpy as np
@@ -25,6 +26,8 @@ def _read_file(
     engine: Literal["fiona", "pyogrio"] | None = None,
     *,
     ignore_geometry: Literal[False] = False,
+    layer: int | str | None = None,
+    encoding: str | None = None,
     **kwargs: Any,  # depends on engine
 ) -> GeoDataFrame: ...
 @overload
@@ -36,6 +39,8 @@ def _read_file(
     engine: Literal["fiona", "pyogrio"] | None = None,
     *,
     ignore_geometry: Literal[True],
+    layer: int | str | None = None,
+    encoding: str | None = None,
     **kwargs: Any,  # depends on engine
 ) -> pd.DataFrame: ...
 @deprecated("Function `geopandas.io.read_file` is deprecated. Use function `geopandas.from_file()` instead.")
@@ -47,6 +52,8 @@ def read_file(
     engine: Literal["fiona", "pyogrio"] | None = None,
     *,
     ignore_geometry: bool,
+    layer: int | str | None = None,
+    encoding: str | None = None,
     **kwargs: Any,
 ) -> pd.DataFrame: ...
 @deprecated("Function `geopandas.io.to_file` is deprecated. Use `GeoDataFrame.to_file()` or `GeoSeries.to_file()` instead.")
@@ -61,4 +68,9 @@ def to_file(
     engine: Literal["fiona", "pyogrio"] | None = None,
     **kwargs: Any,  # depends on driver
 ) -> None: ...
-def infer_schema(df: GeoDataFrame) -> dict[str, Any]: ...
+
+class _Schema(TypedDict):
+    geometry: str | list[str]
+    properties: OrderedDict[str, str]
+
+def infer_schema(df: GeoDataFrame) -> _Schema: ...

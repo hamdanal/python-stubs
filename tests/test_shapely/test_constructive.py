@@ -32,7 +32,7 @@ PO = Polygon([P, P, P, P], holes=[[(0.1, 0.2), (0.3, 0.4), (0.5, 0.6), (0.7, 0.8
 MP = MultiPoint([P, P])
 MLS = MultiLineString([LS, [P, P]])
 MPO = MultiPolygon([PO, (LR,)])
-GC = GeometryCollection([P, LS, PO])
+GC: GeometryCollection = GeometryCollection([P, LS, PO])
 
 GEOMS: list[Geometry] = [P, MP, LS, MLS, LR, PO, MPO, GC]
 
@@ -448,7 +448,10 @@ def test_snap() -> None:
 def test_voronoi_polygons() -> None:
     check(assert_type(shapely.voronoi_polygons(None), None), NoneType)
     for geom in (LS, MLS, LR, PO, MPO, GC):
-        check(assert_type(shapely.voronoi_polygons(geom), GeometryCollection), GeometryCollection)
+        check(
+            assert_type(shapely.voronoi_polygons(geom), "GeometryCollection[Polygon]"),
+            GeometryCollection,
+        )
         check(
             assert_type(
                 shapely.voronoi_polygons(geom, only_edges=True), LineString | MultiLineString
@@ -464,7 +467,7 @@ def test_voronoi_polygons() -> None:
         check(
             assert_type(
                 shapely.voronoi_polygons(geom, only_edges=bool(0.5)),
-                GeometryCollection | LineString | MultiLineString,
+                "GeometryCollection[Polygon] | LineString | MultiLineString",
             ),
             LineString | MultiLineString,
         )
