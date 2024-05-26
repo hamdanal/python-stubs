@@ -2,7 +2,7 @@ import json
 import os
 from _typeshed import Incomplete, SupportsRead, SupportsWrite, Unused
 from collections.abc import Callable, Hashable, Mapping, Sequence
-from typing import Any, Literal, overload
+from typing import Any, Literal, final, overload
 from typing_extensions import Self, TypeAlias, deprecated
 
 import pandas as pd
@@ -25,7 +25,6 @@ _GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Incompl
 _ConvertibleToGeoSeries: TypeAlias = Geometry | Mapping[int, Geometry] | Mapping[str, Geometry] | _GeoListLike
 
 class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-var,misc]  # pyright: ignore[reportInvalidTypeArguments]
-    crs: CRS
     # Override the weird annotation of Series.__new__ in pandas-stubs
     def __new__(
         self,
@@ -49,6 +48,8 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         copy: bool | None = None,
         fastpath: bool = False,
     ) -> None: ...
+    @final
+    def copy(self, deep: bool = True) -> Self: ...  # to override pandas definition
     @property
     def values(self) -> GeometryArray: ...
     @deprecated("Method `Series.append()` has been removed in pandas version '2.0'.")
@@ -71,7 +72,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         rows: int | slice | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
         ignore_geometry: Literal[False] = False,
-        **kwargs: Any,  # depends on engine
+        **kwargs: Any,  # engine dependent
     ) -> GeoSeries: ...
     @classmethod
     def from_wkb(
@@ -149,10 +150,22 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     plot = plot_series  # type: ignore[assignment] # pyright: ignore
     explore = _explore_geoseries
     def explode(self, ignore_index: bool = False, index_parts: bool | None = None) -> GeoSeries: ...
+    @overload
     def set_crs(
-        self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
+        self, crs: _ConvertibleToCRS, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
     ) -> Self: ...
-    def to_crs(self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None) -> GeoSeries: ...
+    @overload
+    def set_crs(
+        self, crs: _ConvertibleToCRS | None = None, *, epsg: int, inplace: bool = False, allow_override: bool = False
+    ) -> Self: ...
+    @overload
+    def set_crs(self, crs: _ConvertibleToCRS | None, epsg: int, inplace: bool = False, allow_override: bool = False) -> Self: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS, epsg: int | None = None) -> GeoSeries: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None = None, *, epsg: int) -> GeoSeries: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None, epsg: int) -> GeoSeries: ...
     def estimate_utm_crs(self, datum_name: str = "WGS 84") -> CRS: ...
     def to_json(  # type: ignore[override]
         self,

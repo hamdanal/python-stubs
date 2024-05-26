@@ -88,7 +88,7 @@ This project is licensed under the MIT License.
     </th>
     <th>Complete</th>
     <th>Yes</th>
-    <th>Partially</th>
+    <th>Yes</th>
   </tr>
   <tr>
     <th>shapely</th>

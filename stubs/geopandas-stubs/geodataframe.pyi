@@ -1,6 +1,7 @@
 import os
 from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
-from collections.abc import Callable, Generator, Hashable, Iterable, Mapping, Sequence
+from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping, Sequence
+from json import JSONEncoder
 from typing import Any, Literal, Protocol, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
 
@@ -21,7 +22,8 @@ from geopandas.plotting import GeoplotAccessor
 from geopandas.tools.clip import _Mask as _ClipMask
 
 # XXX: cannot use pd.Series[Geometry] because of pd.Series type variable bounds
-_GeometryColumn: TypeAlias = Hashable | Sequence[Geometry] | NDArray[np.object_] | pd.Series[Any] | GeometryArray | GeoSeries
+_GeomSeq: TypeAlias = Sequence[Geometry] | NDArray[np.object_] | pd.Series[Any] | GeometryArray | GeoSeries
+_GeomCol: TypeAlias = Hashable | _GeomSeq  # name of column or column values
 _ConvertibleToDataFrame: TypeAlias = (
     ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
 )
@@ -44,7 +46,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _GeometryColumn | None = None,
+        geometry: _GeomCol | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> Self: ...
     @overload
@@ -56,7 +58,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _GeometryColumn | None = None,
+        geometry: _GeomCol | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> Self: ...
     def __init__(
@@ -67,25 +69,35 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         dtype: Dtype | None = None,
         copy: bool | None = None,
         *,
-        geometry: _GeometryColumn | None = None,
+        geometry: _GeomCol | None = None,
         crs: _ConvertibleToCRS | None = None,
     ) -> None: ...
     def __setattr__(self, attr: str, val: Any) -> None: ...
     @property
     def geometry(self) -> GeoSeries: ...
     @geometry.setter
-    def geometry(self, col: _GeometryColumn) -> None: ...
+    def geometry(self, col: _GeomSeq) -> None: ...
+    @overload
     def set_geometry(
-        self, col: _GeometryColumn, drop: bool = False, inplace: bool = False, crs: _ConvertibleToCRS | None = None
-    ): ...
-    def rename_geometry(self, col: Hashable, inplace: bool = False) -> Self: ...
+        self, col: _GeomCol, drop: bool = False, inplace: Literal[False] = False, crs: _ConvertibleToCRS | None = None
+    ) -> Self: ...
+    @overload
+    def set_geometry(
+        self, col: _GeomCol, drop: bool = False, *, inplace: Literal[True], crs: _ConvertibleToCRS | None = None
+    ) -> None: ...
+    @overload
+    def set_geometry(self, col: _GeomCol, drop: bool, inplace: Literal[True], crs: _ConvertibleToCRS | None = None) -> None: ...
+    @overload
+    def rename_geometry(self, col: Hashable, inplace: Literal[False] = False) -> Self: ...
+    @overload
+    def rename_geometry(self, col: Hashable, inplace: Literal[True]) -> None: ...
     @property
     def crs(self) -> CRS | None: ...
     @crs.setter
-    def crs(self, value: _ConvertibleToCRS) -> None: ...
+    def crs(self, value: _ConvertibleToCRS | None) -> None: ...
     @classmethod
     def from_dict(  # type: ignore[override]
-        cls, data: Mapping[Hashable, Any], geometry: _GeometryColumn | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
+        cls, data: Mapping[Hashable, Any], geometry: _GeomCol | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
     ) -> Self: ...
     @classmethod
     def from_file(
@@ -97,7 +109,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         rows: int | slice | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
         ignore_geometry: Literal[False] = False,
-        **kwargs: Any,  # depends on engine
+        **kwargs,  # engine dependent
     ) -> Self: ...
     @classmethod
     def from_features(
@@ -124,7 +136,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
         *,
         chunksize: int,
-    ) -> Generator[GeoDataFrame, None, None]: ...
+    ) -> Iterator[GeoDataFrame]: ...
     @overload
     @classmethod
     def from_postgis(
@@ -140,15 +152,48 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         chunksize: None = None,
     ) -> GeoDataFrame: ...
     def to_json(  # type: ignore[override]
-        self, na: str = "null", show_bbox: bool = False, drop_id: bool = False, to_wgs84: bool = False, **kwargs
+        self,
+        na: str = "null",
+        show_bbox: bool = False,
+        drop_id: bool = False,
+        to_wgs84: bool = False,
+        *,
+        # json.dumps kwargs
+        skipkeys: bool = False,
+        ensure_ascii: bool = True,
+        check_circular: bool = True,
+        allow_nan: bool = True,
+        cls: type[JSONEncoder] | None = None,
+        indent: int | str | None = None,
+        separators: tuple[str, str] | None = None,
+        default: Callable[[Any], Any] | None = None,
+        sort_keys: bool = False,
+        **kwargs,
     ) -> str: ...
     @property
     def __geo_interface__(self) -> dict[str, Any]: ...
-    def iterfeatures(
-        self, na: str = "null", show_bbox: bool = False, drop_id: bool = False
-    ) -> Generator[dict[str, Any], None, None]: ...
-    def to_wkb(self, hex: bool = False, **kwargs) -> pd.DataFrame: ...
-    def to_wkt(self, **kwargs) -> pd.DataFrame: ...
+    def iterfeatures(self, na: str = "null", show_bbox: bool = False, drop_id: bool = False) -> Iterator[dict[str, Any]]: ...
+    def to_wkb(
+        self,
+        hex: bool = False,
+        *,
+        # shapely kwargs
+        output_dimension: int = ...,
+        byte_order: int = ...,
+        include_srid: bool = ...,
+        flavor: Literal["iso", "extended"] = ...,
+        **kwargs,
+    ) -> pd.DataFrame: ...
+    def to_wkt(
+        self,
+        *,
+        # shapely kwargs
+        rounding_precision: int = ...,
+        trim: bool = ...,
+        output_dimension: int = ...,
+        old_3d: bool = ...,
+        **kwargs,
+    ) -> pd.DataFrame: ...
     def to_parquet(  # type: ignore[override]
         self,
         path: str | os.PathLike[str] | SupportsWrite[Incomplete],
@@ -184,15 +229,35 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         overwrite: bool | Incomplete = ...,  # TODO can it be None? (accepted by fiona, not sure about pyogrio)
         **kwargs: Any,  # engine and driver dependent
     ) -> None: ...
+    @overload
     def set_crs(
-        self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
+        self, crs: _ConvertibleToCRS, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
     ) -> Self: ...
-    def to_crs(self, crs: _ConvertibleToCRS | None = None, epsg: int | None = None, inplace: bool = False) -> Self | None: ...
+    @overload
+    def set_crs(
+        self, crs: _ConvertibleToCRS | None = None, *, epsg: int, inplace: bool = False, allow_override: bool = False
+    ) -> Self: ...
+    @overload
+    def set_crs(self, crs: _ConvertibleToCRS | None, epsg: int, inplace: bool = False, allow_override: bool = False) -> Self: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS, epsg: int | None = None, inplace: Literal[False] = False) -> Self: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None = None, *, epsg: int, inplace: Literal[False] = False) -> Self: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None, epsg: int, inplace: Literal[False] = False) -> Self: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS, epsg: int | None = None, *, inplace: Literal[True]) -> None: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS, epsg: int | None, inplace: Literal[True]) -> None: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None = None, *, epsg: int, inplace: Literal[True]) -> None: ...
+    @overload
+    def to_crs(self, crs: _ConvertibleToCRS | None, epsg: int, inplace: Literal[True]) -> None: ...
     def estimate_utm_crs(self, datum_name: str = "WGS 84") -> CRS: ...
     # def __getitem__(self, key): ...
     # def __setitem__(self, key, value) -> None: ...
     def copy(self, deep: bool = True) -> Self: ...
-    def merge(self, *args, **kwargs) -> GeoDataFrame | pd.DataFrame: ...
+    # def merge(self, *args, **kwargs) -> GeoDataFrame | pd.DataFrame: ...
     def apply(  # type: ignore[override]
         self,
         func: Callable[..., Incomplete],
@@ -245,18 +310,26 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         chunksize: int | None = None,
         dtype: dict[Any, Incomplete] | None = None,
     ) -> None: ...
-    @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
+    @deprecated("'^' operator is deprecated. Use the `symmetric_difference` method instead.")
     def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'|' operator is deprecated. Use method `union` instead.")
+    @deprecated("'|' operator is deprecated. Use the `union` method instead.")
     def __or__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'&' operator is deprecated. Use method `intersection` instead.")
+    @deprecated("'&' operator is deprecated. Use the `intersection` method instead.")
     def __and__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'-' operator is deprecated. Use method `difference` instead.")
+    @deprecated("'-' operator is deprecated. Use the `difference` method instead.")
     def __sub__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @property
     def plot(self) -> GeoplotAccessor: ...
     explore = _explore
-    def sjoin(self, df: GeoDataFrame, *args, **kwargs) -> GeoDataFrame: ...
+    def sjoin(
+        self,
+        df: GeoDataFrame,
+        # *args, **kwargs passed to geopandas.sjoin
+        how: str = "inner",
+        predicate: str = "intersects",
+        lsuffix: str = "left",
+        rsuffix: str = "right",
+    ) -> GeoDataFrame: ...
     def sjoin_nearest(
         self,
         right: GeoDataFrame,
