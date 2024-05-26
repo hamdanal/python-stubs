@@ -7,14 +7,12 @@ pyright==1.1.364
 
 # Runtime dependencies
 # --------------------
-shapely>=2.0,<2.1
 geopandas>=0.14.4,<1.0
 
 # Transient dependencies
 # ----------------------
-# shapely
-pyproj>=3.6.1
 # geopandas
+types-shapely>=2.0
 pandas-stubs>=2.2.2.240514
 matplotlib>=3.8.0
 folium>=0.16.0

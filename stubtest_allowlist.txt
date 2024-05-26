@@ -1,13 +1,3 @@
-# Shapely
-# =======
-# Stub missing
-shapely\.geometry\.conftest
-shapely\.tests.*
-
-# Runtime missing
-shapely\._typing
-
-
 # Geopandas
 # =========
 

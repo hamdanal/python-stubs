@@ -20,7 +20,7 @@ default_args = {
     "ruff-format": ["tests", "stubs"],
     "mypy": ["tests", "stubs"],
     "pyright": ["tests", "stubs"],
-    "stubtest": ["--allowlist=stubtest_allowlist.txt", "shapely", "geopandas"],
+    "stubtest": ["--allowlist=stubtest_allowlist.txt", "geopandas"],
     "pytest": [],
 }
 

@@ -90,17 +90,6 @@ This project is licensed under the MIT License.
     <th>Yes</th>
     <th>Yes</th>
   </tr>
-  <tr>
-    <th>shapely</th>
-    <th><code>shapely</code></th>
-    <th>
-      <a href="https://pypi.org/project/shapely">PyPI</a>,
-      <a href="https://github.com/shapely/shapely">GitHub</a>
-    </th>
-    <th>Complete</th>
-    <th>Yes</th>
-    <th>Yes</th>
-  </tr>
 </table>
 
 ## Upstreamed stubs
@@ -117,5 +106,10 @@ These stubs were included here in the past and have been moved to typeshed or to
     <th><a href="https://pypi.org/project/seaborn">seaborn</a></th>
     <th><a href="https://github.com/python/typeshed/tree/main/stubs/seaborn">typeshed</a></th>
     <th><code>pip install types-seaborn</code></th>
+  </tr>
+  <tr>
+    <th><a href="https://pypi.org/project/shapely">shapely</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/shapely">typeshed</a></th>
+    <th><code>pip install types-shapely</code></th>
   </tr>
 </table>
