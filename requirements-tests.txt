@@ -1,9 +1,9 @@
 # Tools
 # -----
-ruff==0.4.3  # must match .pre-commit-config.yaml
+ruff==0.4.5  # must match .pre-commit-config.yaml
 pytest>=8.0
 mypy==1.10.0
-pyright==1.1.361
+pyright==1.1.364
 
 # Runtime dependencies
 # --------------------
@@ -15,10 +15,10 @@ geopandas>=0.14.4,<1.0
 # shapely
 pyproj>=3.6.1
 # geopandas
-pandas-stubs>=2.2.1.240316
+pandas-stubs>=2.2.2.240514
 matplotlib>=3.8.0
-folium>=0.15.1
-rtree>=1.1.0
+folium>=0.16.0
+rtree>=1.2.0
 # netfields and psqlextra
 django-types>=0.19.1
 djangorestframework-types>=0.8.0

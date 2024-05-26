@@ -1,5 +1,5 @@
 import sqlite3
-from collections.abc import Generator, Mapping
+from collections.abc import Iterator, Mapping
 from contextlib import AbstractContextManager
 from typing import Any, Protocol, overload
 from typing_extensions import TypeAlias, deprecated
@@ -85,7 +85,7 @@ def _read_postgis(
     params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
     *,
     chunksize: int,
-) -> Generator[GeoDataFrame, None, None]: ...
+) -> Iterator[GeoDataFrame]: ...
 @overload
 def _read_postgis(
     sql: str,
@@ -109,7 +109,7 @@ def _read_postgis(
     parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
     params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
     chunksize: int | None = None,
-) -> GeoDataFrame | Generator[GeoDataFrame, None, None]: ...
+) -> GeoDataFrame | Iterator[GeoDataFrame]: ...
 @deprecated("Function `geopandas.io.sql.read_postgis()` is deprecated. Use `geopandas.read_postgis()` instead.")
 def read_postgis(
     sql: str,
@@ -121,4 +121,4 @@ def read_postgis(
     parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
     params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
     chunksize: int | None = None,
-) -> GeoDataFrame | Generator[GeoDataFrame, None, None]: ...
+) -> GeoDataFrame | Iterator[GeoDataFrame]: ...
