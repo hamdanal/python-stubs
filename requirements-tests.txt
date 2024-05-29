@@ -12,7 +12,7 @@ geopandas>=0.14.4,<1.0
 # Transient dependencies
 # ----------------------
 # geopandas
-types-shapely>=2.0
+types-shapely>=2.0.0.20240527
 pandas-stubs>=2.2.2.240514
 matplotlib>=3.8.0
 folium>=0.16.0

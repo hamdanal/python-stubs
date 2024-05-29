@@ -144,7 +144,7 @@ def test_wkt_module() -> None:
     check(assert_type(shapely.wkt.dump(P, file), None), NoneType)
 
     class WktReader:
-        def read(self, length=1) -> str:  # TODO length is not required
+        def read(self) -> str:
             return P_WKT
 
     class WktWriter:
@@ -166,11 +166,11 @@ def test_wkb_module() -> None:
     check(assert_type(shapely.wkb.dump(P, file), None), NoneType)
 
     class WkbReader:
-        def read(self, length=1) -> bytes:  # TODO length is not required
+        def read(self) -> bytes:
             return P_WKB
 
     class WkbHexReader:
-        def read(self, length=1) -> str:  # TODO length is not required
+        def read(self) -> str:
             return P_WKB_HEX
 
     class WkbWriter:
