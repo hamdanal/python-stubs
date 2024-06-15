@@ -5,15 +5,10 @@ import argparse
 import os
 import subprocess
 import sys
+from subprocess import list2cmdline as l2c
 
-try:
-    from rich.text import Text  # pyright: ignore[reportAssignmentType]
-    from rich_argparse import RawDescriptionRichHelpFormatter as RawDescriptionHelpFormatter
-except ModuleNotFoundError:
-    RawDescriptionHelpFormatter = argparse.RawDescriptionHelpFormatter
-
-    class Text(str): ...
-
+from rich.markdown import Markdown
+from rich_argparse import RawDescriptionRichHelpFormatter
 
 default_args = {
     "ruff-check": ["tests", "stubs"],
@@ -24,20 +19,18 @@ default_args = {
     "pytest": [],
 }
 
-description = """\
+_newl = "\n"
+description = f"""\
 Run project development tools with proper environment setup.
 
 The following commands are available:
-┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Command     ┃ Default invocation                                             ┃
-"""
-for tool, default in default_args.items():
-    description += "┣━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-    description += f"┃ {tool:<11s} ┃ {subprocess.list2cmdline((*tool.split('-'), *default)):<63s}┃\n"
-description += """\
-┗━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Command | Default invocation |
+------- | ------------------ |
+{_newl.join(f"{tool} | {l2c((*tool.split('-'), *default))}" for tool, default in default_args.items())}
 
 You can override the default invocation by passing extra args after the command:
+
 E.g: `python run.py mypy tests` invokes `mypy tests` instead.
 
 Run `python -m pip install -r requirements-tests.txt` to install dependencies.
@@ -45,7 +38,11 @@ Run `python -m pip install -r requirements-tests.txt` to install dependencies.
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=Text(description), formatter_class=RawDescriptionHelpFormatter, add_help=False)
+    parser = argparse.ArgumentParser(
+        description=Markdown(description),  # pyright: ignore[reportArgumentType]
+        formatter_class=RawDescriptionRichHelpFormatter,
+        add_help=False,
+    )
     parser.add_argument(
         "tool",
         nargs="?",
@@ -84,7 +81,7 @@ def main() -> int:
     ret = 0
     for tool in tools:
         cmd = [*tool.split("-"), *(rest or default_args[tool])]
-        print("Running:", subprocess.list2cmdline(cmd), file=sys.stderr)
+        print("Running:", l2c(cmd), file=sys.stderr)
         ret |= subprocess.call(cmd, env={**os.environ, "PYTHONPATH": "stubs"}, text=True)
         print(file=sys.stderr)
     return ret

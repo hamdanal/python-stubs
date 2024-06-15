@@ -24,7 +24,7 @@ class CustomTextPath(TextPath):
     prop: FontProperties
     def __init__(
         self,
-        xy: tuple[float, float] | NDArray[np.float_],
+        xy: tuple[float, float] | NDArray[np.float64],
         s: str,
         size: float | None = None,
         prop: FontProperties | None = None,
