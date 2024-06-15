@@ -14,7 +14,7 @@ geopandas>=0.14.4,<1.0
 # ----------------------
 # geopandas
 types-shapely>=2.0.0.20240613
-pandas-stubs>=2.2.2.240514
+pandas-stubs>=2.2.2.240603
 matplotlib>=3.8.0
 folium>=0.16.0
 rtree>=1.2.0
