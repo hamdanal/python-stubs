@@ -6,8 +6,8 @@ from numpy.typing import ArrayLike, NDArray
 
 from pandapower.auxiliary import pandapowerNet
 
-_PType: TypeAlias = NDArray[np.float_]
-_QType: TypeAlias = NDArray[np.float_]
+_PType: TypeAlias = NDArray[np.float64]
+_QType: TypeAlias = NDArray[np.float64]
 _BType: TypeAlias = NDArray[np.int_]
 
 def write_voltage_dependend_load_results(
