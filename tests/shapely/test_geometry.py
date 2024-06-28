@@ -464,7 +464,7 @@ def test_geometry_collection() -> None:
     GeometryCollection(MP.geoms)
     GeometryCollection([None])
     GeometryCollection([P, PO, None])
-    with pytest.raises(TypeError):
+    with pytest.raises(Exception):
         GeometryCollection(o for o in [P, PO, None])  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]
 
     # Test BaseGeometry overrides

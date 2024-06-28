@@ -3,11 +3,11 @@ from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
 from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping, Sequence
 from json import JSONEncoder
 from typing import Any, Literal, Protocol, overload, type_check_only
-from typing_extensions import Self, TypeAlias, deprecated
+from typing_extensions import Self, TypeAlias
 
 import numpy as np
 import pandas as pd
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 from pandas._typing import AggFuncTypeFrame, AstypeArg, Axes, Axis, Dtype, GroupByObject, IndexLabel, ListLikeU, Scalar
 from pyproj import CRS
 from shapely import Geometry
@@ -16,6 +16,7 @@ from geopandas.array import GeometryArray
 from geopandas.base import GeoPandasBase, _ConvertibleToCRS
 from geopandas.explore import _explore
 from geopandas.geoseries import GeoSeries
+from geopandas.io._geoarrow import ArrowTable, _GeomEncoding
 from geopandas.io.file import _BboxLike, _MaskLike
 from geopandas.io.sql import _SQLConnection
 from geopandas.plotting import GeoplotAccessor
@@ -79,18 +80,22 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def geometry(self, col: _GeomSeq) -> None: ...
     @overload
     def set_geometry(
-        self, col: _GeomCol, drop: bool = False, inplace: Literal[False] = False, crs: _ConvertibleToCRS | None = None
+        self, col: _GeomCol, drop: bool | None = None, inplace: Literal[False] = False, crs: _ConvertibleToCRS | None = None
     ) -> Self: ...
     @overload
     def set_geometry(
-        self, col: _GeomCol, drop: bool = False, *, inplace: Literal[True], crs: _ConvertibleToCRS | None = None
+        self, col: _GeomCol, drop: bool | None = None, *, inplace: Literal[True], crs: _ConvertibleToCRS | None = None
     ) -> None: ...
     @overload
-    def set_geometry(self, col: _GeomCol, drop: bool, inplace: Literal[True], crs: _ConvertibleToCRS | None = None) -> None: ...
+    def set_geometry(
+        self, col: _GeomCol, drop: bool | None, inplace: Literal[True], crs: _ConvertibleToCRS | None = None
+    ) -> None: ...
     @overload
     def rename_geometry(self, col: Hashable, inplace: Literal[False] = False) -> Self: ...
     @overload
     def rename_geometry(self, col: Hashable, inplace: Literal[True]) -> None: ...
+    @property
+    def active_geometry_name(self) -> str | None: ...
     @property
     def crs(self) -> CRS | None: ...
     @crs.setter
@@ -151,6 +156,8 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
         chunksize: None = None,
     ) -> GeoDataFrame: ...
+    @classmethod
+    def from_arrow(cls, table, geometry: str | None = None) -> GeoDataFrame: ...  # table: pyarrow.Table
     def to_json(  # type: ignore[override]
         self,
         na: str = "null",
@@ -173,6 +180,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     @property
     def __geo_interface__(self) -> dict[str, Any]: ...
     def iterfeatures(self, na: str = "null", show_bbox: bool = False, drop_id: bool = False) -> Iterator[dict[str, Any]]: ...
+    def to_geo_dict(self, na: str = "null", show_bbox: bool = False, drop_id: bool = False) -> dict[str, Any]: ...
     def to_wkb(
         self,
         hex: bool = False,
@@ -194,11 +202,21 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         old_3d: bool = ...,
         **kwargs,
     ) -> pd.DataFrame: ...
+    def to_arrow(
+        self,
+        *,
+        index: bool | None = None,
+        geometry_encoding: _GeomEncoding = "WKB",
+        interleaved: bool = True,
+        include_z: bool | None = None,
+    ) -> ArrowTable: ...
     def to_parquet(  # type: ignore[override]
         self,
         path: str | os.PathLike[str] | SupportsWrite[Incomplete],
         index: bool | None = None,
         compression: Literal["snappy", "gzip", "brotli"] | None = "snappy",
+        geometry_encoding: _GeomEncoding = "WKB",
+        write_covering_bbox: bool = False,
         schema_version: str | None = None,
         *,
         engine: Literal["auto", "pyarrow"] = "auto",  # Only these engines are supported, unlike pandas
@@ -281,24 +299,16 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         sort: bool = True,
         observed: bool = False,
         dropna: bool = True,
+        method: Literal["coverage", "unary"] = "unary",
         **kwargs,
     ) -> GeoDataFrame: ...
-    def explode(self, column: IndexLabel | None = None, ignore_index: bool = False, index_parts: bool | None = None) -> Self: ...
+    def explode(self, column: IndexLabel | None = None, ignore_index: bool = False, index_parts: bool = False) -> Self: ...
     def astype(
         self,
         dtype: AstypeArg | Mapping[Any, Dtype] | pd.Series[Any],
         copy: bool | None = None,
         errors: Literal["ignore", "raise"] = "raise",
     ) -> GeoDataFrame | pd.DataFrame: ...
-    def convert_dtypes(
-        self,
-        infer_objects: bool = True,
-        convert_string: bool = True,
-        convert_integer: bool = True,
-        convert_boolean: bool = True,
-        convert_floating: bool = True,
-        dtype_backend: Literal["pyarrow", "numpy_nullable"] = "numpy_nullable",
-    ) -> GeoDataFrame: ...
     def to_postgis(
         self,
         name: str,
@@ -310,14 +320,6 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         chunksize: int | None = None,
         dtype: dict[Any, Incomplete] | None = None,
     ) -> None: ...
-    @deprecated("'^' operator is deprecated. Use the `symmetric_difference` method instead.")
-    def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'|' operator is deprecated. Use the `union` method instead.")
-    def __or__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'&' operator is deprecated. Use the `intersection` method instead.")
-    def __and__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'-' operator is deprecated. Use the `difference` method instead.")
-    def __sub__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
     @property
     def plot(self) -> GeoplotAccessor: ...
     explore = _explore
@@ -329,6 +331,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         predicate: str = "intersects",
         lsuffix: str = "left",
         rsuffix: str = "right",
+        distance: float | ArrayLike | None = None,
     ) -> GeoDataFrame: ...
     def sjoin_nearest(
         self,
@@ -340,7 +343,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         distance_col: str | None = None,
         exclusive: bool = False,
     ) -> GeoDataFrame: ...
-    def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoDataFrame: ...  # type: ignore[override]
+    def clip(self, mask: _ClipMask, keep_geom_type: bool = False, sort: bool = False) -> GeoDataFrame: ...  # type: ignore[override]
     def overlay(
         self, right: GeoDataFrame, how: str = "intersection", keep_geom_type: bool | None = None, make_valid: bool = True
     ) -> GeoDataFrame: ...

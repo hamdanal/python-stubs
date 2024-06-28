@@ -2,7 +2,7 @@ import sqlite3
 from collections.abc import Iterator, Mapping
 from contextlib import AbstractContextManager
 from typing import Any, Protocol, overload
-from typing_extensions import TypeAlias, deprecated
+from typing_extensions import TypeAlias
 
 from pandas._typing import Scalar
 
@@ -100,18 +100,6 @@ def _read_postgis(
 ) -> GeoDataFrame: ...
 @overload
 def _read_postgis(
-    sql: str,
-    con: _SQLConnection,
-    geom_col: str = "geom",
-    crs: _ConvertibleToCRS | None = None,
-    index_col: str | list[str] | None = None,
-    coerce_float: bool = True,
-    parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-    params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
-    chunksize: int | None = None,
-) -> GeoDataFrame | Iterator[GeoDataFrame]: ...
-@deprecated("Function `geopandas.io.sql.read_postgis()` is deprecated. Use `geopandas.read_postgis()` instead.")
-def read_postgis(
     sql: str,
     con: _SQLConnection,
     geom_col: str = "geom",
