@@ -21,7 +21,7 @@ else:
 P = Point(1, 2)
 LS = LineString([(0, 0), (1, 1)])
 PO: Polygon = P.buffer(1)
-GDF = gpd.GeoDataFrame({"x": [1, 2], "geometry": [Point(1, 2), Point(3, 4)]})
+GDF = gpd.GeoDataFrame({"x": [1, 2], "geometry": [Point(1, 2), Point(3, 4)]}, crs="EPSG:4326")
 
 
 def test_read_file(tmp_path: Path) -> None:

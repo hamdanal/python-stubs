@@ -1,16 +1,16 @@
 import os
-from _typeshed import SupportsRead, SupportsWrite
+from _typeshed import SupportsRead
 from collections import OrderedDict
 from collections.abc import Sequence
 from typing import Any, Literal, TypedDict, overload
-from typing_extensions import TypeAlias, deprecated
+from typing_extensions import TypeAlias
 
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
+from pandas._typing import Axes
 from shapely import Geometry
 
-from geopandas.base import _ConvertibleToCRS
 from geopandas.geodataframe import GeoDataFrame
 from geopandas.geoseries import GeoSeries
 
@@ -22,6 +22,7 @@ def _read_file(
     filename: str | os.PathLike[str] | SupportsRead[Any],
     bbox: _BboxLike | None = None,
     mask: _MaskLike | None = None,
+    columns: Axes | None = None,
     rows: int | slice | None = None,
     engine: Literal["fiona", "pyogrio"] | None = None,
     *,
@@ -35,6 +36,7 @@ def _read_file(
     filename: str | os.PathLike[str] | SupportsRead[Any],
     bbox: _BboxLike | None = None,
     mask: _MaskLike | None = None,
+    columns: Axes | None = None,
     rows: int | slice | None = None,
     engine: Literal["fiona", "pyogrio"] | None = None,
     *,
@@ -43,34 +45,10 @@ def _read_file(
     encoding: str | None = None,
     **kwargs: Any,  # depends on engine
 ) -> pd.DataFrame: ...
-@deprecated("Function `geopandas.io.read_file` is deprecated. Use function `geopandas.from_file()` instead.")
-def read_file(
-    filename: str | os.PathLike[str] | SupportsRead[Any],
-    bbox: _BboxLike | None = None,
-    mask: _MaskLike | None = None,
-    rows: int | slice | None = None,
-    engine: Literal["fiona", "pyogrio"] | None = None,
-    *,
-    ignore_geometry: bool,
-    layer: int | str | None = None,
-    encoding: str | None = None,
-    **kwargs: Any,
-) -> pd.DataFrame: ...
-@deprecated("Function `geopandas.io.to_file` is deprecated. Use `GeoDataFrame.to_file()` or `GeoSeries.to_file()` instead.")
-def to_file(
-    df: GeoDataFrame,
-    filename: str | os.PathLike[str] | SupportsWrite[Any],
-    driver: str | None = None,
-    schema: dict[str, Any] | None = None,
-    index: bool | None = None,
-    mode: Literal["w", "a"] = "w",
-    crs: _ConvertibleToCRS | None = None,
-    engine: Literal["fiona", "pyogrio"] | None = None,
-    **kwargs: Any,  # depends on driver
-) -> None: ...
 
 class _Schema(TypedDict):
     geometry: str | list[str]
     properties: OrderedDict[str, str]
 
 def infer_schema(df: GeoDataFrame) -> _Schema: ...
+def _list_layers(filename: str | bytes | os.PathLike[str] | os.PathLike[bytes] | SupportsRead[Any]) -> pd.DataFrame: ...

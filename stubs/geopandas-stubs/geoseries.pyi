@@ -16,6 +16,7 @@ from shapely.geometry.base import BaseGeometry
 from geopandas.array import GeometryArray
 from geopandas.base import GeoPandasBase, _ConvertibleToCRS
 from geopandas.explore import _explore_geoseries
+from geopandas.io._geoarrow import GeoArrowArray
 from geopandas.io.file import _BboxLike, _MaskLike
 from geopandas.plotting import plot_series
 from geopandas.tools.clip import _Mask as _ClipMask
@@ -80,6 +81,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         data: ArrayLike,  # array-like of bytes handled by shapely.from_wkb(data)
         index: Axes | None = None,
         crs: _ConvertibleToCRS | None = None,
+        on_invalid: Literal["raise", "warn", "ignore"] = "raise",
         *,
         dtype: Dtype | None = None,
         name: Hashable = None,
@@ -92,6 +94,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         data: ArrayLike,  # array-like of str handled by shapely.from_wkt(data)
         index: Axes | None = None,
         crs: _ConvertibleToCRS | None = None,
+        on_invalid: Literal["raise", "warn", "ignore"] = "raise",
         *,
         dtype: Dtype | None = None,
         name: Hashable = None,
@@ -108,6 +111,19 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         index: Axes | None = None,
         crs: _ConvertibleToCRS | None = None,
         *,
+        dtype: Dtype | None = None,
+        name: Hashable = None,
+        copy: bool | None = None,
+        fastpath: bool = False,
+    ) -> Self: ...
+    @classmethod
+    def from_arrow(
+        cls,
+        arr,
+        *,
+        # GeoSeries constructor kwargs
+        index: Axes | None = None,
+        crs: _ConvertibleToCRS | None = None,
         dtype: Dtype | None = None,
         name: Hashable = None,
         copy: bool | None = None,
@@ -149,7 +165,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     def __contains__(self, other: object) -> bool: ...
     plot = plot_series  # type: ignore[assignment] # pyright: ignore
     explore = _explore_geoseries
-    def explode(self, ignore_index: bool = False, index_parts: bool | None = None) -> GeoSeries: ...
+    def explode(self, ignore_index: bool = False, index_parts: bool = False) -> GeoSeries: ...
     @overload
     def set_crs(
         self, crs: _ConvertibleToCRS, epsg: int | None = None, inplace: bool = False, allow_override: bool = False
@@ -169,6 +185,9 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     def estimate_utm_crs(self, datum_name: str = "WGS 84") -> CRS: ...
     def to_json(  # type: ignore[override]
         self,
+        show_bbox: bool = True,
+        drop_id: bool = False,
+        to_wgs84: bool = False,
         *,
         # Keywords from json.dumps
         skipkeys: bool = False,
@@ -189,12 +208,10 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     @overload
     def to_wkb(self, hex: bool = False, **kwargs) -> pd.Series[str] | pd.Series[bytes]: ...
     def to_wkt(self, **kwargs) -> pd.Series[str]: ...
-    @deprecated("'^' operator is deprecated. Use method `symmetric_difference` instead.")
-    def __xor__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'|' operator is deprecated. Use method `union` instead.")
-    def __or__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'&' operator is deprecated. Use method `intersection` instead.")
-    def __and__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    @deprecated("'-' operator is deprecated. Use method `difference` instead.")
-    def __sub__(self, other: GeoSeries | Geometry) -> GeoSeries: ...  # type: ignore[override]
-    def clip(self, mask: _ClipMask, keep_geom_type: bool = False) -> GeoSeries: ...  # type: ignore[override]
+    def to_arrow(
+        self,
+        geometry_encoding: Literal["WKB", "geoarrow", "wkb", "GeoArrow"] = "WKB",
+        interleaved: bool | None = True,
+        include_z: bool | None = None,
+    ) -> GeoArrowArray: ...
+    def clip(self, mask: _ClipMask, keep_geom_type: bool = False, sort: bool = False) -> GeoSeries: ...  # type: ignore[override]

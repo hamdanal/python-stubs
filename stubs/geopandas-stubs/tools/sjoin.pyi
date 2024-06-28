@@ -1,33 +1,23 @@
-from typing import overload
-from typing_extensions import deprecated
+from typing import Literal
+
+from numpy.typing import ArrayLike
 
 from geopandas.geodataframe import GeoDataFrame
 
-@overload
 def sjoin(
     left_df: GeoDataFrame,
     right_df: GeoDataFrame,
-    how: str = "inner",
+    how: Literal["left", "right", "inner"] = "inner",
     predicate: str = "intersects",
     lsuffix: str = "left",
     rsuffix: str = "right",
-) -> GeoDataFrame: ...
-@overload
-@deprecated("Parameter `op` is deprecated. Use parameter `predicate` instead.")
-def sjoin(
-    left_df: GeoDataFrame,
-    right_df: GeoDataFrame,
-    how: str = "inner",
-    predicate: str = "intersects",
-    lsuffix: str = "left",
-    rsuffix: str = "right",
-    *,
-    op: str = ...,
+    distance: float | ArrayLike | None = None,
+    on_attribute: str | tuple[str, ...] | list[str] | None = None,
 ) -> GeoDataFrame: ...
 def sjoin_nearest(
     left_df: GeoDataFrame,
     right_df: GeoDataFrame,
-    how: str = "inner",
+    how: Literal["left", "right", "inner"] = "inner",
     max_distance: float | None = None,
     lsuffix: str = "left",
     rsuffix: str = "right",

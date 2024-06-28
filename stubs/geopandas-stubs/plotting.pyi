@@ -1,13 +1,12 @@
 from collections.abc import Collection, Hashable, Iterable, Mapping, Sequence
 from typing import Any, Literal, overload
-from typing_extensions import TypeAlias, deprecated
+from typing_extensions import TypeAlias
 
 import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
-from matplotlib.collections import Collection as mpl_Collection, LineCollection, PatchCollection
 from matplotlib.colors import Colormap, Normalize
-from matplotlib.typing import ColorType, MarkerType
+from matplotlib.typing import ColorType
 from numpy.typing import ArrayLike, NDArray
 from pandas.plotting import PlotAccessor
 
@@ -16,41 +15,6 @@ from geopandas.geoseries import GeoSeries
 
 _ColorOrColors: TypeAlias = ColorType | Sequence[ColorType] | ArrayLike
 
-@deprecated("Function `plot_polygon_collection` is deprecated.")
-def plot_polygon_collection(
-    ax: Axes,
-    geoms: GeoSeries,
-    values: ArrayLike | None = None,
-    color: _ColorOrColors | None = None,
-    cmap: str | Colormap | None = None,
-    vmin: float | None = None,
-    vmax: float | None = None,
-    **kwargs,
-) -> PatchCollection: ...
-@deprecated("Function `plot_linestring_collection` is deprecated.")
-def plot_linestring_collection(
-    ax: Axes,
-    geoms: GeoSeries,
-    values: ArrayLike | None = None,
-    color: _ColorOrColors | None = None,
-    cmap: str | Colormap | None = None,
-    vmin: float | None = None,
-    vmax: float | None = None,
-    **kwargs,
-) -> LineCollection: ...
-@deprecated("Function `plot_point_collection` is deprecated.")
-def plot_point_collection(
-    ax: Axes,
-    geoms: GeoSeries,
-    values: ArrayLike | None = None,
-    color: _ColorOrColors | None = None,
-    cmap: str | Colormap | None = None,
-    vmin: float | None = None,
-    vmax: float | None = None,
-    marker: MarkerType = "o",
-    markersize: ArrayLike | None = None,
-    **kwargs,
-) -> mpl_Collection: ...
 def plot_series(
     s: GeoSeries,
     cmap: str | Colormap | None = None,
@@ -58,6 +22,7 @@ def plot_series(
     ax: Axes | None = None,
     figsize: tuple[float, float] | None = None,
     aspect: Literal["auto", "equal"] | float | None = "auto",
+    autolim: bool = True,
     *,
     # Extracted from `**style_kwds`
     vmin: float = ...,
@@ -88,6 +53,7 @@ def plot_dataframe(
     classification_kwds: dict[str, Any] | None = None,
     missing_kwds: dict[str, Any] | None = None,
     aspect: Literal["auto", "equal"] | float | None = "auto",
+    autolim: bool = True,
     *,
     # Extracted from `**style_kwds`
     norm: Normalize | None = None,

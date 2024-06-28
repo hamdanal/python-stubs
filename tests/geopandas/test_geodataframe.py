@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from types import NoneType
 
 import geopandas as gpd
@@ -58,12 +59,14 @@ def test_crs() -> None:
     check(assert_type(gdf.crs, CRS | None), CRS)
 
     # setter
-    gdf.crs = None
-    gdf.crs = crs
-    gdf.crs = "EPSG:4326"  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
-    gdf.crs = 4326  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
-    with pytest.raises(Exception):
-        gdf.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore")
+        gdf.crs = None
+        gdf.crs = crs
+        gdf.crs = "EPSG:4326"  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
+        gdf.crs = 4326  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
+        with pytest.raises(Exception):
+            gdf.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
 
     # set_crs
     check(assert_type(gdf.set_crs(crs), GeoDataFrame), GeoDataFrame)
