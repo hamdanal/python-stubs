@@ -1,21 +1,13 @@
 import os
 from _typeshed import SupportsRead
 from collections import OrderedDict
-from collections.abc import Sequence
 from typing import Any, Literal, TypedDict, overload
-from typing_extensions import TypeAlias
 
-import numpy as np
 import pandas as pd
-from numpy.typing import NDArray
 from pandas._typing import Axes
-from shapely import Geometry
 
+from geopandas.base import _BboxLike, _MaskLike
 from geopandas.geodataframe import GeoDataFrame
-from geopandas.geoseries import GeoSeries
-
-_BboxLike: TypeAlias = Sequence[float] | NDArray[np.floating[Any]] | Geometry | GeoDataFrame | GeoSeries
-_MaskLike: TypeAlias = dict[str, Any] | Geometry | GeoDataFrame | GeoSeries
 
 @overload
 def _read_file(

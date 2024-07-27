@@ -1,8 +1,8 @@
 from collections.abc import Callable, Iterable
 from typing import Protocol, type_check_only
 
+from geopandas.base import _ConvertibleToGeoSeries
 from geopandas.geodataframe import GeoDataFrame
-from geopandas.geoseries import GeoSeries, _ConvertibleToGeoSeries
 
 @type_check_only
 class _GeoCoder(Protocol):
@@ -14,5 +14,5 @@ class _GeoCoder(Protocol):
 # below if this ever becomes a thing
 def geocode(strings: Iterable[str], provider: str | Callable[..., _GeoCoder] | None = None, **kwargs) -> GeoDataFrame: ...
 def reverse_geocode(
-    points: GeoSeries | _ConvertibleToGeoSeries, provider: str | Callable[..., _GeoCoder] | None = None, **kwargs
+    points: _ConvertibleToGeoSeries, provider: str | Callable[..., _GeoCoder] | None = None, **kwargs
 ) -> GeoDataFrame: ...

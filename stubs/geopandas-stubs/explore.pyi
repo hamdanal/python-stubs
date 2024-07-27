@@ -30,7 +30,7 @@ def _explore(
     vmax: float | None = None,
     width: float | str = "100%",
     height: float | str = "100%",
-    categories=None,
+    categories: Sequence[Any] | NDArray[Any] | pd.Series[Any] | pd.Index[Any] | None = None,
     classification_kwds: MutableMapping[str, Any] | None = None,
     control_scale: bool = True,
     marker_type: str | folium.Marker | None = None,

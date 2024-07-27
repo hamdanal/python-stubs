@@ -1,38 +1,32 @@
 import os
 from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
-from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping, Sequence
+from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping
 from json import JSONEncoder
-from typing import Any, Literal, Protocol, overload, type_check_only
-from typing_extensions import Self, TypeAlias
+from typing import Any, Literal, overload
+from typing_extensions import Self
 
-import numpy as np
 import pandas as pd
-from numpy.typing import ArrayLike, NDArray
-from pandas._typing import AggFuncTypeFrame, AstypeArg, Axes, Axis, Dtype, GroupByObject, IndexLabel, ListLikeU, Scalar
+from numpy.typing import ArrayLike
+from pandas._typing import AggFuncTypeFrame, AstypeArg, Axes, Axis, Dtype, GroupByObject, IndexLabel, Scalar
 from pyproj import CRS
-from shapely import Geometry
 
-from geopandas.array import GeometryArray
-from geopandas.base import GeoPandasBase, _ConvertibleToCRS
+from geopandas._decorator import doc
+from geopandas.base import (
+    GeoPandasBase,
+    _BboxLike,
+    _ClipMask,
+    _ConvertibleToCRS,
+    _ConvertibleToDataFrame,
+    _GeomCol,
+    _GeomSeq,
+    _MaskLike,
+    _SupportsGeoInterface,
+)
 from geopandas.explore import _explore
 from geopandas.geoseries import GeoSeries
 from geopandas.io._geoarrow import ArrowTable, _GeomEncoding
-from geopandas.io.file import _BboxLike, _MaskLike
 from geopandas.io.sql import _SQLConnection
 from geopandas.plotting import GeoplotAccessor
-from geopandas.tools.clip import _Mask as _ClipMask
-
-# XXX: cannot use pd.Series[Geometry] because of pd.Series type variable bounds
-_GeomSeq: TypeAlias = Sequence[Geometry] | NDArray[np.object_] | pd.Series[Any] | GeometryArray | GeoSeries
-_GeomCol: TypeAlias = Hashable | _GeomSeq  # name of column or column values
-_ConvertibleToDataFrame: TypeAlias = (
-    ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
-)
-
-@type_check_only
-class _SupportsGeoInterface(Protocol):
-    @property
-    def __geo_interface__(self) -> dict[str, Any]: ...
 
 crs_mismatch_error: str
 
@@ -322,12 +316,13 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     ) -> None: ...
     @property
     def plot(self) -> GeoplotAccessor: ...
-    explore = _explore
+    @doc(_explore)
+    def explore(self, *args, **kwargs): ...  # signature of `_explore` copied in `@doc`
     def sjoin(
         self,
         df: GeoDataFrame,
         # *args, **kwargs passed to geopandas.sjoin
-        how: str = "inner",
+        how: Literal["left", "right", "inner"] = "inner",
         predicate: str = "intersects",
         lsuffix: str = "left",
         rsuffix: str = "right",
@@ -336,7 +331,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def sjoin_nearest(
         self,
         right: GeoDataFrame,
-        how: str = "inner",
+        how: Literal["left", "right", "inner"] = "inner",
         max_distance: float | None = None,
         lsuffix: str = "left",
         rsuffix: str = "right",

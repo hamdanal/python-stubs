@@ -1,5 +1,5 @@
 from _typeshed import Incomplete, SupportsGetItem
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Hashable, Iterable, Mapping, Sequence
 from typing import Any, Literal, Protocol, SupportsIndex, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
 
@@ -7,11 +7,14 @@ import numpy as np
 import pandas as pd
 from numpy.random import BitGenerator, Generator as RandomGenerator, SeedSequence
 from numpy.typing import ArrayLike, NDArray
+from pandas._typing import ListLikeU
+from pandas.core.base import IndexOpsMixin
 from pyproj import CRS
-from shapely import Geometry
+from shapely import Geometry, MultiPolygon, Point, Polygon
 from shapely.geometry.base import BaseGeometry
 
-from geopandas.array import _Origin
+from geopandas.array import GeometryArray
+from geopandas.geodataframe import GeoDataFrame
 from geopandas.geoseries import GeoSeries
 from geopandas.sindex import SpatialIndex
 
@@ -19,7 +22,27 @@ from geopandas.sindex import SpatialIndex
 class _SupportsToWkt(Protocol):
     def to_wkt(self) -> str: ...
 
+@type_check_only
+class _SupportsGeoInterface(Protocol):  # noqa: PYI046
+    @property
+    def __geo_interface__(self) -> dict[str, Any]: ...
+
 _ConvertibleToCRS: TypeAlias = str | int | tuple[str, str] | list[str] | dict[str, Any] | _SupportsToWkt
+_AffinityOrigin: TypeAlias = Literal["center", "centroid"] | Point | tuple[float, float] | tuple[float, float, float]
+_ClipMask: TypeAlias = GeoDataFrame | GeoSeries | Polygon | MultiPolygon | tuple[float, float, float, float]  # noqa: PYI047
+_BboxLike: TypeAlias = Sequence[float] | NDArray[np.floating[Any]] | Geometry | GeoDataFrame | GeoSeries  # noqa: PYI047
+_MaskLike: TypeAlias = dict[str, Any] | Geometry | GeoDataFrame | GeoSeries  # noqa: PYI047
+
+# XXX: cannot use IndexOpsMixin[Geometry] because of IndexOpsMixin type variable bounds
+_GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Incomplete]
+_ConvertibleToGeoSeries: TypeAlias = Geometry | Mapping[int, Geometry] | Mapping[str, Geometry] | _GeoListLike  # noqa: PYI047
+
+# XXX: cannot use pd.Series[Geometry] because of pd.Series type variable bounds
+_GeomSeq: TypeAlias = Sequence[Geometry] | NDArray[np.object_] | pd.Series[Any] | GeometryArray | GeoSeries
+_GeomCol: TypeAlias = Hashable | _GeomSeq  # name of column or column values  # noqa: PYI047
+_ConvertibleToDataFrame: TypeAlias = (  # noqa: PYI047
+    ListLikeU | pd.DataFrame | dict[Any, Any] | Iterable[ListLikeU | tuple[Hashable, ListLikeU] | dict[Any, Any]]
+)
 
 def is_geometry_type(data: object) -> bool: ...
 
@@ -161,9 +184,13 @@ class GeoPandasBase:
     def interpolate(self, distance: float | ArrayLike, normalized: bool = False) -> GeoSeries: ...
     def affine_transform(self, matrix: Incomplete) -> GeoSeries: ...
     def translate(self, xoff: float = 0.0, yoff: float = 0.0, zoff: float = 0.0) -> GeoSeries: ...
-    def rotate(self, angle: float, origin: _Origin = "center", use_radians: bool = False) -> GeoSeries: ...
-    def scale(self, xfact: float = 1.0, yfact: float = 1.0, zfact: float = 1.0, origin: _Origin = "center") -> GeoSeries: ...
-    def skew(self, xs: float = 0.0, ys: float = 0.0, origin: _Origin = "center", use_radians: bool = False) -> GeoSeries: ...
+    def rotate(self, angle: float, origin: _AffinityOrigin = "center", use_radians: bool = False) -> GeoSeries: ...
+    def scale(
+        self, xfact: float = 1.0, yfact: float = 1.0, zfact: float = 1.0, origin: _AffinityOrigin = "center"
+    ) -> GeoSeries: ...
+    def skew(
+        self, xs: float = 0.0, ys: float = 0.0, origin: _AffinityOrigin = "center", use_radians: bool = False
+    ) -> GeoSeries: ...
     @property
     def cx(self) -> SupportsGetItem[tuple[SupportsIndex | slice, SupportsIndex | slice], Self]: ...
     def get_coordinates(self, include_z: bool = False, ignore_index: bool = False, index_parts: bool = False) -> pd.DataFrame: ...
