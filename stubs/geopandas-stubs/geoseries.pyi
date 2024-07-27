@@ -1,6 +1,7 @@
+import io
 import json
 import os
-from _typeshed import Incomplete, SupportsRead, SupportsWrite, Unused
+from _typeshed import SupportsRead, Unused
 from collections.abc import Callable, Hashable
 from typing import Any, Literal, final, overload
 from typing_extensions import Self, deprecated
@@ -127,17 +128,20 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     # Keep method to_file roughly in line with GeoDataFrame.to_file
     def to_file(
         self,
-        filename: str | os.PathLike[str] | SupportsWrite[Any] | Incomplete,
+        filename: str | os.PathLike[str] | io.BytesIO,
         driver: str | None = None,
         index: bool | None = None,
         *,
+        # kwargs from `_to_file` function
         schema: dict[str, Any] | None = None,
         mode: Literal["w", "a"] = "w",
         crs: _ConvertibleToCRS | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
+        metadata: dict[str, str] | None = None,
+        # kwargs extracted from engines
         layer: int | str | None = None,
         encoding: str | None = None,
-        overwrite: bool | Incomplete = ...,  # TODO can it be None? (accepted by fiona, not sure about pyogrio)
+        overwrite: bool | None = ...,
         **kwargs: Any,  # engine and driver dependent
     ) -> None: ...
     # *** TODO: compare `__getitem__` with pandas-stubs ***

@@ -1,3 +1,4 @@
+import io
 import os
 from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
 from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping
@@ -227,18 +228,20 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     # Keep method to_file roughly in line with GeoSeries.to_file
     def to_file(
         self,
-        # TODO verify SupportsWrite[Any] is correct and remove Incomplete
-        filename: str | os.PathLike[str] | SupportsWrite[Any] | Incomplete,
+        filename: str | os.PathLike[str] | io.BytesIO,
         driver: str | None = None,
         schema: dict[str, Any] | None = None,
         index: bool | None = None,
         *,
+        # kwargs from `_to_file` function
         mode: Literal["w", "a"] = "w",
         crs: _ConvertibleToCRS | None = None,
         engine: Literal["fiona", "pyogrio"] | None = None,
+        metadata: dict[str, str] | None = None,
+        # kwargs extracted from engines
         layer: int | str | None = None,
         encoding: str | None = None,
-        overwrite: bool | Incomplete = ...,  # TODO can it be None? (accepted by fiona, not sure about pyogrio)
+        overwrite: bool | None = ...,
         **kwargs: Any,  # engine and driver dependent
     ) -> None: ...
     @overload
