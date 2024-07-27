@@ -1,29 +1,22 @@
 import json
 import os
 from _typeshed import Incomplete, SupportsRead, SupportsWrite, Unused
-from collections.abc import Callable, Hashable, Mapping, Sequence
+from collections.abc import Callable, Hashable
 from typing import Any, Literal, final, overload
-from typing_extensions import Self, TypeAlias, deprecated
+from typing_extensions import Self, deprecated
 
 import pandas as pd
 from numpy.typing import ArrayLike
 from pandas._typing import Axes, AxisIndex, Dtype
-from pandas.core.base import IndexOpsMixin
 from pyproj import CRS
-from shapely import Geometry
 from shapely.geometry.base import BaseGeometry
 
+from geopandas._decorator import doc
 from geopandas.array import GeometryArray
-from geopandas.base import GeoPandasBase, _ConvertibleToCRS
+from geopandas.base import GeoPandasBase, _BboxLike, _ClipMask, _ConvertibleToCRS, _ConvertibleToGeoSeries, _MaskLike
 from geopandas.explore import _explore_geoseries
 from geopandas.io._geoarrow import GeoArrowArray
-from geopandas.io.file import _BboxLike, _MaskLike
 from geopandas.plotting import plot_series
-from geopandas.tools.clip import _Mask as _ClipMask
-
-# XXX: cannot use IndexOpsMixin[Geometry] because of IndexOpsMixin type variable bounds
-_GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Incomplete]
-_ConvertibleToGeoSeries: TypeAlias = Geometry | Mapping[int, Geometry] | Mapping[str, Geometry] | _GeoListLike
 
 class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-var,misc]  # pyright: ignore[reportInvalidTypeArguments]
     # Override the weird annotation of Series.__new__ in pandas-stubs
@@ -163,8 +156,10 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     # *** TODO: `fillna` annotation in pandas-stubs is NOT compatible; must `-> Self` ***
     # def fillna(self, value=None, method: FillnaOptions | None = None, inplace: bool = False, **kwargs): ...
     def __contains__(self, other: object) -> bool: ...
-    plot = plot_series  # type: ignore[assignment] # pyright: ignore
-    explore = _explore_geoseries
+    @doc(plot_series)
+    def plot(self, *args, **kwargs): ...  # signature of `plot_series` copied in `@doc`
+    @doc(_explore_geoseries)
+    def explore(self, *args, **kwargs): ...  # signature of `_explore_geoseries` copied in `@doc`
     def explode(self, ignore_index: bool = False, index_parts: bool = False) -> GeoSeries: ...
     @overload
     def set_crs(

@@ -12,11 +12,10 @@ geopandas\.datasets\.*
 
 # Inconsistent OK
 geopandas\.(geodataframe\.)?GeoDataFrame\.plot
-geopandas\.(geodataframe\.)?GeoDataFrame\.explore
-geopandas\.(geoseries\.)?GeoSeries\.explore
 
-# Failed to import
+# Failed to import OK
 geopandas\.io\._geoarrow
+geopandas\._exports
 
 # TODO Inconsistent
 geopandas\.(geoseries\.)?GeoSeries\.apply
