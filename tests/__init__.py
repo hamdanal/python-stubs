@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from types import UnionType
+from types import GenericAlias, UnionType
 from typing import Any, TypeAlias, TypeVar, cast
 
 import numpy as np
+from shapely.geometry.base import BaseMultipartGeometry, GeometrySequence
 
 T = TypeVar("T")
 _ClassInfo: TypeAlias = type | UnionType | tuple["_ClassInfo", ...]  # see isinstance
+
+# Make stubs generic classes generic at runtime
+setattr(BaseMultipartGeometry, "__class_getitem__", classmethod(GenericAlias))
+setattr(GeometrySequence, "__class_getitem__", classmethod(GenericAlias))
 
 
 def check(obj: T, cls: _ClassInfo, dtype: _ClassInfo | None = None) -> T:

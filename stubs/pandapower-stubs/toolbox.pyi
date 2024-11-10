@@ -252,11 +252,11 @@ def get_element_index(net: pandapowerNet, element: str, name: str, exact_match: 
 @overload
 def get_element_index(net: pandapowerNet, element: str, name: str, exact_match: bool = True) -> int | pd.Index[int]: ...
 @overload
-def get_element_indices(  # type: ignore[overload-overlap]
+def get_element_indices(
     net: pandapowerNet, element: str | Iterable[str], name: str | Iterable[str], exact_match: Literal[True] = True
 ) -> list[int]: ...
 @overload
-def get_element_indices(  # type: ignore[overload-overlap]
+def get_element_indices(
     net: pandapowerNet, element: str | Iterable[str], name: str | Iterable[str], exact_match: Literal[False]
 ) -> list[pd.Index[int]]: ...
 @overload
