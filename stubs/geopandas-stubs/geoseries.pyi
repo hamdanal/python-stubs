@@ -4,7 +4,7 @@ import os
 from _typeshed import SupportsRead, Unused
 from collections.abc import Callable, Hashable
 from typing import Any, Literal, final, overload
-from typing_extensions import Self, deprecated
+from typing_extensions import Self
 
 import pandas as pd
 from numpy.typing import ArrayLike
@@ -47,8 +47,6 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     def copy(self, deep: bool = True) -> Self: ...  # to override pandas definition
     @property
     def values(self) -> GeometryArray: ...
-    @deprecated("Method `Series.append()` has been removed in pandas version '2.0'.")
-    def append(self, *args: Any, **kwargs: Any) -> GeoSeries: ...
     @property
     def geometry(self) -> Self: ...
     @property
@@ -149,8 +147,6 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
     # *** `sort_index` is annotated with `-> Self` in pandas-stubs; no need to override it ***
     # def sort_index(self, *args, **kwargs): ...
     def take(self, indices: ArrayLike, axis: AxisIndex = 0, **kwargs: Unused) -> GeoSeries: ...
-    @deprecated("Method `Series.select()` has been removed in pandas version '0.25'.")
-    def select(self, *args: Any, **kwargs: Any) -> Any: ...
     # *** `apply` annotation in pandas-stubs is compatible except for deprecated `convert_dtype` argument ***
     # def apply(self, func, convert_dtype: bool | None = None, args=(), **kwargs): ...
     def isna(self) -> pd.Series[bool]: ...
