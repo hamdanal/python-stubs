@@ -17,6 +17,8 @@ PO: Polygon = P.buffer(1)
 MP = MultiPoint([(0, 0), (1, 1), (0, 2), (2, 2), (3, 1), (1, 0)])
 MLS = MultiLineString([LS, PO.exterior])
 
+LineMergeType = LineString | MultiLineString | GeometryCollection
+
 
 def test_line_interpolate_point() -> None:
     check(assert_type(shapely.line_interpolate_point(LS, 1.0), Point), Point)
@@ -86,13 +88,12 @@ def test_line_locate_point() -> None:
 
 
 def test_line_merge() -> None:
-    expected_type = LineString | MultiLineString | GeometryCollection
-    check(assert_type(shapely.line_merge(P), expected_type), GeometryCollection)
-    check(assert_type(shapely.line_merge(LineString()), expected_type), GeometryCollection)
-    check(assert_type(shapely.line_merge(MultiLineString()), expected_type), GeometryCollection)
-    check(assert_type(shapely.line_merge(LS), expected_type), LineString)
-    check(assert_type(shapely.line_merge(MLS), expected_type), MultiLineString)
-    check(assert_type(shapely.line_merge(GeometryCollection(MLS)), expected_type), MultiLineString)
+    check(assert_type(shapely.line_merge(P), LineMergeType), GeometryCollection)
+    check(assert_type(shapely.line_merge(LineString()), LineMergeType), GeometryCollection)
+    check(assert_type(shapely.line_merge(MultiLineString()), LineMergeType), GeometryCollection)
+    check(assert_type(shapely.line_merge(LS), LineMergeType), LineString)
+    check(assert_type(shapely.line_merge(MLS), LineMergeType), MultiLineString)
+    check(assert_type(shapely.line_merge(GeometryCollection(MLS)), LineMergeType), MultiLineString)
     check(assert_type(shapely.line_merge(None), None), NoneType)
     check(
         assert_type(shapely.line_merge([LS, None]), NDArray[np.object_]),
@@ -104,12 +105,12 @@ def test_line_merge() -> None:
         np.ndarray,
         dtype=MultiLineString,
     )
-    check(assert_type(shapely.line_merge(LS, directed=True), expected_type), LineString)
+    check(assert_type(shapely.line_merge(LS, directed=True), LineMergeType), LineString)
 
 
 def test_shared_paths() -> None:
     check(
-        assert_type(shapely.shared_paths(MLS, LS), "GeometryCollection[MultiLineString]"),
+        assert_type(shapely.shared_paths(MLS, LS), GeometryCollection[MultiLineString]),
         GeometryCollection,
     )
     check(assert_type(shapely.shared_paths(MLS, None), None), NoneType)

@@ -41,7 +41,7 @@ GC: GeometryCollection = GeometryCollection([P, LS, PO])
 
 def test_base_geometry_constructor() -> None:
     with pytest.warns(FutureWarning):
-        check(assert_type(BaseGeometry(), GeometryCollection), GeometryCollection)
+        check(assert_type(BaseGeometry(), GeometryCollection), GeometryCollection)  # pyright: ignore[reportDeprecated]
 
 
 def test_geometry_operators() -> None:
@@ -237,20 +237,18 @@ def test_multipart_geometry() -> None:
     with pytest.raises(NotImplementedError):
         assert_never(MLS.coords)
 
-    check(assert_type(MP.geoms, "GeometrySequence[MultiPoint]"), GeometrySequence, Point)
-    check(assert_type(MLS.geoms, "GeometrySequence[MultiLineString]"), GeometrySequence, LineString)
-    check(assert_type(MPO.geoms, "GeometrySequence[MultiPolygon]"), GeometrySequence, Polygon)
+    check(assert_type(MP.geoms, GeometrySequence[MultiPoint]), GeometrySequence, Point)
+    check(assert_type(MLS.geoms, GeometrySequence[MultiLineString]), GeometrySequence, LineString)
+    check(assert_type(MPO.geoms, GeometrySequence[MultiPolygon]), GeometrySequence, Polygon)
     check(
-        assert_type(GC.geoms, "GeometrySequence[GeometryCollection]"),
-        GeometrySequence,
-        BaseGeometry,
+        assert_type(GC.geoms, GeometrySequence[GeometryCollection]), GeometrySequence, BaseGeometry
     )
     check(assert_type(iter(MP.geoms), Iterator[Point]), Iterator, dtype=Point)
     check(assert_type(iter(MLS.geoms), Iterator[LineString]), Iterator, dtype=LineString)
     check(assert_type(iter(MPO.geoms), Iterator[Polygon]), Iterator, dtype=Polygon)
     check(assert_type(iter(GC.geoms), Iterator[BaseGeometry]), Iterator, dtype=BaseGeometry)
     polygons_collection = GeometryCollection(MPO)
-    check(assert_type(polygons_collection, "GeometryCollection[Polygon]"), GeometryCollection)
+    check(assert_type(polygons_collection, GeometryCollection[Polygon]), GeometryCollection)
     check(assert_type(iter(polygons_collection.geoms), Iterator[Polygon]), Iterator, dtype=Polygon)
     check(assert_type(MP.geoms[0], Point), Point)
     check(assert_type(MLS.geoms[0], LineString), LineString)

@@ -36,6 +36,13 @@ GC: GeometryCollection = GeometryCollection([P, LS, PO])
 
 GEOMS: list[Geometry] = [P, MP, LS, MLS, LR, PO, MPO, GC]
 
+PolygonizeFullCollections = tuple[
+    GeometryCollection, GeometryCollection, GeometryCollection, GeometryCollection
+]
+PolygonizeFullArrays = tuple[
+    NDArray[np.object_], NDArray[np.object_], NDArray[np.object_], NDArray[np.object_]
+]
+
 
 def test_boundary() -> None:
     check(assert_type(shapely.boundary(P), GeometryCollection), GeometryCollection)
@@ -310,30 +317,34 @@ def test_polygonize() -> None:
 
 
 def test_polygonize_full() -> None:
-    FourCollections = tuple[
-        GeometryCollection, GeometryCollection, GeometryCollection, GeometryCollection
-    ]
-    FourArrays = tuple[
-        NDArray[np.object_], NDArray[np.object_], NDArray[np.object_], NDArray[np.object_]
-    ]
     check(
-        assert_type(shapely.polygonize_full([P, LS]), FourCollections),
+        assert_type(shapely.polygonize_full([P, LS]), PolygonizeFullCollections),
         tuple,
         dtype=GeometryCollection,
     )
     check(
-        assert_type(shapely.polygonize_full((LS, None)), FourCollections),
-        tuple,
-        dtype=GeometryCollection,
-    )
-    check(assert_type(shapely.polygonize_full([(LS, None)]), FourArrays), tuple, dtype=np.ndarray)
-    check(
-        assert_type(shapely.polygonize_full(np.array([P, LS])), FourCollections | FourArrays),
+        assert_type(shapely.polygonize_full((LS, None)), PolygonizeFullCollections),
         tuple,
         dtype=GeometryCollection,
     )
     check(
-        assert_type(shapely.polygonize_full(np.array([[P, LS]])), FourCollections | FourArrays),
+        assert_type(shapely.polygonize_full([(LS, None)]), PolygonizeFullArrays),
+        tuple,
+        dtype=np.ndarray,
+    )
+    check(
+        assert_type(
+            shapely.polygonize_full(np.array([P, LS])),
+            PolygonizeFullCollections | PolygonizeFullArrays,
+        ),
+        tuple,
+        dtype=GeometryCollection,
+    )
+    check(
+        assert_type(
+            shapely.polygonize_full(np.array([[P, LS]])),
+            PolygonizeFullCollections | PolygonizeFullArrays,
+        ),
         tuple,
         dtype=np.ndarray,
     )
@@ -449,7 +460,7 @@ def test_voronoi_polygons() -> None:
     check(assert_type(shapely.voronoi_polygons(None), None), NoneType)
     for geom in (LS, MLS, LR, PO, MPO, GC):
         check(
-            assert_type(shapely.voronoi_polygons(geom), "GeometryCollection[Polygon]"),
+            assert_type(shapely.voronoi_polygons(geom), GeometryCollection[Polygon]),
             GeometryCollection,
         )
         check(
@@ -467,7 +478,7 @@ def test_voronoi_polygons() -> None:
         check(
             assert_type(
                 shapely.voronoi_polygons(geom, only_edges=bool(0.5)),
-                "GeometryCollection[Polygon] | LineString | MultiLineString",
+                GeometryCollection[Polygon] | LineString | MultiLineString,
             ),
             LineString | MultiLineString,
         )
