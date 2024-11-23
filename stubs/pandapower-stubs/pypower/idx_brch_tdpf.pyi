@@ -1,19 +1,17 @@
-from _typeshed import Incomplete
-
-TDPF: Incomplete
-BR_R_REF_OHM_PER_KM: Incomplete
-BR_LENGTH_KM: Incomplete
-RATE_I_KA: Incomplete
-T_START_C: Incomplete
-T_REF_C: Incomplete
-T_AMBIENT_C: Incomplete
-ALPHA: Incomplete
-WIND_SPEED_MPS: Incomplete
-WIND_ANGLE_DEGREE: Incomplete
-SOLAR_RADIATION_W_PER_SQ_M: Incomplete
-GAMMA: Incomplete
-EPSILON: Incomplete
-R_THETA: Incomplete
-OUTER_DIAMETER_M: Incomplete
-MC_JOULE_PER_M_K: Incomplete
+TDPF: int
+BR_R_REF_OHM_PER_KM: int
+BR_LENGTH_KM: int
+RATE_I_KA: int
+T_START_C: int
+T_REF_C: int
+T_AMBIENT_C: int
+ALPHA: int
+WIND_SPEED_MPS: int
+WIND_ANGLE_DEGREE: int
+SOLAR_RADIATION_W_PER_SQ_M: int
+GAMMA: int
+EPSILON: int
+R_THETA: int
+OUTER_DIAMETER_M: int
+MC_JOULE_PER_M_K: int
 branch_cols_tdpf: int

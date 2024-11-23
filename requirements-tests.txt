@@ -1,10 +1,10 @@
 # Tools
 # -----
-ruff==0.7.3  # must match .pre-commit-config.yaml
+ruff==0.8.0  # must match .pre-commit-config.yaml
 pytest>=8.0
 rich-argparse>=1.5.2
 mypy==1.13.0
-pyright==1.1.388
+pyright==1.1.389
 
 # Runtime dependencies
 # --------------------
@@ -13,7 +13,7 @@ geopandas>=1.0.0
 # Transient dependencies
 # ----------------------
 # geopandas
-types-shapely>=2.0.0.20240820
+types-shapely>=2.0.0.20241112
 pandas-stubs>=2.2.3.241009
 matplotlib>=3.8.0
 folium>=0.16.0

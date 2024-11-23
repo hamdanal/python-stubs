@@ -27,7 +27,7 @@ The following commands are available:
 
 Command | Default invocation |
 ------- | ------------------ |
-{_newl.join(f"{tool} | {l2c((*tool.split('-'), *default))}" for tool, default in default_args.items())}
+{_newl.join(f"`{tool}` | `{l2c((*tool.split('-'), *default))}`" for tool, default in default_args.items())}
 
 You can override the default invocation by passing extra args after the command:
 

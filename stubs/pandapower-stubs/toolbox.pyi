@@ -87,7 +87,7 @@ def nets_equal(
     check_without_results: bool = False,
     exclude_elms: Iterable[str] | None = None,
     name_selection: Iterable[str] | None = None,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> bool: ...
 def clear_result_tables(net: pandapowerNet) -> None: ...
 def add_column_from_node_to_elements(
@@ -165,12 +165,7 @@ def select_subnet(
     keep_everything_else: bool = False,
 ) -> pandapowerNet: ...
 def merge_nets(
-    net1: pandapowerNet,
-    net2: pandapowerNet,
-    validate: bool = True,
-    merge_results: bool = True,
-    tol: float = 1e-9,
-    **kwargs: Incomplete,
+    net1: pandapowerNet, net2: pandapowerNet, validate: bool = True, merge_results: bool = True, tol: float = 1e-9, **kwargs
 ) -> pandapowerNet: ...
 def repl_to_line(
     net: pandapowerNet, idx: int, std_type: str, name: str | None = None, in_service: bool = False, **kwargs: Incomplete

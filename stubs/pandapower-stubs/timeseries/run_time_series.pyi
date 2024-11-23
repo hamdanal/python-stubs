@@ -21,7 +21,7 @@ def run_time_step(
     ts_variables: dict[str, Incomplete],
     run_control_fct: Callable[..., object] = ...,
     output_writer_fct: Callable[[pandapowerNet, Incomplete, bool, bool, dict[str, Incomplete]], object] = ...,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 @overload
 def get_recycle_settings(net: pandapowerNet, recycle: Literal[False], **kwargs: Unused) -> Literal[False]: ...
@@ -38,7 +38,7 @@ def init_time_series(
     time_steps: Iterable[Incomplete] | tuple[int, int] | None,
     continue_on_divergence: bool = False,
     verbose: bool = True,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> dict[str, Any]: ...
 def cleanup(net: pandapowerNet, ts_variables: dict[str, Incomplete]) -> None: ...
 def print_progress(i: int, time_step: Incomplete, time_steps: Incomplete, verbose: bool, **kwargs: Incomplete) -> None: ...
@@ -47,12 +47,8 @@ def run_loop(
     ts_variables: dict[str, Incomplete],
     run_control_fct: Callable[..., object] = ...,
     output_writer_fct: Callable[[pandapowerNet, Incomplete, bool, bool, dict[str, Incomplete]], object] = ...,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 def run_timeseries(
-    net: pandapowerNet,
-    time_steps: Incomplete | None = None,
-    continue_on_divergence: bool = False,
-    verbose: bool = True,
-    **kwargs: Incomplete,
+    net: pandapowerNet, time_steps: Incomplete | None = None, continue_on_divergence: bool = False, verbose: bool = True, **kwargs
 ) -> None: ...

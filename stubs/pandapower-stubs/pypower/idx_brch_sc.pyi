@@ -1,15 +1,13 @@
-from _typeshed import Incomplete
-
-IKSS_F: Incomplete
-IKSS_T: Incomplete
-ITH_F: Incomplete
-ITH_T: Incomplete
-IP_F: Incomplete
-IP_T: Incomplete
-IK_F: Incomplete
-IK_T: Incomplete
-IB_F: Incomplete
-IB_T: Incomplete
-K_T: Incomplete
-K_ST: Incomplete
+IKSS_F: int
+IKSS_T: int
+ITH_F: int
+ITH_T: int
+IP_F: int
+IP_T: int
+IK_F: int
+IK_T: int
+IB_F: int
+IB_T: int
+K_T: int
+K_ST: int
 branch_cols_sc: int

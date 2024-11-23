@@ -6,7 +6,7 @@ import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
 
-_Element: TypeAlias = Literal["line", "trafo", "trafo3w"]
+_Element: TypeAlias = Literal["line", "trafo", "trafo3w", "fuse"]
 _StdType: TypeAlias = dict[str, Any]
 
 class _StdLineType(TypedDict, total=False):
@@ -60,14 +60,26 @@ class _StdTrafo3wType(TypedDict, total=False):
     tap_max: int
     tap_step_percent: float
 
+class _StdFuseType(TypedDict, total=False):
+    fuse_type: str
+    i_rated_a: float
+    t_avg: float | list[float]
+    t_min: float | list[float]
+    t_total: float | list[float]
+    x_avg: float | list[float]
+    x_min: float | list[float]
+    x_total: float | list[float]
+
 _StdLineTypes: TypeAlias = dict[str, _StdLineType]
 _StdTrafoTypes: TypeAlias = dict[str, _StdTrafoType]
 _StdTrafo3wTypes: TypeAlias = dict[str, _StdTrafo3wType]
+_StdFuseTypes: TypeAlias = dict[str, _StdFuseType]
 
 class _StdTypes(TypedDict):
     line: _StdLineTypes
     trafo: _StdTrafoTypes
     trafo3w: _StdTrafo3wTypes
+    fuse: _StdFuseTypes
 
 def create_std_type(
     net: pandapowerNet, data: _StdType, name: str, element: _Element = "line", overwrite: bool = True, check_required: bool = True
@@ -87,6 +99,8 @@ def load_std_type(net: pandapowerNet, name: str, element: Literal["trafo"]) -> _
 @overload
 def load_std_type(net: pandapowerNet, name: str, element: Literal["trafo3w"]) -> _StdTrafo3wType: ...
 @overload
+def load_std_type(net: pandapowerNet, name: str, element: Literal["fuse"]) -> _StdFuseType: ...
+@overload
 def load_std_type(net: pandapowerNet, name: str, element: Literal["line"] = "line") -> _StdLineType: ...
 def std_type_exists(net: pandapowerNet, name: str, element: _Element = "line") -> bool: ...
 def delete_std_type(net: pandapowerNet, name: str, element: _Element = "line") -> None: ...
@@ -101,5 +115,6 @@ def add_temperature_coefficient(net: pandapowerNet, fill: Any | None = None) -> 
 def basic_line_std_types() -> _StdLineTypes: ...
 def basic_trafo_std_types() -> _StdTrafoTypes: ...
 def basic_trafo3w_std_types() -> _StdTrafo3wTypes: ...
+def basic_fuse_std_types() -> _StdFuseTypes: ...
 def basic_std_types() -> _StdTypes: ...
-def add_basic_std_types(net: pandapowerNet) -> tuple[_StdLineTypes, _StdTrafoTypes, _StdTrafo3wTypes]: ...
+def add_basic_std_types(net: pandapowerNet) -> tuple[_StdLineTypes, _StdTrafoTypes, _StdTrafo3wTypes, _StdFuseTypes]: ...

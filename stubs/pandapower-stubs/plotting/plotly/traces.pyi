@@ -104,5 +104,5 @@ def draw_traces(
     aspectratio: tuple[float, float] | Literal["auto"] = "auto",
     filename: str = "temp-plot.html",
     auto_open: bool = True,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> Figure: ...

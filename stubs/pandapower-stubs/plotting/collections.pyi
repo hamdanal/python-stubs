@@ -38,7 +38,7 @@ def create_annotation_collection(
     coords: Iterable[tuple[float, float]],
     size: float | Iterable[float],
     prop: FontProperties | None = None,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> PatchCollection: ...
 def add_cmap_to_collection(
     collection: _CollectionT,

@@ -1,3 +1,3 @@
-from _typeshed import Incomplete
+from typing import Final
 
-PY2: Incomplete
+PY2: Final = False
