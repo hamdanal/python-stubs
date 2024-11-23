@@ -1,4 +1,3 @@
-from _typeshed import Incomplete
 from collections.abc import Mapping, Sequence
 
 import pandas as pd
@@ -22,7 +21,7 @@ def plot_voltage_profile(
     line_loading_weight: bool = False,
     bus_size: float = 3,
     lines: Sequence[int] | pd.Index[int] | None = None,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> Axes: ...
 def plot_loading(
     net: pandapowerNet,
@@ -32,6 +31,6 @@ def plot_loading(
     median_color: ColorType = "r",
     whisker_color: ColorType = "k",
     index_subset: Sequence[int] | pd.Index[int] | None = None,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> Axes: ...
 def voltage_profile_to_bus_geodata(net: pandapowerNet, voltages: pd.Series[float] | None = None) -> pd.DataFrame: ...

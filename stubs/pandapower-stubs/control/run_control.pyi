@@ -25,7 +25,7 @@ def control_implementation(
     ctrl_variables: dict[str, Incomplete],
     max_iter: int,
     evaluate_net_fct: Callable[..., dict[str, Incomplete]] = ...,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 def control_finalization(controller_order: Incomplete) -> None: ...
 def run_control(

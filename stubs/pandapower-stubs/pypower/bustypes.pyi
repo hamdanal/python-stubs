@@ -1,3 +1,4 @@
-from pandapower.pypower.idx_gen import GEN_BUS as GEN_BUS, GEN_STATUS as GEN_STATUS
+import numpy as np
+from numpy.typing import NDArray
 
-def bustypes(bus, gen): ...
+def bustypes(bus, gen) -> tuple[NDArray[np.intp], NDArray[np.intp], NDArray[np.intp]]: ...

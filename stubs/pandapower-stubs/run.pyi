@@ -1,4 +1,3 @@
-from _typeshed import Incomplete
 from collections.abc import Iterable
 from typing import Literal
 
@@ -6,7 +5,7 @@ import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
 
-def set_user_pf_options(net: pandapowerNet, overwrite: bool = False, **kwargs: Incomplete) -> None: ...
+def set_user_pf_options(net: pandapowerNet, overwrite: bool = False, **kwargs) -> None: ...
 def runpp(
     net: pandapowerNet,
     algorithm: Literal["nr", "iwamoto_nr", "bfsw", "gs", "fdbx", "fdxb"] = "nr",
@@ -36,7 +35,7 @@ def runpp(
     recycle: dict[Literal["bus_pq", "trafo", "gen"], bool] | None = None,
     neglect_open_switch_branches: bool = False,
     tdpf_update_r_theta: bool = True,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 def rundcpp(
     net: pandapowerNet,
@@ -46,7 +45,7 @@ def rundcpp(
     check_connectivity: bool = True,
     switch_rx_ratio: float = 2,
     trafo3w_losses: Literal["hv", "mv", "lv", "star"] = "hv",
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 def runopp(
     net: pandapowerNet,
@@ -60,7 +59,7 @@ def runopp(
     numba: bool = True,
     trafo3w_losses: Literal["hv", "mv", "lv", "star"] = "hv",
     consider_line_temperature: bool = False,
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
 def rundcopp(
     net: pandapowerNet,
@@ -70,5 +69,5 @@ def rundcopp(
     switch_rx_ratio: float = 0.5,
     delta: float = 1e-10,
     trafo3w_losses: Literal["hv", "mv", "lv", "star"] = "hv",
-    **kwargs: Incomplete,
+    **kwargs,
 ) -> None: ...
