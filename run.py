@@ -8,7 +8,7 @@ import sys
 from subprocess import list2cmdline as l2c
 
 from rich.markdown import Markdown
-from rich_argparse import RawDescriptionRichHelpFormatter
+from rich_argparse import RawTextRichHelpFormatter
 
 default_args = {
     "ruff-check": ["tests", "stubs"],
@@ -27,20 +27,17 @@ The following commands are available:
 
 Command | Default invocation |
 ------- | ------------------ |
-{_newl.join(f"`{tool}` | `{l2c((*tool.split('-'), *default))}`" for tool, default in default_args.items())}
+{_newl.join(f"{tool} | {l2c((*tool.split('-'), *default))}" for tool, default in default_args.items())}
 
-You can override the default invocation by passing extra args after the command:
-
-E.g: `python run.py mypy tests` invokes `mypy tests` instead.
-
-Run `python -m pip install -r requirements-tests.txt` to install dependencies.
+You can override the default invocation by passing extra args after the command.
 """
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=Markdown(description),  # pyright: ignore[reportArgumentType]
-        formatter_class=RawDescriptionRichHelpFormatter,
+        epilog="Run [argparse.args]python -m pip install -r requirements.txt[/] to install project dependencies.",
+        formatter_class=RawTextRichHelpFormatter,
         add_help=False,
     )
     parser.add_argument(
@@ -48,24 +45,21 @@ def main() -> int:
         nargs="?",
         metavar="command",
         choices=default_args,
-        help="A command from (%(choices)s) to run, optionally with args. See the table above for more information.",
+        help="A command from (%(choices)s)\nto run, optionally with args.\n\nSee the table above for more information.\n\n",
     )
     parser.add_argument(
         "-h",
         "--help",
         action="store_true",
-        help="Show this help message and exit. Use `--help CMD` to print the help of a command `CMD`.",
+        help="Show this help message and exit.\nUse --help [i]CMD[/] to print the help of command [i]CMD[/].\n\n",
     )
-    parser.add_argument("--all", action="store_true", help="Run all the commands in the table above.")
+    parser.add_argument("--all", action="store_true", help="Run all commands in the table above.")
 
     args, rest = parser.parse_known_args()
-
     tool: str | None = args.tool
 
     if args.help:
-        help_text = parser.format_help()
-        help_text = help_text[0].upper() + help_text[1:]
-        print(help_text, end="", file=sys.stderr)
+        parser.print_help(file=sys.stderr)
         if tool:
             print("\n" + "━" * 80 + "\n", file=sys.stderr)
             return subprocess.call([*tool.split("-"), "--help"])
@@ -76,7 +70,14 @@ def main() -> int:
     elif tool:
         tools = [tool]
     else:
-        parser.error(f"missing command from ({', '.join(default_args)}) or `--all`")
+        parser.print_usage(file=sys.stderr)
+        formatter = parser.formatter_class(prog=parser.prog)
+        formatter.add_text(
+            f"\n[argparse.prog]{parser.prog}[/]: [red]error:[/] missing command from "
+            f"({', '.join(f'[argparse.args]{a}[/]' for a in default_args)}) "
+            f"or [argparse.args]--all[/]"
+        )
+        parser.exit(2, formatter.format_help())
 
     ret = 0
     for tool in tools:

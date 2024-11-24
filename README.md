@@ -27,7 +27,7 @@ To set up a development environment:
 2. Activate the virtual environment:
    - Unix: `. .venv/bin/activate`
    - Windows: `.venv\Scripts\activate`
-3. Install the dependencies: `python -m pip install -r requirements-tests.txt`
+3. Install the dependencies: `python -m pip install -r requirements.txt`
 
 Run `python run.py --help` for more.
 
