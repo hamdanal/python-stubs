@@ -1,7 +1,6 @@
 from _typeshed import Incomplete
 
 from pandapower.control.basic_controller import Controller
-from pandapower.toolbox import write_to_net as write_to_net
 
 class TrafoController(Controller):
     trafotype: Incomplete
