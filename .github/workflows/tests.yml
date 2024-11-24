@@ -18,8 +18,8 @@ permissions:
   contents: read
 
 env:
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
   FORCE_COLOR: 1
-  UV_SYSTEM_PYTHON: 1
 
 jobs:
   ruff:
@@ -29,34 +29,34 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
       - name: Lint with ruff
-        run: uv run python run.py ruff-check
+        run: python run.py ruff-check
       - name: Format with ruff
-        run: uv run python run.py ruff-format
+        run: python run.py ruff-format
   pytest:
     name: Run the test suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
-      - run: uv run python run.py pytest
+      - run: python run.py pytest
   mypy:
     name: Run mypy on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
-      - run: uv run python run.py mypy
+      - run: python run.py mypy
   stubtest:
     name: Run stubtest on the the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
-      - run: uv run python run.py stubtest
+      - run: python run.py stubtest
   pyright:
     name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/setup
-      - run: uv run python run.py pyright
+      - run: python run.py pyright
