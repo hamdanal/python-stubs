@@ -1,3 +1,1 @@
-from pandapower.auxiliary import ppException
-
-class OPFNotConverged(ppException): ...
+from pandapower.auxiliary import OPFNotConverged as OPFNotConverged

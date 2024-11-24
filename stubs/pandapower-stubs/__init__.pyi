@@ -1,5 +1,16 @@
-from _typeshed import Incomplete
+from typing import Final
 
+import pandapower.control  # pyright: ignore[reportUnusedImport]
+import pandapower.converter
+import pandapower.estimation
+import pandapower.grid_equivalents
+import pandapower.networks
+import pandapower.plotting
+import pandapower.shortcircuit
+import pandapower.timeseries
+import pandapower.toolbox
+import pandapower.topology  # noqa: F401
+from pandapower._version import __format_version__ as __format_version__, __version__ as __version__
 from pandapower.auxiliary import *
 from pandapower.convert_format import *
 from pandapower.create import *
@@ -22,5 +33,4 @@ from pandapower.sql_io import (
 from pandapower.std_types import *
 from pandapower.toolbox import *
 
-__format_version__: str
-pp_dir: Incomplete
+pp_dir: Final[str]

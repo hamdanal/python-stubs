@@ -6,9 +6,6 @@ import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
 
-PSYCOPG2_INSTALLED: bool
-SQLITE_INSTALLED: bool
-
 def match_sql_type(dtype: str) -> str: ...
 def check_if_sql_table_exists(cursor: DBAPICursor, table_name: str) -> bool: ...
 def get_sql_table_columns(cursor: DBAPICursor, table_name: str) -> list[str]: ...

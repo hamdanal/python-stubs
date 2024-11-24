@@ -14,8 +14,6 @@ from pandapower.auxiliary import pandapowerNet
 _PMode: TypeAlias = Literal["load", "gen"]
 _QMode: TypeAlias = Literal["underexcited", "overexcited"]
 
-GRAPHS_EQUAL_POSSIBLE: bool
-
 def element_bus_tuples(
     bus_elements: bool = True, branch_elements: bool = True, res_elements: bool = False
 ) -> set[tuple[str, str]]: ...
@@ -288,20 +286,5 @@ def get_connected_elements_dict(
 def get_gc_objects_dict() -> dict[type[Any], int]: ...
 def false_elm_links(net: pandapowerNet, elm: str, col: str, target_elm: str | Iterable[str]) -> pd.Index[int]: ...
 def false_elm_links_loop(net: pandapowerNet, elms: Iterable[str] | None = None) -> dict[str, pd.Index[int]]: ...
-def read_from_net(
-    net: pandapowerNet,
-    element: str,
-    index: int | Iterable[int],
-    variable: str,
-    flag: Literal["auto", "single_index", "all_index", "loc", "object"] = "auto",
-) -> Any: ...
-def write_to_net(
-    net: pandapowerNet,
-    element: str,
-    index: int | Iterable[int],
-    variable: str,
-    values: Any,
-    flag: Literal["auto", "single_index", "all_index", "loc", "object"] = "auto",
-) -> None: ...
 def group_row(net: pandapowerNet, index: int, element_type: str) -> pd.Series[Incomplete]: ...
 def group_element_index(net: pandapowerNet, index: int, element_type: str) -> pd.Index[int]: ...
