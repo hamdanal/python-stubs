@@ -19,6 +19,7 @@ permissions:
 
 env:
   FORCE_COLOR: 1
+  UV_SYSTEM_PYTHON: 1
 
 jobs:
   ruff:
