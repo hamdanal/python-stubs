@@ -5,12 +5,14 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v5
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v4
       with:
-        python-version: "3.12"
-        cache: pip
-        cache-dependency-path: requirements-tests.txt
+        enable-cache: true
+        cache-dependency-glob: "requirements.txt"
+    - name: Install Python 3.12
+      shell: bash
+      run: uv python install 3.12
     - name: Install dependencies
       shell: bash
-      run: pip install -r requirements-tests.txt
+      run: uv pip install -r requirements.txt
