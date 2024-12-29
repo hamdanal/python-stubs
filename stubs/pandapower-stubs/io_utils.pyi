@@ -2,7 +2,7 @@ import json
 from _typeshed import Incomplete, ReadableBuffer, StrOrBytesPath, SupportsRead
 from collections.abc import Callable, Container, Mapping
 from functools import singledispatch
-from typing import Any, TypeVar
+from typing import Any, SupportsIndex as Int, TypeVar
 from typing_extensions import Self
 
 import pandas as pd
@@ -106,11 +106,11 @@ class JSONSerializableClass:
         self,
         net: pandapowerNet,
         element: str,
-        index: int | None = None,
+        index: Int | None = None,
         column: str = "object",
         overwrite: bool = False,
         preserve_dtypes: bool = False,
-        fill_dict: dict[str, Incomplete] | None = None,
+        fill_dict: dict[str, Any] | None = None,
     ) -> int: ...
     def equals(self, other: object) -> bool: ...
     @classmethod
