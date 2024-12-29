@@ -1,15 +1,14 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from functools import partial
-from typing import Generic, Literal, TypeVar
+from typing import Any, Generic, Literal
 
 import pandas as pd
 from numpy.typing import NDArray
+from pandas._typing import S1 as _T
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.io_utils import JSONSerializableClass
-
-_T = TypeVar("_T")
 
 class OutputWriter(JSONSerializableClass, Generic[_T]):
     output_path: str | None
@@ -30,7 +29,7 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
     def __init__(
         self,
         net: pandapowerNet,
-        time_steps: Sequence[_T] | None = None,
+        time_steps: Sequence[_T] | pd.Index[_T] | pd.Series[_T] | NDArray[Any] | None = None,
         output_path: str | None = None,
         output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"] = ".p",
         write_time: float | None = None,
