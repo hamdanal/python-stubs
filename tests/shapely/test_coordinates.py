@@ -16,11 +16,15 @@ P = Point(1, 2)
 
 
 def test_transform() -> None:
+    # TODO: remove astype(np.float64) when https://github.com/numpy/numpy/issues/28071 is fixed
     check(assert_type(shapely.transform(P, lambda x: x), Point), Point)
-    check(assert_type(shapely.transform(P, lambda x: x + 1.0), Point), Point)
+    check(assert_type(shapely.transform(P, lambda x: (x + 1.0).astype(np.float64)), Point), Point)
     check(assert_type(shapely.transform(None, lambda x: x), None), NoneType)
     check(
-        assert_type(shapely.transform(shapely.from_wkt(P.wkt), lambda x: x + 1.0), BaseGeometry),
+        assert_type(
+            shapely.transform(shapely.from_wkt(P.wkt), lambda x: (x + 1.0).astype(np.float64)),
+            BaseGeometry,
+        ),
         Point,
     )
 
@@ -30,17 +34,24 @@ def test_transform() -> None:
     check(assert_type(shapely.transform(P, transformer), Point), Point)
 
     check(
-        assert_type(shapely.transform([P], lambda x: x + 1.0), NDArray[np.object_]),
+        assert_type(
+            shapely.transform([P], lambda x: (x + 1.0).astype(np.float64)), NDArray[np.object_]
+        ),
         np.ndarray,
         dtype=Point,
     )
     check(
-        assert_type(shapely.transform([None], lambda x: x + 1.0), NDArray[np.object_]),
+        assert_type(
+            shapely.transform([None], lambda x: (x + 1.0).astype(np.float64)), NDArray[np.object_]
+        ),
         np.ndarray,
         dtype=NoneType,
     )
     check(
-        assert_type(shapely.transform((P, None), lambda x: x + 1.0), NDArray[np.object_]),
+        assert_type(
+            shapely.transform((P, None), lambda x: (x + 1.0).astype(np.float64)),
+            NDArray[np.object_],
+        ),
         np.ndarray,
         dtype=Point,
     )

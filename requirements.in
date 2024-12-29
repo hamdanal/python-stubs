@@ -3,8 +3,8 @@
 ruff>=0.8.0
 pytest>=8.0
 rich-argparse>=1.5.2
-mypy>=1.13.0
-pyright>=1.1.389
+mypy>=1.14.0
+pyright>=1.1.391
 
 # Runtime dependencies
 # --------------------

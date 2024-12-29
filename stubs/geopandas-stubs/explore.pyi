@@ -1,8 +1,8 @@
 from collections.abc import Callable, Hashable, MutableMapping, Sequence
 from typing import Any
 
-import branca  # type: ignore[import-untyped]
-import folium  # type: ignore[import-untyped]
+import branca
+import folium
 import pandas as pd
 import xyzservices  # type: ignore[import-untyped]
 from matplotlib.colors import Colormap
