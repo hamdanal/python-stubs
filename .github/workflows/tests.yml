@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 env:
-  PIP_DISABLE_PIP_VERSION_CHECK: 1
+  UV_PYTHON: "3.12"
   FORCE_COLOR: 1
 
 jobs:
@@ -27,36 +27,81 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
       - name: Lint with ruff
-        run: python run.py ruff-check
+        run: uv run python run.py ruff-check
       - name: Format with ruff
-        run: python run.py ruff-format
+        run: uv run python run.py ruff-format
   pytest:
     name: Run the test suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup
-      - run: python run.py pytest
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+      - run: uv run python run.py pytest
   mypy:
     name: Run mypy on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup
-      - run: python run.py mypy
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+      - run: uv run python run.py mypy
   stubtest:
     name: Run stubtest on the the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup
-      - run: python run.py stubtest
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+      - run: uv run python run.py stubtest
   pyright:
     name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/setup
-      - run: python run.py pyright
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
+      - run: uv run python run.py pyright
