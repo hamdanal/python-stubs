@@ -3,14 +3,14 @@ from enum import Enum
 from django.db import models
 
 class PostgresTableLockMode(Enum):
-    ACCESS_SHARE: str
-    ROW_SHARE: str
-    ROW_EXCLUSIVE: str
-    SHARE_UPDATE_EXCLUSIVE: str
-    SHARE: str
-    SHARE_ROW_EXCLUSIVE: str
-    EXCLUSIVE: str
-    ACCESS_EXCLUSIVE: str
+    ACCESS_SHARE = "ACCESS SHARE"
+    ROW_SHARE = "ROW SHARE"
+    ROW_EXCLUSIVE = "ROW EXCLUSIVE"
+    SHARE_UPDATE_EXCLUSIVE = "SHARE UPDATE EXCLUSIVE"
+    SHARE = "SHARE"
+    SHARE_ROW_EXCLUSIVE = "SHARE ROW EXCLUSIVE"
+    EXCLUSIVE = "EXCLUSIVE"
+    ACCESS_EXCLUSIVE = "ACCESS EXCLUSIVE"
 
     @property
     def alias(self) -> str: ...

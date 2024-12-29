@@ -4,31 +4,31 @@ from typing import Any
 from pandapower.converter.cim import interfaces
 
 class ReportCode(enum.Enum):
-    INFO: int
-    INFO_PARSING: int
-    INFO_CONVERTING: int
-    INFO_REPAIRING: int
-    WARNING: int
-    WARNING_PARSING: int
-    WARNING_CONVERTING: int
-    WARNING_REPAIRING: int
-    ERROR: int
-    ERROR_PARSING: int
-    ERROR_CONVERTING: int
-    ERROR_REPAIRING: int
-    EXCEPTION: int
-    EXCEPTION_PARSING: int
-    EXCEPTION_CONVERTING: int
-    EXCEPTION_REPAIRING: int
+    INFO = 20
+    INFO_PARSING = 21
+    INFO_CONVERTING = 22
+    INFO_REPAIRING = 23
+    WARNING = 30
+    WARNING_PARSING = 31
+    WARNING_CONVERTING = 32
+    WARNING_REPAIRING = 33
+    ERROR = 40
+    ERROR_PARSING = 41
+    ERROR_CONVERTING = 42
+    ERROR_REPAIRING = 43
+    EXCEPTION = 50
+    EXCEPTION_PARSING = 51
+    EXCEPTION_CONVERTING = 52
+    EXCEPTION_REPAIRING = 53
 
     @classmethod
     def from_value(cls, value: int) -> ReportCode: ...
 
 class LogLevel(enum.Enum):
-    INFO: str
-    WARNING: str
-    ERROR: str
-    EXCEPTION: str
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    EXCEPTION = "EXCEPTION"
 
     @classmethod
     def from_value(cls, value: str) -> LogLevel: ...

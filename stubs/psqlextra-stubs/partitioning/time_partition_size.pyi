@@ -4,10 +4,10 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 class PostgresTimePartitionUnit(enum.Enum):
-    YEARS: str
-    MONTHS: str
-    WEEKS: str
-    DAYS: str
+    YEARS = "years"
+    MONTHS = "months"
+    WEEKS = "weeks"
+    DAYS = "days"
 
 class PostgresTimePartitionSize:
     unit: PostgresTimePartitionUnit

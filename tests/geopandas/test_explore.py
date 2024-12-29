@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import folium  # type: ignore[import-untyped]
+import folium
 import geopandas as gpd
 from geopandas.explore import _explore, _explore_geoseries
 from shapely import Point
