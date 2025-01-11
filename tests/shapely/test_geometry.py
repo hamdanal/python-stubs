@@ -146,69 +146,61 @@ def test_geometry_binary_predicates() -> None:
     check(assert_type(BG.relate([P, None]), NDArray[np.str_]), np.ndarray, dtype=str)
     check(assert_type(BG.covers(P), bool), bool)
     check(assert_type(BG.covers(None), bool), bool)
-    check(assert_type(BG.covers([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.covers([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.covered_by(P), bool), bool)
     check(assert_type(BG.covered_by(None), bool), bool)
-    check(assert_type(BG.covered_by([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.covered_by([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.contains(P), bool), bool)
     check(assert_type(BG.contains(None), bool), bool)
-    check(assert_type(BG.contains([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.contains([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.contains_properly(P), bool), bool)
     check(assert_type(BG.contains_properly(None), bool), bool)
-    check(
-        assert_type(BG.contains_properly([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_
-    )
+    check(assert_type(BG.contains_properly([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.crosses(P), bool), bool)
     check(assert_type(BG.crosses(None), bool), bool)
-    check(assert_type(BG.crosses([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.crosses([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.disjoint(P), bool), bool)
     check(assert_type(BG.disjoint(None), bool), bool)
-    check(assert_type(BG.disjoint([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.disjoint([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.equals(P), bool), bool)
     check(assert_type(BG.equals(None), bool), bool)
-    check(assert_type(BG.equals([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.equals([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.intersects(P), bool), bool)
     check(assert_type(BG.intersects(None), bool), bool)
-    check(assert_type(BG.intersects([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.intersects([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.overlaps(P), bool), bool)
     check(assert_type(BG.overlaps(None), bool), bool)
-    check(assert_type(BG.overlaps([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.overlaps([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.touches(P), bool), bool)
     check(assert_type(BG.touches(None), bool), bool)
-    check(assert_type(BG.touches([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.touches([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.within(P), bool), bool)
     check(assert_type(BG.within(None), bool), bool)
-    check(assert_type(BG.within([P, None]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.within([P, None]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.dwithin(P, 1.5), bool), bool)
     check(assert_type(BG.dwithin(None, 1.5), bool), bool)
-    check(assert_type(BG.dwithin([P, None], 1.5), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
-    check(assert_type(BG.dwithin(P, [1.5]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
-    check(assert_type(BG.dwithin(None, [1.5]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
-    check(assert_type(BG.dwithin([P, None], [1.5]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
+    check(assert_type(BG.dwithin([P, None], 1.5), NDArray[np.bool]), np.ndarray, dtype=np.bool)
+    check(assert_type(BG.dwithin(P, [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
+    check(assert_type(BG.dwithin(None, [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
+    check(assert_type(BG.dwithin([P, None], [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(assert_type(BG.equals_exact(P, 1.5), bool), bool)
     check(assert_type(BG.equals_exact(None, 1.5), bool), bool)
+    check(assert_type(BG.equals_exact([P, None], 1.5), NDArray[np.bool]), np.ndarray, dtype=np.bool)
+    check(assert_type(BG.equals_exact(P, [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
+    check(assert_type(BG.equals_exact(None, [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool)
     check(
-        assert_type(BG.equals_exact([P, None], 1.5), NDArray[np.bool_]), np.ndarray, dtype=np.bool_
-    )
-    check(assert_type(BG.equals_exact(P, [1.5]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
-    check(assert_type(BG.equals_exact(None, [1.5]), NDArray[np.bool_]), np.ndarray, dtype=np.bool_)
-    check(
-        assert_type(BG.equals_exact([P, None], [1.5]), NDArray[np.bool_]),
-        np.ndarray,
-        dtype=np.bool_,
+        assert_type(BG.equals_exact([P, None], [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool
     )
     with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals(P, 1), bool | NDArray[np.bool_]), bool)  # pyright: ignore[reportDeprecated]
+        check(assert_type(BG.almost_equals(P, 1), bool | NDArray[np.bool]), bool)  # pyright: ignore[reportDeprecated]
     with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals(None, 1), bool | NDArray[np.bool_]), bool)  # pyright: ignore[reportDeprecated]
+        check(assert_type(BG.almost_equals(None, 1), bool | NDArray[np.bool]), bool)  # pyright: ignore[reportDeprecated]
     with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals([P, None], 1), bool | NDArray[np.bool_]), np.ndarray)  # pyright: ignore[reportDeprecated]
+        check(assert_type(BG.almost_equals([P, None], 1), bool | NDArray[np.bool]), np.ndarray)  # pyright: ignore[reportDeprecated]
     p = "T*F**F***"
     check(assert_type(BG.relate_pattern(P, p), bool), bool)
     check(assert_type(BG.relate_pattern(None, p), bool), bool)
-    check(
-        assert_type(BG.relate_pattern([P, None], p), NDArray[np.bool_]), np.ndarray, dtype=np.bool_
-    )
+    check(assert_type(BG.relate_pattern([P, None], p), NDArray[np.bool]), np.ndarray, dtype=np.bool)
 
 
 def test_geometry_linear_referencing() -> None:
