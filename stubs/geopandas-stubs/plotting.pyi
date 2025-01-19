@@ -108,7 +108,7 @@ class GeoplotAccessor(PlotAccessor):
         mark_right: bool = True,
         include_bool: bool = False,
         backend: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> Axes: ...
     @overload
     def __call__(
@@ -150,7 +150,7 @@ class GeoplotAccessor(PlotAccessor):
         mark_right: bool = True,
         include_bool: bool = False,
         backend: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> NDArray[np.object_]: ...  # should be NDArray[Axes] but it is not supported
     @overload
     def __call__(
@@ -192,7 +192,7 @@ class GeoplotAccessor(PlotAccessor):
         mark_right: bool = True,
         include_bool: bool = False,
         backend: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> pd.Series[Axes]: ...  # type: ignore[type-var] # pyright: ignore[reportInvalidTypeArguments]
     @overload
     def __call__(
