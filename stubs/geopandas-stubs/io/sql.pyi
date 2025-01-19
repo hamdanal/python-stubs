@@ -1,5 +1,6 @@
 import sqlite3
-from collections.abc import Iterator, Mapping
+from _typeshed import SupportsLenAndGetItem
+from collections.abc import Container, Iterator, Mapping
 from contextlib import AbstractContextManager
 from typing import Any, Protocol, overload
 from typing_extensions import TypeAlias
@@ -79,10 +80,10 @@ def _read_postgis(
     con: _SQLConnection,
     geom_col: str = "geom",
     crs: _ConvertibleToCRS | None = None,
-    index_col: str | list[str] | None = None,
+    index_col: str | Container[str] | None = None,
     coerce_float: bool = True,
-    parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-    params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
+    parse_dates: Container[str | Mapping[str, Any]] | Mapping[str, str | Mapping[str, Any]] | None = None,
+    params: SupportsLenAndGetItem[Scalar] | Mapping[str, Scalar] | None = None,
     *,
     chunksize: int,
 ) -> Iterator[GeoDataFrame]: ...
@@ -92,10 +93,10 @@ def _read_postgis(
     con: _SQLConnection,
     geom_col: str = "geom",
     crs: _ConvertibleToCRS | None = None,
-    index_col: str | list[str] | None = None,
+    index_col: str | Container[str] | None = None,
     coerce_float: bool = True,
-    parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-    params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
+    parse_dates: Container[str | Mapping[str, Any]] | Mapping[str, str | Mapping[str, Any]] | None = None,
+    params: SupportsLenAndGetItem[Scalar] | Mapping[str, Scalar] | None = None,
     chunksize: None = None,
 ) -> GeoDataFrame: ...
 @overload
@@ -104,9 +105,9 @@ def _read_postgis(
     con: _SQLConnection,
     geom_col: str = "geom",
     crs: _ConvertibleToCRS | None = None,
-    index_col: str | list[str] | None = None,
+    index_col: str | Container[str] | None = None,
     coerce_float: bool = True,
-    parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-    params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
+    parse_dates: Container[str | Mapping[str, Any]] | Mapping[str, str | Mapping[str, Any]] | None = None,
+    params: SupportsLenAndGetItem[Scalar] | Mapping[str, Scalar] | None = None,
     chunksize: int | None = None,
 ) -> GeoDataFrame | Iterator[GeoDataFrame]: ...

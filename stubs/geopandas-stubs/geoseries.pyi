@@ -68,7 +68,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         ignore_geometry: Literal[False] = False,
         layer: int | str | None = None,
         encoding: str | None = None,
-        **kwargs: Any,  # engine dependent
+        **kwargs,  # engine dependent
     ) -> GeoSeries: ...
     @classmethod
     def from_wkb(
@@ -143,7 +143,7 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         layer: int | str | None = None,
         encoding: str | None = None,
         overwrite: bool | None = ...,
-        **kwargs: Any,  # engine and driver dependent
+        **kwargs,  # engine and driver dependent
     ) -> None: ...
     # *** TODO: compare `__getitem__` with pandas-stubs ***
     # def __getitem__(self, key): ...
@@ -195,9 +195,9 @@ class GeoSeries(GeoPandasBase, pd.Series[BaseGeometry]):  # type: ignore[type-va
         cls: type[json.JSONEncoder] | None = None,
         indent: None | int | str = None,
         separators: tuple[str, str] | None = None,
-        default: Callable[[Any], Any] | None = None,
+        default: Callable[..., Any] | None = None,  # as typed in the json stdlib module
         sort_keys: bool = False,
-        **kwds: Any,
+        **kwds,
     ) -> str: ...
     @overload
     def to_wkb(self, hex: Literal[False] = False, **kwargs) -> pd.Series[bytes]: ...

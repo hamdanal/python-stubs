@@ -1,4 +1,4 @@
-from _typeshed import Incomplete, SupportsGetItem
+from _typeshed import SupportsGetItem
 from collections.abc import Callable, Hashable, Iterable, Mapping, Sequence
 from typing import Any, Literal, Protocol, SupportsIndex, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
@@ -13,7 +13,7 @@ from pyproj import CRS
 from shapely import Geometry, MultiPolygon, Point, Polygon
 from shapely.geometry.base import BaseGeometry
 
-from geopandas.array import GeometryArray
+from geopandas.array import GeometryArray, _Array1D
 from geopandas.geodataframe import GeoDataFrame
 from geopandas.geoseries import GeoSeries
 from geopandas.sindex import SpatialIndex
@@ -34,7 +34,7 @@ _BboxLike: TypeAlias = Sequence[float] | NDArray[np.floating[Any]] | Geometry | 
 _MaskLike: TypeAlias = dict[str, Any] | Geometry | GeoDataFrame | GeoSeries  # noqa: PYI047
 
 # XXX: cannot use IndexOpsMixin[Geometry] because of IndexOpsMixin type variable bounds
-_GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Incomplete]
+_GeoListLike: TypeAlias = ArrayLike | Sequence[Geometry] | IndexOpsMixin[Any]
 _ConvertibleToGeoSeries: TypeAlias = Geometry | Mapping[int, Geometry] | Mapping[str, Geometry] | _GeoListLike  # noqa: PYI047
 
 # XXX: cannot use pd.Series[Geometry] because of pd.Series type variable bounds
@@ -162,7 +162,7 @@ class GeoPandasBase:
     @property
     def bounds(self) -> pd.DataFrame: ...
     @property
-    def total_bounds(self) -> NDArray[np.float64]: ...
+    def total_bounds(self) -> _Array1D[np.float64]: ...
     @property
     def sindex(self) -> SpatialIndex: ...
     @property
@@ -182,7 +182,7 @@ class GeoPandasBase:
     def relate_pattern(self, other: GeoSeries | Geometry, pattern: str, align: bool | None = None) -> pd.Series[bool]: ...
     def project(self, other: GeoSeries | Geometry, normalized: bool = False, align: bool | None = None) -> pd.Series[float]: ...
     def interpolate(self, distance: float | ArrayLike, normalized: bool = False) -> GeoSeries: ...
-    def affine_transform(self, matrix: Incomplete) -> GeoSeries: ...
+    def affine_transform(self, matrix) -> GeoSeries: ...
     def translate(self, xoff: float = 0.0, yoff: float = 0.0, zoff: float = 0.0) -> GeoSeries: ...
     def rotate(self, angle: float, origin: _AffinityOrigin = "center", use_radians: bool = False) -> GeoSeries: ...
     def scale(

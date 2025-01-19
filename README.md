@@ -79,17 +79,6 @@ This project is licensed under the MIT License.
     <th>Yes</th>
     <th>No</th>
   </tr>
-  <tr>
-    <th>geopandas</th>
-    <th><code>geopandas</code></th>
-    <th>
-      <a href="https://pypi.org/project/geopandas">PyPI</a>,
-      <a href="https://github.com/geopandas/geopandas">GitHub</a>
-    </th>
-    <th>Complete</th>
-    <th>Yes</th>
-    <th>Yes</th>
-  </tr>
 </table>
 
 ## Upstreamed stubs
@@ -111,5 +100,10 @@ These stubs were included here in the past and have been moved to typeshed or to
     <th><a href="https://pypi.org/project/shapely">shapely</a></th>
     <th><a href="https://github.com/python/typeshed/tree/main/stubs/shapely">typeshed</a></th>
     <th><code>pip install types-shapely</code></th>
+  </tr>
+  <tr>
+    <th><a href="https://pypi.org/project/geopandas">geopandas</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/geopandas">typeshed</a></th>
+    <th><code>pip install types-geopandas</code></th>
   </tr>
 </table>

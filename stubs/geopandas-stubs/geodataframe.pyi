@@ -1,7 +1,7 @@
 import io
 import os
-from _typeshed import Incomplete, SupportsGetItem, SupportsRead, SupportsWrite
-from collections.abc import Callable, Hashable, Iterable, Iterator, Mapping
+from _typeshed import Incomplete, SupportsGetItem, SupportsLenAndGetItem, SupportsRead, SupportsWrite
+from collections.abc import Callable, Container, Hashable, Iterable, Iterator, Mapping
 from json import JSONEncoder
 from typing import Any, Literal, overload
 from typing_extensions import Self
@@ -97,7 +97,12 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
     def crs(self, value: _ConvertibleToCRS | None) -> None: ...
     @classmethod
     def from_dict(  # type: ignore[override]
-        cls, data: Mapping[Hashable, Any], geometry: _GeomCol | None = None, crs: _ConvertibleToCRS | None = None, **kwargs
+        # Mapping[Any, Any] because of invariance keys and arbitrary values
+        cls,
+        data: Mapping[Any, Any],
+        geometry: _GeomCol | None = None,
+        crs: _ConvertibleToCRS | None = None,
+        **kwargs,
     ) -> Self: ...
     # Keep inline with GeoSeries.from_file and geopandas.io.file._read_file
     @classmethod
@@ -135,8 +140,8 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         crs: _ConvertibleToCRS | None = None,
         index_col: str | list[str] | None = None,
         coerce_float: bool = True,
-        parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-        params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
+        parse_dates: Container[str | Mapping[str, Any]] | Mapping[str, str | Mapping[str, Any]] | None = None,
+        params: SupportsLenAndGetItem[Scalar] | Mapping[str, Scalar] | None = None,
         *,
         chunksize: int,
     ) -> Iterator[GeoDataFrame]: ...
@@ -150,8 +155,8 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         crs: _ConvertibleToCRS | None = None,
         index_col: str | list[str] | None = None,
         coerce_float: bool = True,
-        parse_dates: list[str] | dict[str, str] | dict[str, dict[str, Any]] | None = None,
-        params: list[Scalar] | tuple[Scalar, ...] | Mapping[str, Scalar] | None = None,
+        parse_dates: Container[str | Mapping[str, Any]] | Mapping[str, str | Mapping[str, Any]] | None = None,
+        params: SupportsLenAndGetItem[Scalar] | Mapping[str, Scalar] | None = None,
         chunksize: None = None,
     ) -> GeoDataFrame: ...
     @classmethod
@@ -245,7 +250,7 @@ class GeoDataFrame(GeoPandasBase, pd.DataFrame):  # type: ignore[misc]
         layer: int | str | None = None,
         encoding: str | None = None,
         overwrite: bool | None = ...,
-        **kwargs: Any,  # engine and driver dependent
+        **kwargs,  # engine and driver dependent
     ) -> None: ...
     @overload
     def set_crs(

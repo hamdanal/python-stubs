@@ -36,7 +36,7 @@ def _read_file(
     ignore_geometry: Literal[True],
     layer: int | str | None = None,
     encoding: str | None = None,
-    **kwargs: Any,  # depends on engine
+    **kwargs: Any,  # depend on engine
 ) -> pd.DataFrame: ...
 
 class _Schema(TypedDict):

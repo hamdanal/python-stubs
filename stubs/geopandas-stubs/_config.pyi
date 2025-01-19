@@ -7,7 +7,7 @@ class Option(NamedTuple):
     default_value: Any
     doc: str
     validator: Callable[[object], Unused]
-    callback: Callable[[str, Any], Unused] | None
+    callback: Callable[[str, object], Unused] | None
 
 class Options:
     def __init__(self, options: SupportsItems[str, Option]) -> None: ...
