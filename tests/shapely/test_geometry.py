@@ -191,12 +191,6 @@ def test_geometry_binary_predicates() -> None:
     check(
         assert_type(BG.equals_exact([P, None], [1.5]), NDArray[np.bool]), np.ndarray, dtype=np.bool
     )
-    with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals(P, 1), bool | NDArray[np.bool]), bool)  # pyright: ignore[reportDeprecated]
-    with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals(None, 1), bool | NDArray[np.bool]), bool)  # pyright: ignore[reportDeprecated]
-    with pytest.warns(FutureWarning):
-        check(assert_type(BG.almost_equals([P, None], 1), bool | NDArray[np.bool]), np.ndarray)  # pyright: ignore[reportDeprecated]
     p = "T*F**F***"
     check(assert_type(BG.relate_pattern(P, p), bool), bool)
     check(assert_type(BG.relate_pattern(None, p), bool), bool)

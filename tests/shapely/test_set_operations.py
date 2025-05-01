@@ -135,38 +135,41 @@ def test_symmetric_difference() -> None:
 
 
 def test_symmetric_difference_all() -> None:
-    check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)
-    check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)
-    check(
-        assert_type(
-            shapely.symmetric_difference_all([P], axis=0), BaseGeometry | NDArray[np.object_]
-        ),
-        BaseGeometry,
-    )
-    check(
-        assert_type(
-            shapely.symmetric_difference_all([[P]], axis=0), BaseGeometry | NDArray[np.object_]
-        ),
-        np.ndarray,
-        dtype=BaseGeometry,
-    )
-    check(
-        assert_type(
-            shapely.symmetric_difference_all([None], axis=0), BaseGeometry | NDArray[np.object_]
-        ),
-        BaseGeometry,
-    )
-    check(
-        assert_type(
-            shapely.symmetric_difference_all([[None]], axis=0), BaseGeometry | NDArray[np.object_]
-        ),
-        np.ndarray,
-        dtype=BaseGeometry,
-    )
+    with pytest.deprecated_call():
+        # TODO: deprecate in typeshed
+        check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)
+        check(
+            assert_type(
+                shapely.symmetric_difference_all([P], axis=0), BaseGeometry | NDArray[np.object_]
+            ),
+            BaseGeometry,
+        )
+        check(
+            assert_type(
+                shapely.symmetric_difference_all([[P]], axis=0), BaseGeometry | NDArray[np.object_]
+            ),
+            np.ndarray,
+            dtype=BaseGeometry,
+        )
+        check(
+            assert_type(
+                shapely.symmetric_difference_all([None], axis=0), BaseGeometry | NDArray[np.object_]
+            ),
+            BaseGeometry,
+        )
+        check(
+            assert_type(
+                shapely.symmetric_difference_all([[None]], axis=0),
+                BaseGeometry | NDArray[np.object_],
+            ),
+            np.ndarray,
+            dtype=BaseGeometry,
+        )
 
 
 def test_union() -> None:
@@ -225,10 +228,8 @@ def test_coverage_union() -> None:
         np.ndarray,
         dtype=BaseGeometry,
     )
-
-    with pytest.warns(RuntimeWarning):
-        check(assert_type(shapely.coverage_union(None, None), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.coverage_union([None], [None]), BaseGeometry), BaseGeometry)
+    check(assert_type(shapely.coverage_union(None, None), BaseGeometry), BaseGeometry)
+    check(assert_type(shapely.coverage_union([None], [None]), BaseGeometry), BaseGeometry)
 
 
 def test_coverage_union_all() -> None:
@@ -246,19 +247,16 @@ def test_coverage_union_all() -> None:
         dtype=BaseGeometry,
     )
 
-    with pytest.warns(RuntimeWarning):
-        check(assert_type(shapely.coverage_union_all(None), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.coverage_union_all([None]), BaseGeometry), BaseGeometry)
-        check(
-            assert_type(
-                shapely.coverage_union_all([None], axis=0), BaseGeometry | NDArray[np.object_]
-            ),
-            BaseGeometry,
-        )
-        check(
-            assert_type(
-                shapely.coverage_union_all([[None]], axis=0), BaseGeometry | NDArray[np.object_]
-            ),
-            np.ndarray,
-            dtype=BaseGeometry,
-        )
+    check(assert_type(shapely.coverage_union_all(None), BaseGeometry), BaseGeometry)
+    check(assert_type(shapely.coverage_union_all([None]), BaseGeometry), BaseGeometry)
+    check(
+        assert_type(shapely.coverage_union_all([None], axis=0), BaseGeometry | NDArray[np.object_]),
+        BaseGeometry,
+    )
+    check(
+        assert_type(
+            shapely.coverage_union_all([[None]], axis=0), BaseGeometry | NDArray[np.object_]
+        ),
+        np.ndarray,
+        dtype=BaseGeometry,
+    )

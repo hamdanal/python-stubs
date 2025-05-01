@@ -28,7 +28,9 @@ P = Point(1, 2)
 P3 = Point(1, 2, 4)
 LS = LineString([(1, 2), (3, 4), (5, 6), (7, 8)])
 LR = LinearRing([(1, 2), (3, 4), (5, 6), (7, 8)])
-PO = Polygon([P, P, P, P], holes=[[(0.1, 0.2), (0.3, 0.4), (0.5, 0.6), (0.7, 0.8)]])
+PO = Polygon(
+    [P, P, Point(1, 3), Point(1, 4)], holes=[[(0.1, 0.2), (0.3, 0.4), (0.5, 0.6), (0.7, 0.8)]]
+)
 MP = MultiPoint([P, P])
 MLS = MultiLineString([LS, [P, P]])
 MPO = MultiPolygon([PO, (LR,)])
@@ -246,6 +248,8 @@ def test_make_valid() -> None:
     for geom in GEOMS:
         if isinstance(geom, LinearRing):
             continue
+        if isinstance(geom, GeometryCollection):
+            geom = GeometryCollection([P, P, P])  # doesn't accept mixed dimension geometries
         check(assert_type(shapely.make_valid(geom), BaseGeometry), BaseGeometry)
     check(assert_type(shapely.make_valid([P]), NDArray[np.object_]), np.ndarray, dtype=Point)
     check(assert_type(shapely.make_valid([None]), NDArray[np.object_]), np.ndarray)
@@ -471,7 +475,8 @@ def test_voronoi_polygons() -> None:
         )
         check(
             assert_type(
-                shapely.voronoi_polygons(geom, 0.0, LS, True), LineString | MultiLineString
+                shapely.voronoi_polygons(geom, 0.0, extend_to=LS, only_edges=True),
+                LineString | MultiLineString,
             ),
             LineString | MultiLineString,
         )
@@ -493,7 +498,7 @@ def test_voronoi_polygons() -> None:
         dtype=GeometryCollection,
     )
     check(
-        assert_type(shapely.voronoi_polygons(LS, 0.0, [LS]), NDArray[np.object_]),
+        assert_type(shapely.voronoi_polygons(LS, 0.0, extend_to=[LS]), NDArray[np.object_]),
         np.ndarray,
         dtype=GeometryCollection,
     )
@@ -503,7 +508,10 @@ def test_voronoi_polygons() -> None:
         dtype=GeometryCollection,
     )
     check(
-        assert_type(shapely.voronoi_polygons(LS, 0.0, None, [False]), NDArray[np.object_]),
+        assert_type(
+            shapely.voronoi_polygons(LS, 0.0, extend_to=None, only_edges=[False]),
+            NDArray[np.object_],
+        ),
         np.ndarray,
         dtype=GeometryCollection,
     )
