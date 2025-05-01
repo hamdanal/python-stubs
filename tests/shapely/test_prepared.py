@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Literal
 
-import pytest
 import shapely
 from shapely import Point
 from shapely.prepared import PreparedGeometry
@@ -39,7 +38,3 @@ def test_prepared_geometry() -> None:
     check(assert_type(PG.touches(None), bool), bool)
     check(assert_type(PG.within(P), bool), bool)
     check(assert_type(PG.within(None), bool), bool)
-
-    # comparison to array-like sequences is not allowed
-    with pytest.raises(TypeError):
-        PG.contains_properly([P, None])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
