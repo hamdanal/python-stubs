@@ -23,13 +23,18 @@ every change).
 Contributions of any kind are welcome. Please open an issue or a send pull request.
 
 To set up a development environment:
+1. Install `uv`: https://docs.astral.sh/uv/getting-started/installation/
+2. Install the project dependencies: `uv sync --frozen`
+3. Run `uv run python run.py --help` for more.
+
+Alternatively, if you want to use pip instead of `uv`:
 1. Create a virtual environment: `python -m .venv venv`
 2. Activate the virtual environment:
    - Unix: `. .venv/bin/activate`
    - Windows: `.venv\Scripts\activate`
-3. Install the dependencies: `python -m pip install -r requirements.txt`
-
-Run `python run.py --help` for more.
+3. Update `pip`: `python -m pip install --upgrade pip`
+4. Install the dependencies: `python -m pip install -r requirements.txt`
+5. Run `python run.py --help` for more.
 
 ## License
 

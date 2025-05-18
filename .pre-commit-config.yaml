@@ -10,7 +10,7 @@ repos:
       - id: mixed-line-ending
       - id: check-case-conflict
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.1 # must match requirements.txt
+    rev: v0.11.10 # must match requirements.txt
     hooks:
       - id: ruff
       - id: ruff-format
