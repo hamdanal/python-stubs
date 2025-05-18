@@ -6,7 +6,7 @@ import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
 
-_Element: TypeAlias = Literal["line", "trafo", "trafo3w", "fuse"]
+_Element: TypeAlias = Literal["line", "line_dc", "trafo", "trafo3w", "fuse"]
 _StdType: TypeAlias = dict[str, Any]
 
 @type_check_only
@@ -14,6 +14,9 @@ class _StdLineType(TypedDict, total=False):
     c_nf_per_km: float
     r_ohm_per_km: float
     x_ohm_per_km: float
+    c0_nf_per_km: float
+    r0_ohm_per_km: float
+    x0_ohm_per_km: float
     max_i_ka: float
     type: str
     q_mm2: int
@@ -96,6 +99,7 @@ class _StdTypes(TypedDict):
     trafo3w: _StdTrafo3wTypes
     fuse: _StdFuseTypes
 
+def required_std_type_parameters(element: _Element = "line") -> list[str]: ...
 def create_std_type(
     net: pandapowerNet, data: _StdType, name: str, element: _Element = "line", overwrite: bool = True, check_required: bool = True
 ) -> None: ...
@@ -121,6 +125,7 @@ def load_std_type(net: pandapowerNet, name: str, element: Literal["trafo3w"]) ->
 def load_std_type(net: pandapowerNet, name: str, element: Literal["fuse"]) -> _StdFuseType: ...
 def std_type_exists(net: pandapowerNet, name: str, element: _Element = "line") -> bool: ...
 def delete_std_type(net: pandapowerNet, name: str, element: _Element = "line") -> None: ...
+def rename_std_type(net: pandapowerNet, old_name: str, new_name: str, element: _Element = "line") -> None: ...
 def available_std_types(net: pandapowerNet, element: _Element = "line") -> pd.DataFrame: ...
 def parameter_from_std_type(net: pandapowerNet, parameter: str, element: _Element = "line", fill: Any | None = None) -> None: ...
 def change_std_type(net: pandapowerNet, eid: int, name: str, element: _Element = "line") -> None: ...
