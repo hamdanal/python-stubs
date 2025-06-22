@@ -39,8 +39,8 @@ def test_crs() -> None:
         warnings.filterwarnings("ignore")
         gs.crs = None
         gs.crs = crs
-        gs.crs = "EPSG:4326"  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
-        gs.crs = 4326  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
+        gs.crs = "EPSG:4326"
+        gs.crs = 4326
         assert isinstance(gs.crs, CRS)
         with pytest.raises(Exception):
             gs.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]

@@ -27,12 +27,12 @@ def test_geometry() -> None:
 
     # setter
     gdf.geometry = geo
-    gdf.geometry = geo.values  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
-    gdf.geometry = [Point(1, 2), Point(3, 4)]  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
+    gdf.geometry = geo.values
+    gdf.geometry = [Point(1, 2), Point(3, 4)]
     with pytest.raises(Exception):
         gdf.geometry = "geometry"  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
     with pytest.raises(Exception):
-        gdf.geometry = [1, 2]  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
+        gdf.geometry = [1, 2]  # type: ignore[list-item] # pyright: ignore[reportAttributeAccessIssue]
 
     # set_geometry
     check(assert_type(gdf.set_geometry(geo), GeoDataFrame), GeoDataFrame)
@@ -63,8 +63,8 @@ def test_crs() -> None:
         warnings.filterwarnings("ignore")
         gdf.crs = None
         gdf.crs = crs
-        gdf.crs = "EPSG:4326"  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
-        gdf.crs = 4326  # type: ignore[assignment] # https://github.com/python/mypy/issues/3004
+        gdf.crs = "EPSG:4326"
+        gdf.crs = 4326
         with pytest.raises(Exception):
             gdf.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
 
