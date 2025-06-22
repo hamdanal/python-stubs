@@ -36,7 +36,7 @@ You can override the default invocation by passing extra args after the command.
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=Markdown(description),  # pyright: ignore[reportArgumentType]
-        epilog="Run [argparse.args]python -m pip install -r requirements.txt[/] to install project dependencies.",
+        epilog="Run [argparse.args]uv sync --frozen[/] to install project dependencies.",
         formatter_class=RawTextRichHelpFormatter,
         add_help=False,
     )

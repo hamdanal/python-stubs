@@ -67,20 +67,20 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py mypy
-  # stubtest:
-  #   name: Run stubtest on the the stubs
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Set up Python ${{ env.UV_PYTHON }}
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: ${{ env.UV_PYTHON }}
-  #     - name: Install uv
-  #       uses: astral-sh/setup-uv@v6
-  #     - name: Install dependencies
-  #       run: uv sync --frozen
-  #     - run: uv run python run.py stubtest
+  stubtest:
+    name: Run stubtest on the the stubs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ env.UV_PYTHON }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+      - name: Install dependencies
+        run: uv sync --frozen
+      - run: uv run python run.py stubtest
   pyright:
     name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
