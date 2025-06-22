@@ -1,6 +1,7 @@
 from _typeshed import Incomplete, SupportsGetItem, Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, Literal, TypeVar, overload
+from typing_extensions import deprecated
 
 from pandapower.auxiliary import pandapowerNet
 
@@ -32,7 +33,8 @@ def get_recycle_settings(
 @overload
 def init_time_steps(net: pandapowerNet, time_steps: Iterable[_T], **kwargs: Unused) -> Iterable[_T]: ...  # type: ignore[overload-overlap]
 @overload
-def init_time_steps(net: pandapowerNet, time_steps: None, start_step: int, stop_step: int, **kwargs: Unused) -> range: ...
+@deprecated("start_step and stop_step are deprcated")
+def init_time_steps(net: pandapowerNet, time_steps: None, *, start_step: int, stop_step: int, **kwargs: Unused) -> range: ...
 @overload
 def init_time_steps(net: pandapowerNet, time_steps: object, **kwargs: Unused) -> range: ...
 def init_time_series(

@@ -9,7 +9,7 @@ from pandapower.plotting.plotly.traces import _MapStyle
 def pf_res_plotly(
     net: pandapowerNet,
     cmap: str = "Jet",
-    use_line_geodata: bool | None = None,
+    use_line_geo: bool | None = None,
     on_map: bool = False,
     projection: str | None = None,
     map_style: _MapStyle = "basic",

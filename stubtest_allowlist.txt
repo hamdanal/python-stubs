@@ -1,0 +1,30 @@
+# pandapower allowlist
+# ====================
+# TODO modules
+pandapower\.build_bus.*
+pandapower\.contingency.*
+pandapower\.control.*
+pandapower\.converter.*
+pandapower\.estimation.*
+pandapower\.grid_equivalents.*
+pandapower\.io_utils.*
+pandapower\.pf.*
+pandapower\.protection.*
+pandapower\.pypower.*
+pandapower\.results.*
+pandapower\.topology.*
+
+# TODO constants
+pandapower\.[A-Z0-9_]+$
+
+# OK stubs-only
+pandapower\._typing
+
+# OK runtime-only
+pandapower\..*\.logger
+pandapower\.(\w+\.)*(nan|zeros|pp_version)
+pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
+pandapower\.networks\.pp_dir
+
+# OK requires optional dependencies
+pandapower\.timeseries\.ts_runpp  # requires numba

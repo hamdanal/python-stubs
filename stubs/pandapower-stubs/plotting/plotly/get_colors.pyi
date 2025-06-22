@@ -2,8 +2,6 @@ from _typeshed import Incomplete
 
 from matplotlib.colors import Colormap
 
-MATPLOTLIB_INSTALLED: bool
-
 def get_plotly_color(color_string: str) -> str: ...
 def get_plotly_color_palette(n) -> list[str]: ...
 def get_plotly_cmap(

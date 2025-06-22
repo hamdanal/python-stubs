@@ -251,6 +251,27 @@ def runpm_ploss(
     pdm_dev_mode: bool = False,
     **kwargs,
 ) -> None: ...
+def runpm_loading(
+    net: pandapowerNet,
+    pp_to_pm_callback: Callable[..., Incomplete] | None = None,
+    calculate_voltage_angles: bool = True,
+    trafo_model: str = "t",
+    delta: float = 1e-8,
+    trafo3w_losses: str = "hv",
+    check_connectivity: bool = True,
+    pm_model: str = "ACPPowerModel",
+    pm_solver: str = "ipopt",
+    correct_pm_network_data: bool = True,
+    silence: bool = True,
+    pm_time_limits: Mapping[str, float] | None = None,
+    pm_log_level: int = 0,
+    pm_file_path: str | None = None,
+    delete_buffer_file: bool = True,
+    opf_flow_lim: str = "S",
+    pm_tol: float = 1e-8,
+    pdm_dev_mode: bool = False,
+    **kwargs,
+) -> None: ...
 def runpm_pf(
     net: pandapowerNet,
     julia_file: str | None = None,

@@ -47,16 +47,16 @@ class PPJSONEncoder(json.JSONEncoder):
         isinstance_func: Callable[[object, type[object]], bool] = ...,
         # json.JSONEncoder.__init__ kwargs
         *,
-        skipkeys: bool = ...,
-        ensure_ascii: bool = ...,
-        check_circular: bool = ...,
-        allow_nan: bool = ...,
-        sort_keys: bool = ...,
-        indent: int | str | None = ...,
-        separators: tuple[str, str] | None = ...,
-        default: Callable[..., Any] | None = ...,
+        skipkeys: bool = False,
+        ensure_ascii: bool = True,
+        check_circular: bool = True,
+        allow_nan: bool = True,
+        sort_keys: bool = False,
+        indent: int | str | None = None,
+        separators: tuple[str, str] | None = None,
+        default: Callable[..., Any] | None = None,
     ) -> None: ...
-    def iterencode(self, o: object, _one_shot: bool = False) -> Incomplete: ...
+    def iterencode(self, o: object, _one_shot: bool = False) -> Any: ...
     def default(self, o: object) -> Any: ...
 
 class FromSerializable:

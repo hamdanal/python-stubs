@@ -1,18 +1,6 @@
 from _typeshed import Incomplete, Unused
 
 from pandapower.auxiliary import pandapowerNet
-from pandapower.pypower.idx_brch import (
-    BR_B as BR_B,
-    BR_R as BR_R,
-    BR_STATUS as BR_STATUS,
-    BR_X as BR_X,
-    F_BUS as F_BUS,
-    RATE_A as RATE_A,
-    SHIFT as SHIFT,
-    T_BUS as T_BUS,
-    TAP as TAP,
-)
-from pandapower.results_bus import write_pq_results_to_element as write_pq_results_to_element
 from pandapower.timeseries.output_writer import OutputWriter
 
 class TimeSeriesRunpp:

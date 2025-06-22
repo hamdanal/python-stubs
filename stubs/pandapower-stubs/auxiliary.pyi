@@ -1,26 +1,36 @@
+import logging
 from collections.abc import Iterable, Mapping, MutableMapping
-from typing import Any, Final, Literal, NoReturn, SupportsFloat as Float, SupportsIndex as Int, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Final, Literal, NoReturn, TypeVar, overload
+from typing_extensions import Self, deprecated
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike, DTypeLike, NDArray
 from shapely.geometry.base import BaseGeometry
 
+from pandapower._typing import Float, Int
 from pandapower.std_types import _StdTypes
 
 _T = TypeVar("_T")
 _KT = TypeVar("_KT")
 _VT = TypeVar("_VT")
 
+def log_to_level(msg: str, passed_logger: logging.Logger, level: str) -> None: ...
+def version_check(package_name: str, level="UserWarning", ignore_not_installed: bool = False) -> None: ...
 def soft_dependency_error(fct_name: str, required_packages: str | Iterable[str]) -> NoReturn: ...
 def warn_and_fix_parameter_renaming(
-    old_parameter_name: str, new_parameter_name: str, new_parameter: _T, default_value: _T, category: Warning = ..., **kwargs: Any
+    old_parameter_name: str,
+    new_parameter_name: str,
+    new_parameter: _T,
+    default_value: _T,
+    category: type[Warning] = ...,
+    **kwargs: Any,
 ) -> _T: ...
 
 class ADict(dict[_KT, _VT], MutableMapping[_KT, _VT]):
     def __setattr__(self, key: str, value: _VT) -> None: ...
+    def __delattr__(self, key: _KT, force: bool = False) -> None: ...  # type: ignore[override]
     def __call__(self, key: _KT) -> _VT: ...
     def __getattr__(self, name: str) -> _VT: ...
     def __deepcopy__(self, memo: dict[int, Any] | None) -> Self: ...
@@ -116,9 +126,13 @@ class pandapowerNet(ADict[str, pd.DataFrame]):
     res_ward: pd.DataFrame
     res_xward: pd.DataFrame
     res_protection: pd.DataFrame  # Optional?
+    @deprecated("Use copy.deepcopy(net) instead of net.deepcopy()")
+    def deepcopy(self) -> Self: ...
 
 class GeoAccessor:
     def __init__(self, pandas_obj) -> None: ...
+    @property
+    def as_geo_obj(self): ...
     @property
     def type(self) -> str: ...
     @property
@@ -140,6 +154,7 @@ def element_types_to_ets(element_types: None = None) -> pd.Series[str]: ...
 def element_types_to_ets(element_types: str) -> str: ...
 @overload
 def element_types_to_ets(element_types: list[str] | pd.Series[str] | pd.Index[str] | NDArray[np.str_]) -> list[str]: ...
+def empty_defaults_per_dtype(dtype: DTypeLike) -> float | Literal[""] | None: ...
 def get_free_id(df: pd.DataFrame) -> np.int64: ...
 
 class ppException(Exception): ...

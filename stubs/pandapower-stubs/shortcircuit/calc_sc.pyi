@@ -20,4 +20,5 @@ def calc_sc(
     check_connectivity: bool = True,
     return_all_currents: bool = False,
     inverse_y: bool = True,
+    use_pre_fault_voltage: bool = False,
 ) -> None: ...

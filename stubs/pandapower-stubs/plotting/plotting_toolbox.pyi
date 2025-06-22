@@ -1,52 +1,54 @@
-from collections.abc import Iterable
+from collections.abc import Collection, Iterable, Set as AbstractSet
 from typing import TypeVar, overload
 
 import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike, NDArray
 
+from pandapower._typing import Bool, Float, Int, ScalarOrVector
 from pandapower.auxiliary import pandapowerNet
 
 _T = TypeVar("_T")
 
 def get_collection_sizes(
     net: pandapowerNet,
-    bus_size: float = 1.0,
-    ext_grid_size: float = 1.0,
-    trafo_size: float = 1.0,
-    load_size: float = 1.0,
-    sgen_size: float = 1.0,
-    switch_size: float = 2.0,
-    switch_distance: float = 1.0,
-    gen_size: float = 1.0,
+    bus_size: Float = 1.0,
+    ext_grid_size: Float = 1.0,
+    trafo_size: Float = 1.0,
+    load_size: Float = 1.0,
+    sgen_size: Float = 1.0,
+    switch_size: Float = 2.0,
+    switch_distance: Float = 1.0,
+    gen_size: Float = 1.0,
 ) -> dict[str, float]: ...
 @overload
-def get_list(individuals: str, number_entries: int, name_ind: str, name_ent: str) -> list[str]: ...
+def get_list(individuals: str, number_entries: Int, name_ind: str, name_ent: str) -> list[str]: ...
 @overload
-def get_list(individuals: _T | Iterable[_T], number_entries: int, name_ind: str, name_ent: str) -> list[_T]: ...
+def get_list(individuals: ScalarOrVector[_T], number_entries: Int, name_ind: str, name_ent: str) -> list[_T]: ...
 @overload
 def get_color_list(
-    color: tuple[float, float, float], number_entries: int, name_entries: str = "nodes"
+    color: tuple[Float, Float, Float], number_entries: Int, name_entries: str = "nodes"
 ) -> list[tuple[float, float, float]]: ...
 @overload
 def get_color_list(
-    color: tuple[float, float, float, float], number_entries: int, name_entries: str = "nodes"
+    color: tuple[Float, Float, Float, Float], number_entries: Int, name_entries: str = "nodes"
 ) -> list[tuple[float, float, float, float]]: ...
 @overload
-def get_color_list(color: str | Iterable[str], number_entries: int, name_entries: str = "nodes") -> list[str]: ...
-def get_angle_list(angle: float | Iterable[float], number_entries: int, name_entries: str = "nodes") -> list[float]: ...
-def get_linewidth_list(linewidth: float | Iterable[float], number_entries: int, name_entries: str = "lines") -> list[float]: ...
-def get_index_array(indices: set[int] | ArrayLike | None, net_table_indices: pd.Index[int]) -> NDArray[np.int_]: ...
+def get_color_list(color: str | Iterable[str], number_entries: Int, name_entries: str = "nodes") -> list[str]: ...
+def get_angle_list(angle: ScalarOrVector[Float], number_entries: Int, name_entries: str = "nodes") -> list[float]: ...
+def get_linewidth_list(linewidth: ScalarOrVector[Float], number_entries: Int, name_entries: str = "lines") -> list[float]: ...
+def get_index_array(indices: AbstractSet[Int] | ArrayLike | None, net_table_indices: pd.Index[int]) -> NDArray[np.int_]: ...
 def coords_from_node_geodata(
-    element_indices: Iterable[int],
-    from_nodes: Iterable[int],
-    to_nodes: Iterable[int],
+    element_indices: Collection[Int],
+    from_nodes: Collection[Int],
+    to_nodes: Collection[Int],
     node_geodata: pd.DataFrame,
     table_name: str,
     node_name: str = "Bus",
-    ignore_zero_length: bool = True,
-) -> tuple[list[tuple[float, float]], NDArray[np.int_]]: ...
+    ignore_no_geo_diff: Bool = True,
+    node_geodata_to: pd.DataFrame | None = None,
+) -> tuple[list[tuple[float, float]], NDArray[np.int64]]: ...
 def set_line_geodata_from_bus_geodata(
-    net: pandapowerNet, line_index: Iterable[int] | None = None, overwrite: bool = False
+    net: pandapowerNet, line_index: Iterable[Int] | None = None, overwrite: Bool = False, ignore_no_geo_diff: Bool = True
 ) -> None: ...
-def position_on_busbar(net: pandapowerNet, bus: int, busbar_coords: NDArray[np.float64]) -> NDArray[np.float64] | None: ...
+def position_on_busbar(net: pandapowerNet, bus: Int, busbar_coords: NDArray[np.float64]) -> NDArray[np.float64] | None: ...
