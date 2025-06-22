@@ -1,9 +1,10 @@
 from _typeshed import SupportsItems
-from typing import Any, Literal, SupportsFloat as Float, TypedDict, overload, type_check_only
+from typing import Any, Literal, TypedDict, overload, type_check_only
 from typing_extensions import TypeAlias
 
 import pandas as pd
 
+from pandapower._typing import Float
 from pandapower.auxiliary import pandapowerNet
 
 _Element: TypeAlias = Literal["line", "line_dc", "trafo", "trafo3w", "fuse"]

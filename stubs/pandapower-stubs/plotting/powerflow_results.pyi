@@ -1,26 +1,26 @@
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping
 
 import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.typing import ColorType
 
+from pandapower._typing import Bool, Float, Int
 from pandapower.auxiliary import pandapowerNet
-
-MATPLOTLIB_INSTALLED: bool
 
 def plot_voltage_profile(
     net: pandapowerNet,
     ax: Axes | None = None,
-    plot_transformers: bool = True,
+    plot_transformers: Bool = True,
     xlabel: str = "Distance from Slack [km]",
     ylabel: str = "Voltage [pu]",
-    x0: float = 0,
+    x0: Float = 0,
     line_color: ColorType = "grey",
     trafo_color: ColorType = "r",
     bus_colors: str | Mapping[int, ColorType] = "b",
-    line_loading_weight: bool = False,
-    bus_size: float = 3,
-    lines: Sequence[int] | pd.Index[int] | None = None,
+    line_loading_weight: Bool = False,
+    voltage_column: str | None = None,
+    bus_size: Float = 3,
+    lines: Collection[int] | None = None,
     **kwargs,
 ) -> Axes: ...
 def plot_loading(
@@ -30,7 +30,9 @@ def plot_loading(
     box_color: ColorType = "b",
     median_color: ColorType = "r",
     whisker_color: ColorType = "k",
-    index_subset: Sequence[int] | pd.Index[int] | None = None,
+    index_subset: Collection[int] | None = None,
     **kwargs,
 ) -> Axes: ...
-def voltage_profile_to_bus_geodata(net: pandapowerNet, voltages: pd.Series[float] | None = None) -> pd.DataFrame: ...
+def voltage_profile_to_bus_geodata(
+    net: pandapowerNet, voltages: pd.Series[float] | None = None, root_bus: Int | None = None
+) -> pd.DataFrame: ...

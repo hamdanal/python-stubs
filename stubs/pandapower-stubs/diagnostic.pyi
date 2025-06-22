@@ -7,6 +7,7 @@ from pandapower.auxiliary import pandapowerNet
 _IntT = TypeVar("_IntT", bound=SupportsIndex)
 
 log_message_sep: str
+expected_exceptions: tuple[type[Exception], ...]
 
 @typing_overload
 def diagnostic(

@@ -1,11 +1,12 @@
-from typing import Literal, SupportsIndex
+from typing import Literal
 
+from pandapower._typing import Int
 from pandapower.auxiliary import pandapowerNet
 from pandapower.std_types import _StdType
 
 def create_dickert_lv_feeders(
     net: pandapowerNet,
-    busbar_index: SupportsIndex,
+    busbar_index: Int,
     feeders_range: Literal["short", "middle", "long"] = "short",
     linetype: Literal["cable", "C&OHL"] = "cable",
     customer: Literal["single", "multiple"] = "single",

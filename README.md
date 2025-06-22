@@ -82,7 +82,7 @@ This project is licensed under the MIT License.
     </th>
     <th>Incomplete</th>
     <th>Yes</th>
-    <th>No</th>
+    <th>Yes</th>
   </tr>
 </table>
 

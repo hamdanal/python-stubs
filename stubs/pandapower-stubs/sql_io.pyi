@@ -46,6 +46,7 @@ def from_sql(
     grid_id_column: str = "grid_id",
     grid_catalogue_name: str = "grid_catalogue",
     empty_dict_like_object: Mapping[str, pd.DataFrame] | None = None,
+    grid_tables: pd.DataFrame | None = None,
 ) -> pandapowerNet: ...
 def to_sql(
     net: pandapowerNet,
@@ -82,4 +83,5 @@ def from_postgresql(
     grid_id_column: str = "grid_id",
     grid_catalogue_name: str = "grid_catalogue",
     empty_dict_like_object: Mapping[str, pd.DataFrame] | None = None,
+    grid_tables: pd.DataFrame | None = None,
 ) -> pandapowerNet: ...

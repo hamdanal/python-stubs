@@ -1,8 +1,9 @@
 from collections.abc import Iterable
-from typing import Literal, SupportsFloat as Float, SupportsIndex as Int
+from typing import Literal
 
 import pandas as pd
 
+from pandapower._typing import Float, Int
 from pandapower.auxiliary import pandapowerNet
 
 def set_user_pf_options(net: pandapowerNet, overwrite: bool = False, **kwargs) -> None: ...
@@ -23,6 +24,7 @@ def runpp(
     distributed_slack: bool = False,
     tdpf: bool = False,
     tdpf_delay_s: Float | None = None,
+    *,
     # the following are defined as **kwargs and documented as follows
     lightsim2grid: bool | Literal["auto"] = "auto",
     numba: bool = True,
