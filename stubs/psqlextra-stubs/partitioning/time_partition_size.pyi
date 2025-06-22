@@ -1,7 +1,9 @@
+import datetime as dt
 import enum
-from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
+
+__all__ = ["PostgresTimePartitionUnit", "PostgresTimePartitionSize"]
 
 class PostgresTimePartitionUnit(enum.Enum):
     YEARS = "years"
@@ -13,7 +15,7 @@ class PostgresTimePartitionSize:
     unit: PostgresTimePartitionUnit
     value: int
     def __init__(
-        self, years: int | None = ..., months: int | None = ..., weeks: int | None = ..., days: int | None = ...
+        self, years: int | None = None, months: int | None = None, weeks: int | None = None, days: int | None = None
     ) -> None: ...
     def as_delta(self) -> relativedelta: ...
-    def start(self, dt: datetime) -> datetime: ...
+    def start(self, dt: dt.datetime) -> dt.datetime: ...

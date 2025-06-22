@@ -24,11 +24,11 @@ class HStoreRef(F):
     def __init__(self, name: str, key: str) -> None: ...
     def resolve_expression(  # type: ignore[override]
         self,
-        query: Incomplete = ...,
-        allow_joins: bool = ...,
-        reuse: set[str] | None = ...,
-        summarize: bool = ...,
-        for_save: bool = ...,
+        query: Incomplete = None,
+        allow_joins: bool = True,
+        reuse: set[str] | None = None,
+        summarize: bool = False,
+        for_save: bool = False,
     ) -> HStoreColumn: ...
 
 class DateTimeEpochColumn(Col): ...
@@ -36,14 +36,14 @@ class DateTimeEpochColumn(Col): ...
 class DateTimeEpoch(F):
     def resolve_expression(  # type: ignore[override]
         self,
-        query: Incomplete = ...,
-        allow_joins: bool = ...,
-        reuse: set[str] | None = ...,
-        summarize: bool = ...,
-        for_save: bool = ...,
+        query: Incomplete = None,
+        allow_joins: bool = True,
+        reuse: set[str] | None = None,
+        summarize: bool = False,
+        for_save: bool = False,
     ) -> DateTimeEpochColumn: ...
 
-def IsNotNone(*fields: str, default: Incomplete | None = None) -> Case: ...
+def IsNotNone(*fields: str, default: object | None = None) -> Case: ...
 
 class ExcludedCol(Expression):
     name: str
