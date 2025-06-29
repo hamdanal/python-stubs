@@ -5,14 +5,11 @@ pandapower\.build_bus.*
 pandapower\.contingency.*
 pandapower\.control.*
 pandapower\.converter.*
-pandapower\.estimation.*
 pandapower\.grid_equivalents.*
-pandapower\.io_utils.*
 pandapower\.pf.*
 pandapower\.protection.*
 pandapower\.pypower.*
 pandapower\.results.*
-pandapower\.topology.*
 
 # TODO constants
 pandapower\.[A-Z0-9_]+$
@@ -20,11 +17,15 @@ pandapower\.[A-Z0-9_]+$
 # OK stubs-only
 pandapower\._typing
 
-# OK runtime-only
-pandapower\..*\.logger
-pandapower\.(\w+\.)*(nan|zeros|pp_version)
+# OK runtime-only helpers
+pandapower\..*\.(std_)?logger
 pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
-pandapower\.networks\.pp_dir
+
+# OK runtime-only unintentional reexports
+pandapower\.(nan|pp_version)
+pandapower\.networks\.(nan|pp_dir)
+pandapower\.topology\.BASE_KV
 
 # OK requires optional dependencies
 pandapower\.timeseries\.ts_runpp  # requires numba
+pandapower\.topology\.graph_tool_interface  # requires graph-tool

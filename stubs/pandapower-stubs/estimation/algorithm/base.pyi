@@ -2,6 +2,8 @@ from _typeshed import Incomplete
 
 from pandapower.estimation.ppc_conversion import ExtendedPPCI
 
+__all__ = ["WLSAlgorithm", "WLSZeroInjectionConstraintsAlgorithm", "IRWLSAlgorithm"]
+
 class BaseAlgorithm:
     tolerance: Incomplete
     max_iterations: Incomplete
@@ -23,7 +25,7 @@ class WLSAlgorithm(BaseAlgorithm):
     H: Incomplete
     hx: Incomplete
     def __init__(self, tolerance, maximum_iterations, logger=...) -> None: ...
-    def estimate(self, eppci: ExtendedPPCI, **kwargs): ...
+    def estimate(self, eppci: ExtendedPPCI, debug_mode: bool = False, **kwargs): ...
 
 class WLSZeroInjectionConstraintsAlgorithm(BaseAlgorithm):
     def estimate(self, eppci: ExtendedPPCI, **kwargs): ...

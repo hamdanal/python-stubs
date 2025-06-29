@@ -1,14 +1,16 @@
-VM: int
-VM_STD: int
-P: int
-P_STD: int
-Q: int
-Q_STD: int
-VM_IDX: int
-P_IDX: int
-Q_IDX: int
-ZERO_INJ_FLAG: int
-VA: int
-VA_STD: int
-VA_IDX: int
-bus_cols_se: int
+from typing import Final
+
+VM: Final = 0
+VM_STD: Final = 1
+P: Final = 2
+P_STD: Final = 3
+Q: Final = 4
+Q_STD: Final = 5
+VM_IDX: Final = 6
+P_IDX: Final = 7
+Q_IDX: Final = 8
+ZERO_INJ_FLAG: Final = 9
+VA: Final = 10
+VA_STD: Final = 11
+VA_IDX: Final = 12
+bus_cols_se: Final = 13
