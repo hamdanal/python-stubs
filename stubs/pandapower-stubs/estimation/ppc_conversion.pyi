@@ -39,9 +39,9 @@ class ExtendedPPCI(UserDict[str, Any]):
     any_i_meas: bool
     any_degree_meas: bool
     non_slack_buses: Array1D[np.int64]
-    non_slack_bus_mask: Array1D[np.bool_]
+    non_slack_bus_mask: Array1D[np.bool]
     num_non_slack_bus: np.int64
-    delta_v_bus_mask: Array1D[np.bool_]
+    delta_v_bus_mask: Array1D[np.bool]
     delta_v_bus_selector: Array1D[np.int64]
     v_init: Array1D[np.float64]
     delta_init: Array1D[np.float64]
