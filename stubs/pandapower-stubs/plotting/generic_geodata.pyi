@@ -5,7 +5,7 @@ from typing import (
     Literal,
 )
 
-import networkx as nx  # type: ignore[import-untyped]
+import networkx as nx
 from numpy.typing import ArrayLike
 
 from pandapower._typing import Float

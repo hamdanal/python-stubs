@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 
-import networkx as nx  # type: ignore[import-untyped]
+import networkx as nx
 
 from pandapower.auxiliary import pandapowerNet
 

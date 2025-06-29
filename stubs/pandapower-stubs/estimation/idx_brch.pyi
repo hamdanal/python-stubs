@@ -1,25 +1,27 @@
-IM_FROM: int
-IM_FROM_STD: int
-IM_TO: int
-IM_TO_STD: int
-P_FROM: int
-P_FROM_STD: int
-P_TO: int
-P_TO_STD: int
-Q_FROM: int
-Q_FROM_STD: int
-Q_TO: int
-Q_TO_STD: int
-IM_FROM_IDX: int
-P_FROM_IDX: int
-Q_FROM_IDX: int
-IM_TO_IDX: int
-P_TO_IDX: int
-Q_TO_IDX: int
-IA_FROM: int
-IA_FROM_STD: int
-IA_TO: int
-IA_TO_STD: int
-IA_FROM_IDX: int
-IA_TO_IDX: int
-branch_cols_se: int
+from typing import Final
+
+IM_FROM: Final = 0
+IM_FROM_STD: Final = 1
+IM_TO: Final = 2
+IM_TO_STD: Final = 3
+P_FROM: Final = 4
+P_FROM_STD: Final = 5
+P_TO: Final = 6
+P_TO_STD: Final = 7
+Q_FROM: Final = 8
+Q_FROM_STD: Final = 9
+Q_TO: Final = 10
+Q_TO_STD: Final = 11
+IM_FROM_IDX: Final = 12
+P_FROM_IDX: Final = 13
+Q_FROM_IDX: Final = 14
+IM_TO_IDX: Final = 15
+P_TO_IDX: Final = 16
+Q_TO_IDX: Final = 17
+IA_FROM: Final = 18
+IA_FROM_STD: Final = 19
+IA_TO: Final = 20
+IA_TO_STD: Final = 21
+IA_FROM_IDX: Final = 22
+IA_TO_IDX: Final = 23
+branch_cols_se: Final = 24

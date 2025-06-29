@@ -2,6 +2,8 @@ from _typeshed import Incomplete
 
 from pandapower.estimation.ppc_conversion import ExtendedPPCI
 
+__all__ = ["BaseAlgebra", "BaseAlgebraZeroInjConstraints"]
+
 class BaseAlgebra:
     eppci: Incomplete
     fb: Incomplete

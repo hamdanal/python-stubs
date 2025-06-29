@@ -1,9 +1,9 @@
 from _typeshed import Incomplete
 from collections.abc import Collection, Container, Generator, Iterable, Set as AbstractSet
-from typing import Literal, TypedDict
+from typing import Any, Literal, TypedDict
 from typing_extensions import TypeAlias
 
-import networkx as nx  # type: ignore[import-untyped]
+import networkx as nx
 import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
@@ -34,6 +34,7 @@ def calc_distance_to_bus(
     nogobuses: Iterable[int] | None = None,
     notravbuses: Iterable[int] | None = None,
     weight: str | None = "weight",
+    g: nx.MultiGraph[Any] | None = None,
 ) -> pd.Series[float]: ...
 def unsupplied_buses(
     net: pandapowerNet,
