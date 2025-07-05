@@ -37,3 +37,8 @@ class SupportsGeoInterface(Protocol):
     def __geo_interface__(self) -> dict[str, Any]: ...  # values are arbitrary
 
 ConvertibleToCRS: TypeAlias = str | int | tuple[str, str] | list[str] | dict[str, Any] | SupportsToWkt
+
+from pandapower.auxiliary import pandapowerNet  # noqa: E402
+
+class RunPPFunc(Protocol):
+    def __call__(self, net: pandapowerNet, *, calculate_voltage_angles: bool, **kwargs) -> object: ...

@@ -5,6 +5,7 @@ from pandapower.auxiliary import pandapowerNet
 
 _Mode: TypeAlias = Literal["pf", "opf", "sc", "se", "pf_3ph"]
 
+BRANCH_RESULTS_KEYS: tuple[str, ...]
 suffix_mode: dict[str, str]
 
 def verify_results(net: pandapowerNet, mode: _Mode = "pf") -> None: ...
