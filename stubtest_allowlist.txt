@@ -1,31 +1,28 @@
 # pandapower allowlist
 # ====================
-# TODO modules
-pandapower\.build_bus.*
+# TODO: modules
 pandapower\.contingency.*
 pandapower\.control.*
 pandapower\.converter.*
-pandapower\.grid_equivalents.*
-pandapower\.pf.*
-pandapower\.protection.*
 pandapower\.pypower.*
-pandapower\.results.*
 
-# TODO constants
+# TODO: constants
 pandapower\.[A-Z0-9_]+$
 
-# OK stubs-only
+# OK: stubs-only
 pandapower\._typing
 
-# OK runtime-only helpers
+# OK: runtime-only helpers
 pandapower\..*\.(std_)?logger
+pandapower\.grid_equivalents(\.auxiliary)?\.(home|desktop)
 pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
 
-# OK runtime-only unintentional reexports
+# OK: runtime-only unintentional reexports
 pandapower\.(nan|pp_version)
 pandapower\.networks\.(nan|pp_dir)
 pandapower\.topology\.BASE_KV
 
-# OK requires optional dependencies
+# OK: requires optional dependencies
 pandapower\.timeseries\.ts_runpp  # requires numba
+pandapower\.pf\.(makeYbus_numba|dSbus_dV_numba|create_jacobian_numba)  # requires numba
 pandapower\.topology\.graph_tool_interface  # requires graph-tool
