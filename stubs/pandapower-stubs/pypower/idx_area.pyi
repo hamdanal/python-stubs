@@ -1,2 +1,4 @@
-AREA_I: int
-PRICE_REF_BUS: int
+from typing import Final
+
+AREA_I: Final = 0
+PRICE_REF_BUS: Final = 1

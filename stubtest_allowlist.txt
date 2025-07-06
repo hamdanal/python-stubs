@@ -2,9 +2,7 @@
 # ====================
 # TODO: modules
 pandapower\.contingency.*
-pandapower\.control.*
 pandapower\.converter.*
-pandapower\.pypower.*
 
 # TODO: constants
 pandapower\.[A-Z0-9_]+$
@@ -15,7 +13,7 @@ pandapower\._typing
 # OK: runtime-only helpers
 pandapower\..*\.(std_)?logger
 pandapower\.grid_equivalents(\.auxiliary)?\.(home|desktop)
-pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
+pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|imported|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
 
 # OK: runtime-only unintentional reexports
 pandapower\.(nan|pp_version)

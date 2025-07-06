@@ -1,25 +1,31 @@
-PQ: int
-PV: int
-REF: int
-NONE: int
-BUS_I: int
-BUS_TYPE: int
-PD: int
-QD: int
-GS: int
-BS: int
-BUS_AREA: int
-VM: int
-VA: int
-BASE_KV: int
-ZONE: int
-VMAX: int
-VMIN: int
-LAM_P: int
-LAM_Q: int
-MU_VMAX: int
-MU_VMIN: int
-CID: int
-CZD: int
-SL_FAC: int
-bus_cols: int
+from typing import Final
+
+PQ: Final = 1
+PV: Final = 2
+REF: Final = 3
+NONE: Final = 4
+
+BUS_I: Final = 0
+BUS_TYPE: Final = 1
+PD: Final = 2
+QD: Final = 3
+GS: Final = 4
+BS: Final = 5
+BUS_AREA: Final = 6
+VM: Final = 7
+VA: Final = 8
+BASE_KV: Final = 9
+ZONE: Final = 10
+VMAX: Final = 11
+VMIN: Final = 12
+
+LAM_P: Final = 13
+LAM_Q: Final = 14
+MU_VMAX: Final = 15
+MU_VMIN: Final = 16
+
+CID: Final = 13
+CZD: Final = 14
+SL_FAC: Final = 15
+
+bus_cols: Final = 16

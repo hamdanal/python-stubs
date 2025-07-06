@@ -4,7 +4,9 @@ from typing_extensions import TypeAlias
 
 import numpy as np
 
-_T = TypeVar("_T", bound=Any)
+_T = TypeVar("_T")
+_G = TypeVar("_G", bound=np.generic)
+_Generic_co = TypeVar("_Generic_co", covariant=True, bound=np.generic)
 
 # Wide primitives for input types
 Bool: TypeAlias = bool | np.bool
@@ -13,8 +15,14 @@ Float: TypeAlias = SupportsFloat | Int
 
 # Vector-related
 ScalarOrVector: TypeAlias = _T | Collection[_T]
-Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_T]]
-Array2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_T]]
+Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_G]]
+Array2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_G]]
+
+class SupportsArray(Protocol[_Generic_co]):
+    def __array__(self) -> np.ndarray[Any, np.dtype[_Generic_co]]: ...
+
+VectorLike: TypeAlias = Collection[_T] | SupportsArray[_G]
+FloatVectorLike: TypeAlias = VectorLike[Float, np.floating | np.integer | np.bool]
 
 # File I/O related
 @type_check_only

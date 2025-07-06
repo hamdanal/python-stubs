@@ -1,12 +1,10 @@
-from _typeshed import Incomplete
-
+from pandapower.auxiliary import pandapowerNet
 from pandapower.control.controller.characteristic_control import CharacteristicControl
-from pandapower.control.util.characteristic import Characteristic as Characteristic
 
 class VmSetTapControl(CharacteristicControl):
     def __init__(
         self,
-        net,
+        net: pandapowerNet,
         controller_index,
         characteristic_index,
         variable: str = "p_hv_mw",
@@ -15,6 +13,6 @@ class VmSetTapControl(CharacteristicControl):
         order: int = 0,
         level: int = 0,
         drop_same_existing_ctrl: bool = False,
-        matching_params: Incomplete | None = None,
+        matching_params=None,
         **kwargs,
     ) -> None: ...

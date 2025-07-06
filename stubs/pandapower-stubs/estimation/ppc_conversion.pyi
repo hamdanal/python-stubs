@@ -1,12 +1,9 @@
 from collections import UserDict
 from collections.abc import Collection
-from typing import (
-    Any,
-    Any as csr_matrix,  # scipy.sparse.csr_matrix
-    Literal,
-)
+from typing import Any, Literal
 
 import numpy as np
+from scipy.sparse import csr_matrix  # type: ignore[import-untyped]
 
 from pandapower._typing import Array1D, Array2D
 from pandapower.auxiliary import pandapowerNet
