@@ -53,12 +53,14 @@ def test_line_interpolate_point() -> None:
 
 
 def test_line_locate_point() -> None:
-    check(assert_type(shapely.line_locate_point(LS, P), float), float)
-    check(assert_type(shapely.line_locate_point(MLS, P), float), float)
-    check(assert_type(shapely.line_locate_point(GeometryCollection(MLS), P), float), float)
-    check(assert_type(shapely.line_locate_point(None, P), float), float)
-    check(assert_type(shapely.line_locate_point(LS, None), float), float)
-    check(assert_type(shapely.line_locate_point(None, None), float), float)
+    check(assert_type(shapely.line_locate_point(LS, P), np.float64), np.float64)
+    check(assert_type(shapely.line_locate_point(MLS, P), np.float64), np.float64)
+    check(
+        assert_type(shapely.line_locate_point(GeometryCollection(MLS), P), np.float64), np.float64
+    )
+    check(assert_type(shapely.line_locate_point(None, P), np.float64), np.float64)
+    check(assert_type(shapely.line_locate_point(LS, None), np.float64), np.float64)
+    check(assert_type(shapely.line_locate_point(None, None), np.float64), np.float64)
     check(
         assert_type(shapely.line_locate_point([MLS, LS], P), NDArray[np.float64]),
         np.ndarray,
@@ -74,7 +76,7 @@ def test_line_locate_point() -> None:
         np.ndarray,
         dtype=float,
     )
-    check(assert_type(shapely.line_locate_point(LS, P, normalized=True), float), float)
+    check(assert_type(shapely.line_locate_point(LS, P, normalized=True), np.float64), np.float64)
     check(
         assert_type(shapely.line_locate_point([MLS, LS], P, normalized=True), NDArray[np.float64]),
         np.ndarray,

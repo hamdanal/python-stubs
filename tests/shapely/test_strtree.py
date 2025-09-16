@@ -28,16 +28,16 @@ def test_strtree_query() -> None:
     check(
         assert_type(TREE.query(shapely.box(0, 0, 1, 1)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(assert_type(TREE.query(None), NDArray[np.int64]), np.ndarray)
     check(
         assert_type(TREE.query((shapely.box(0, 0, 1, 1), None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
-    check(assert_type(TREE.query(BOXES), NDArray[np.int64]), np.ndarray, dtype=np.integer)
-    check(assert_type(TREE.query(np.array(BOXES)), NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(TREE.query(BOXES), NDArray[np.int64]), np.ndarray, dtype=np.int64)
+    check(assert_type(TREE.query(np.array(BOXES)), NDArray[np.int64]), np.ndarray, dtype=np.int64)
 
     tree = shapely.STRtree(
         [shapely.box(0, 0, 0.5, 0.5), shapely.box(0.5, 0.5, 1, 1), shapely.box(1, 1, 2, 2)]
@@ -45,24 +45,24 @@ def test_strtree_query() -> None:
     check(
         assert_type(tree.query(shapely.box(0, 0, 1, 1), predicate="contains"), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(
         assert_type(
             tree.query(Point(0.75, 0.75), predicate="dwithin", distance=0.5), NDArray[np.int64]
         ),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(
         assert_type(tree.query(BOXES, predicate="dwithin", distance=0.5), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(
         assert_type(tree.query(BOXES, predicate="dwithin", distance=[0.5, 0.6]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
 
     with pytest.raises(Exception):  # needs distance
@@ -73,17 +73,17 @@ def test_strtree_query() -> None:
 
 
 def test_strtree_nearest() -> None:
-    check(assert_type(TREE.nearest(shapely.box(0, 0, 1, 1)), int | Any), np.integer)
+    check(assert_type(TREE.nearest(shapely.box(0, 0, 1, 1)), np.int64 | Any), np.int64)
     check(
         assert_type(TREE.nearest([shapely.box(0, 0, 1, 1)]), NDArray[np.int64] | Any),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
-    check(assert_type(TREE.nearest(BOXES), NDArray[np.int64] | Any), np.ndarray, dtype=np.integer)
+    check(assert_type(TREE.nearest(BOXES), NDArray[np.int64] | Any), np.ndarray, dtype=np.int64)
     check(
         assert_type(TREE.nearest(np.array(BOXES)), NDArray[np.int64] | Any),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
 
     with pytest.raises(Exception):
@@ -96,25 +96,25 @@ def test_strtree_query_nearest() -> None:
     check(
         assert_type(TREE.query_nearest(Point(0.25, 0.25)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(assert_type(TREE.query_nearest(None), NDArray[np.int64]), np.ndarray)
     check(
         assert_type(TREE.query_nearest([Point(2.25, 2.25), Point(1, 1)]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(
         assert_type(TREE.query_nearest((Point(2.25, 2.25), None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     check(
         assert_type(
             TREE.query_nearest(shapely.box(1, 1, 3, 3), all_matches=False), NDArray[np.int64]
         ),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int64,
     )
     with_distance = TREE.query_nearest(Point(0.5, 0.5), return_distance=True)
     check(
@@ -122,7 +122,7 @@ def test_strtree_query_nearest() -> None:
         tuple,
         dtype=np.ndarray,
     )
-    check(assert_type(with_distance[0], NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(with_distance[0], NDArray[np.int64]), np.ndarray, dtype=np.int64)
     check(assert_type(with_distance[1], NDArray[np.float64]), np.ndarray, dtype=float)
     check(
         assert_type(

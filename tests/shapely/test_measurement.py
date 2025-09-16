@@ -15,17 +15,17 @@ MP = MultiPoint([(0, 0), (1, 1), (0, 2), (2, 2), (3, 1), (1, 0)])
 
 
 def test_area() -> None:
-    check(assert_type(shapely.area(PO), float), float)
-    check(assert_type(shapely.area(None), float), float)
+    check(assert_type(shapely.area(PO), np.float64), np.float64)
+    check(assert_type(shapely.area(None), np.float64), np.float64)
     check(assert_type(shapely.area([P, LS]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.area((P, LS, None)), NDArray[np.float64]), np.ndarray, dtype=float)
 
 
 def test_distance() -> None:
-    check(assert_type(shapely.distance(PO, P), float), float)
-    check(assert_type(shapely.distance(PO, None), float), float)
-    check(assert_type(shapely.distance(None, PO), float), float)
-    check(assert_type(shapely.distance(None, None), float), float)
+    check(assert_type(shapely.distance(PO, P), np.float64), np.float64)
+    check(assert_type(shapely.distance(PO, None), np.float64), np.float64)
+    check(assert_type(shapely.distance(None, PO), np.float64), np.float64)
+    check(assert_type(shapely.distance(None, None), np.float64), np.float64)
     check(
         assert_type(shapely.distance([P, LS], None), NDArray[np.float64]), np.ndarray, dtype=float
     )
@@ -55,18 +55,18 @@ def test_total_bounds() -> None:
 
 
 def test_length() -> None:
-    check(assert_type(shapely.length(PO), float), float)
-    check(assert_type(shapely.length(None), float), float)
+    check(assert_type(shapely.length(PO), np.float64), np.float64)
+    check(assert_type(shapely.length(None), np.float64), np.float64)
     check(assert_type(shapely.length([P, LS]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.length((P, LS, None)), NDArray[np.float64]), np.ndarray, dtype=float)
 
 
 def test_hausdorff_distance() -> None:
-    check(assert_type(shapely.hausdorff_distance(PO, P), float), float)
-    check(assert_type(shapely.hausdorff_distance(P, None), float), float)
-    check(assert_type(shapely.hausdorff_distance(PO, P, densify=0.01), float), float)
-    check(assert_type(shapely.hausdorff_distance(P, None, densify=0.01), float), float)
-    check(assert_type(shapely.hausdorff_distance(None, None), float), float)
+    check(assert_type(shapely.hausdorff_distance(PO, P), np.float64), np.float64)
+    check(assert_type(shapely.hausdorff_distance(P, None), np.float64), np.float64)
+    check(assert_type(shapely.hausdorff_distance(PO, P, densify=0.01), np.float64), np.float64)
+    check(assert_type(shapely.hausdorff_distance(P, None, densify=0.01), np.float64), np.float64)
+    check(assert_type(shapely.hausdorff_distance(None, None), np.float64), np.float64)
     check(
         assert_type(shapely.hausdorff_distance([P], None), NDArray[np.float64]),
         np.ndarray,
@@ -111,11 +111,11 @@ def test_hausdorff_distance() -> None:
 
 
 def test_frechet_distance() -> None:
-    check(assert_type(shapely.frechet_distance(PO, P), float), float)
-    check(assert_type(shapely.frechet_distance(P, None), float), float)
-    check(assert_type(shapely.frechet_distance(PO, P, densify=0.01), float), float)
-    check(assert_type(shapely.frechet_distance(P, None, densify=0.01), float), float)
-    check(assert_type(shapely.frechet_distance(None, None), float), float)
+    check(assert_type(shapely.frechet_distance(PO, P), np.float64), np.float64)
+    check(assert_type(shapely.frechet_distance(P, None), np.float64), np.float64)
+    check(assert_type(shapely.frechet_distance(PO, P, densify=0.01), np.float64), np.float64)
+    check(assert_type(shapely.frechet_distance(P, None, densify=0.01), np.float64), np.float64)
+    check(assert_type(shapely.frechet_distance(None, None), np.float64), np.float64)
     check(
         assert_type(shapely.frechet_distance([P], None), NDArray[np.float64]),
         np.ndarray,
@@ -158,8 +158,8 @@ def test_frechet_distance() -> None:
 
 
 def test_minimum_clearance() -> None:
-    check(assert_type(shapely.minimum_clearance(PO), float), float)
-    check(assert_type(shapely.minimum_clearance(None), float), float)
+    check(assert_type(shapely.minimum_clearance(PO), np.float64), np.float64)
+    check(assert_type(shapely.minimum_clearance(None), np.float64), np.float64)
     check(
         assert_type(shapely.minimum_clearance([P, LS]), NDArray[np.float64]),
         np.ndarray,
@@ -173,8 +173,8 @@ def test_minimum_clearance() -> None:
 
 
 def test_minimum_bounding_radius() -> None:
-    check(assert_type(shapely.minimum_bounding_radius(PO), float), float)
-    check(assert_type(shapely.minimum_bounding_radius(None), float), float)
+    check(assert_type(shapely.minimum_bounding_radius(PO), np.float64), np.float64)
+    check(assert_type(shapely.minimum_bounding_radius(None), np.float64), np.float64)
     check(
         assert_type(shapely.minimum_bounding_radius([P, LS]), NDArray[np.float64]),
         np.ndarray,
