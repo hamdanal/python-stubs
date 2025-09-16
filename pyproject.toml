@@ -83,6 +83,7 @@ strict = true
 warn_unused_ignores = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
+enable_error_code = "deprecated"
 
 [tool.pyright]
 # Project settings

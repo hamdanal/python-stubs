@@ -483,71 +483,69 @@ def test_geo() -> None:
 
 def test_generic_getset() -> None:
     # type_id
-    check(assert_type(shapely.get_type_id(P), int), np.integer)
-    check(assert_type(shapely.get_type_id(None), int), np.integer)
-    check(assert_type(shapely.get_type_id([P]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
-    check(assert_type(shapely.get_type_id([None]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(shapely.get_type_id(P), np.int32), np.int32)
+    check(assert_type(shapely.get_type_id(None), np.int32), np.int32)
+    check(assert_type(shapely.get_type_id([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
+    check(assert_type(shapely.get_type_id([None]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
     check(
-        assert_type(shapely.get_type_id((P, None)), NDArray[np.int64]), np.ndarray, dtype=np.integer
+        assert_type(shapely.get_type_id((P, None)), NDArray[np.int64]), np.ndarray, dtype=np.int32
     )
 
     # dimensions
-    check(assert_type(shapely.get_dimensions(P), int), np.integer)
-    check(assert_type(shapely.get_dimensions(None), int), np.integer)
-    check(assert_type(shapely.get_dimensions([P]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(shapely.get_dimensions(P), np.int32), np.int32)
+    check(assert_type(shapely.get_dimensions(None), np.int32), np.int32)
+    check(assert_type(shapely.get_dimensions([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
     check(
-        assert_type(shapely.get_dimensions([None]), NDArray[np.int64]), np.ndarray, dtype=np.integer
+        assert_type(shapely.get_dimensions([None]), NDArray[np.int64]), np.ndarray, dtype=np.int32
     )
     check(
         assert_type(shapely.get_dimensions((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
     # coordinate_dimension
-    check(assert_type(shapely.get_coordinate_dimension(P), int), np.integer)
-    check(assert_type(shapely.get_coordinate_dimension(None), int), np.integer)
+    check(assert_type(shapely.get_coordinate_dimension(P), np.int32), np.int32)
+    check(assert_type(shapely.get_coordinate_dimension(None), np.int32), np.int32)
     check(
         assert_type(shapely.get_coordinate_dimension([P]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_coordinate_dimension([None]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_coordinate_dimension((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
     # num_coordinates
-    check(assert_type(shapely.get_num_coordinates(P), int), np.integer)
-    check(assert_type(shapely.get_num_coordinates(None), int), np.integer)
+    check(assert_type(shapely.get_num_coordinates(P), np.int32), np.int32)
+    check(assert_type(shapely.get_num_coordinates(None), np.int32), np.int32)
     check(
-        assert_type(shapely.get_num_coordinates([P]), NDArray[np.int64]),
-        np.ndarray,
-        dtype=np.integer,
+        assert_type(shapely.get_num_coordinates([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32
     )
     check(
         assert_type(shapely.get_num_coordinates([None]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_num_coordinates((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
     # srid
-    check(assert_type(shapely.get_srid(P), int), np.integer)
-    check(assert_type(shapely.get_srid(None), int), np.integer)
-    check(assert_type(shapely.get_srid([P]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
-    check(assert_type(shapely.get_srid([None]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
-    check(assert_type(shapely.get_srid((P, None)), NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(shapely.get_srid(P), np.int32), np.int32)
+    check(assert_type(shapely.get_srid(None), np.int32), np.int32)
+    check(assert_type(shapely.get_srid([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
+    check(assert_type(shapely.get_srid([None]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
+    check(assert_type(shapely.get_srid((P, None)), NDArray[np.int64]), np.ndarray, dtype=np.int32)
 
     check(assert_type(shapely.set_srid(P, 20), Point), Point)
     check(assert_type(shapely.set_srid(None, 20), None), NoneType)
@@ -560,8 +558,8 @@ def test_generic_getset() -> None:
     )
 
     # precision
-    check(assert_type(shapely.get_precision(None), float), float)
-    check(assert_type(shapely.get_precision(P), float), float)
+    check(assert_type(shapely.get_precision(None), np.float64), np.float64)
+    check(assert_type(shapely.get_precision(P), np.float64), np.float64)
     check(assert_type(shapely.get_precision([P]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_precision([None]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(
@@ -615,23 +613,23 @@ def test_generic_getset() -> None:
 
 
 def test_point_getset() -> None:
-    check(assert_type(shapely.get_x(P), float), float)
-    check(assert_type(shapely.get_x(LS), float), float)
-    check(assert_type(shapely.get_x(None), float), float)
+    check(assert_type(shapely.get_x(P), np.float64), np.float64)
+    check(assert_type(shapely.get_x(LS), np.float64), np.float64)
+    check(assert_type(shapely.get_x(None), np.float64), np.float64)
     check(assert_type(shapely.get_x([P]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_x([None]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_x((P, None)), NDArray[np.float64]), np.ndarray, dtype=float)
 
-    check(assert_type(shapely.get_y(P), float), float)
-    check(assert_type(shapely.get_y(LS), float), float)
-    check(assert_type(shapely.get_y(None), float), float)
+    check(assert_type(shapely.get_y(P), np.float64), np.float64)
+    check(assert_type(shapely.get_y(LS), np.float64), np.float64)
+    check(assert_type(shapely.get_y(None), np.float64), np.float64)
     check(assert_type(shapely.get_y([P]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_y([None]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_y((P, None)), NDArray[np.float64]), np.ndarray, dtype=float)
 
-    check(assert_type(shapely.get_z(P), float), float)
-    check(assert_type(shapely.get_z(LS), float), float)
-    check(assert_type(shapely.get_z(None), float), float)
+    check(assert_type(shapely.get_z(P), np.float64), np.float64)
+    check(assert_type(shapely.get_z(LS), np.float64), np.float64)
+    check(assert_type(shapely.get_z(None), np.float64), np.float64)
     check(assert_type(shapely.get_z([P]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_z([None]), NDArray[np.float64]), np.ndarray, dtype=float)
     check(assert_type(shapely.get_z((P, None)), NDArray[np.float64]), np.ndarray, dtype=float)
@@ -658,17 +656,17 @@ def test_linestring_getset() -> None:
     check(assert_type(shapely.get_point(LS, [0]), NDArray[np.object_]), np.ndarray, dtype=Point)
     check(assert_type(shapely.get_point([LS], [0]), NDArray[np.object_]), np.ndarray, dtype=Point)
 
-    check(assert_type(shapely.get_num_points(LS), int), np.integer)
-    check(assert_type(shapely.get_num_points(P), int), np.integer)
-    check(assert_type(shapely.get_num_points(None), int), np.integer)
-    check(assert_type(shapely.get_num_points([P]), NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(shapely.get_num_points(LS), np.int32), np.int32)
+    check(assert_type(shapely.get_num_points(P), np.int32), np.int32)
+    check(assert_type(shapely.get_num_points(None), np.int32), np.int32)
+    check(assert_type(shapely.get_num_points([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32)
     check(
-        assert_type(shapely.get_num_points([None]), NDArray[np.int64]), np.ndarray, dtype=np.integer
+        assert_type(shapely.get_num_points([None]), NDArray[np.int64]), np.ndarray, dtype=np.int32
     )
     check(
         assert_type(shapely.get_num_points((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
 
@@ -735,23 +733,23 @@ def test_polygon_getset() -> None:
         dtype=LinearRing,
     )
 
-    check(assert_type(shapely.get_num_interior_rings(PO), int), np.integer)
-    check(assert_type(shapely.get_num_interior_rings(P), int), np.integer)
-    check(assert_type(shapely.get_num_interior_rings(None), int), np.integer)
+    check(assert_type(shapely.get_num_interior_rings(PO), np.int32), np.int32)
+    check(assert_type(shapely.get_num_interior_rings(P), np.int32), np.int32)
+    check(assert_type(shapely.get_num_interior_rings(None), np.int32), np.int32)
     check(
         assert_type(shapely.get_num_interior_rings([P]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_num_interior_rings([None]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_num_interior_rings((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
 
@@ -787,23 +785,21 @@ def test_collection_getset() -> None:
         assert_type(shapely.get_geometry([MP], [0]), NDArray[np.object_]), np.ndarray, dtype=Point
     )
 
-    check(assert_type(shapely.get_num_geometries(MP), int), np.integer)
-    check(assert_type(shapely.get_num_geometries(P), int), np.integer)
-    check(assert_type(shapely.get_num_geometries(None), int), np.integer)
+    check(assert_type(shapely.get_num_geometries(MP), np.int32), np.int32)
+    check(assert_type(shapely.get_num_geometries(P), np.int32), np.int32)
+    check(assert_type(shapely.get_num_geometries(None), np.int32), np.int32)
     check(
-        assert_type(shapely.get_num_geometries([P]), NDArray[np.int64]),
-        np.ndarray,
-        dtype=np.integer,
+        assert_type(shapely.get_num_geometries([P]), NDArray[np.int64]), np.ndarray, dtype=np.int32
     )
     check(
         assert_type(shapely.get_num_geometries([None]), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
     check(
         assert_type(shapely.get_num_geometries((P, None)), NDArray[np.int64]),
         np.ndarray,
-        dtype=np.integer,
+        dtype=np.int32,
     )
 
     check(assert_type(shapely.get_parts(P), NDArray[np.object_]), np.ndarray, dtype=Point)
@@ -825,7 +821,7 @@ def test_collection_getset() -> None:
         dtype=np.ndarray,
     )
     check(assert_type(parts_with_index[0], NDArray[np.object_]), np.ndarray, dtype=BaseGeometry)
-    check(assert_type(parts_with_index[1], NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(parts_with_index[1], NDArray[np.int64]), np.ndarray, dtype=np.int64)
     check(
         assert_type(
             shapely.get_parts(None, return_index=True),
@@ -871,7 +867,7 @@ def test_collection_getset() -> None:
         dtype=np.ndarray,
     )
     check(assert_type(parts_with_index[0], NDArray[np.object_]), np.ndarray, dtype=LinearRing)
-    check(assert_type(parts_with_index[1], NDArray[np.int64]), np.ndarray, dtype=np.integer)
+    check(assert_type(parts_with_index[1], NDArray[np.int64]), np.ndarray, dtype=np.int64)
     check(
         assert_type(
             shapely.get_rings(None, return_index=True),

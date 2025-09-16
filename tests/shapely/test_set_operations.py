@@ -136,35 +136,37 @@ def test_symmetric_difference() -> None:
 
 def test_symmetric_difference_all() -> None:
     with pytest.deprecated_call():
-        # TODO: deprecate in typeshed
-        check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)
-        check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)
+        check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
         check(
             assert_type(
-                shapely.symmetric_difference_all([P], axis=0), BaseGeometry | NDArray[np.object_]
+                shapely.symmetric_difference_all([P], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                BaseGeometry | NDArray[np.object_],
             ),
             BaseGeometry,
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([[P]], axis=0), BaseGeometry | NDArray[np.object_]
+                shapely.symmetric_difference_all([[P]], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                BaseGeometry | NDArray[np.object_],
             ),
             np.ndarray,
             dtype=BaseGeometry,
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([None], axis=0), BaseGeometry | NDArray[np.object_]
+                shapely.symmetric_difference_all([None], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                BaseGeometry | NDArray[np.object_],
             ),
             BaseGeometry,
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([[None]], axis=0),
+                shapely.symmetric_difference_all([[None]], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
                 BaseGeometry | NDArray[np.object_],
             ),
             np.ndarray,

@@ -16,42 +16,31 @@ P = Point(1, 2)
 
 
 def test_transform() -> None:
-    # TODO: remove astype(np.float64) when https://github.com/numpy/numpy/issues/28071 is fixed
     check(assert_type(shapely.transform(P, lambda x: x), Point), Point)
-    check(assert_type(shapely.transform(P, lambda x: (x + 1.0).astype(np.float64)), Point), Point)
+    check(assert_type(shapely.transform(P, lambda x: x + 1.0), Point), Point)
     check(assert_type(shapely.transform(None, lambda x: x), None), NoneType)
     check(
-        assert_type(
-            shapely.transform(shapely.from_wkt(P.wkt), lambda x: (x + 1.0).astype(np.float64)),
-            BaseGeometry,
-        ),
+        assert_type(shapely.transform(shapely.from_wkt(P.wkt), lambda x: x + 1.0), BaseGeometry),
         Point,
     )
 
     def transformer(coords: ArrayLike) -> NDArray[np.float64]:
-        return (np.asarray(coords) + 1).astype(np.float64)
+        return np.asarray(coords) + 1
 
     check(assert_type(shapely.transform(P, transformer), Point), Point)
 
     check(
-        assert_type(
-            shapely.transform([P], lambda x: (x + 1.0).astype(np.float64)), NDArray[np.object_]
-        ),
+        assert_type(shapely.transform([P], lambda x: x + 1.0), NDArray[np.object_]),
         np.ndarray,
         dtype=Point,
     )
     check(
-        assert_type(
-            shapely.transform([None], lambda x: (x + 1.0).astype(np.float64)), NDArray[np.object_]
-        ),
+        assert_type(shapely.transform([None], lambda x: x + 1.0), NDArray[np.object_]),
         np.ndarray,
         dtype=NoneType,
     )
     check(
-        assert_type(
-            shapely.transform((P, None), lambda x: (x + 1.0).astype(np.float64)),
-            NDArray[np.object_],
-        ),
+        assert_type(shapely.transform((P, None), lambda x: x + 1.0), NDArray[np.object_]),
         np.ndarray,
         dtype=Point,
     )
@@ -88,7 +77,7 @@ def test_get_coordinates() -> None:
     )
     coords, idx = with_index
     check(coords, np.ndarray, dtype=float)
-    check(idx, np.ndarray, dtype=np.integer)
+    check(idx, np.ndarray, dtype=np.int64)
     check(
         assert_type(
             shapely.get_coordinates([P, None], return_index=True),

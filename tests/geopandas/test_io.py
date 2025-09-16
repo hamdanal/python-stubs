@@ -40,7 +40,11 @@ def test_read_file(tmp_path: Path) -> None:
 def test_infer_schema() -> None:
     schema = infer_schema(GDF)
     heterogeneous_schema = infer_schema(gpd.GeoDataFrame({"x": [1, 2], "geometry": [P, LS]}))
-    check(assert_type(schema, _Schema), _Schema, dtype=str)
+    check(
+        assert_type(schema, _Schema),
+        _Schema,  # pyright: ignore[reportGeneralTypeIssues]
+        dtype=str,
+    )
     check(assert_type(schema["geometry"], str | list[str]), str)
     check(assert_type(heterogeneous_schema["geometry"], str | list[str]), list, dtype=str)
     check(assert_type(schema["properties"], OrderedDict[str, str]), OrderedDict, dtype=str)
