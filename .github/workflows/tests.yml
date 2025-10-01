@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
@@ -87,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
