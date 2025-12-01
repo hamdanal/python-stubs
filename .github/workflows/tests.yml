@@ -26,7 +26,7 @@ jobs:
     name: Run ruff check and ruff format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ env.UV_PYTHON }}
         uses: actions/setup-python@v6
         with:
@@ -43,7 +43,7 @@ jobs:
     name: Run the test suite
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ env.UV_PYTHON }}
         uses: actions/setup-python@v6
         with:
@@ -57,7 +57,7 @@ jobs:
     name: Run mypy on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ env.UV_PYTHON }}
         uses: actions/setup-python@v6
         with:
@@ -71,7 +71,7 @@ jobs:
     name: Run stubtest on the the stubs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ env.UV_PYTHON }}
         uses: actions/setup-python@v6
         with:
@@ -85,7 +85,7 @@ jobs:
     name: Run pyright on the tests and on the stubs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ env.UV_PYTHON }}
         uses: actions/setup-python@v6
         with:
