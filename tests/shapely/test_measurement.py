@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from typing import assert_type
+
 import numpy as np
 import shapely
 from numpy.typing import NDArray
 from shapely import LineString, MultiPoint, Point, Polygon
-from typing_extensions import assert_type
 
 from tests import check
 

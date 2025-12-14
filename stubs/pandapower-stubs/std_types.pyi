@@ -1,14 +1,13 @@
 from _typeshed import SupportsItems
 from typing import Any, Literal, TypedDict, overload, type_check_only
-from typing_extensions import TypeAlias
 
 import pandas as pd
 
 from pandapower._typing import Float
 from pandapower.auxiliary import pandapowerNet
 
-_Element: TypeAlias = Literal["line", "line_dc", "trafo", "trafo3w", "fuse"]
-_StdType: TypeAlias = dict[str, Any]
+type _Element = Literal["line", "line_dc", "trafo", "trafo3w", "fuse"]
+type _StdType = dict[str, Any]
 
 @type_check_only
 class _StdLineType(TypedDict, total=False):
@@ -86,11 +85,11 @@ class _StdFuseType(TypedDict, total=False):
     x_min: float | list[float]
     x_total: float | list[float]
 
-_StdLineTypes: TypeAlias = dict[str, _StdLineType]
-_StdLineDcTypes: TypeAlias = dict[str, _StdLineDcType]
-_StdTrafoTypes: TypeAlias = dict[str, _StdTrafoType]
-_StdTrafo3wTypes: TypeAlias = dict[str, _StdTrafo3wType]
-_StdFuseTypes: TypeAlias = dict[str, _StdFuseType]
+type _StdLineTypes = dict[str, _StdLineType]
+type _StdLineDcTypes = dict[str, _StdLineDcType]
+type _StdTrafoTypes = dict[str, _StdTrafoType]
+type _StdTrafo3wTypes = dict[str, _StdTrafo3wType]
+type _StdFuseTypes = dict[str, _StdFuseType]
 
 @type_check_only
 class _StdTypes(TypedDict):

@@ -1,7 +1,6 @@
 from _typeshed import Incomplete
 from collections.abc import Iterable
-from typing import Any
-from typing_extensions import Literal, Self
+from typing import Any, Literal, Self
 
 import numpy as np
 from numpy.typing import ArrayLike

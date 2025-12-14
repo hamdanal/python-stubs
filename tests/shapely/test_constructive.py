@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from types import NoneType
-from typing import Any
+from typing import Any, assert_type
 
 import numpy as np
 import pytest
@@ -19,7 +19,6 @@ from shapely import (
     Polygon,
 )
 from shapely.geometry.base import BaseGeometry, BaseMultipartGeometry
-from typing_extensions import assert_type
 
 from tests import check
 

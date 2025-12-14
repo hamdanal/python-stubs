@@ -1,9 +1,8 @@
 from enum import Enum
 from typing import Any
-from typing_extensions import TypeAlias
 
-SQL: TypeAlias = str
-SQLWithParams: TypeAlias = tuple[str, tuple[Any, ...] | dict[str, Any]]
+type SQL = str
+type SQLWithParams = tuple[str, tuple[Any, ...] | dict[str, Any]]
 
 class StrEnum(str, Enum):  # type: ignore[misc]
     @classmethod

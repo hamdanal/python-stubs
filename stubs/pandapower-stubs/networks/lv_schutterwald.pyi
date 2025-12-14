@@ -1,4 +1,4 @@
-from typing_extensions import Unpack
+from typing import Unpack
 
 from pandapower._typing import FromJsonKwds
 from pandapower.auxiliary import pandapowerNet

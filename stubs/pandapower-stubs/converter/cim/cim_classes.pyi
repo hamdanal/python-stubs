@@ -1,5 +1,5 @@
 import logging
-from typing_extensions import Self
+from typing import Self
 
 import pandas as pd
 

@@ -1,5 +1,5 @@
 from _typeshed import StrOrBytesPath, SupportsRead
-from typing_extensions import Unpack
+from typing import Unpack
 
 from pandapower._typing import Float, FromJsonKwds, Int
 from pandapower.auxiliary import pandapowerNet

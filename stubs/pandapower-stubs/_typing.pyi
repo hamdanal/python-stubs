@@ -1,28 +1,23 @@
 from collections.abc import Collection, Iterable, Mapping, MutableMapping
-from typing import Any, Protocol, SupportsFloat, SupportsIndex, TypedDict, TypeVar, type_check_only
-from typing_extensions import TypeAlias
+from typing import Any, Protocol, SupportsFloat, SupportsIndex, TypedDict, type_check_only
 
 import numpy as np
 
-_T = TypeVar("_T")
-_G = TypeVar("_G", bound=np.generic)
-_Generic_co = TypeVar("_Generic_co", covariant=True, bound=np.generic)
-
 # Wide primitives for input types
-Bool: TypeAlias = bool | np.bool
-Int: TypeAlias = SupportsIndex
-Float: TypeAlias = SupportsFloat | Int
+type Bool = bool | np.bool
+type Int = SupportsIndex
+type Float = SupportsFloat | Int
 
 # Vector-related
-ScalarOrVector: TypeAlias = _T | Collection[_T]
-Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_G]]
-Array2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_G]]
+type ScalarOrVector[T] = T | Collection[T]
+type Array1D[G: np.generic] = np.ndarray[tuple[int], np.dtype[G]]
+type Array2D[G: np.generic] = np.ndarray[tuple[int, int], np.dtype[G]]
 
-class SupportsArray(Protocol[_Generic_co]):
-    def __array__(self) -> np.ndarray[Any, np.dtype[_Generic_co]]: ...
+class SupportsArray[G: np.generic](Protocol):
+    def __array__(self) -> np.ndarray[Any, np.dtype[G]]: ...
 
-VectorLike: TypeAlias = Collection[_T] | SupportsArray[_G]
-FloatVectorLike: TypeAlias = VectorLike[Float, np.floating | np.integer | np.bool]
+type VectorLike[T, G: np.generic] = Collection[T] | SupportsArray[G]
+type FloatVectorLike = VectorLike[Float, np.floating | np.integer | np.bool]
 
 # File I/O related
 @type_check_only
@@ -44,7 +39,7 @@ class SupportsGeoInterface(Protocol):
     @property
     def __geo_interface__(self) -> dict[str, Any]: ...  # values are arbitrary
 
-ConvertibleToCRS: TypeAlias = str | int | tuple[str, str] | list[str] | dict[str, Any] | SupportsToWkt
+type ConvertibleToCRS = str | int | tuple[str, str] | list[str] | dict[str, Any] | SupportsToWkt
 
 from pandapower.auxiliary import pandapowerNet  # noqa: E402
 

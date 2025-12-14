@@ -1,13 +1,10 @@
 from _typeshed import SupportsGetItem
 from collections.abc import Collection, Iterable
-from typing import TypeVar
 
 import pandas as pd
 
 from pandapower._typing import Bool, Int, RunPPFunc
 from pandapower.auxiliary import pandapowerNet
-
-_S = TypeVar("_S", tuple[Int, ...], list[Int])
 
 impedance_columns: list[str]
 
@@ -22,8 +19,8 @@ def add_ext_grids_to_boundaries(
 def drop_internal_branch_elements(
     net: pandapowerNet, internal_buses: Collection[Int], branch_elements: Iterable[Int] | None = None
 ) -> None: ...
-def calc_zpbn_parameters(
-    net: pandapowerNet, boundary_buses: _S, all_external_buses: _S, slack_as: str = "gen", existing_shift_degree: Bool = False
+def calc_zpbn_parameters[S: (tuple[Int, ...], list[Int])](
+    net: pandapowerNet, boundary_buses: S, all_external_buses: S, slack_as: str = "gen", existing_shift_degree: Bool = False
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]: ...
 def drop_assist_elms_by_creating_ext_net(net: pandapowerNet, elms: Iterable[str] | None = None) -> None: ...
 def build_ppc_and_Ybus(net: pandapowerNet) -> None: ...

@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from types import NoneType
+from typing import assert_type
 
 import numpy as np
 import pytest
 import shapely
 from numpy.typing import NDArray
 from shapely import GeometryCollection, LineString, MultiLineString, MultiPoint, Point, Polygon
-from typing_extensions import assert_type
 
 from tests import check
 

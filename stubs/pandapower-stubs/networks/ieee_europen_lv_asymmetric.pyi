@@ -1,5 +1,4 @@
-from typing import Literal
-from typing_extensions import Unpack
+from typing import Literal, Unpack
 
 from pandapower._typing import FromJsonKwds
 from pandapower.auxiliary import pandapowerNet

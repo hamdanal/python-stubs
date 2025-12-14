@@ -1,5 +1,5 @@
 from _typeshed import Incomplete
-from typing_extensions import Self
+from typing import Self
 
 from django.db.models.expressions import Case, Col, Expression, F
 from django.db.models.sql.compiler import SQLCompiler

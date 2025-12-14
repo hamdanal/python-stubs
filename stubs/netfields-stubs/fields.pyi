@@ -1,7 +1,7 @@
 from _typeshed import Unused
 from collections.abc import Callable, Iterable
 from ipaddress import IPv4Interface, IPv4Network, IPv6Interface, IPv6Network
-from typing import Literal, TypeVar, overload
+from typing import Literal, overload
 
 from django.db.models.expressions import Combinable
 from django.db.models.fields import Field, _ErrorMessagesToOverride, _ValidatorCallable
@@ -11,9 +11,8 @@ from netfields.forms import CidrAddressFormField, InetAddressFormField, NoPrefix
 
 NET_OPERATORS: dict[str, str]
 NET_TEXT_OPERATORS: list[str]
-_I = TypeVar("_I", bound=IPv4Interface | IPv6Interface | None)
 
-class InetAddressField(Field[_I | Combinable, _I]):
+class InetAddressField[I: IPv4Interface | IPv6Interface | None](Field[I | Combinable, I]):
     @overload
     def __new__(
         cls,
@@ -25,14 +24,14 @@ class InetAddressField(Field[_I | Combinable, _I]):
         blank: bool = False,
         null: Literal[False] = False,
         db_index: bool = False,
-        default: _I | Callable[[], _I] | None = ...,
+        default: I | Callable[[], I] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_I, str] | tuple[str, Iterable[tuple[_I, str]]]] | None = None,
+        choices: Iterable[tuple[I, str] | tuple[str, Iterable[tuple[I, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -52,14 +51,14 @@ class InetAddressField(Field[_I | Combinable, _I]):
         *,
         null: Literal[True],
         db_index: bool = False,
-        default: _I | Callable[[], _I] = ...,
+        default: I | Callable[[], I] = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_I, str] | tuple[str, Iterable[tuple[_I, str]]]] | None = None,
+        choices: Iterable[tuple[I, str] | tuple[str, Iterable[tuple[I, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -70,9 +69,7 @@ class InetAddressField(Field[_I | Combinable, _I]):
     def python_type(self) -> Callable[..., IPv4Interface | IPv6Interface]: ...
     def form_class(self) -> type[InetAddressFormField | NoPrefixInetAddressFormField]: ...
 
-_N = TypeVar("_N", bound=IPv4Network | IPv6Network | None)
-
-class CidrAddressField(Field[_N | Combinable, _N]):
+class CidrAddressField[N: IPv4Network | IPv6Network | None](Field[N | Combinable, N]):
     @overload
     def __new__(
         cls,
@@ -84,14 +81,14 @@ class CidrAddressField(Field[_N | Combinable, _N]):
         blank: bool = False,
         null: Literal[False] = False,
         db_index: bool = False,
-        default: _N | Callable[[], _N] | None = ...,
+        default: N | Callable[[], N] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_N, str] | tuple[str, Iterable[tuple[_N, str]]]] | None = None,
+        choices: Iterable[tuple[N, str] | tuple[str, Iterable[tuple[N, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -110,14 +107,14 @@ class CidrAddressField(Field[_N | Combinable, _N]):
         *,
         null: Literal[True],
         db_index: bool = False,
-        default: _N | Callable[[], _N] = ...,
+        default: N | Callable[[], N] = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_N, str] | tuple[str, Iterable[tuple[_N, str]]]] | None = None,
+        choices: Iterable[tuple[N, str] | tuple[str, Iterable[tuple[N, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -127,9 +124,7 @@ class CidrAddressField(Field[_N | Combinable, _N]):
     def python_type(self) -> Callable[..., IPv4Network | IPv6Network]: ...
     def form_class(self) -> type[CidrAddressFormField]: ...
 
-_E = TypeVar("_E", bound=EUI | None)
-
-class MACAddressField(Field[_E | Combinable, _E]):
+class MACAddressField[E: EUI | None](Field[E | Combinable, E]):
     @overload
     def __new__(
         cls,
@@ -141,14 +136,14 @@ class MACAddressField(Field[_E | Combinable, _E]):
         blank: bool = False,
         null: Literal[False] = False,
         db_index: bool = False,
-        default: _E | Callable[[], _E] | None = ...,
+        default: E | Callable[[], E] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_E, str] | tuple[str, Iterable[tuple[_E, str]]]] | None = None,
+        choices: Iterable[tuple[E, str] | tuple[str, Iterable[tuple[E, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -167,14 +162,14 @@ class MACAddressField(Field[_E | Combinable, _E]):
         *,
         null: Literal[True],
         db_index: bool = False,
-        default: _E | Callable[[], _E] = ...,
+        default: E | Callable[[], E] = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_E, str] | tuple[str, Iterable[tuple[_E, str]]]] | None = None,
+        choices: Iterable[tuple[E, str] | tuple[str, Iterable[tuple[E, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -184,7 +179,7 @@ class MACAddressField(Field[_E | Combinable, _E]):
     def from_db_value(self, value: str, expression: Unused, connection: Unused, *args: Unused) -> EUI | None: ...
     def get_db_prep_value(self, value: int | str | EUI | None, connection: Unused, prepared: bool = False) -> str: ...
 
-class MACAddress8Field(Field[_E | Combinable, _E]):
+class MACAddress8Field[E: EUI | None](Field[E | Combinable, E]):
     @overload
     def __new__(
         cls,
@@ -196,14 +191,14 @@ class MACAddress8Field(Field[_E | Combinable, _E]):
         blank: bool = False,
         null: Literal[False] = False,
         db_index: bool = False,
-        default: _E | Callable[[], _E] | None = ...,
+        default: E | Callable[[], E] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_E, str] | tuple[str, Iterable[tuple[_E, str]]]] | None = None,
+        choices: Iterable[tuple[E, str] | tuple[str, Iterable[tuple[E, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -222,14 +217,14 @@ class MACAddress8Field(Field[_E | Combinable, _E]):
         *,
         null: Literal[True],
         db_index: bool = False,
-        default: _E | Callable[[], _E] = ...,
+        default: E | Callable[[], E] = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_E, str] | tuple[str, Iterable[tuple[_E, str]]]] | None = None,
+        choices: Iterable[tuple[E, str] | tuple[str, Iterable[tuple[E, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,

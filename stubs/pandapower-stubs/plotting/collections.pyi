@@ -1,6 +1,6 @@
 from collections.abc import Callable, Collection as abc_Collection, Iterable
-from typing import Any, Literal, TypeVar
-from typing_extensions import Self, deprecated
+from typing import Any, Literal, Self
+from typing_extensions import deprecated
 
 import numpy as np
 import pandas as pd
@@ -14,8 +14,6 @@ from numpy.typing import ArrayLike, NDArray
 
 from pandapower._typing import Float, Int, ScalarOrVector
 from pandapower.auxiliary import pandapowerNet
-
-_CollectionT = TypeVar("_CollectionT", bound=Collection)
 
 class CustomTextPath(TextPath):
     s: str
@@ -39,15 +37,15 @@ def create_annotation_collection(
     prop: FontProperties | None = None,
     **kwargs,
 ) -> PatchCollection: ...
-def add_cmap_to_collection(
-    collection: _CollectionT,
+def add_cmap_to_collection[C: Collection](
+    collection: C,
     cmap: Colormap | str | None,
     norm: Normalize | str | None,
     z: ArrayLike,
     cbar_title: str,
     plot_colormap: bool = True,
     clim: Float | tuple[Float, Float] | None = None,
-) -> _CollectionT: ...
+) -> C: ...
 def create_bus_collection(
     net: pandapowerNet,
     buses: abc_Collection[Int] | None = None,

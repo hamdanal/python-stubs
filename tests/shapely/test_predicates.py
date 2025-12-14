@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 from types import NoneType
-from typing import Literal as L  # noqa: F401
+from typing import (
+    Literal as L,  # noqa: F401
+    assert_type,
+)
 
 import numpy as np
 import shapely
 from numpy.typing import NDArray
 from shapely import Geometry, Point, Polygon
 from shapely.geometry.base import BaseGeometry
-from typing_extensions import assert_type
 
 from tests import check
 

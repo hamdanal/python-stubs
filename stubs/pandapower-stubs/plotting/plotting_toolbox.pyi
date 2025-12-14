@@ -1,5 +1,5 @@
 from collections.abc import Collection, Iterable, Set as AbstractSet
-from typing import TypeVar, overload
+from typing import overload
 
 import numpy as np
 import pandas as pd
@@ -7,8 +7,6 @@ from numpy.typing import ArrayLike, NDArray
 
 from pandapower._typing import Bool, Float, Int, ScalarOrVector
 from pandapower.auxiliary import pandapowerNet
-
-_T = TypeVar("_T")
 
 def get_collection_sizes(
     net: pandapowerNet,
@@ -24,7 +22,7 @@ def get_collection_sizes(
 @overload
 def get_list(individuals: str, number_entries: Int, name_ind: str, name_ent: str) -> list[str]: ...
 @overload
-def get_list(individuals: ScalarOrVector[_T], number_entries: Int, name_ind: str, name_ent: str) -> list[_T]: ...
+def get_list[T](individuals: ScalarOrVector[T], number_entries: Int, name_ind: str, name_ent: str) -> list[T]: ...
 @overload
 def get_color_list(
     color: tuple[Float, Float, Float], number_entries: Int, name_entries: str = "nodes"

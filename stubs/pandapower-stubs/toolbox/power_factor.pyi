@@ -1,12 +1,11 @@
 from collections.abc import Collection, Iterable
 from typing import Literal, overload
-from typing_extensions import TypeAlias
 
 import numpy as np
 from numpy.typing import NDArray
 
-_PMode: TypeAlias = Literal["load", "gen"]
-_QMode: TypeAlias = Literal["underexcited", "overexcited"]
+type _PMode = Literal["load", "gen"]
+type _QMode = Literal["underexcited", "overexcited"]
 
 def signing_system_value(element_type: str) -> Literal[-1, 1]: ...
 @overload

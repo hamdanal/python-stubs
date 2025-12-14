@@ -3,8 +3,7 @@ import numbers
 from _typeshed import Incomplete, ReadableBuffer, StrOrBytesPath, SupportsRead
 from collections.abc import Callable, Container, Mapping
 from functools import singledispatch
-from typing import Any, SupportsIndex as Int, TypeVar, overload
-from typing_extensions import Self
+from typing import Any, Self, SupportsIndex as Int, overload
 
 import geopandas as gpd
 import networkx as nx
@@ -15,9 +14,6 @@ from shapely.geometry.base import BaseGeometry
 
 from pandapower._typing import SupportsGeoInterface
 from pandapower.auxiliary import pandapowerNet
-
-_T = TypeVar("_T")
-_D = TypeVar("_D", bound=dict[str, Any])
 
 PSYCOPG2_INSTALLED: bool
 cryptography_INSTALLED: bool
@@ -76,8 +72,8 @@ class FromSerializable:
     @overload
     def __get__(self, instance: None, owner: type[object]) -> Self: ...
     @overload
-    def __get__(self, instance: _T, owner: type[_T]) -> Incomplete: ...
-    def register(self, class_name: str = "", module_name: str = "") -> Callable[[_T], _T]: ...
+    def __get__[T](self, instance: T, owner: type[T]) -> Incomplete: ...
+    def register[T](self, class_name: str = "", module_name: str = "") -> Callable[[T], T]: ...
 
 class FromSerializableRegistry:
     from_serializable: FromSerializable
@@ -102,13 +98,13 @@ class FromSerializableRegistry:
 class PPJSONDecoder(json.JSONDecoder):
     def __init__(self, **kwargs: Incomplete) -> None: ...
 
-def pp_hook(
-    d: _D,
+def pp_hook[D: dict[str, Any]](
+    d: D,
     deserialize_pandas: bool = True,
     empty_dict_like_object: Incomplete | None = None,
     registry_class: type[FromSerializableRegistry] = ...,
     ignore_unknown_objects: bool = False,
-) -> _D: ...
+) -> D: ...
 def encrypt_string(s: str, key: str, compress: bool = True) -> str: ...
 def decrypt_string(s: str, key: str) -> str: ...
 

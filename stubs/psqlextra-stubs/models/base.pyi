@@ -1,5 +1,4 @@
-from typing import ClassVar
-from typing_extensions import Self
+from typing import ClassVar, Self
 
 from django.db import models
 

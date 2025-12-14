@@ -1,16 +1,15 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from functools import partial
-from typing import Any, Generic, Literal
+from typing import Any, Literal
 
 import pandas as pd
 from numpy.typing import NDArray
-from pandas._typing import S1 as _T
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.io_utils import JSONSerializableClass
 
-class OutputWriter(JSONSerializableClass, Generic[_T]):
+class OutputWriter[T: Any](JSONSerializableClass):
     output_path: str | None
     output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"]
     write_time: float | None
@@ -23,13 +22,13 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
     np_results: dict[str, NDArray[Incomplete]]
     output_list: list[partial[object]]  # also list[tuple[str, str]] in self.get_batch_outputs
     cur_realtime: float
-    time_steps: Sequence[_T] | None
-    time_step: _T
-    time_step_lookup: dict[_T, int]
+    time_steps: Sequence[T] | None
+    time_step: T
+    time_step_lookup: dict[T, int]
     def __init__(
         self,
         net: pandapowerNet,
-        time_steps: Sequence[_T] | pd.Index[_T] | pd.Series[_T] | NDArray[Any] | None = None,
+        time_steps: Sequence[T] | pd.Index[T] | pd.Series[T] | NDArray[Any] | None = None,
         output_path: str | None = None,
         output_file_type: Literal[".xls", ".xlsx", ".csv", ".p", ".json"] = ".p",
         write_time: float | None = None,
@@ -45,7 +44,7 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
     def save_results(
         self,
         net: pandapowerNet,
-        time_step: _T,
+        time_step: T,
         pf_converged: bool,
         ctrl_converged: bool,
         recycle_options: Mapping[str, Incomplete] | Literal[False] | None = None,
@@ -61,5 +60,5 @@ class OutputWriter(JSONSerializableClass, Generic[_T]):
         eval_function: Callable[[NDArray[Incomplete]], object] | None = None,
         eval_name: str | None = None,
     ) -> None: ...
-    def init_timesteps(self, time_steps: Sequence[_T]) -> None: ...
+    def init_timesteps(self, time_steps: Sequence[T]) -> None: ...
     def get_batch_outputs(self, net: pandapowerNet, recycle_options: Mapping[str, Incomplete]) -> None: ...

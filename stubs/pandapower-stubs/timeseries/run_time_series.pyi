@@ -1,11 +1,9 @@
 from _typeshed import Incomplete, SupportsGetItem, Unused
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, Literal, TypeVar, overload
+from typing import Any, Literal, overload
 from typing_extensions import deprecated
 
 from pandapower.auxiliary import pandapowerNet
-
-_T = TypeVar("_T")
 
 def init_default_outputwriter(net: pandapowerNet, time_steps: Iterable[Incomplete]) -> None: ...
 def init_output_writer(net: pandapowerNet, time_steps) -> None: ...
@@ -31,7 +29,7 @@ def get_recycle_settings(
     net: pandapowerNet, *, recycle: Incomplete | None = None, **kwargs
 ) -> dict[str, Any] | Literal[False]: ...
 @overload
-def init_time_steps(net: pandapowerNet, time_steps: Iterable[_T], **kwargs: Unused) -> Iterable[_T]: ...  # type: ignore[overload-overlap]
+def init_time_steps[T](net: pandapowerNet, time_steps: Iterable[T], **kwargs: Unused) -> Iterable[T]: ...  # type: ignore[overload-overlap]
 @overload
 @deprecated("start_step and stop_step are deprcated")
 def init_time_steps(net: pandapowerNet, time_steps: None, *, start_step: int, stop_step: int, **kwargs: Unused) -> range: ...

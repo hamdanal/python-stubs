@@ -1,25 +1,24 @@
 from typing import Literal
-from typing_extensions import TypeAlias
 
 import numpy as np
 
-Int: TypeAlias = int | np.integer
-Float: TypeAlias = float | np.number
+type Int = int | np.integer
+type Float = float | np.number
 
-BusType: TypeAlias = Literal["n", "b", "m"]
-CostElementType: TypeAlias = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
-GeneratorType: TypeAlias = Literal["current_source", "async", "async_doubly_fed"]
-LineType: TypeAlias = Literal["ol", "cs"]
-HVLVType: TypeAlias = Literal["hv", "lv"]
-HVMVLVType: TypeAlias = Literal["hv", "mv", "lv"]
-MeasurementType: TypeAlias = Literal["v", "p", "q", "i", "va", "ia"]
-MeasurementElementType: TypeAlias = Literal[
+type BusType = Literal["n", "b", "m"]
+type CostElementType = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
+type GeneratorType = Literal["current_source", "async", "async_doubly_fed"]
+type LineType = Literal["ol", "cs"]
+type HVLVType = Literal["hv", "lv"]
+type HVMVLVType = Literal["hv", "mv", "lv"]
+type MeasurementType = Literal["v", "p", "q", "i", "va", "ia"]
+type MeasurementElementType = Literal[
     "bus", "line", "trafo", "trafow3", "load", "gen", "sgen", "shunt", "ward", "xward", "ext_grid"
 ]
-PWLPowerType: TypeAlias = Literal["p", "q"]
-SwitchElementType: TypeAlias = Literal["b", "l", "t"]
-SwitchType: TypeAlias = Literal["LS", "CB", "LBS", "DS"]
-TapChangerType: TypeAlias = Literal["Ratio", "Symmetrical", "Ideal"]
-TapChangerWithTabularType: TypeAlias = Literal["Ratio", "Symmetrical", "Ideal", "Tabular"]
-UnderOverExcitedType: TypeAlias = Literal["underexcited", "overexcited"]
-WyeDeltaType: TypeAlias = Literal["wye", "delta"]
+type PWLPowerType = Literal["p", "q"]
+type SwitchElementType = Literal["b", "l", "t"]
+type SwitchType = Literal["LS", "CB", "LBS", "DS"]
+type TapChangerType = Literal["Ratio", "Symmetrical", "Ideal"]
+type TapChangerWithTabularType = Literal["Ratio", "Symmetrical", "Ideal", "Tabular"]
+type UnderOverExcitedType = Literal["underexcited", "overexcited"]
+type WyeDeltaType = Literal["wye", "delta"]
