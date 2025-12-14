@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import warnings
 from types import NoneType
+from typing import assert_type
 
 import geopandas as gpd
 import pytest
 from geopandas import GeoSeries
 from pyproj import CRS
 from shapely import LineString, Point, Polygon
-from typing_extensions import assert_type
 
 from tests import check
 

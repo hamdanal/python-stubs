@@ -1,9 +1,6 @@
-from typing import TypeVar
-from typing_extensions import Literal
+from typing import Literal
 
 from django.db import models
 
-_T = TypeVar("_T", bound=models.Model)
-
-class NetManager(models.Manager[_T]):
+class NetManager[M: models.Model](models.Manager[M]):
     use_for_related_fields: Literal[True]

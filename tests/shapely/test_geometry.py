@@ -3,7 +3,7 @@ from __future__ import annotations
 from array import array
 from collections.abc import Iterator
 from types import NoneType
-from typing import Any
+from typing import Any, assert_never, assert_type
 
 import numpy as np
 import pytest
@@ -23,7 +23,6 @@ from shapely.coords import CoordinateSequence
 from shapely.geometry.base import BaseGeometry, BaseMultipartGeometry, GeometrySequence
 from shapely.geometry.geo import box, mapping, shape
 from shapely.geometry.polygon import InteriorRingSequence
-from typing_extensions import assert_never, assert_type
 
 from tests import HasArray, check
 

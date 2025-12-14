@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, assert_type
 
 import folium
 import geopandas as gpd
 from geopandas.explore import _explore, _explore_geoseries
 from shapely import Point
-from typing_extensions import assert_type
 
 GDF = gpd.GeoDataFrame({"x": [1, 2], "geometry": [Point(1, 2), Point(3, 4)]})
 

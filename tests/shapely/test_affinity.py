@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+from typing import assert_type
 
 import numpy as np
 import pytest
 import shapely
 from shapely import LineString, Point, Polygon
 from shapely.geometry.base import BaseGeometry
-from typing_extensions import assert_type
 
 from tests import check
 

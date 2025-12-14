@@ -1,6 +1,6 @@
 from collections.abc import Generator
 from contextlib import contextmanager
-from typing_extensions import Self
+from typing import Self
 
 class PostgresSchema:
     NAME_MAX_LENGTH: int

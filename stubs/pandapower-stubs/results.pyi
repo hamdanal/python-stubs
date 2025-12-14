@@ -1,9 +1,8 @@
 from typing import Literal
-from typing_extensions import TypeAlias
 
 from pandapower.auxiliary import pandapowerNet
 
-_Mode: TypeAlias = Literal["pf", "opf", "sc", "se", "pf_3ph"]
+type _Mode = Literal["pf", "opf", "sc", "se", "pf_3ph"]
 
 BRANCH_RESULTS_KEYS: tuple[str, ...]
 suffix_mode: dict[str, str]

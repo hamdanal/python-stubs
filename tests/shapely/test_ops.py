@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 from types import NoneType
-from typing import TypeAlias
+from typing import assert_type
 
 import pyproj
 import pytest
 import shapely.ops
 from shapely import GeometryCollection, LineString, MultiLineString, MultiPoint, Point, Polygon
 from shapely.geometry.base import BaseGeometry, GeometrySequence
-from typing_extensions import assert_type
 
 from tests import check
 
@@ -17,7 +16,7 @@ LS = LineString([(0, 0), (1, 1)])
 PO: Polygon = P.buffer(1)
 MP = MultiPoint([(0, 0), (1, 1), (0, 2), (2, 2), (3, 1), (1, 0)])
 
-PolygonizeFull: TypeAlias = tuple[
+type PolygonizeFull = tuple[
     GeometryCollection[Polygon],
     GeometryCollection[LineString],
     GeometryCollection[LineString],

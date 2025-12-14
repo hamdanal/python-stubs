@@ -1,7 +1,6 @@
 from _typeshed import Incomplete
 from collections.abc import Collection, Iterable, Mapping
 from typing import Any, Literal
-from typing_extensions import TypeAlias
 
 import pandas as pd
 from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
@@ -9,7 +8,7 @@ from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright
 from pandapower._typing import Float, Int
 from pandapower.auxiliary import pandapowerNet
 
-_MapStyle: TypeAlias = Literal["basic", "streets", "bright", "light", "dark", "satellite"]
+type _MapStyle = Literal["basic", "streets", "bright", "light", "dark", "satellite"]
 
 def sum_line_length(pts: Incomplete) -> float: ...
 def get_line_neutral(coord: Incomplete) -> list[Incomplete]: ...

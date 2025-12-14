@@ -1,6 +1,5 @@
 from collections.abc import Iterable
-from typing import Any
-from typing_extensions import TypeGuard
+from typing import Any, TypeGuard
 
 from django.db.models.query import QuerySet
 

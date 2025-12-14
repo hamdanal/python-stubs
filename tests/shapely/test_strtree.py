@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, assert_type
 
 import numpy as np
 import pytest
 import shapely
 from numpy.typing import NDArray
 from shapely import Point
-from typing_extensions import assert_type
 
 from tests import check
 

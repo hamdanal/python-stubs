@@ -1,6 +1,5 @@
 from collections.abc import Collection, Mapping
 from typing import Any, Literal
-from typing_extensions import TypeAlias
 
 import numpy as np
 import pandas as pd
@@ -9,8 +8,8 @@ from numpy.typing import DTypeLike
 from pandapower._typing import Array1D, Bool, Float, Int, ScalarOrVector
 from pandapower.auxiliary import pandapowerNet
 
-_CostElementType: TypeAlias = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
-_SGenGeneratorType: TypeAlias = Literal["current_source", "async", "async_doubly_fed"]
+type _CostElementType = Literal["gen", "sgen", "ext_grid", "load", "dcline", "storage"]
+type _SGenGeneratorType = Literal["current_source", "async", "async_doubly_fed"]
 
 def create_empty_network(name: str = "", f_hz: Float = 50.0, sn_mva: Float = 1, add_stdtypes: Bool = True) -> pandapowerNet: ...
 def create_bus(

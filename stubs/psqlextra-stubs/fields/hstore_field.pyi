@@ -1,13 +1,10 @@
 from collections.abc import Callable, Iterable
-from typing import TypeVar, overload
-from typing_extensions import Literal
+from typing import Literal, overload
 
 from django.contrib.postgres.fields import HStoreField as DjangoHStoreField
 from django.db.models.fields import _ErrorMessagesToOverride, _ValidatorCallable
 
-_T = TypeVar("_T", bound=dict[str, str | None] | None)
-
-class HStoreField(DjangoHStoreField[_T]):
+class HStoreField[T: dict[str, str | None] | None](DjangoHStoreField[T]):
     uniqueness: list[str | tuple[str, ...]] | None
     required: list[str] | None
     @overload
@@ -22,14 +19,14 @@ class HStoreField(DjangoHStoreField[_T]):
         blank: bool = False,
         null: Literal[False] = False,
         db_index: bool = False,
-        default: _T | Callable[[], _T] | None = ...,
+        default: T | Callable[[], T] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_T, str] | tuple[str, Iterable[tuple[_T, str]]]] | None = None,
+        choices: Iterable[tuple[T, str] | tuple[str, Iterable[tuple[T, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,
@@ -50,14 +47,14 @@ class HStoreField(DjangoHStoreField[_T]):
         blank: bool = False,
         null: Literal[True],
         db_index: bool = False,
-        default: _T | Callable[[], _T] | None = ...,
+        default: T | Callable[[], T] | None = ...,
         editable: bool = True,
         auto_created: bool = False,
         serialize: bool = True,
         unique_for_date: str | None = None,
         unique_for_month: str | None = None,
         unique_for_year: str | None = None,
-        choices: Iterable[tuple[_T, str] | tuple[str, Iterable[tuple[_T, str]]]] | None = None,
+        choices: Iterable[tuple[T, str] | tuple[str, Iterable[tuple[T, str]]]] | None = None,
         help_text: str = "",
         db_column: str | None = None,
         db_tablespace: str | None = None,

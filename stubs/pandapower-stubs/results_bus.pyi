@@ -1,15 +1,14 @@
 from collections.abc import Mapping
 from typing import Any
-from typing_extensions import TypeAlias
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from pandapower.auxiliary import pandapowerNet
 
-_PType: TypeAlias = NDArray[np.float64]
-_QType: TypeAlias = NDArray[np.float64]
-_BType: TypeAlias = NDArray[np.int_]
+type _PType = NDArray[np.float64]
+type _QType = NDArray[np.float64]
+type _BType = NDArray[np.int_]
 
 def write_voltage_dependend_load_results(
     net: pandapowerNet, p: ArrayLike, q: ArrayLike, b: ArrayLike

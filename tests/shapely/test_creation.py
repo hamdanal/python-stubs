@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import assert_type
+
 import numpy as np
 import pytest
 import shapely
@@ -16,7 +18,6 @@ from shapely import (
     Polygon,
 )
 from shapely.prepared import PreparedGeometry
-from typing_extensions import assert_type
 
 from tests import HasArray, check
 

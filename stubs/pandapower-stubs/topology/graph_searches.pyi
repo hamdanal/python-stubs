@@ -1,14 +1,13 @@
 from _typeshed import Incomplete
 from collections.abc import Collection, Container, Generator, Iterable, Set as AbstractSet
 from typing import Any, Literal, TypedDict
-from typing_extensions import TypeAlias
 
 import networkx as nx
 import pandas as pd
 
 from pandapower.auxiliary import pandapowerNet
 
-_GraphCharKey: TypeAlias = Literal["connected", "articulation_points", "bridges", "stub_buses", "required_bridges", "notn1_areas"]
+type _GraphCharKey = Literal["connected", "articulation_points", "bridges", "stub_buses", "required_bridges", "notn1_areas"]
 
 class _GraphCharDict(TypedDict, total=False):
     connected: set[int]

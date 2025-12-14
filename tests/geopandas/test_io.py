@@ -2,14 +2,13 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, assert_type
 
 import geopandas as gpd
 import pandas as pd
 import pytest
 from geopandas.io.file import infer_schema
 from shapely import LineString, Point, Polygon
-from typing_extensions import assert_type
 
 from tests import check
 
