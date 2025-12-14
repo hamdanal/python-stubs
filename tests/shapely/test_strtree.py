@@ -123,7 +123,7 @@ def test_strtree_query_nearest() -> None:
         dtype=np.ndarray,
     )
     check(assert_type(with_distance[0], NDArray[np.int64]), np.ndarray, dtype=np.int64)
-    check(assert_type(with_distance[1], NDArray[np.float64]), np.ndarray, dtype=float)
+    check(assert_type(with_distance[1], NDArray[np.float64]), np.ndarray, dtype=np.float64)
     check(
         assert_type(
             TREE.query_nearest([Point(0.5, 0.5), Point(1, 1)], return_distance=True),

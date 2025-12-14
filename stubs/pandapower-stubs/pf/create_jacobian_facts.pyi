@@ -14,5 +14,18 @@ def create_J_modification_ssc_vsc(
     J, V, Vm, y_pu, f, t, pvpq, pq, pvpq_lookup, pq_lookup, control_v, control_delta
 ) -> csr_matrix: ...
 def create_J_modification_hvdc(
-    J, V_dc, Ybus_hvdc, Ybus_vsc_dc, vsc_g_pu, vsc_gl_pu, dc_p, dc_p_lookup, vsc_dc_fb, vsc_dc_tb, vsc_dc_slack, vsc_dc_mode_p
+    J,
+    V_dc,
+    Ybus_hvdc,
+    Ybus_vsc_dc,
+    vsc_g_pu,
+    vsc_gl_pu,
+    dc_p,
+    dc_p_lookup,
+    vsc_dc_fb,
+    vsc_dc_tb,
+    vsc_dc_slack,
+    vsc_dc_mode_p,
+    dc_ref,
+    dc_ref_lookup,
 ) -> csr_array: ...

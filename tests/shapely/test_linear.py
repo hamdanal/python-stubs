@@ -64,23 +64,23 @@ def test_line_locate_point() -> None:
     check(
         assert_type(shapely.line_locate_point([MLS, LS], P), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     check(
         assert_type(shapely.line_locate_point((MLS, LS, None), P), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     check(
         assert_type(shapely.line_locate_point(MLS, [P]), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     check(assert_type(shapely.line_locate_point(LS, P, normalized=True), np.float64), np.float64)
     check(
         assert_type(shapely.line_locate_point([MLS, LS], P, normalized=True), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     with pytest.raises(Exception):
         shapely.line_locate_point(P, P)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]

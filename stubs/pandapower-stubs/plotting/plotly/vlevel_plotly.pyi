@@ -19,4 +19,5 @@ def vlevel_plotly(
     bus_size: float = 10,
     filename: str = "temp-plot.html",
     auto_open: bool = True,
+    zoomlevel: int = 11,
 ) -> Figure: ...

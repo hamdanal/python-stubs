@@ -23,4 +23,5 @@ def pf_res_plotly(
     cpos_load: float = 1.1,
     filename: str = "temp-plot.html",
     auto_open: bool = True,
+    zoomlevel: int = 11,
 ) -> Figure: ...

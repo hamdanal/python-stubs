@@ -38,6 +38,7 @@ def delete_postgresql_net(
     schema: str,
     grid_id_column: str = "grid_id",
     grid_catalogue_name: str = "grid_catalogue",
+    port: int | None = None,
 ) -> None: ...
 def from_sql(
     conn: DBAPIConnection,
@@ -72,6 +73,7 @@ def to_postgresql(
     grid_id_column: str = "grid_id",
     grid_catalogue_name: str = "grid_catalogue",
     index_name: str | None = None,
+    port: int | None = None,
 ) -> int: ...
 def from_postgresql(
     grid_id: int,
@@ -84,4 +86,5 @@ def from_postgresql(
     grid_catalogue_name: str = "grid_catalogue",
     empty_dict_like_object: Mapping[str, pd.DataFrame] | None = None,
     grid_tables: pd.DataFrame | None = None,
+    port: int | None = None,
 ) -> pandapowerNet: ...

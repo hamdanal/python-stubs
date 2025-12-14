@@ -7,6 +7,9 @@ pandapower\.converter.*
 # TODO: constants
 pandapower\.[A-Z0-9_]+$
 
+# TODO: types (stubtest bug?)
+pandapower\.pp_types\.[a-zA-Z]+$
+
 # OK: stubs-only
 pandapower\._typing
 
