@@ -13,26 +13,32 @@ def to_excel(
 ) -> None: ...
 @overload
 def to_json(
-    net: pandapowerNet, filename: None = None, encryption_key: str | None = None, store_index_names: None = None
+    net: pandapowerNet,
+    filename: None = None,
+    encryption_key: str | None = None,
+    indent: int | str | None = 2,
+    sort_keys: bool = False,
 ) -> str: ...
 @overload
 def to_json(
     net: pandapowerNet,
     filename: SupportsWrite[str] | StrOrBytesPath,
     encryption_key: str | None = None,
-    store_index_names: None = None,
+    indent: int | str | None = 2,
+    sort_keys: bool = False,
 ) -> None: ...
 @overload
 def to_json(
     net: pandapowerNet,
     filename: SupportsWrite[str] | StrOrBytesPath | None = None,
     encryption_key: str | None = None,
-    store_index_names: None = None,
+    indent: int | str | None = 2,
+    sort_keys: bool = False,
 ) -> str | None: ...
 def from_pickle(filename: SupportsRead[bytes] | StrOrBytesPath, convert: bool = True) -> pandapowerNet: ...
 def from_excel(filename: StrOrBytesPath, convert: bool = True) -> pandapowerNet: ...
 def from_json(  # keep inline with pandapower._typing.FromJsonKwds
-    filename: SupportsRead[str] | StrOrBytesPath,
+    filename_or_str: SupportsRead[str] | StrOrBytesPath,
     convert: bool = True,
     encryption_key: str | None = None,
     elements_to_deserialize: Iterable[str] | None = None,

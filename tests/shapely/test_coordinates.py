@@ -55,19 +55,23 @@ def test_count_coordinates() -> None:
 
 
 def test_get_coordinates() -> None:
-    check(assert_type(shapely.get_coordinates(P), NDArray[np.float64]), np.ndarray, dtype=float)
+    check(
+        assert_type(shapely.get_coordinates(P), NDArray[np.float64]), np.ndarray, dtype=np.float64
+    )
     check(assert_type(shapely.get_coordinates(None), NDArray[np.float64]), np.ndarray)
-    check(assert_type(shapely.get_coordinates([P]), NDArray[np.float64]), np.ndarray, dtype=float)
+    check(
+        assert_type(shapely.get_coordinates([P]), NDArray[np.float64]), np.ndarray, dtype=np.float64
+    )
     check(assert_type(shapely.get_coordinates([None]), NDArray[np.float64]), np.ndarray)
     check(
         assert_type(shapely.get_coordinates((P, None)), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     check(
         assert_type(shapely.get_coordinates(P, include_z=True), NDArray[np.float64]),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
     with_index = shapely.get_coordinates(P, return_index=True)
     check(
@@ -76,7 +80,7 @@ def test_get_coordinates() -> None:
         dtype=np.ndarray,
     )
     coords, idx = with_index
-    check(coords, np.ndarray, dtype=float)
+    check(coords, np.ndarray, dtype=np.float64)
     check(idx, np.ndarray, dtype=np.int64)
     check(
         assert_type(
@@ -102,7 +106,7 @@ def test_get_coordinates() -> None:
             tuple[NDArray[np.float64], NDArray[np.int64]] | NDArray[np.float64],
         ),
         np.ndarray,
-        dtype=float,
+        dtype=np.float64,
     )
 
 

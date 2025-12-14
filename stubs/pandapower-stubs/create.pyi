@@ -76,8 +76,10 @@ def create_load(
     bus: Int,
     p_mw: Float,
     q_mvar: Float = 0,
-    const_z_percent: Float = 0,
-    const_i_percent: Float = 0,
+    const_z_p_percent: Float = 0,
+    const_i_p_percent: Float = 0,
+    const_z_q_percent: Float = 0,
+    const_i_q_percent: Float = 0,
     sn_mva: Float = ...,
     name: str | None = None,
     scaling: Float = 1.0,
@@ -96,8 +98,10 @@ def create_loads(
     buses: Collection[Int],
     p_mw: ScalarOrVector[Float],
     q_mvar: ScalarOrVector[Float] = 0,
-    const_z_percent: ScalarOrVector[Float] = 0,
-    const_i_percent: ScalarOrVector[Float] = 0,
+    const_z_p_percent: ScalarOrVector[Float] = 0,
+    const_i_p_percent: ScalarOrVector[Float] = 0,
+    const_z_q_percent: ScalarOrVector[Float] = 0,
+    const_i_q_percent: ScalarOrVector[Float] = 0,
     sn_mva: ScalarOrVector[Float] = ...,
     name: ScalarOrVector[str] | None = None,
     scaling: ScalarOrVector[Float] = 1.0,
@@ -149,7 +153,7 @@ def create_sgen(
     controllable: Bool | float = ...,  # float because default value is nan
     k: Float = ...,
     rx: Float = ...,
-    id_q_capability_curve_characteristic: Int | None = None,
+    id_q_capability_characteristic: Int | None = None,
     reactive_capability_curve: Bool = False,
     curve_style: str | None = None,
     current_source: Bool = True,
@@ -177,7 +181,7 @@ def create_sgens(
     controllable: ScalarOrVector[Bool] | float = ...,  # float because default value is nan
     k: ScalarOrVector[Float] = ...,
     rx: ScalarOrVector[Float] = ...,
-    id_q_capability_curve_characteristic: ScalarOrVector[Int] | float | None = ...,  # float because default value is nan
+    id_q_capability_characteristic: ScalarOrVector[Int] | None = None,
     reactive_capability_curve: ScalarOrVector[Bool] = False,
     curve_style: ScalarOrVector[str] | None = None,
     current_source: ScalarOrVector[Bool] = True,
@@ -266,7 +270,7 @@ def create_gen(
     scaling: Float = 1.0,
     type: str | None = None,
     slack: Bool = False,
-    id_q_capability_curve_characteristic: Int | None = None,
+    id_q_capability_characteristic: Int | None = None,
     reactive_capability_curve: Bool = False,
     curve_style: str | None = None,
     controllable: Bool | float = ...,  # float because default value is nan
@@ -297,7 +301,7 @@ def create_gens(
     scaling: ScalarOrVector[Float] = 1.0,
     type: ScalarOrVector[str] | None = None,
     slack: ScalarOrVector[Bool] = False,
-    id_q_capability_curve_characteristic: ScalarOrVector[Int] | None | float = ...,  # float because default value is nan
+    id_q_capability_characteristic: ScalarOrVector[Int] | None = None,
     reactive_capability_curve: ScalarOrVector[Bool] = False,
     curve_style: ScalarOrVector[str] | None = None,
     controllable: ScalarOrVector[Bool] | float = ...,  # float because default value is nan
@@ -521,10 +525,10 @@ def create_transformer(
     parallel: Int = 1,
     df: Float = 1.0,
     tap_changer_type: Literal["Ratio", "Symmetrical", "Ideal", "Tabular"] | None = None,
-    tap_dependency_table: Bool | float = ...,  # float because default value is nan
-    id_characteristic_table: Int | float = ...,  # float because default value is nan
+    tap_dependency_table: Bool = False,
+    id_characteristic_table: Int | None = None,
     pt_percent: Float = ...,
-    oltc: Bool | float = ...,  # float because default value is nan
+    oltc: Bool = False,
     xn_ohm: Float = ...,
     tap2_pos: Int | float = ...,  # float because default value is nan
     **kwargs,
@@ -549,7 +553,7 @@ def create_transformer_from_parameters(
     tap_step_degree: Float = ...,
     tap_pos: Int | float = ...,  # float because default value is nan
     tap_changer_type: Literal["Ratio", "Symmetrical", "Ideal", "Tabular"] | None = None,
-    id_characteristic_table: Int | float = ...,  # float because default value is nan
+    id_characteristic_table: Int | None = None,
     in_service: Bool = True,
     name: str | None = None,
     vector_group: str | None = None,
@@ -563,7 +567,7 @@ def create_transformer_from_parameters(
     mag0_rx: Float = ...,
     si0_hv_partial: Float = ...,
     pt_percent: Float = ...,
-    oltc: Bool | float = ...,  # float because default value is nan
+    oltc: Bool = False,
     tap_dependency_table: Bool = False,
     xn_ohm: Float = ...,
     tap2_side: Literal["hv", "lv"] | None = None,
@@ -596,7 +600,7 @@ def create_transformers_from_parameters(
     tap_step_degree: ScalarOrVector[Float] = ...,
     tap_pos: ScalarOrVector[Int] | float = ...,  # float because default value is nan
     tap_changer_type: ScalarOrVector[Literal["Ratio", "Symmetrical", "Ideal", "Tabular"]] | None = None,
-    id_characteristic_table: ScalarOrVector[Int] | float = ...,  # float because default value is nan
+    id_characteristic_table: ScalarOrVector[Int] | None = None,
     in_service: ScalarOrVector[Bool] = True,
     name: ScalarOrVector[str] | None = None,
     vector_group: ScalarOrVector[str] | None = None,
@@ -610,7 +614,7 @@ def create_transformers_from_parameters(
     mag0_rx: ScalarOrVector[Float] = ...,
     si0_hv_partial: ScalarOrVector[Float] = ...,
     pt_percent: ScalarOrVector[Float] = ...,
-    oltc: ScalarOrVector[Bool] | float = ...,  # float because default value is nan
+    oltc: ScalarOrVector[Bool] = False,
     tap_dependency_table: ScalarOrVector[Bool] = False,
     xn_ohm: ScalarOrVector[Float] = ...,
     tap2_side: ScalarOrVector[Literal["hv", "lv"]] | None = None,
@@ -636,8 +640,8 @@ def create_transformer3w(
     max_loading_percent: Float = ...,
     tap_changer_type: Literal["Ratio", "Symmetrical", "Ideal", "Tabular"] | None = None,
     tap_at_star_point: Bool = False,
-    tap_dependency_table: Bool | float = ...,  # float because default value is nan
-    id_characteristic_table: Int | float = ...,  # float because default value is nan
+    tap_dependency_table: Bool = False,
+    id_characteristic_table: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
 def create_transformer3w_from_parameters(
@@ -682,7 +686,7 @@ def create_transformer3w_from_parameters(
     vkr0_lv_percent: Float = ...,
     vector_group: str | None = None,
     tap_dependency_table: Bool = False,
-    id_characteristic_table: Int | float = ...,  # float because default value is nan
+    id_characteristic_table: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
 def create_transformers3w_from_parameters(
@@ -727,7 +731,7 @@ def create_transformers3w_from_parameters(
     vkr0_lv_percent: ScalarOrVector[Float] = ...,
     vector_group: ScalarOrVector[str] | None = None,
     tap_dependency_table: ScalarOrVector[Bool] = False,
-    id_characteristic_table: ScalarOrVector[Int] | float = ...,  # float because default value is nan
+    id_characteristic_table: ScalarOrVector[Int] | None = None,
     **kwargs,
 ) -> Array1D[np.int64]: ...
 def create_switch(
@@ -766,7 +770,7 @@ def create_shunt(
     max_step: Int = 1,
     name: str | None = None,
     step_dependency_table: Bool = False,
-    id_characteristic_table: Int | float = ...,  # float because default value is nan
+    id_characteristic_table: Int | None = None,
     in_service: Bool = True,
     index: Int | None = None,
     **kwargs,
@@ -781,7 +785,7 @@ def create_shunts(
     max_step: ScalarOrVector[Int] = 1,
     name: ScalarOrVector[str] | None = None,
     step_dependency_table: ScalarOrVector[Bool] = False,
-    id_characteristic_table: ScalarOrVector[Int] | float = ...,  # float because default value is nan
+    id_characteristic_table: ScalarOrVector[Int] | None = None,
     in_service: ScalarOrVector[Bool] = True,
     index: Collection[Int] | None = None,
     **kwargs,
@@ -798,9 +802,31 @@ def create_shunt_as_capacitor(
     max_step: Int = 1,
     name: str | None = None,
     step_dependency_table: Bool = False,
-    id_characteristic_table: Int = ...,
+    id_characteristic_table: Int | None = None,
     in_service: Bool = True,
     index: Int | None = None,
+    **kwargs,
+) -> np.int64: ...
+def create_source_dc(
+    net: pandapowerNet,
+    bus_dc: Int,
+    vm_pu: Float = 1.0,
+    index: Int | None = None,
+    name: str | None = None,
+    in_service: Bool = True,
+    type: str | None = None,
+    **kwargs,
+) -> np.int64: ...
+def create_load_dc(
+    net: pandapowerNet,
+    bus_dc: Int,
+    p_dc_mw: Float,
+    scaling: Float = 1.0,
+    type: str | None = None,
+    index: Int | None = None,
+    name: str | None = None,
+    in_service: Bool = True,
+    controllable: Bool = False,
     **kwargs,
 ) -> np.int64: ...
 def create_svc(
@@ -832,6 +858,44 @@ def create_ssc(
     index: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
+def create_b2b_vsc(
+    net: pandapowerNet,
+    bus: Int,
+    bus_dc_plus: Int,
+    bus_dc_minus: Int,
+    r_ohm: Float,
+    x_ohm: Float,
+    r_dc_ohm: Float,
+    pl_dc_mw: Float = 0.0,
+    control_mode_ac: Literal["vm_pu", "q_mvar", "slack"] = "vm_pu",
+    control_value_ac: Float = 1.0,
+    control_mode_dc: Literal["vm_pu", "p_mw"] = "p_mw",
+    control_value_dc: Float = 0.0,
+    name: str | None = None,
+    controllable: Bool = True,
+    in_service: Bool = True,
+    index: Int | None = None,
+    **kwargs,
+) -> np.int64: ...
+def create_bi_vsc(
+    net: pandapowerNet,
+    bus: Int,
+    bus_dc_plus: Int,
+    bus_dc_minus: Int,
+    r_ohm: Float,
+    x_ohm: Float,
+    r_dc_ohm: Float,
+    pl_dc_mw: Float = 0.0,
+    control_mode_ac: Literal["vm_pu", "q_mvar", "slack"] = "vm_pu",
+    control_value_ac: Float = 1.0,
+    control_mode_dc: Literal["vm_pu", "p_mw"] = "p_mw",
+    control_value_dc: Float = 0.0,
+    name: str | None = None,
+    controllable: Bool = True,
+    in_service: Bool = True,
+    index: Int | None = None,
+    **kwargs,
+) -> np.int64: ...
 def create_vsc(
     net: pandapowerNet,
     bus: Int,
@@ -848,6 +912,7 @@ def create_vsc(
     controllable: Bool = True,
     in_service: Bool = True,
     index: Int | None = None,
+    ref_bus: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
 def create_impedance(

@@ -3,8 +3,11 @@ from typing import Final
 VSC_MODE_AC_V: Final = 0
 VSC_MODE_AC_Q: Final = 1
 VSC_MODE_AC_SL: Final = 2
+
 VSC_MODE_DC_V: Final = 0
 VSC_MODE_DC_P: Final = 1
+VSC_MODE_DC_DP: Final = 2
+VSC_MODE_DC_DM: Final = 3
 
 VSC_BUS: Final = 0
 VSC_INTERNAL_BUS: Final = 1
@@ -25,4 +28,6 @@ VSC_P: Final = 14
 VSC_Q: Final = 15
 VSC_P_DC: Final = 16
 
-vsc_cols: Final = 17
+VSC_DIFF_REF_BUS: Final = 17
+
+vsc_cols: Final = 18

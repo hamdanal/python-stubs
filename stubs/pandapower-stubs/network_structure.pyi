@@ -1,0 +1,6 @@
+from typing import Any
+
+import numpy as np
+
+def get_structure_dict() -> dict[str, dict[str, str | np.dtype[Any]]]: ...
+def get_std_type_structure_dict() -> dict[str, dict[str, str | np.dtype[Any]]]: ...

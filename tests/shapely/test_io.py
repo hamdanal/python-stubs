@@ -96,17 +96,17 @@ def test_geojson() -> None:
 def test_ragged_array() -> None:
     ra = shapely.to_ragged_array([PO])
     check(
-        assert_type(ra, tuple[GeometryType, NDArray[np.float64], tuple[NDArray[np.int64], ...]]),
+        assert_type(ra, tuple[GeometryType, NDArray[np.float64], tuple[NDArray[np.int32], ...]]),
         tuple,
     )
     check(assert_type(ra[0], GeometryType), GeometryType)
     check(assert_type(ra[1], NDArray[np.float64]), np.ndarray, dtype=float)
-    check(assert_type(ra[2], tuple[NDArray[np.int64], ...]), tuple, dtype=np.ndarray)
-    check(assert_type(ra[2][0], NDArray[np.int64]), np.ndarray, dtype=np.int32)
+    check(assert_type(ra[2], tuple[NDArray[np.int32], ...]), tuple, dtype=np.ndarray)
+    check(assert_type(ra[2][0], NDArray[np.int32]), np.ndarray, dtype=np.int32)
     check(
         assert_type(
             shapely.to_ragged_array([PO], include_z=True),
-            tuple[GeometryType, NDArray[np.float64], tuple[NDArray[np.int64], ...]],
+            tuple[GeometryType, NDArray[np.float64], tuple[NDArray[np.int32], ...]],
         ),
         tuple,
     )

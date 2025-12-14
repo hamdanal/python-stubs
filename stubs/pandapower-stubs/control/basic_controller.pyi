@@ -7,7 +7,7 @@ from pandapower.io_utils import JSONSerializableClass
 
 class BasicCtrl(JSONSerializableClass):
     index: int
-    def __init__(self, container: pandapowerNet, index: Int | None = None, **kwargs) -> None: ...
+    def __init__(self, container: pandapowerNet, index: Int | None = None) -> None: ...
     def time_step(self, container: pandapowerNet, time: Any) -> None: ...
     def initialize_control(self, container: pandapowerNet) -> None: ...
     def is_converged(self, container: pandapowerNet): ...
@@ -25,6 +25,7 @@ class Controller(BasicCtrl):
     def __init__(
         self,
         net: pandapowerNet,
+        name: str | None = None,
         in_service: bool = True,
         order: Int = 0,
         level: Int = 0,
@@ -34,11 +35,11 @@ class Controller(BasicCtrl):
         initial_run: bool = True,
         overwrite: bool = False,
         matching_params: dict[str, Any] | None = None,
-        **kwargs,
     ) -> None: ...
     def add_controller_to_net(
         self,
         net: pandapowerNet,
+        name: str | None,
         in_service: bool,
         initial_run: bool,
         order: Int,

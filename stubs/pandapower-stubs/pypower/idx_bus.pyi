@@ -24,8 +24,10 @@ LAM_Q: Final = 14
 MU_VMAX: Final = 15
 MU_VMIN: Final = 16
 
-CID: Final = 13
-CZD: Final = 14
+CID_P: Final = 13
+CZD_P: Final = 14
 SL_FAC: Final = 15
+CID_Q: Final = 16
+CZD_Q: Final = 17
 
-bus_cols: Final = 16
+bus_cols: Final = 18
