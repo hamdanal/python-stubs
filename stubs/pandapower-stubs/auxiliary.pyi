@@ -1,7 +1,6 @@
 import logging
 from collections.abc import Iterable, Mapping, MutableMapping
 from typing import Any, Final, Literal, NoReturn, Self, overload
-from typing_extensions import deprecated
 
 import geopandas as gpd
 import numpy as np
@@ -124,8 +123,6 @@ class pandapowerNet(ADict[pd.DataFrame]):
     res_protection: pd.DataFrame  # Optional?
     @classmethod
     def create_dataframes(cls, data): ...
-    @deprecated("Use copy.deepcopy(net) instead of net.deepcopy()")
-    def deepcopy(self) -> Self: ...
 
 class GeoAccessor:
     def __init__(self, pandas_obj) -> None: ...

@@ -16,7 +16,6 @@ def runpp_3ph(
     recycle: dict[str, bool] | None = None,
     check_connectivity: bool = True,
     switch_rx_ratio: Float = 2.0,
-    delta_q: Float = 0,
     v_debug: bool = False,
     **kwargs,
 ) -> None: ...

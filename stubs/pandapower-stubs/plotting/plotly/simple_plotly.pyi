@@ -2,7 +2,7 @@ from collections.abc import Iterable, Mapping
 from typing import Any, Literal, overload
 
 import pandas as pd
-from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
@@ -43,7 +43,7 @@ def simple_plotly(
     zoomlevel: int = 11,
     auto_draw_traces: Literal[True] = True,
     hvdc_color: str = "cyan",
-) -> Figure: ...
+) -> go.Figure: ...
 @overload  # auto_draw_traces=False positional
 def simple_plotly(
     net: pandapowerNet,
