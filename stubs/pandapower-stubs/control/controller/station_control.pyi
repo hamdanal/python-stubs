@@ -20,7 +20,6 @@ class BinarySearchControl(Controller):
         voltage_ctrl,
         name="",
         input_inverted=[],
-        gen_Q_response=[],
         bus_idx=None,
         tol=0.001,
         in_service=True,

@@ -3,6 +3,7 @@
 # TODO: modules
 pandapower\.contingency.*
 pandapower\.converter.*
+pandapower\.network_schema.*
 
 # TODO: constants
 pandapower\.[A-Z0-9_]+$
@@ -20,6 +21,8 @@ pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|imported|INSTALLED|IMPORTED)|GRAPHS
 
 # OK: runtime-only unintentional reexports
 pandapower\.(nan|pp_version)
+pandapower\.create\.nan
+pandapower\.diagnostic\.diagnostic_helpers\.(N|T)
 pandapower\.networks\.(nan|pp_dir)
 pandapower\.topology\.BASE_KV
 

@@ -1,7 +1,7 @@
 import json
 import numbers
 from _typeshed import Incomplete, ReadableBuffer, StrOrBytesPath, SupportsRead
-from collections.abc import Callable, Container, Mapping
+from collections.abc import Callable, Container, Iterable, Mapping
 from functools import singledispatch
 from typing import Any, Self, SupportsIndex as Int, overload
 
@@ -13,7 +13,7 @@ import shapely
 from shapely.geometry.base import BaseGeometry
 
 from pandapower._typing import SupportsGeoInterface
-from pandapower.auxiliary import pandapowerNet
+from pandapower.auxiliary import pandapowerNet, pandapowerNet as _pandapowerNet
 
 PSYCOPG2_INSTALLED: bool
 cryptography_INSTALLED: bool
@@ -81,13 +81,19 @@ class FromSerializableRegistry:
     module_name: str
     obj: Any
     d: dict[str, Any]
+    omit_modules: Iterable[str] | None
     pp_hook: Callable[..., Incomplete]
     def __init__(
-        self, obj: Any, d: dict[str, Any], pp_hook_funct: Callable[..., Incomplete], ignore_unknown_objects: bool = False
+        self,
+        obj: Any,
+        d: dict[str, Any],
+        pp_hook_funct: Callable[..., Incomplete],
+        ignore_unknown_objects: bool = False,
+        omit_modules: Iterable[str] | None = None,
     ) -> None: ...
     def Series(self) -> pd.Series[Any]: ...
     def DataFrame(self) -> pd.DataFrame: ...
-    def pandapowerNet(self) -> pandapowerNet: ...
+    def pandapowerNet(self) -> _pandapowerNet: ...
     def networkx(self) -> Incomplete: ...
     def method(self) -> Incomplete: ...
     def function(self) -> Incomplete: ...
@@ -104,6 +110,8 @@ def pp_hook[D: dict[str, Any]](
     empty_dict_like_object: Incomplete | None = None,
     registry_class: type[FromSerializableRegistry] = ...,
     ignore_unknown_objects: bool = False,
+    omit_tables: Iterable[str] | None = None,
+    omit_modules: Iterable[str] | None = None,
 ) -> D: ...
 def encrypt_string(s: str, key: str, compress: bool = True) -> str: ...
 def decrypt_string(s: str, key: str) -> str: ...

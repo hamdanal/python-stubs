@@ -3,7 +3,7 @@ from collections.abc import Collection, Iterable, Mapping
 from typing import Any, Literal
 
 import pandas as pd
-from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower._typing import Float, Int
 from pandapower.auxiliary import pandapowerNet
@@ -126,4 +126,4 @@ def draw_traces(
     filename: str = "temp-plot.html",
     auto_open: bool = True,
     **kwargs,
-) -> Figure: ...
+) -> go.Figure: ...

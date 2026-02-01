@@ -47,6 +47,9 @@ def from_json(  # keep inline with pandapower._typing.FromJsonKwds
     replace_elements: Mapping[str, str] | None = None,
     empty_dict_like_object: MutableMapping[str, Any] | None = None,
     ignore_unknown_objects: bool = False,
+    drop_invalid_geodata: bool = False,
+    omit_tables: Iterable[str] | None = None,
+    omit_modules: Iterable[str] | None = None,
 ) -> pandapowerNet: ...
 def from_json_string(
     json_string: str,
@@ -58,5 +61,8 @@ def from_json_string(
     replace_elements: Mapping[str, str] | None = None,
     empty_dict_like_object: MutableMapping[str, Any] | None = None,
     ignore_unknown_objects: bool = False,
+    drop_invalid_geodata: bool = False,
+    omit_tables: Iterable[str] | None = None,
+    omit_modules: Iterable[str] | None = None,
 ) -> pandapowerNet: ...
 def from_json_dict(json_dict: Mapping[str, Any]) -> pandapowerNet: ...

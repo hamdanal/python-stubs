@@ -1,6 +1,6 @@
 from typing import Literal
 
-from plotly.graph_objs import Figure  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.mapbox_plot import *
@@ -24,4 +24,4 @@ def pf_res_plotly(
     filename: str = "temp-plot.html",
     auto_open: bool = True,
     zoomlevel: int = 11,
-) -> Figure: ...
+) -> go.Figure: ...
