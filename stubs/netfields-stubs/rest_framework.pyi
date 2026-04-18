@@ -9,7 +9,7 @@ from rest_framework.serializers import ModelSerializer
 
 type _IPAddress = IPv4Address | IPv6Address
 type _IPNetwork = IPv4Network | IPv6Network
-type _InetDefaultInitial = _IPAddress | None | Callable[[], _IPAddress | None] | type[empty]  # type: ignore[valid-type]  # pyright: ignore[reportInvalidTypeForm]
+type _InetDefaultInitial = _IPAddress | None | Callable[[], _IPAddress | None] | type[empty]  # pyright: ignore[reportInvalidTypeForm]
 
 class InetAddressField(Field[_IPAddress | None, _IPAddress | int | str | None, str | None, Incomplete]):
     store_prefix: bool
