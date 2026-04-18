@@ -1,11 +1,8 @@
 # python-stubs
 
-This repository provides stubs for some python packages that do not offer proper type hints
-and have no stubs available. The main goal is to provide helpers for VSCode's Pylance language
-server to offer better autocompletion. Another goal is to improve the performance of VSCode's
-python extension where it suffers from slow downs with some packages (For example, installing
-`pandapower` without the stubs, python analysis in VSCode takes up to 7 seconds to complete on
-every change).
+This repository provides stubs for some python packages that do not offer proper type hints and
+have no stubs available. It improves language service experience in editors like VSCode by
+providing better autocompletion and sometimes better performance.
 
 ## Usage
 
@@ -13,10 +10,19 @@ every change).
    ```bash
    git clone https://github.com/hamdanal/python-stubs /path/to/python-stubs
    ```
-2. Add the stubs to `"extraPaths"` in your VSCode's `settings.json`:
-   ```json
-   "python.analysis.extraPaths": ["/path/to/python-stubs/stubs"]
-   ```
+2. In VSCode's `settings.json` file, add the stubs path to the appropriate setting:
+   1. If using _Pylance_:
+      ```json
+      "python.analysis.extraPaths": ["/path/to/python-stubs/stubs"]
+      ```
+   2. If using _ty_:
+      ```json
+      "ty.configuration": {
+        "environment": {
+          "extra-paths": ["/path/to/python-stubs/stubs"]
+        }
+      }
+      ```
 
 ## Contributing
 
