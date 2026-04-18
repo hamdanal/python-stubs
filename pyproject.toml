@@ -28,8 +28,8 @@ dev = [
     "ruff>=0.14.14",
     "pytest>=8.0",
     "rich-argparse>=1.6.0",
-    "mypy>=1.19.1",
-    "pyright>=1.1.392",
+    "mypy[native-parser]>=1.20.1",
+    "pyright>=1.1.408",
     { include-group = "tests" },
 ]
 
@@ -66,6 +66,7 @@ fixable = [
     "E741", # ambiguous-variable-name
     "F403", # undefined-local-with-import-star
     "F405", # undefined-local-with-import-star-usage
+    "UP042", # replace-str-enum
 ]
 "__init__.pyi" = ["TID252"]
 
@@ -84,6 +85,9 @@ warn_unused_ignores = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 enable_error_code = "deprecated"
+local_partial_types = true
+allow_redefinition_new = true
+native_parser = true
 
 [tool.pyright]
 # Project settings
