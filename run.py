@@ -15,6 +15,7 @@ default_args = {
     "ruff-format": ["tests", "stubs"],
     "mypy": ["tests", "stubs"],
     "pyright": ["tests", "stubs"],
+    "ty-check": ["tests", "stubs"],
     "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower", "pyogrio"],
     "pytest": [],
 }

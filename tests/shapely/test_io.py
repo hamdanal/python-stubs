@@ -112,7 +112,7 @@ def test_ragged_array() -> None:
     )
     shapely.to_ragged_array([PO, None])
     with pytest.raises(Exception):
-        shapely.to_ragged_array(PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        shapely.to_ragged_array(PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     check(
         assert_type(shapely.from_ragged_array(*ra), NDArray[np.object_]), np.ndarray, dtype=Polygon
@@ -187,6 +187,6 @@ def test_wkb_module() -> None:
     check(assert_type(shapely.wkb.dump(P, WkbHexWriter(), hex=True), None), NoneType)
 
     with pytest.raises(Exception):
-        shapely.wkb.dump(P, WkbWriter(), hex=True)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        shapely.wkb.dump(P, WkbWriter(), hex=True)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.wkb.dump(P, WkbHexWriter(), hex=False)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        shapely.wkb.dump(P, WkbHexWriter(), hex=False)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]

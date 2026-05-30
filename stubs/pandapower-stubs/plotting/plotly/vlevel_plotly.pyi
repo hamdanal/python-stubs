@@ -1,6 +1,6 @@
 from typing import Literal
 
-import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import]
 
 from pandapower.auxiliary import pandapowerNet
 from pandapower.plotting.plotly.traces import _MapStyle

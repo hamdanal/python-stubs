@@ -31,6 +31,7 @@ dev = [
     "rich-argparse>=1.8.0",
     "mypy[native-parser]>=2.1.0",
     "pyright>=1.1.409",
+    "ty>=0.0.40",
     { include-group = "tests" },
 ]
 
@@ -120,6 +121,11 @@ reportIncompatibleMethodOverride = "none"
 reportIncompatibleVariableOverride = "none"
 reportPropertyTypeMismatch = "none"
 reportSelfClsParameterName = "none"
+
+[tool.ty]
+analysis.respect-type-ignore-comments = false
+rules.invalid-method-override = "ignore" # out of control of the stubs (inherited from implementation)
+terminal.output-format = "concise"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
