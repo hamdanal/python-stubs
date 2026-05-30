@@ -57,7 +57,8 @@ def test_polygonize() -> None:
     )
     check(assert_type(poly[0], Polygon), Polygon)
     check(assert_type(poly[:], GeometryCollection[Polygon]), GeometryCollection)
-    check(assert_type(list(poly), list[Polygon]), list, dtype=Polygon)
+    # TODO https://github.com/astral-sh/ty/issues/3598
+    check(assert_type(list(poly), list[Polygon]), list, dtype=Polygon)  # ty:ignore[type-assertion-failure]
     check(assert_type(len(poly), int), int)
 
     check(
@@ -158,7 +159,9 @@ def test_triangulate() -> None:
         dtype=LineString,
     )
     check(
-        assert_type(shapely.ops.triangulate(MP, edges=bool("")), list[Polygon] | list[LineString]),
+        assert_type(
+            shapely.ops.triangulate(MP, edges=bool(int("0"))), list[Polygon] | list[LineString]
+        ),
         list,
         dtype=LineString | Polygon,
     )
@@ -189,7 +192,7 @@ def test_transform() -> None:
         return x, y, z
 
     with pytest.raises(TypeError):
-        shapely.ops.transform(wrong_id_func, P)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        shapely.ops.transform(wrong_id_func, P)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     wgs84_pt = Point(-72.2495, 43.886)
     wgs84 = pyproj.CRS("EPSG:4326")
@@ -215,7 +218,7 @@ def test_shared_paths() -> None:
     shared = shapely.ops.shared_paths(LS, PO.exterior)
     check(assert_type(shared, GeometryCollection[MultiLineString]), GeometryCollection)
     with pytest.raises(Exception):
-        shapely.ops.shared_paths(LS, PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        shapely.ops.shared_paths(LS, PO)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
 def test_split() -> None:

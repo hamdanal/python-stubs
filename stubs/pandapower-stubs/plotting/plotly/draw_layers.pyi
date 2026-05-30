@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, Literal
 
-import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import]
 
 def version_check() -> None: ...
 def draw_layers(

@@ -18,7 +18,7 @@ BOXES = [shapely.box(0, 0, 1, 1), shapely.box(2, 2, 3, 3)]
 
 def test_strtree() -> None:
     with pytest.raises(Exception):
-        shapely.STRtree(P)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        shapely.STRtree(P)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     check(assert_type(TREE.geometries, NDArray[np.object_]), np.ndarray, dtype=Point)
     _ = len(TREE)
 
@@ -65,10 +65,10 @@ def test_strtree_query() -> None:
     )
 
     with pytest.raises(Exception):  # needs distance
-        tree.query(BOXES, predicate="dwithin")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]
+        tree.query(BOXES, predicate="dwithin")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     with pytest.raises(Exception):  # invalid predicate
-        tree.query(BOXES, predicate="yes")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]
+        tree.query(BOXES, predicate="yes")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
 def test_strtree_nearest() -> None:
@@ -86,9 +86,9 @@ def test_strtree_nearest() -> None:
     )
 
     with pytest.raises(Exception):
-        TREE.nearest(None)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        TREE.nearest(None)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        TREE.nearest((shapely.box(0, 0, 1, 1), None))  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]
+        TREE.nearest((shapely.box(0, 0, 1, 1), None))  # type: ignore[arg-type] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
 
 
 def test_strtree_query_nearest() -> None:

@@ -43,7 +43,7 @@ def test_crs() -> None:
         gs.crs = 4326
         assert isinstance(gs.crs, CRS)
         with pytest.raises(Exception):
-            gs.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]
+            gs.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-assignment]
 
     # set_crs
     check(assert_type(gs.set_crs(crs), GeoSeries), GeoSeries)
@@ -53,11 +53,11 @@ def test_crs() -> None:
     check(assert_type(gs.set_crs(crs=4326), GeoSeries), GeoSeries)
     check(assert_type(gs.set_crs(epsg=4326), GeoSeries), GeoSeries)
     with pytest.raises(Exception):
-        gs.set_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]
+        gs.set_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gs.set_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]
+        gs.set_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(Exception):
-        gs.set_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]
+        gs.set_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
 
     # to_crs
     check(assert_type(gs.to_crs(crs), GeoSeries), GeoSeries)
@@ -65,16 +65,16 @@ def test_crs() -> None:
     check(assert_type(gs.to_crs(crs=4326), GeoSeries), GeoSeries)
     check(assert_type(gs.to_crs(epsg=4326), GeoSeries), GeoSeries)
     with pytest.raises(Exception):
-        gs.to_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]
+        gs.to_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gs.to_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]
+        gs.to_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(Exception):
-        gs.to_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]
+        gs.to_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
 
     # estimate_utm_crs
     check(assert_type(gs.estimate_utm_crs(), CRS), CRS)
     check(assert_type(gs.estimate_utm_crs("WGS 84"), CRS), CRS)
     with pytest.raises(Exception):
-        gs.estimate_utm_crs(84)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        gs.estimate_utm_crs(84)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(Exception):
-        gs.estimate_utm_crs(CRS)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        gs.estimate_utm_crs(CRS)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]

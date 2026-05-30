@@ -262,9 +262,9 @@ def test_point() -> None:
     Point(float(i) for i in range(2))
 
     with pytest.raises(TypeError):
-        Point(1)  # type: ignore # pyright: ignore
+        Point(1)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        Point(1, 2, 3, 4)  # type: ignore # pyright: ignore
+        Point(1, 2, 3, 4)  # type: ignore # pyright: ignore  # ty:ignore[no-matching-overload]
 
     # Test new attributes
     check(assert_type(P.x, float), float)
@@ -291,11 +291,11 @@ def test_linestring() -> None:
     LineString(HasArray(np.array([[1, 2], [3, 4]])))
 
     with pytest.raises(TypeError):
-        LineString(1)  # type: ignore # pyright: ignore
+        LineString(1)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        LineString(P)  # type: ignore # pyright: ignore
+        LineString(P)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        LineString([P, LS])  # type: ignore # pyright: ignore
+        LineString([P, LS])  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
 
     # Test new attributes
     check(assert_type(LS.offset_curve(1.5), LineString | MultiLineString), LineString)
@@ -322,11 +322,11 @@ def test_linearring() -> None:
     LinearRing(HasArray(np.array(coords)))
 
     with pytest.raises(TypeError):
-        LinearRing(1)  # type: ignore # pyright: ignore
+        LinearRing(1)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        LinearRing(P)  # type: ignore # pyright: ignore
+        LinearRing(P)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        LinearRing([P, LR])  # type: ignore # pyright: ignore
+        LinearRing([P, LR])  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
 
     # Test new attributes
     check(assert_type(LR.offset_curve(1.5), LineString | MultiLineString), LineString)
@@ -352,9 +352,9 @@ def test_polygon() -> None:
     Polygon(np.array(coords))
 
     with pytest.raises(TypeError):
-        Polygon(1.0, 2)  # type: ignore # pyright: ignore
+        Polygon(1.0, 2)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        Polygon(1, 2, 3, 4)  # type: ignore # pyright: ignore
+        Polygon(1, 2, 3, 4)  # type: ignore # pyright: ignore  # ty:ignore[invalid-argument-type, too-many-positional-arguments]
 
     # Test new attributes
     check(assert_type(PO.exterior, LinearRing), LinearRing)
@@ -382,15 +382,15 @@ def test_multipoint() -> None:
     t: tuple[Point | tuple[float, float] | list[float], ...] = (P, (1, 2), [1, 2])
     MultiPoint(t)
     with pytest.raises(TypeError):
-        MultiPoint(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPoint(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPoint(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPoint(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPoint((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPoint((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPoint((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPoint((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPoint((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPoint((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     # Test BaseGeometry overrides
     check(assert_type(MP.boundary, GeometryCollection), GeometryCollection)
@@ -405,15 +405,15 @@ def test_multilinestring() -> None:
     t: tuple[LineString | list[Point], ...] = (LS, LS, LS, [P, P])
     MultiLineString(t)
     with pytest.raises(TypeError):
-        MultiLineString(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiLineString(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiLineString(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiLineString(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiLineString((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiLineString((PO,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(shapely.errors.ShapelyError):
-        MultiLineString((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiLineString((None,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiLineString((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiLineString((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     # Test BaseGeometry overrides
     check(assert_type(MLS.boundary, MultiPoint), MultiPoint)
@@ -430,13 +430,13 @@ def test_multipolygon() -> None:
     t: tuple[Polygon, None] = (PO, None)
     MultiPolygon(t)
     with pytest.raises(TypeError):
-        MultiPolygon(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPolygon(o for o in [LS, LS, LS])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPolygon(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPolygon(BG)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPolygon((MLS,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPolygon((MLS,))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
     with pytest.raises(TypeError):
-        MultiPolygon((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        MultiPolygon((P, PO, None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
     # Test BaseGeometry overrides
     check(assert_type(MPO.boundary, MultiLineString), MultiLineString)
@@ -450,7 +450,7 @@ def test_geometry_collection() -> None:
     GeometryCollection([None])
     GeometryCollection([P, PO, None])
     with pytest.raises(Exception):
-        GeometryCollection(o for o in [P, PO, None])  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]
+        GeometryCollection(o for o in [P, PO, None])  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
 
     # Test BaseGeometry overrides
     check(assert_type(GC.boundary, None), NoneType)
@@ -598,8 +598,8 @@ def test_generic_getset() -> None:
         dtype=Point,
     )
     with pytest.raises(Exception):
-        shapely.set_precision(LS, 1.0, mode="something")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
-        shapely.set_precision(LS, 1.0, mode=10)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
+        shapely.set_precision(LS, 1.0, mode="something")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]  # ty:ignore[no-matching-overload]
+        shapely.set_precision(LS, 1.0, mode=10)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]  # ty:ignore[no-matching-overload]
 
     # force_dimension
     check(assert_type(shapely.force_2d(None), None), NoneType)

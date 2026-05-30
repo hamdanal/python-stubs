@@ -94,7 +94,7 @@ def test_get_coordinates() -> None:
     # bool fallback
     check(
         assert_type(
-            shapely.get_coordinates(P, return_index=bool(1)),
+            shapely.get_coordinates(P, return_index=bool(int("1"))),
             tuple[NDArray[np.float64], NDArray[np.int64]] | NDArray[np.float64],
         ),
         tuple,
@@ -102,7 +102,7 @@ def test_get_coordinates() -> None:
     )
     check(
         assert_type(
-            shapely.get_coordinates(P, return_index=bool(0)),
+            shapely.get_coordinates(P, return_index=bool(int("0"))),
             tuple[NDArray[np.float64], NDArray[np.int64]] | NDArray[np.float64],
         ),
         np.ndarray,
@@ -129,8 +129,8 @@ def test_set_coordinates() -> None:
         dtype=Point,
     )
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]
+        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]

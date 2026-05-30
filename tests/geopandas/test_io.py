@@ -33,7 +33,7 @@ def test_read_file(tmp_path: Path) -> None:
     assert not isinstance(df, gpd.GeoDataFrame)
 
     with pytest.raises(Exception):
-        gpd.read_file(file, engine="toto")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]
+        gpd.read_file(file, engine="toto")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
 
 
 def test_infer_schema() -> None:

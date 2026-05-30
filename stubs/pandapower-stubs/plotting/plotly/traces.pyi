@@ -3,7 +3,7 @@ from collections.abc import Collection, Iterable, Mapping
 from typing import Any, Literal
 
 import pandas as pd
-import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import]
 
 from pandapower._typing import Float, Int
 from pandapower.auxiliary import pandapowerNet
