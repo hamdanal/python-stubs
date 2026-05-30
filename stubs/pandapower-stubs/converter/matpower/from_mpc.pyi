@@ -1,3 +1,1 @@
-matpowercaseframes_imported: bool
-
 def from_mpc(mpc_file, f_hz: int = 50, casename_mpc_file: str = "mpc", validate_conversion: bool = False, **kwargs): ...

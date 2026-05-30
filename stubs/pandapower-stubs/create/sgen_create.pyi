@@ -5,7 +5,7 @@ import numpy as np
 
 from pandapower._typing import Array1D, Bool, Float, Int, ScalarOrVector
 from pandapower.auxiliary import pandapowerNet
-from pandapower.pp_types import GeneratorType
+from pandapower.pp_types import GeneratorType, UnderOverExcitedType
 
 def create_sgen(
     net: pandapowerNet,
@@ -72,6 +72,9 @@ def create_asymmetric_sgen(
     q_a_mvar: Float = 0,
     q_b_mvar: Float = 0,
     q_c_mvar: Float = 0,
+    sn_a_mva: Float = ...,
+    sn_b_mva: Float = ...,
+    sn_c_mva: Float = ...,
     sn_mva: Float = ...,
     name: str | None = None,
     index: Int | None = None,
@@ -81,5 +84,5 @@ def create_asymmetric_sgen(
     **kwargs,
 ) -> np.int64: ...
 def create_sgen_from_cosphi(
-    net: pandapowerNet, bus: Int, sn_mva: Float, cos_phi: Float, mode: Literal["underexcited", "overexcited"], **kwargs
+    net: pandapowerNet, bus: Int, sn_mva: Float, cos_phi: Float, mode: UnderOverExcitedType, **kwargs
 ) -> np.int64: ...

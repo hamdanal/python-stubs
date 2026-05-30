@@ -16,6 +16,7 @@ def runpp(
     tolerance_mva: Float = 1e-8,
     trafo_model: Literal["t", "pi"] = "t",
     trafo_loading: Literal["current", "power"] = "current",
+    enforce_p_lims: bool = False,
     enforce_q_lims: bool = False,
     check_connectivity: bool = True,
     voltage_depend_loads: bool = True,

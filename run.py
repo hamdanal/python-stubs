@@ -15,11 +15,13 @@ default_args = {
     "ruff-format": ["tests", "stubs"],
     "mypy": ["tests", "stubs"],
     "pyright": ["tests", "stubs"],
-    "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower"],
+    "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower", "pyogrio"],
     "pytest": [],
 }
+if (num_mypy_workers := min(os.cpu_count() or 1, 6)) > 1:
+    default_args["mypy"].insert(0, f"--num-workers={num_mypy_workers}")
+del num_mypy_workers
 
-_newl = "\n"
 description = f"""\
 Run project development tools with proper environment setup.
 
@@ -27,7 +29,7 @@ The following commands are available:
 
 Command | Default invocation |
 ------- | ------------------ |
-{_newl.join(f"{tool} | {l2c((*tool.split('-'), *default))}" for tool, default in default_args.items())}
+{"\n".join(f"{tool} | {l2c((*tool.split('-'), *default))}" for tool, default in default_args.items())}
 
 You can override the default invocation by passing extra args after the command.
 """

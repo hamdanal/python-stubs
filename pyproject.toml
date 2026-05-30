@@ -9,6 +9,7 @@ tests = [
     "types-geopandas>=1.0.1",
     "types-shapely>=2.0.0",
     "pandas-stubs>=2.2.2",
+    "pyarrow-stubs>=20.0.0",
     "matplotlib>=3.8.0",
     "folium>=0.16.0",
     "rtree>=1.2.0",
@@ -25,11 +26,11 @@ tests = [
     "types-networkx>=3.4.2",
 ]
 dev = [
-    "ruff>=0.14.14",
-    "pytest>=8.0",
-    "rich-argparse>=1.6.0",
-    "mypy[native-parser]>=1.20.1",
-    "pyright>=1.1.408",
+    "ruff>=0.15.15",
+    "pytest>=9.0",
+    "rich-argparse>=1.8.0",
+    "mypy[native-parser]>=2.1.0",
+    "pyright>=1.1.409",
     { include-group = "tests" },
 ]
 
@@ -85,8 +86,7 @@ warn_unused_ignores = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 enable_error_code = "deprecated"
-local_partial_types = true
-allow_redefinition_new = true
+allow_redefinition = true
 native_parser = true
 
 [tool.pyright]

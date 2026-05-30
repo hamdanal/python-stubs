@@ -45,7 +45,6 @@ This project is licensed under the MIT License.
     <th>Import name</th>
     <th>Links</th>
     <th>Status</th>
-    <th>Type-checked</th>
     <th>Tested</th>
   </tr>
   <tr>
@@ -56,7 +55,6 @@ This project is licensed under the MIT License.
       <a href="https://github.com/jimfunk/django-postgresql-netfields">GitHub</a>
     </th>
     <th>Complete</th>
-    <th>Yes</th>
     <th>No</th>
   </tr>
   <tr>
@@ -67,7 +65,6 @@ This project is licensed under the MIT License.
       <a href="https://github.com/SectorLabs/django-postgres-extra">GitHub</a>
     </th>
     <th>Incomplete</th>
-    <th>Yes</th>
     <th>No</th>
   </tr>
   <tr>
@@ -79,6 +76,15 @@ This project is licensed under the MIT License.
     </th>
     <th>Incomplete</th>
     <th>Yes</th>
+  </tr>
+  <tr>
+    <th>pyogrio</th>
+    <th><code>pyogrio</code></th>
+    <th>
+      <a href="https://pypi.org/project/pyogrio">PyPI</a>,
+      <a href="https://github.com/geopandas/pyogrio">GitHub</a>
+    </th>
+    <th>Complete</th>
     <th>Yes</th>
   </tr>
 </table>

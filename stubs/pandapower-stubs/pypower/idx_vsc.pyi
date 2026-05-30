@@ -3,6 +3,8 @@ from typing import Final
 VSC_MODE_AC_V: Final = 0
 VSC_MODE_AC_Q: Final = 1
 VSC_MODE_AC_SL: Final = 2
+VSC_MODE_AC_P: Final = 3
+VSC_MODE_AC_PHI: Final = 4
 
 VSC_MODE_DC_V: Final = 0
 VSC_MODE_DC_P: Final = 1
