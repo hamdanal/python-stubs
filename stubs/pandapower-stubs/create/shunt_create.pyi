@@ -82,7 +82,7 @@ def create_ssc(
     index: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
-def create_b2b_vsc(
+def create_vsc_stacked(
     net: pandapowerNet,
     bus: Int,
     bus_dc_plus: Int,
@@ -101,7 +101,7 @@ def create_b2b_vsc(
     index: Int | None = None,
     **kwargs,
 ) -> np.int64: ...
-def create_bi_vsc(
+def create_vsc_bipolar(
     net: pandapowerNet,
     bus: Int,
     bus_dc_plus: Int,
@@ -110,10 +110,9 @@ def create_bi_vsc(
     x_ohm: Float,
     r_dc_ohm: Float,
     pl_dc_mw: Float = 0.0,
-    control_mode_ac: Literal["vm_pu", "q_mvar", "slack"] = "vm_pu",
-    control_value_ac: Float = 1.0,
-    control_mode_dc: Literal["vm_pu", "p_mw"] = "p_mw",
-    control_value_dc: Float = 0.0,
+    control_mode: Literal["vm_pu", "q_mvar", "slack", "Vac_phi"] = "Vac_phi",
+    control_value_1: Float = 1.0,
+    control_value_2: Float = 0.0,
     name: str | None = None,
     controllable: Bool = True,
     in_service: Bool = True,

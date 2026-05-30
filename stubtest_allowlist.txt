@@ -5,11 +5,10 @@ pandapower\.contingency.*
 pandapower\.converter.*
 pandapower\.network_schema.*
 
-# TODO: constants
-pandapower\.[A-Z0-9_]+$
-
 # TODO: types (stubtest bug?)
 pandapower\.pp_types\.[a-zA-Z]+$
+pandapower\.auxiliary\.(EtType|ElementType)
+pandapower\.std_types\.(DefaultStandardTypes)
 
 # OK: stubs-only
 pandapower\._typing
@@ -17,16 +16,27 @@ pandapower\._typing
 # OK: runtime-only helpers
 pandapower\..*\.(std_)?logger
 pandapower\.grid_equivalents(\.auxiliary)?\.(home|desktop)
-pandapower\.(\w+\.)*([a-zA-Z0-9]+_(available|imported|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
+pandapower\.(\w+\.)*([a-zA-Z0-9_]+_(available|imported|INSTALLED|IMPORTED)|GRAPHS_EQUAL_POSSIBLE|TYPE_CHECKING)
 
 # OK: runtime-only unintentional reexports
+pandapower\.[A-Z0-9_]+$
+pandapower\.auxiliary\.(NumpyDType|T|PyPowerNetwork)
 pandapower\.(nan|pp_version)
 pandapower\.create\.nan
 pandapower\.diagnostic\.diagnostic_helpers\.(N|T)
 pandapower\.networks\.(nan|pp_dir)
+pandapower\.pf\.no_numba\.(P|R)
 pandapower\.topology\.BASE_KV
 
 # OK: requires optional dependencies
 pandapower\.timeseries\.ts_runpp  # requires numba
 pandapower\.pf\.(makeYbus_numba|dSbus_dV_numba|create_jacobian_numba)  # requires numba
 pandapower\.topology\.graph_tool_interface  # requires graph-tool
+
+# pyogrio allowlist
+# ====================
+# OK: stubs-only
+pyogrio\._typing
+
+# OK: tests
+pyogrio\.tests(\..*)?

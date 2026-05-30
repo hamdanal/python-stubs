@@ -4,9 +4,6 @@ from typing import Any, overload
 
 from pandapower.auxiliary import pandapowerNet
 
-xlsxwriter_INSTALLED: bool
-openpyxl_INSTALLED: bool
-
 def to_pickle(net: pandapowerNet, filename: SupportsWrite[bytes] | str) -> None: ...
 def to_excel(
     net: pandapowerNet, filename: StrOrBytesPath, include_empty_tables: bool = False, include_results: bool = True

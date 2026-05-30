@@ -10,8 +10,6 @@ from numpy.typing import NDArray
 from pandapower.auxiliary import pandapowerNet
 from pandapower.topology.graph_tool_interface import GraphToolInterface
 
-graph_tool_available: bool
-
 INDEX: Final = 0
 F_BUS: Final = 1
 T_BUS: Final = 2
