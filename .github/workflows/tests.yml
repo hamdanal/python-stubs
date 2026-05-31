@@ -27,10 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
       - name: Install dependencies
@@ -44,12 +40,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+        with:
+          save-cache: "false"
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py pytest
@@ -58,12 +52,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+        with:
+          save-cache: "false"
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py mypy
@@ -72,12 +64,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+        with:
+          save-cache: "false"
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py stubtest
@@ -86,12 +76,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+        with:
+          save-cache: "false"
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py pyright
@@ -100,12 +88,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python ${{ env.UV_PYTHON }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ env.UV_PYTHON }}
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+        with:
+          save-cache: "false"
       - name: Install dependencies
         run: uv sync --frozen
       - run: uv run python run.py ty-check
