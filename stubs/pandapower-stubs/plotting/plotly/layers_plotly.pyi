@@ -1,7 +1,7 @@
 from _typeshed import SupportsGetItem
 from typing import Literal
 
-import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import]
+import plotly.graph_objs as go  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import] # pyrefly:ignore[missing-import]
 
 from pandapower.auxiliary import pandapowerNet
 
