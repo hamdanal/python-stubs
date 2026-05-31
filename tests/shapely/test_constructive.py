@@ -316,7 +316,7 @@ def test_polygonize() -> None:
         dtype=GeometryCollection,
     )
     with pytest.raises(Exception):
-        shapely.polygonize(LS)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.polygonize(LS)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
 
 def test_polygonize_full() -> None:
@@ -352,7 +352,7 @@ def test_polygonize_full() -> None:
         dtype=np.ndarray,
     )
     with pytest.raises(Exception):
-        shapely.polygonize_full(LS)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.polygonize_full(LS)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
 
 def test_remove_repeated_points() -> None:

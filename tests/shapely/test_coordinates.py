@@ -129,8 +129,8 @@ def test_set_coordinates() -> None:
         dtype=Point,
     )
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.set_coordinates(None, [])  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.set_coordinates(None, [1, 1])  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.set_coordinates(None, [[1, 1]])  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]

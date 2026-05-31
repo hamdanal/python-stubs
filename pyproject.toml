@@ -32,6 +32,7 @@ dev = [
     "mypy[native-parser]>=2.1.0",
     "pyright>=1.1.409",
     "ty>=0.0.40",
+    "pyrefly>=1.0.0",
     { include-group = "tests" },
 ]
 
@@ -94,9 +95,6 @@ native_parser = true
 # Project settings
 stubPath = "stubs/"
 enableTypeIgnoreComments = false # Leave "type: ignore" comments to mypy
-ignore = [
-    "**/site-packages/", # Disable annoying checks in third-party library code
-]
 
 # Strict mode
 typeCheckingMode = "strict"
@@ -124,8 +122,22 @@ reportSelfClsParameterName = "none"
 
 [tool.ty]
 analysis.respect-type-ignore-comments = false
-rules.invalid-method-override = "ignore" # out of control of the stubs (inherited from implementation)
 terminal.output-format = "concise"
+
+[tool.ty.rules]
+deprecated = "error"
+invalid-method-override = "ignore" # out of control of the stubs (inherited from implementation)
+
+[tool.pyrefly]
+search-path = ["stubs/"]
+enabled-ignores = ["pyrefly"]
+output-format = "min-text"
+
+[tool.pyrefly.errors]
+deprecated = "error"
+# Out of control of the stubs (inherited from implementation)
+bad-override = false
+inconsistent-inheritance = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

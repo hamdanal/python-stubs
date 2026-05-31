@@ -30,9 +30,9 @@ def test_geometry() -> None:
     gdf.geometry = geo.values
     gdf.geometry = [Point(1, 2), Point(3, 4)]
     with pytest.raises(Exception):
-        gdf.geometry = "geometry"  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-assignment]
+        gdf.geometry = "geometry"  # type: ignore[assignment] # pyright:ignore[reportAttributeAccessIssue] # ty:ignore[invalid-assignment] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        gdf.geometry = [1, 2]  # type: ignore[list-item] # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-assignment]
+        gdf.geometry = [1, 2]  # type: ignore[list-item] # pyright:ignore[reportAttributeAccessIssue] # ty:ignore[invalid-assignment] # pyrefly:ignore[bad-argument-type]
 
     # set_geometry
     check(assert_type(gdf.set_geometry(geo), GeoDataFrame), GeoDataFrame)
@@ -41,7 +41,7 @@ def test_geometry() -> None:
     check(assert_type(gdf.set_geometry([Point(1, 2), Point(3, 4)]), GeoDataFrame), GeoDataFrame)
     check(assert_type(gdf.set_geometry("geometry"), GeoDataFrame), GeoDataFrame)
     with pytest.raises(Exception):
-        gdf.set_geometry([1, 2])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        gdf.set_geometry([1, 2])  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # pyrefly:ignore[bad-argument-type]
 
     # rename_geometry
     check(assert_type(gdf.rename_geometry("geom"), GeoDataFrame), GeoDataFrame)
@@ -66,7 +66,7 @@ def test_crs() -> None:
         gdf.crs = "EPSG:4326"
         gdf.crs = 4326
         with pytest.raises(Exception):
-            gdf.crs = 1.5  # type: ignore[assignment] # pyright: ignore[reportAttributeAccessIssue]  # ty:ignore[invalid-assignment]
+            gdf.crs = 1.5  # type: ignore[assignment] # pyright:ignore[reportAttributeAccessIssue] # ty:ignore[invalid-assignment] # pyrefly:ignore[bad-argument-type]
 
     # set_crs
     check(assert_type(gdf.set_crs(crs), GeoDataFrame), GeoDataFrame)
@@ -76,11 +76,11 @@ def test_crs() -> None:
     check(assert_type(gdf.set_crs(crs=4326), GeoDataFrame), GeoDataFrame)
     check(assert_type(gdf.set_crs(epsg=4326), GeoDataFrame), GeoDataFrame)
     with pytest.raises(Exception):
-        gdf.set_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.set_crs()  # type: ignore[call-overload] # pyright:ignore[reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.set_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        gdf.set_crs(None)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        gdf.set_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.set_crs(None, None)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType,reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
     # to_crs
     check(assert_type(gdf.to_crs(crs), GeoDataFrame), GeoDataFrame)
@@ -90,24 +90,24 @@ def test_crs() -> None:
     check(assert_type(gdf.to_crs(crs=4326), GeoDataFrame), GeoDataFrame)
     check(assert_type(gdf.to_crs(epsg=4326), GeoDataFrame), GeoDataFrame)
     with pytest.raises(Exception):
-        gdf.to_crs()  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs()  # type: ignore[call-overload] # pyright:ignore[reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.to_crs(None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        gdf.to_crs(None)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        gdf.to_crs(None, None)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs(None, None)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType,reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.to_crs(inplace=True)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs(inplace=True)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.to_crs(None, inplace=True)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs(None, inplace=True)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType,reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.to_crs(None, None, inplace=True)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs(None, None, inplace=True)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType,reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        gdf.to_crs(None, None, True)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType,reportCallIssue]  # ty:ignore[no-matching-overload]
+        gdf.to_crs(None, None, True)  # type: ignore[call-overload] # pyright:ignore[reportArgumentType,reportCallIssue] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
     # estimate_utm_crs
     check(assert_type(gdf.estimate_utm_crs(), CRS), CRS)
     check(assert_type(gdf.estimate_utm_crs("WGS 84"), CRS), CRS)
     with pytest.raises(Exception):
-        gdf.estimate_utm_crs(84)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        gdf.estimate_utm_crs(84)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        gdf.estimate_utm_crs(CRS)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        gdf.estimate_utm_crs(CRS)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]

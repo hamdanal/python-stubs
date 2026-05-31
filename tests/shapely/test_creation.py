@@ -73,9 +73,9 @@ def test_points() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.points(0)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.points(0)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
-        shapely.points(0, None, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.points(0, None, 1)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
     with pytest.raises(Exception):
         shapely.points(0, 1, indices=[0])  # False negative (difficult to catch)
 
@@ -107,7 +107,7 @@ def test_linestrings() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.linestrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.linestrings(0, 1)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
 
 def test_linearrings() -> None:
@@ -149,7 +149,7 @@ def test_linearrings() -> None:
 
     # wrong
     with pytest.raises(Exception):
-        shapely.linearrings(0, 1)  # type: ignore[call-overload] # pyright: ignore[reportCallIssue, reportArgumentType]  # ty:ignore[no-matching-overload]
+        shapely.linearrings(0, 1)  # type: ignore[call-overload] # pyright:ignore[reportCallIssue, reportArgumentType] # ty:ignore[no-matching-overload] # pyrefly:ignore[no-matching-overload]
 
 
 def test_polygons() -> None:
@@ -473,11 +473,11 @@ def test_destroy_prepared() -> None:
 
     # despite its name, this function doesn't accept PreparedGeometry
     with pytest.raises(Exception):
-        shapely.destroy_prepared(PreparedGeometry(P))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        shapely.destroy_prepared(PreparedGeometry(P))  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        shapely.destroy_prepared([PreparedGeometry(P)])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        shapely.destroy_prepared([PreparedGeometry(P)])  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
     with pytest.raises(Exception):
-        shapely.destroy_prepared((PreparedGeometry(P), None))  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        shapely.destroy_prepared((PreparedGeometry(P), None))  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
 
 
 def test_empty() -> None:

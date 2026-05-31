@@ -14,8 +14,8 @@ def test_explore() -> None:
     if TYPE_CHECKING:
         assert_type(GDF.explore(tooltip=False, popup=True, k=4, map_kwds={}), folium.Map)
         assert_type(_explore(GDF, tooltip=False, popup=True, k=4, map_kwds={}), folium.Map)
-        GDF.explore(map_kwds=False)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
-        _explore(GDF, map_kwds=False)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        GDF.explore(map_kwds=False)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
+        _explore(GDF, map_kwds=False)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
 
 
 def test_geoseries_explore() -> None:
@@ -27,5 +27,5 @@ def test_geoseries_explore() -> None:
             _explore_geoseries(GDF.geometry, highlight=False, control_scale=False, map_kwds={}),
             folium.Map,
         )
-        GDF.geometry.explore(map_kwds=False)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
-        _explore_geoseries(GDF.geometry, map_kwds=False)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        GDF.geometry.explore(map_kwds=False)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]
+        _explore_geoseries(GDF.geometry, map_kwds=False)  # type: ignore[arg-type] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[bad-argument-type]

@@ -136,22 +136,23 @@ def test_symmetric_difference() -> None:
 
 def test_symmetric_difference_all() -> None:
     with pytest.deprecated_call():
-        check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
-        check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
-        check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
-        check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
-        check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
-        check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+        # TODO[ty]: https://github.com/astral-sh/ty/issues/842
+        check(assert_type(shapely.symmetric_difference_all(P), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
+        check(assert_type(shapely.symmetric_difference_all(None), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
+        check(assert_type(shapely.symmetric_difference_all([P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
+        check(assert_type(shapely.symmetric_difference_all([None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
+        check(assert_type(shapely.symmetric_difference_all([P, P]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
+        check(assert_type(shapely.symmetric_difference_all([P, None]), BaseGeometry), BaseGeometry)  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
         check(
             assert_type(
-                shapely.symmetric_difference_all([P], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                shapely.symmetric_difference_all([P], axis=0),  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
                 BaseGeometry | NDArray[np.object_],
             ),
             BaseGeometry,
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([[P]], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                shapely.symmetric_difference_all([[P]], axis=0),  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
                 BaseGeometry | NDArray[np.object_],
             ),
             np.ndarray,
@@ -159,14 +160,14 @@ def test_symmetric_difference_all() -> None:
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([None], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                shapely.symmetric_difference_all([None], axis=0),  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
                 BaseGeometry | NDArray[np.object_],
             ),
             BaseGeometry,
         )
         check(
             assert_type(
-                shapely.symmetric_difference_all([[None]], axis=0),  # type: ignore[deprecated] # pyright: ignore[reportDeprecated]
+                shapely.symmetric_difference_all([[None]], axis=0),  # type: ignore[deprecated] # pyright:ignore[reportDeprecated] # pyrefly:ignore[deprecated]
                 BaseGeometry | NDArray[np.object_],
             ),
             np.ndarray,

@@ -33,7 +33,7 @@ def test_read_file(tmp_path: Path) -> None:
     assert not isinstance(df, gpd.GeoDataFrame)
 
     with pytest.raises(Exception):
-        gpd.read_file(file, engine="toto")  # type: ignore[call-overload] # pyright: ignore[reportArgumentType]  # ty:ignore[invalid-argument-type]
+        gpd.read_file(file, engine="toto")  # type: ignore[call-overload] # pyright:ignore[reportArgumentType] # ty:ignore[invalid-argument-type] # pyrefly:ignore[no-matching-overload]
 
 
 def test_infer_schema() -> None:
@@ -41,7 +41,7 @@ def test_infer_schema() -> None:
     heterogeneous_schema = infer_schema(gpd.GeoDataFrame({"x": [1, 2], "geometry": [P, LS]}))
     check(
         assert_type(schema, _Schema),
-        _Schema,  # pyright: ignore[reportGeneralTypeIssues]
+        _Schema,  # pyright:ignore[reportGeneralTypeIssues]
         dtype=str,
     )
     check(assert_type(schema["geometry"], str | list[str]), str)

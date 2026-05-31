@@ -1,5 +1,5 @@
 from django import db
-from psycopg import (  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import]
+from psycopg import (  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports]  # ty:ignore[unresolved-import] # pyrefly:ignore[missing-import]
     Error as _Psycopg3Error,
 )
 from psycopg2 import Error as _Psycopg2Error

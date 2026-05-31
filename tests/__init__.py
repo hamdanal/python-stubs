@@ -7,7 +7,7 @@ from typing import Any, cast
 import numpy as np
 from shapely.geometry.base import BaseMultipartGeometry, GeometrySequence
 
-type _ClassInfo = type | UnionType | tuple["_ClassInfo", ...]  # see isinstance
+type _ClassInfo = type | UnionType | tuple[_ClassInfo, ...]  # see isinstance
 
 # Make stubs generic classes generic at runtime
 setattr(BaseMultipartGeometry, "__class_getitem__", classmethod(GenericAlias))
@@ -16,20 +16,20 @@ setattr(GeometrySequence, "__class_getitem__", classmethod(GenericAlias))
 
 def check[T](obj: T, cls: _ClassInfo, dtype: _ClassInfo | None = None) -> T:
     __tracebackhide__ = True
-    if not isinstance(obj, cls):
+    if not isinstance(obj, cls):  # pyrefly:ignore[invalid-argument]
         raise RuntimeError(f"Expected type '{cls}' but got '{type(obj)}'")
     if dtype is None:
         return obj
 
     value: Any
     if isinstance(obj, np.ndarray):
-        value = np.asarray(obj).flatten()[0]  # pyright: ignore[reportUnknownArgumentType]
+        value = np.asarray(obj).flatten()[0]  # pyright:ignore[reportUnknownArgumentType]
     elif hasattr(obj, "__iter__"):
         value = next(iter(cast(Iterable[Any], obj)))
     else:
         value = obj
 
-    if not isinstance(value, dtype):
+    if not isinstance(value, dtype):  # pyrefly:ignore[invalid-argument]
         raise RuntimeError(f"Expected type '{dtype}' but got '{type(value)}'")
     return obj
 

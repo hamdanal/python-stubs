@@ -16,6 +16,7 @@ default_args = {
     "mypy": ["tests", "stubs"],
     "pyright": ["tests", "stubs"],
     "ty-check": ["tests", "stubs"],
+    "pyrefly-check": ["tests", "stubs"],
     "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower", "pyogrio"],
     "pytest": [],
 }

@@ -2,7 +2,7 @@ from _typeshed import Incomplete
 from collections.abc import Iterable
 from typing import Literal
 
-from graph_tool import (  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports] # ty:ignore[unresolved-import]
+from graph_tool import (  # type: ignore[import-not-found] # pyright: ignore[reportMissingImports] # ty:ignore[unresolved-import] # pyrefly:ignore[missing-import]
     Graph,
 )
 
