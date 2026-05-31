@@ -87,7 +87,7 @@ def read_arrow(
     datetime_as_string: bool = False,
     *,
     batch_size: int = 65536,  # Extracted from kwargs
-    **kwargs,  # Dataset open options passed to OGR
+    **kwargs: Any,  # Dataset open options passed to OGR
 ) -> tuple[_Meta, pa.Table]: ...
 @overload
 def open_arrow(
@@ -156,7 +156,7 @@ def write(
     dataset_options: dict[str, Any] | None = None,
     layer_options: dict[str, Any] | None = None,
     gdal_tz_offsets: dict[str, Any] | None = None,
-    **kwargs: Any,
+    **kwargs: Any,  # Additional driver-specific dataset or layer creation options passed to OGR
 ) -> None: ...
 def write_arrow(
     arrow_obj: SupportsArrowCStream,
