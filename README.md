@@ -77,16 +77,6 @@ This project is licensed under the MIT License.
     <th>Incomplete</th>
     <th>Yes</th>
   </tr>
-  <tr>
-    <th>pyogrio</th>
-    <th><code>pyogrio</code></th>
-    <th>
-      <a href="https://pypi.org/project/pyogrio">PyPI</a>,
-      <a href="https://github.com/geopandas/pyogrio">GitHub</a>
-    </th>
-    <th>Complete</th>
-    <th>Yes</th>
-  </tr>
 </table>
 
 ## Upstreamed stubs
@@ -113,5 +103,10 @@ These stubs were included here in the past and have been moved to typeshed or to
     <th><a href="https://pypi.org/project/geopandas">geopandas</a></th>
     <th><a href="https://github.com/python/typeshed/tree/main/stubs/geopandas">typeshed</a></th>
     <th><code>pip install types-geopandas</code></th>
+  </tr>
+  <tr>
+    <th><a href="https://pypi.org/project/pyogrio">pyogrio</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/pyogrio">typeshed</a></th>
+    <th><code>pip install types-pyogrio</code></th>
   </tr>
 </table>

@@ -24,8 +24,6 @@ tests = [
     "geopandas>=1.0.0",
     "pandapower>=3.1.2,<3.5",  # TODO: remove upper bound
     "types-networkx>=3.4.2",
-    # pyogrio
-    "pyogrio>=0.13.0",
 ]
 dev = [
     "ruff>=0.15.21",

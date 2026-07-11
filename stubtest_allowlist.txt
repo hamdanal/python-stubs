@@ -32,11 +32,3 @@ pandapower\.topology\.BASE_KV
 pandapower\.timeseries\.ts_runpp  # requires numba
 pandapower\.pf\.(makeYbus_numba|dSbus_dV_numba|create_jacobian_numba)  # requires numba
 pandapower\.topology\.graph_tool_interface  # requires graph-tool
-
-# pyogrio allowlist
-# ====================
-# OK: stubs-only
-pyogrio\._typing
-
-# OK: tests
-pyogrio\.tests(\..*)?
