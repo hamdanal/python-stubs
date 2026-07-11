@@ -17,7 +17,7 @@ default_args = {
     "pyright": ["tests", "stubs"],
     "ty-check": ["tests", "stubs"],
     "pyrefly-check": ["tests", "stubs"],
-    "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower", "pyogrio"],
+    "stubtest": ["--allowlist=stubtest_allowlist.txt", "pandapower"],
     "pytest": [],
 }
 if (num_mypy_workers := min(os.cpu_count() or 1, 6)) > 1:
