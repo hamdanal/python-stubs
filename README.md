@@ -90,6 +90,16 @@ These stubs were included here in the past and have been moved to typeshed or to
     <th>Installation</th>
   </tr>
   <tr>
+    <th><a href="https://pypi.org/project/pyserial">pyserial</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/pyserial">typeshed</a></th>
+    <th><code>pip install types-pyserial</code></th>
+  </tr>
+  <tr>
+    <th><a href="https://pypi.org/project/netaddr">netaddr</a></th>
+    <th><a href="https://github.com/python/typeshed/tree/main/stubs/netaddr">typeshed</a></th>
+    <th><code>pip install types-netaddr</code></th>
+  </tr>
+  <tr>
     <th><a href="https://pypi.org/project/seaborn">seaborn</a></th>
     <th><a href="https://github.com/python/typeshed/tree/main/stubs/seaborn">typeshed</a></th>
     <th><code>pip install types-seaborn</code></th>
