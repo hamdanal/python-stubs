@@ -1,11 +1,10 @@
-from collections.abc import Collection
+from collections.abc import Collection, Iterable
 from contextlib import AbstractContextManager
 from typing import Any, Literal, TypedDict, overload, type_check_only
 
 import numpy as np
 import pyarrow as pa
 import shapely as shp
-from numpy.typing import ArrayLike
 
 from pyogrio._typing import Array1D, ArrayLikeInt, ReadPathOrBuffer, SupportsArrowCStream, WritePathOrBuffer
 
@@ -139,9 +138,9 @@ def open_arrow(
 def write(
     path: WritePathOrBuffer,
     geometry: np.ndarray | None,  # ndarray of WKB encoded geometries or None
-    field_data: ArrayLike,
-    fields: Collection[str],
-    field_mask=None,
+    field_data: Iterable[np.ndarray] | None,
+    fields: Iterable[str],
+    field_mask: Iterable[np.ndarray | None] | None = None,
     layer: str | None = None,
     driver: str | None = None,
     geometry_type: str | None = None,
