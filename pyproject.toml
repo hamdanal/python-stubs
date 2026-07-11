@@ -22,17 +22,19 @@ tests = [
     # pandapower
     "networkx>=3.2.1",
     "geopandas>=1.0.0",
-    "pandapower>=3.1.2",
+    "pandapower>=3.1.2,<3.5",  # TODO: remove upper bound
     "types-networkx>=3.4.2",
+    # pyogrio
+    "pyogrio>=0.13.0",
 ]
 dev = [
-    "ruff>=0.15.15",
+    "ruff>=0.15.21",
     "pytest>=9.0",
     "rich-argparse>=1.8.0",
-    "mypy[native-parser]>=2.1.0",
-    "pyright>=1.1.409",
-    "ty>=0.0.40",
-    "pyrefly>=1.0.0",
+    "mypy[native-parser]>=2.2.0",
+    "pyright>=1.1.411",
+    "ty>=0.0.58",
+    "pyrefly>=1.1.1",
     { include-group = "tests" },
 ]
 
@@ -122,6 +124,7 @@ reportSelfClsParameterName = "none"
 
 [tool.ty]
 analysis.respect-type-ignore-comments = false
+environment.extra-paths = ["./stubs/"]
 terminal.output-format = "concise"
 
 [tool.ty.rules]
@@ -129,7 +132,7 @@ deprecated = "error"
 invalid-method-override = "ignore" # out of control of the stubs (inherited from implementation)
 
 [tool.pyrefly]
-search-path = ["stubs/"]
+site-package-path = ["./stubs/"]
 enabled-ignores = ["pyrefly"]
 output-format = "min-text"
 
