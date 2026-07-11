@@ -10,11 +10,11 @@ repos:
       - id: mixed-line-ending
       - id: check-case-conflict
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.11.17
+    rev: 0.11.28
     hooks:
       - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.15 # must match uv.lock
+    rev: v0.15.21 # must match uv.lock
     hooks:
       - id: ruff-check
       - id: ruff-format

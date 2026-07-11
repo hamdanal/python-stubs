@@ -86,8 +86,9 @@ def main() -> int:
     ret = 0
     for tool in tools:
         cmd = [*tool.split("-"), *(rest or default_args[tool])]
+        env = {**os.environ, "PYTHONPATH": "stubs"} if tool in ("mypy", "stubtest") else None
         print("Running:", l2c(cmd), file=sys.stderr)
-        ret |= subprocess.call(cmd, env={**os.environ, "PYTHONPATH": "stubs"}, text=True)
+        ret |= subprocess.call(cmd, env=env, text=True)
         print(file=sys.stderr)
     return ret
 
